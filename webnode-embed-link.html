@@ -1,4 +1,4 @@
-<!-- SELECTOR DE VEHÍCULOS - Copiar y pegar en bloque HTML de Webnode -->
+<!-- SELECTOR DE VEHÍCULOS - VERSION CON ENLACE (Más compatible con Webnode) -->
 
 <style>
   .vehiculo-selector-container * {
@@ -124,6 +124,7 @@
   }
 
   .vehiculo-selector-container .btn-buscar {
+    display: inline-block;
     width: 100%;
     padding: 12px 24px;
     background: linear-gradient(135deg, #f15a29 0%, #e34a1a 100%);
@@ -137,25 +138,29 @@
     text-transform: none;
     letter-spacing: 0.3px;
     box-shadow: 0 4px 12px rgba(241, 90, 41, 0.25);
+    text-decoration: none;
+    text-align: center;
+    line-height: 1.2;
   }
 
-  .vehiculo-selector-container .btn-buscar:hover:not(:disabled) {
+  .vehiculo-selector-container .btn-buscar:hover:not(.disabled) {
     background: linear-gradient(135deg, #e34a1a 0%, #d43a0a 100%);
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(241, 90, 41, 0.35);
   }
 
-  .vehiculo-selector-container .btn-buscar:active:not(:disabled) {
+  .vehiculo-selector-container .btn-buscar:active:not(.disabled) {
     transform: translateY(0);
     box-shadow: 0 2px 8px rgba(241, 90, 41, 0.25);
   }
 
-  .vehiculo-selector-container .btn-buscar:disabled {
+  .vehiculo-selector-container .btn-buscar.disabled {
     opacity: 0.4;
     cursor: not-allowed;
     transform: none;
     background: #ccc;
     box-shadow: none;
+    pointer-events: none;
   }
 
   /* Responsive - móvil en vertical */
@@ -194,30 +199,30 @@
     <p>Encuentra el equipamiento ideal</p>
   </div>
 
-  <form id="vehicleFormWebnode">
+  <form id="vehicleFormWebnode2">
     <div class="form-row">
-      <div class="form-group" id="grupo-marca-webnode">
-        <label for="marca-webnode">Marca</label>
+      <div class="form-group" id="grupo-marca-webnode2">
+        <label for="marca-webnode2">Marca</label>
         <div class="select-wrapper">
-          <select id="marca-webnode" name="marca">
+          <select id="marca-webnode2" name="marca">
             <option value="">Selecciona marca...</option>
           </select>
         </div>
       </div>
 
-      <div class="form-group" id="grupo-modelo-webnode">
-        <label for="modelo-webnode">Modelo</label>
+      <div class="form-group" id="grupo-modelo-webnode2">
+        <label for="modelo-webnode2">Modelo</label>
         <div class="select-wrapper">
-          <select id="modelo-webnode" name="modelo" disabled>
+          <select id="modelo-webnode2" name="modelo" disabled>
             <option value="">Selecciona modelo...</option>
           </select>
         </div>
       </div>
 
       <div class="btn-group">
-        <button type="button" id="buscar-webnode" class="btn-buscar" disabled>
+        <a href="#" id="buscar-webnode2" class="btn-buscar disabled">
           Ver Opciones
-        </button>
+        </a>
       </div>
     </div>
   </form>
@@ -294,9 +299,9 @@
   };
 
   // Referencias a elementos DOM
-  const selMarca = document.getElementById('marca-webnode');
-  const selModelo = document.getElementById('modelo-webnode');
-  const btnBuscar = document.getElementById('buscar-webnode');
+  const selMarca = document.getElementById('marca-webnode2');
+  const selModelo = document.getElementById('modelo-webnode2');
+  const btnBuscar = document.getElementById('buscar-webnode2');
 
   // Cargar marcas
   function cargarMarcas() {
@@ -308,6 +313,20 @@
     });
   }
 
+  // Actualizar enlace del botón
+  function actualizarEnlace() {
+    const marca = selMarca.value;
+    const modelo = selModelo.value;
+
+    if (marca && modelo && datosVehiculos[marca] && datosVehiculos[marca][modelo]) {
+      const url = datosVehiculos[marca][modelo];
+      btnBuscar.href = url;
+      btnBuscar.classList.remove('disabled');
+    } else {
+      btnBuscar.href = '#';
+      btnBuscar.classList.add('disabled');
+    }
+  }
 
   // Animaciones
   function toggleSelectAnimation(selectElement) {
@@ -330,7 +349,6 @@
 
     selModelo.innerHTML = '<option value="">Selecciona un modelo...</option>';
     selModelo.disabled = true;
-    btnBuscar.disabled = true;
 
     if (marca && datosVehiculos[marca]) {
       selModelo.disabled = false;
@@ -342,42 +360,20 @@
         selModelo.appendChild(opt);
       });
     }
+
+    actualizarEnlace();
   });
 
   // Cambio de modelo
   selModelo.addEventListener('change', function() {
-    const marca = selMarca.value;
-    const modelo = selModelo.value;
-
-    btnBuscar.disabled = !(marca && modelo);
+    actualizarEnlace();
   });
 
-  // Click en buscar
+  // Prevenir click cuando está deshabilitado
   btnBuscar.addEventListener('click', function(e) {
-    e.preventDefault();
-
-    const marca = selMarca.value;
-    const modelo = selModelo.value;
-
-    console.log('Marca seleccionada:', marca);
-    console.log('Modelo seleccionado:', modelo);
-
-    if (marca && modelo && datosVehiculos[marca] && datosVehiculos[marca][modelo]) {
-      const url = datosVehiculos[marca][modelo];
-      console.log('Navegando a:', url);
-
-      // Intentar múltiples métodos de navegación
-      try {
-        window.top.location.href = url;
-      } catch(err) {
-        try {
-          window.location.href = url;
-        } catch(err2) {
-          window.open(url, '_self');
-        }
-      }
-    } else {
-      console.log('Error: No se encontró la URL para', marca, modelo);
+    if (btnBuscar.classList.contains('disabled')) {
+      e.preventDefault();
+      return false;
     }
   });
 
