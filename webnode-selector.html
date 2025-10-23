@@ -1,0 +1,371 @@
+<!-- ============================================
+     SELECTOR DE VEHÍCULOS - CAMPERÍZATE TODO EN 1
+     Optimizado para SEO y velocidad de carga
+     ============================================ -->
+
+<style>
+/* Contenedor principal */
+.vehicle-selector {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+/* Fila de formulario - horizontal en desktop */
+.vehicle-selector__row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+/* Columnas de selectores */
+.vehicle-selector__col {
+  flex: 1 1 200px;
+  min-width: 180px;
+}
+
+/* Etiquetas */
+.vehicle-selector__label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 7px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* Wrapper del select (para el ícono) */
+.vehicle-selector__select-wrapper {
+  position: relative;
+}
+
+.vehicle-selector__select-wrapper::after {
+  content: '▼';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #a0aec0;
+  font-size: 10px;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.vehicle-selector__select-wrapper:hover::after {
+  color: #f15a29;
+}
+
+/* Selectores */
+.vehicle-selector__select {
+  width: 100%;
+  padding: 14px 44px 14px 18px;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  font-size: 15px;
+  color: #2d3748;
+  background: #ffffff;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  font-weight: 500;
+}
+
+.vehicle-selector__select:hover:not(:disabled) {
+  border-color: #f15a29;
+  box-shadow: 0 4px 16px rgba(241, 90, 41, 0.15);
+  transform: translateY(-1px);
+}
+
+.vehicle-selector__select:focus {
+  outline: none;
+  border-color: #f15a29;
+  box-shadow: 0 0 0 4px rgba(241, 90, 41, 0.12), 0 4px 16px rgba(241, 90, 41, 0.2);
+  transform: translateY(-1px);
+}
+
+.vehicle-selector__select:disabled {
+  background: #f7fafc;
+  color: #a0aec0;
+  cursor: not-allowed;
+  opacity: 0.6;
+  border-color: #e2e8f0;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Columna del botón */
+.vehicle-selector__btn-col {
+  flex: 0 0 auto;
+  min-width: 180px;
+}
+
+/* Botón */
+.vehicle-selector__btn {
+  display: block;
+  width: 100%;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #f15a29 0%, #e63946 100%);
+  color: #ffffff;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(241, 90, 41, 0.35);
+  cursor: pointer;
+  border: none;
+  line-height: 1.4;
+  position: relative;
+  overflow: hidden;
+}
+
+.vehicle-selector__btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.vehicle-selector__btn:not(.disabled):hover {
+  background: linear-gradient(135deg, #e63946 0%, #d62828 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(241, 90, 41, 0.45);
+  color: #ffffff;
+}
+
+.vehicle-selector__btn:not(.disabled):hover::before {
+  opacity: 1;
+}
+
+.vehicle-selector__btn:not(.disabled):active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(241, 90, 41, 0.35);
+}
+
+.vehicle-selector__btn.disabled {
+  background: linear-gradient(135deg, #cbd5e0 0%, #a0aec0 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
+  transform: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .vehicle-selector__row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .vehicle-selector__col,
+  .vehicle-selector__btn-col {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .vehicle-selector__select {
+    padding: 16px 44px 16px 18px;
+    font-size: 16px; /* Evita zoom en iOS */
+  }
+
+  .vehicle-selector__btn {
+    padding: 16px 28px;
+    font-size: 16px;
+  }
+}
+
+/* Animación de carga */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vehicle-selector {
+  animation: fadeIn 0.4s ease-out;
+}
+</style>
+
+<div class="vehicle-selector">
+  <div class="vehicle-selector__row">
+    <!-- Selector de Marca -->
+    <div class="vehicle-selector__col">
+      <label for="vehicle-marca" class="vehicle-selector__label">Marca</label>
+      <div class="vehicle-selector__select-wrapper">
+        <select id="vehicle-marca" class="vehicle-selector__select" aria-label="Seleccionar marca del vehículo">
+          <option value="">Selecciona tu marca...</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Selector de Modelo -->
+    <div class="vehicle-selector__col">
+      <label for="vehicle-modelo" class="vehicle-selector__label">Modelo</label>
+      <div class="vehicle-selector__select-wrapper">
+        <select id="vehicle-modelo" class="vehicle-selector__select" disabled aria-label="Seleccionar modelo del vehículo">
+          <option value="">Selecciona tu modelo...</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Botón de búsqueda -->
+    <div class="vehicle-selector__btn-col">
+      <a href="#" id="vehicle-btn" class="vehicle-selector__btn disabled" aria-label="Ver opciones de equipamiento">
+        Ver Opciones →
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // Base de datos de vehículos con URLs absolutas
+  var vehicleData = {
+    "Citroën": {
+      "Berlingo": "https://camperizatetodoen1.com/berlingo/",
+      "Jumpy": "https://camperizatetodoen1.com/jumpy/",
+      "Space Tourer": "https://camperizatetodoen1.com/space-tourer/",
+      "Jumper": "https://camperizatetodoen1.com/jumper-boxer-transit/"
+    },
+    "Dacia": {
+      "Dokker": "https://camperizatetodoen1.com/dokker/",
+      "Jogger / Lodgy": "https://camperizatetodoen1.com/dacia-jogger-lodgy/"
+    },
+    "Fiat": {
+      "Doblo": "https://camperizatetodoen1.com/fiat-doblo/",
+      "Scudo": "https://camperizatetodoen1.com/fiat-scudo/",
+      "Talento": "https://camperizatetodoen1.com/talento/",
+      "Ducato": "https://camperizatetodoen1.com/jumper-boxer-transit/"
+    },
+    "Ford": {
+      "Tourneo / Transit Connect": "https://camperizatetodoen1.com/tourneo-transit/",
+      "Courier": "https://camperizatetodoen1.com/ford-courier/",
+      "Transit Custom": "https://camperizatetodoen1.com/ford-transit-custom/",
+      "Transit": "https://camperizatetodoen1.com/jumper-boxer-transit/"
+    },
+    "Hyundai": {
+      "H1": "https://camperizatetodoen1.com/hyundai-h1/"
+    },
+    "Mercedes": {
+      "Citan - Clase T": "https://camperizatetodoen1.com/mercedes-citan/",
+      "Vito / Viano": "https://camperizatetodoen1.com/vito-viano/"
+    },
+    "Nissan": {
+      "Townstar": "https://camperizatetodoen1.com/nissan-townstar/",
+      "NV200": "https://camperizatetodoen1.com/nv200/",
+      "NV300 / Primastar": "https://camperizatetodoen1.com/nv300/"
+    },
+    "Opel": {
+      "Combo Life": "https://camperizatetodoen1.com/opel-combo-life/",
+      "Vivaro / Zafira": "https://camperizatetodoen1.com/opel-vivaro/",
+      "Movano": "https://camperizatetodoen1.com/jumper-boxer-transit/"
+    },
+    "Peugeot": {
+      "Partner": "https://camperizatetodoen1.com/partner/",
+      "Rifter": "https://camperizatetodoen1.com/rifter/",
+      "Traveller": "https://camperizatetodoen1.com/traveller/",
+      "Expert": "https://camperizatetodoen1.com/expert/",
+      "Boxer": "https://camperizatetodoen1.com/jumper-boxer-transit/"
+    },
+    "Renault": {
+      "Kangoo": "https://camperizatetodoen1.com/renault-kangoo/",
+      "Trafic": "https://camperizatetodoen1.com/trafic/",
+      "Master": "https://camperizatetodoen1.com/jumper-boxer-transit/"
+    },
+    "Volkswagen": {
+      "Caddy": "https://camperizatetodoen1.com/caddy/",
+      "Transporter T4, T5, T6": "https://camperizatetodoen1.com/transporter-t4-t5-t6/",
+      "Caravelle T4, T5, T6": "https://camperizatetodoen1.com/caravelle-t4-t5-t6/"
+    },
+    "Toyota": {
+      "Proace City": "https://camperizatetodoen1.com/proace-city/",
+      "Proace / Proace Verso": "https://camperizatetodoen1.com/toyota-proace/"
+    },
+    "Otros": {
+      "Coches, Monovolumen y 4x4": "https://camperizatetodoen1.com/coches-monovolumen-y-4x4/",
+      "2+1": "https://camperizatetodoen1.com/2-12/"
+    }
+  };
+
+  // Referencias a elementos DOM
+  var selectMarca = document.getElementById('vehicle-marca');
+  var selectModelo = document.getElementById('vehicle-modelo');
+  var btn = document.getElementById('vehicle-btn');
+
+  // Actualizar estado del enlace
+  function updateLink() {
+    var marca = selectMarca.value;
+    var modelo = selectModelo.value;
+
+    if (marca && modelo && vehicleData[marca] && vehicleData[marca][modelo]) {
+      var url = vehicleData[marca][modelo];
+      btn.href = url;
+      btn.classList.remove('disabled');
+      btn.removeAttribute('onclick');
+    } else {
+      btn.href = '#';
+      btn.classList.add('disabled');
+      btn.setAttribute('onclick', 'return false');
+    }
+  }
+
+  // Cargar marcas al iniciar
+  Object.keys(vehicleData).forEach(function(marca) {
+    var option = document.createElement('option');
+    option.value = marca;
+    option.textContent = marca;
+    selectMarca.appendChild(option);
+  });
+
+  // Evento: cambio de marca
+  selectMarca.addEventListener('change', function() {
+    var marca = selectMarca.value;
+
+    // Resetear modelo
+    selectModelo.innerHTML = '<option value="">Selecciona tu modelo...</option>';
+    selectModelo.disabled = true;
+
+    if (marca && vehicleData[marca]) {
+      selectModelo.disabled = false;
+
+      // Cargar modelos
+      Object.keys(vehicleData[marca]).forEach(function(modelo) {
+        var option = document.createElement('option');
+        option.value = modelo;
+        option.textContent = modelo;
+        selectModelo.appendChild(option);
+      });
+    }
+
+    updateLink();
+  });
+
+  // Evento: cambio de modelo
+  selectModelo.addEventListener('change', updateLink);
+
+  // Inicializar
+  updateLink();
+})();
+</script>
