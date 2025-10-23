@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selector de Vehículos - Camperízate Todo en 1</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .selector-container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      padding: 40px;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      color: #2d3748;
+      font-size: 26px;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .header p {
+      color: #718096;
+      font-size: 14px;
+    }
+
+    .icon-car {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      color: #4a5568;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      transition: color 0.3s ease;
+    }
+
+    .form-group.active label {
+      color: #0066cc;
+    }
+
+    .select-wrapper {
+      position: relative;
+    }
+
+    .select-wrapper::after {
+      content: '▼';
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #a0aec0;
+      pointer-events: none;
+      font-size: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .select-wrapper.open::after {
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    select {
+      width: 100%;
+      padding: 14px 40px 14px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 16px;
+      color: #2d3748;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+
+    select:hover:not(:disabled) {
+      border-color: #cbd5e0;
+      background: #fafafa;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #0066cc;
+      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+
+    select:disabled {
+      background: #f7fafc;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    select option {
+      padding: 10px;
+    }
+
+    .btn-buscar {
+      width: 100%;
+      padding: 16px;
+      background: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-buscar:hover:not(:disabled) {
+      background: #0052a3;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 102, 204, 0.3);
+    }
+
+    .btn-buscar:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-buscar:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      background: #cbd5e0;
+    }
+
+    .selected-info {
+      margin-top: 20px;
+      padding: 16px;
+      background: #f0f9ff;
+      border-radius: 10px;
+      border-left: 4px solid #0066cc;
+      display: none;
+    }
+
+    .selected-info.show {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .selected-info p {
+      color: #4a5568;
+      font-size: 14px;
+      margin: 4px 0;
+    }
+
+    .selected-info strong {
+      color: #2d3748;
+    }
+
+    @media (max-width: 600px) {
+      .selector-container {
+        padding: 30px 20px;
+      }
+
+      .header h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="selector-container">
+    <div class="header">
+      <div class="icon-car">🚐</div>
+      <h1>Selecciona tu furgoneta</h1>
+      <p>Encuentra el equipamiento para tu vehículo</p>
+    </div>
+
+    <form id="vehicleForm">
+      <div class="form-group" id="grupo-marca">
+        <label for="marca">Marca del Vehículo</label>
+        <div class="select-wrapper">
+          <select id="marca" name="marca">
+            <option value="">Elige una marca...</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group" id="grupo-modelo">
+        <label for="modelo">Modelo del Vehículo</label>
+        <div class="select-wrapper">
+          <select id="modelo" name="modelo" disabled>
+            <option value="">Primero selecciona una marca</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="button" id="buscar" class="btn-buscar" disabled>
+        Ver mi vehículo
+      </button>
+
+      <div class="selected-info" id="selectedInfo">
+        <p><strong>Tu selección:</strong></p>
+        <p id="infoText"></p>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Datos completos de vehículos de Camperízate Todo en 1
+    const datos = {
+      "Citroën": {
+        "Berlingo": "/berlingo/",
+        "Jumpy": "/jumpy/",
+        "Space Tourer": "/space-tourer/",
+        "Jumper": "/jumper-boxer-transit/"
+      },
+      "Dacia": {
+        "Dokker": "/dokker/",
+        "Jogger / Lodgy": "/dacia-jogger-lodgy/"
+      },
+      "Fiat": {
+        "Doblo": "/fiat-doblo/",
+        "Scudo": "/fiat-scudo/",
+        "Talento": "/talento/",
+        "Ducato": "/jumper-boxer-transit/"
+      },
+      "Ford": {
+        "Tourneo / Transit Connect": "/tourneo-transit/",
+        "Courier": "/ford-courier/",
+        "Transit Custom": "/ford-transit-custom/",
+        "Transit": "/jumper-boxer-transit/"
+      },
+      "Hyundai": {
+        "H1": "/hyundai-h1/"
+      },
+      "Mercedes": {
+        "Citan - Clase T": "/mercedes-citan/",
+        "Vito / Viano": "/vito-viano/"
+      },
+      "Nissan": {
+        "Townstar": "/nissan-townstar/",
+        "NV200": "/nv200/",
+        "NV300 / Primastar": "/nv300/"
+      },
+      "Opel": {
+        "Combo Life": "/opel-combo-life/",
+        "Vivaro / Zafira": "/opel-vivaro/",
+        "Movano": "/jumper-boxer-transit/"
+      },
+      "Peugeot": {
+        "Partner": "/partner/",
+        "Rifter": "/rifter/",
+        "Traveller": "/traveller/",
+        "Expert": "/expert/",
+        "Boxer": "/jumper-boxer-transit/"
+      },
+      "Renault": {
+        "Kangoo": "/renault-kangoo/",
+        "Trafic": "/trafic/",
+        "Master": "/jumper-boxer-transit/"
+      },
+      "Volkswagen": {
+        "Caddy": "/caddy/",
+        "Transporter T4, T5, T6": "/transporter-t4-t5-t6/",
+        "Caravelle T4, T5, T6": "/caravelle-t4-t5-t6/"
+      },
+      "Toyota": {
+        "Proace City": "/proace-city/",
+        "Proace / Proace Verso": "/toyota-proace/"
+      },
+      "Otros": {
+        "Coches, Monovolumen y 4x4": "/coches-monovolumen-y-4x4/",
+        "2+1": "/2-12/"
+      }
+    };
+
+    // Referencias a elementos DOM
+    const selMarca = document.getElementById('marca');
+    const selModelo = document.getElementById('modelo');
+    const btnBuscar = document.getElementById('buscar');
+    const selectedInfo = document.getElementById('selectedInfo');
+    const infoText = document.getElementById('infoText');
+
+    // Cargar marcas al inicio
+    function cargarMarcas() {
+      Object.keys(datos).forEach(marca => {
+        const opt = document.createElement('option');
+        opt.value = marca;
+        opt.textContent = marca;
+        selMarca.appendChild(opt);
+      });
+    }
+
+    // Actualizar información de selección
+    function actualizarInfo() {
+      const marca = selMarca.value;
+      const modelo = selModelo.value;
+
+      if (marca && modelo) {
+        infoText.textContent = `${marca} ${modelo}`;
+        selectedInfo.classList.add('show');
+      } else {
+        selectedInfo.classList.remove('show');
+      }
+    }
+
+    // Animación de select activo
+    function toggleSelectAnimation(selectElement) {
+      selectElement.addEventListener('focus', function() {
+        this.closest('.select-wrapper').classList.add('open');
+        this.closest('.form-group').classList.add('active');
+      });
+
+      selectElement.addEventListener('blur', function() {
+        this.closest('.select-wrapper').classList.remove('open');
+        this.closest('.form-group').classList.remove('active');
+      });
+    }
+
+    // Aplicar animaciones a los selects
+    [selMarca, selModelo].forEach(toggleSelectAnimation);
+
+    // Evento: cambio de marca
+    selMarca.addEventListener('change', () => {
+      const marca = selMarca.value;
+
+      // Reset modelo
+      selModelo.innerHTML = '<option value="">Selecciona un modelo...</option>';
+      selModelo.disabled = true;
+      btnBuscar.disabled = true;
+
+      if (marca && datos[marca]) {
+        selModelo.disabled = false;
+
+        // Cargar modelos de la marca seleccionada
+        Object.keys(datos[marca]).forEach(modelo => {
+          const opt = document.createElement('option');
+          opt.value = modelo;
+          opt.textContent = modelo;
+          selModelo.appendChild(opt);
+        });
+      }
+
+      actualizarInfo();
+    });
+
+    // Evento: cambio de modelo
+    selModelo.addEventListener('change', () => {
+      const marca = selMarca.value;
+      const modelo = selModelo.value;
+
+      btnBuscar.disabled = !(marca && modelo);
+      actualizarInfo();
+    });
+
+    // Evento: click en buscar
+    btnBuscar.addEventListener('click', () => {
+      const marca = selMarca.value;
+      const modelo = selModelo.value;
+
+      if (marca && modelo && datos[marca][modelo]) {
+        const url = datos[marca][modelo];
+        // Redirigir en la misma pestaña (puedes cambiar a '_blank' para nueva pestaña)
+        window.location.href = url;
+      }
+    });
+
+    // Inicializar cargando las marcas
+    cargarMarcas();
+  </script>
+</body>
+</html>
