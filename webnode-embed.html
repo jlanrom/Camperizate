@@ -8,11 +8,12 @@
   }
 
   .vehiculo-selector-container {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: white;
-    border-radius: 16px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #ddd;
+    max-width: 900px;
     width: 100%;
     padding: 40px;
     margin: 40px auto;
@@ -20,19 +21,19 @@
 
   .vehiculo-selector-container .header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
   }
 
   .vehiculo-selector-container .header h2 {
-    color: #2d3748;
-    font-size: 26px;
+    color: #333;
+    font-size: 28px;
     margin-bottom: 8px;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .vehiculo-selector-container .header p {
-    color: #718096;
-    font-size: 14px;
+    color: #888;
+    font-size: 15px;
   }
 
   .vehiculo-selector-container .icon-car {
@@ -40,22 +41,29 @@
     margin-bottom: 10px;
   }
 
-  .vehiculo-selector-container .form-group {
+  .vehiculo-selector-container .form-row {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
     margin-bottom: 20px;
+  }
+
+  .vehiculo-selector-container .form-group {
+    flex: 1;
     position: relative;
   }
 
   .vehiculo-selector-container .form-group label {
     display: block;
-    color: #4a5568;
+    color: #333;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 8px;
-    transition: color 0.3s ease;
+    transition: color 0.2s ease-in-out;
   }
 
   .vehiculo-selector-container .form-group.active label {
-    color: #0066cc;
+    color: #f15a29;
   }
 
   .vehiculo-selector-container .select-wrapper {
@@ -65,13 +73,13 @@
   .vehiculo-selector-container .select-wrapper::after {
     content: '▼';
     position: absolute;
-    right: 16px;
+    right: 14px;
     top: 50%;
     transform: translateY(-50%);
-    color: #a0aec0;
+    color: #888;
     pointer-events: none;
-    font-size: 12px;
-    transition: transform 0.3s ease;
+    font-size: 11px;
+    transition: transform 0.2s ease-in-out;
   }
 
   .vehiculo-selector-container .select-wrapper.open::after {
@@ -80,60 +88,65 @@
 
   .vehiculo-selector-container select {
     width: 100%;
-    padding: 14px 40px 14px 16px;
-    border: 2px solid #e2e8f0;
-    border-radius: 10px;
-    font-size: 16px;
-    color: #2d3748;
+    padding: 14px 38px 14px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #333;
     background: white;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease-in-out;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
   }
 
   .vehiculo-selector-container select:hover:not(:disabled) {
-    border-color: #cbd5e0;
-    background: #fafafa;
+    border-color: #f15a29;
+    background: #faf7f5;
   }
 
   .vehiculo-selector-container select:focus {
     outline: none;
-    border-color: #0066cc;
-    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    border-color: #f15a29;
+    box-shadow: 0 0 0 3px rgba(241, 90, 41, 0.1);
   }
 
   .vehiculo-selector-container select:disabled {
-    background: #f7fafc;
+    background: #f5f5f5;
     cursor: not-allowed;
     opacity: 0.6;
+    border-color: #e5e5e5;
   }
 
   .vehiculo-selector-container select option {
     padding: 10px;
   }
 
+  .vehiculo-selector-container .btn-group {
+    flex: 0 0 auto;
+    min-width: 180px;
+  }
+
   .vehiculo-selector-container .btn-buscar {
     width: 100%;
-    padding: 16px;
-    background: #0066cc;
+    padding: 14px 24px;
+    background: #f15a29;
     color: white;
     border: none;
-    border-radius: 10px;
-    font-size: 16px;
+    border-radius: 8px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 10px;
+    transition: all 0.2s ease-in-out;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
 
   .vehiculo-selector-container .btn-buscar:hover:not(:disabled) {
-    background: #0052a3;
+    background: #e34a1a;
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 102, 204, 0.3);
+    box-shadow: 0 6px 12px rgba(241, 90, 41, 0.3);
   }
 
   .vehiculo-selector-container .btn-buscar:active:not(:disabled) {
@@ -144,15 +157,15 @@
     opacity: 0.5;
     cursor: not-allowed;
     transform: none;
-    background: #cbd5e0;
+    background: #ccc;
   }
 
   .vehiculo-selector-container .selected-info {
-    margin-top: 20px;
-    padding: 16px;
-    background: #f0f9ff;
-    border-radius: 10px;
-    border-left: 4px solid #0066cc;
+    margin-top: 25px;
+    padding: 16px 20px;
+    background: #faf7f5;
+    border-radius: 8px;
+    border-left: 4px solid #f15a29;
     display: none;
   }
 
@@ -161,22 +174,45 @@
   }
 
   .vehiculo-selector-container .selected-info p {
-    color: #4a5568;
+    color: #333;
     font-size: 14px;
-    margin: 4px 0;
+    margin: 0;
   }
 
   .vehiculo-selector-container .selected-info strong {
-    color: #2d3748;
+    color: #f15a29;
   }
 
-  @media (max-width: 600px) {
+  /* Responsive - móvil en vertical */
+  @media (max-width: 768px) {
     .vehiculo-selector-container {
       padding: 30px 20px;
     }
 
     .vehiculo-selector-container .header h2 {
-      font-size: 22px;
+      font-size: 24px;
+    }
+
+    .vehiculo-selector-container .form-row {
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .vehiculo-selector-container .form-group {
+      width: 100%;
+    }
+
+    .vehiculo-selector-container .btn-group {
+      width: 100%;
+      min-width: auto;
+    }
+
+    .vehiculo-selector-container select {
+      padding: 16px 38px 16px 14px;
+    }
+
+    .vehiculo-selector-container .btn-buscar {
+      padding: 16px 24px;
     }
   }
 </style>
@@ -189,31 +225,34 @@
   </div>
 
   <form id="vehicleFormWebnode">
-    <div class="form-group" id="grupo-marca-webnode">
-      <label for="marca-webnode">Marca del Vehículo</label>
-      <div class="select-wrapper">
-        <select id="marca-webnode" name="marca">
-          <option value="">Elige una marca...</option>
-        </select>
+    <div class="form-row">
+      <div class="form-group" id="grupo-marca-webnode">
+        <label for="marca-webnode">Marca</label>
+        <div class="select-wrapper">
+          <select id="marca-webnode" name="marca">
+            <option value="">Selecciona marca...</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group" id="grupo-modelo-webnode">
+        <label for="modelo-webnode">Modelo</label>
+        <div class="select-wrapper">
+          <select id="modelo-webnode" name="modelo" disabled>
+            <option value="">Selecciona modelo...</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" id="buscar-webnode" class="btn-buscar" disabled>
+          🔍 Buscar
+        </button>
       </div>
     </div>
-
-    <div class="form-group" id="grupo-modelo-webnode">
-      <label for="modelo-webnode">Modelo del Vehículo</label>
-      <div class="select-wrapper">
-        <select id="modelo-webnode" name="modelo" disabled>
-          <option value="">Primero selecciona una marca</option>
-        </select>
-      </div>
-    </div>
-
-    <button type="button" id="buscar-webnode" class="btn-buscar" disabled>
-      Ver mi vehículo
-    </button>
 
     <div class="selected-info" id="selectedInfo-webnode">
-      <p><strong>Tu selección:</strong></p>
-      <p id="infoText-webnode"></p>
+      <p><strong>Selección:</strong> <span id="infoText-webnode"></span></p>
     </div>
   </form>
 </div>
