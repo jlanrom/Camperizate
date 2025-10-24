@@ -180,47 +180,48 @@
 @media (max-width: 768px) {
   .vehicle-selector__row {
     flex-direction: column;
-    gap: 0; /* SIN espacio - Webnode ya añade el suyo */
+    gap: 0;
   }
 
   .vehicle-selector__col,
   .vehicle-selector__btn-col {
     width: 100%;
     min-width: 0;
-    margin-bottom: 8px; /* Espacio individual controlado */
+    margin-bottom: 10px; /* Espacio entre elementos */
   }
 
   .vehicle-selector__btn-col {
-    margin-bottom: 0; /* El último no necesita margen */
+    margin-bottom: 0;
   }
 
   .vehicle-selector__label {
-    font-size: 13px;
-    margin-bottom: 6px; /* Reducido de 10px a 6px */
+    font-size: 12px;
+    margin-bottom: 4px; /* Muy reducido */
   }
 
-  /* Touch targets 52px - WCAG compliant */
+  /* Selectores mucho más compactos */
   .vehicle-selector__select {
-    padding: 16px 52px 16px 20px;
-    font-size: 16px; /* Evita zoom en iOS */
-    min-height: 52px;
-    border-radius: var(--radius-sm);
+    padding: 10px 44px 10px 14px; /* Padding reducido drásticamente */
+    font-size: 16px;
+    min-height: 44px; /* Reducido de 52px */
+    border-radius: 10px;
   }
 
   .vehicle-selector__select-wrapper::after {
-    right: 20px;
-    font-size: 11px;
+    right: 16px;
+    font-size: 10px;
   }
 
+  /* Botón más compacto */
   .vehicle-selector__btn {
-    padding: 16px 24px;
-    font-size: 16px;
-    min-height: 52px;
-    border-radius: var(--radius-sm);
+    padding: 10px 20px; /* Padding reducido */
+    font-size: 15px;
+    min-height: 44px; /* Reducido de 52px */
+    border-radius: 10px;
     font-weight: 600;
   }
 
-  /* Feedback táctil en móvil */
+  /* Feedback táctil */
   .vehicle-selector__select:active:not(:disabled) {
     transform: scale(0.98);
   }
@@ -234,21 +235,21 @@
 @media (max-width: 480px) {
   .vehicle-selector__col,
   .vehicle-selector__btn-col {
-    margin-bottom: 6px; /* Aún más compacto */
+    margin-bottom: 8px;
   }
 
   .vehicle-selector__label {
-    margin-bottom: 5px; /* Mínimo espacio */
+    margin-bottom: 3px;
   }
 
   .vehicle-selector__select {
-    padding: 15px 50px 15px 18px;
-    min-height: 50px;
+    padding: 9px 42px 9px 12px;
+    min-height: 42px;
   }
 
   .vehicle-selector__btn {
-    padding: 15px 22px;
-    min-height: 50px;
+    padding: 9px 18px;
+    min-height: 42px;
   }
 }
 
