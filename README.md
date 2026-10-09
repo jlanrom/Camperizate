@@ -5,6 +5,9 @@ Fichier unique `public/index.html` (HTML + CSS + JS inline, aucune dépendance),
 
 ## Déploiement Cloudflare
 
+Worker : `kitamenagement` · branche de production : `kitamenagement`
+(chaque push sur cette branche redéploie automatiquement le site).
+
 Option A — Worker (static assets), depuis la racine de cette branche :
 
     npx wrangler deploy
