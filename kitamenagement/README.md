@@ -14,8 +14,15 @@ Puis Workers & Pages → kitamenagement → Settings → Domains & Routes → aj
 Option B — Cloudflare Pages : créer un projet relié au repo, *root directory* `kitamenagement`,
 *build command* vide, *output directory* `public`.
 
-## À compléter avant mise en ligne
+## Pages
 
-- Liens boutique : tous les boutons « Commander » pointent vers `https://camperizatetodoen1.com/`
-  (+ UTM). Pour des liens produit précis, modifier `SHOP` / la fonction `utm()` en bas du fichier.
-- Mentions légales / politique de confidentialité (obligatoires en France) : pages non incluses.
+- `/` — landing page
+- `/mentions-legales/` — mentions légales (Camperizate Todo en 1, S.L.U.)
+- `/politique-de-confidentialite/` — politique de confidentialité / cookies (aucun cookie déposé)
+
+## Liens
+
+- Produits : pages françaises de la boutique `https://www.camperizatetodoen1.com/fr/kit-camperizacion/<modèle>/`
+  (avec paramètres UTM). Le sélecteur de véhicule met à jour les boutons des fiches vers le modèle choisi.
+- Contact (« Écrivez-nous ») : formulaire `https://tally.so/r/OD6BOp`, le même que le bouton WhatsApp
+  de camperizatetodoen1.com.

@@ -115,7 +115,8 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .cat-head{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:16px}
 .cat-head p{margin:0;color:var(--ink-2)}
 .models{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0;padding:0;list-style:none}
-.models li{font-size:.82rem;background:#efe8d9;border-radius:999px;padding:4px 10px}
+.models a{display:inline-block;font-size:.82rem;background:#efe8d9;border-radius:999px;padding:6px 11px;text-decoration:none}
+.models a:hover{background:var(--accent);color:#fff}
 .product{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 10px rgba(31,42,36,.05)}
 .product .pic{position:relative;aspect-ratio:4/3;background:#e9e2d3}
 .product .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -222,7 +223,7 @@ footer.site a{color:#fff}
       "priceRange":"500 € – 1150 €",
       "address":{"@type":"PostalAddress","streetAddress":"866 Avenue Maréchal Juin, Local n° 112","postalCode":"30900","addressLocality":"Nîmes","addressCountry":"FR"},
       "areaServed":"FR",
-      "sameAs":["https://camperizatetodoen1.com/"]
+      "sameAs":["https://www.camperizatetodoen1.com/fr/"]
     },
     {
       "@type":"Product",
@@ -366,41 +367,44 @@ footer.site a{color:#fff}
         <select id="vehicule">
           <option value="">— Choisir mon modèle —</option>
           <optgroup label="Ludospaces">
-            <option value="mini">Citroën Berlingo</option>
-            <option value="mini">Peugeot Partner</option>
-            <option value="mini">Peugeot Rifter</option>
-            <option value="mini">Renault Kangoo</option>
-            <option value="mini">Volkswagen Caddy</option>
-            <option value="mini">Opel Combo</option>
-            <option value="mini">Fiat Doblo</option>
-            <option value="mini">Toyota Proace City</option>
-            <option value="mini">Nissan Townstar</option>
-            <option value="mini">Mercedes Citan</option>
-            <option value="mini">Ford Tourneo / Transit Connect</option>
-            <option value="mini">Ford Tourneo / Transit Courier</option>
-            <option value="mini">Dacia Dokker</option>
-            <option value="mini">Dacia Jogger</option>
-            <option value="mini">Dacia Lodgy</option>
+            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/berlingo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën Berlingo</option>
+            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/partner/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Partner</option>
+            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/rifter/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Rifter</option>
+            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/renault-kangoo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Renault Kangoo</option>
+            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/caddy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Volkswagen Caddy</option>
+            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/opel-combo-life/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Opel Combo Life</option>
+            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/fiat-doblo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Doblo</option>
+            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/proace-city/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Toyota Proace City</option>
+            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nissan-townstar/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan Townstar</option>
+            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/mercedes-citan/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Mercedes Citan / Classe T</option>
+            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/tourneo-transit/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Tourneo / Transit Connect</option>
+            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/ford-courier/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Tourneo / Transit Courier</option>
+            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/dokker/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Dacia Dokker</option>
+            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/dacia-jogger-lodgy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Dacia Jogger / Lodgy</option>
           </optgroup>
           <optgroup label="Vans compacts">
-            <option value="moyen">Renault Trafic</option>
-            <option value="moyen">Volkswagen Transporter T4 / T5 / T6</option>
-            <option value="moyen">Volkswagen Caravelle / Multivan</option>
-            <option value="moyen">Mercedes Vito / Viano</option>
-            <option value="moyen">Peugeot Expert / Traveller</option>
-            <option value="moyen">Citroën Jumpy / SpaceTourer</option>
-            <option value="moyen">Fiat Scudo / Talento</option>
-            <option value="moyen">Opel Vivaro / Zafira Life</option>
-            <option value="moyen">Toyota Proace</option>
-            <option value="moyen">Ford Transit Custom</option>
-            <option value="moyen">Nissan NV200 / NV300 / Primastar</option>
-            <option value="moyen">Hyundai H1</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/trafic/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Renault Trafic</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/transporter-t4-t5-t6/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Volkswagen Transporter T4 / T5 / T6</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/caravelle-t4-t5-t6/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Volkswagen Caravelle / Multivan</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/vito-viano/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Mercedes Vito / Viano</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/expert/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Expert</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/traveller/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Traveller</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/jumpy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën Jumpy</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/space-tourer/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën SpaceTourer</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/fiat-scudo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Scudo</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/talento/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Talento</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/opel-vivaro/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Opel Vivaro / Zafira Life</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/toyota-proace/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Toyota Proace</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/ford-transit-custom/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Transit / Tourneo Custom</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nv200/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan NV200</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nv300/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan NV300 / Primastar</option>
+            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/hyundai-h1/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Hyundai H1</option>
           </optgroup>
           <optgroup label="Grands fourgons">
+            <option value="grand" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/jumper-boxer-transit/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Ducato / Citroën Jumper / Peugeot Boxer</option>
+            <option value="grand" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/jumper-boxer-transit/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Transit</option>
             <option value="grand">Renault Master</option>
-            <option value="grand">Fiat Ducato / Citroën Jumper / Peugeot Boxer</option>
             <option value="grand">Mercedes Sprinter / VW Crafter</option>
-            <option value="grand">Ford Transit</option>
             <option value="grand">Autre modèle</option>
           </optgroup>
         </select>
@@ -424,7 +428,7 @@ footer.site a{color:#fff}
         <h3>Kit camper ludospace : Berlingo, Partner, Kangoo, Caddy…</h3>
         <p>Plié avec le matelas, il tient dans le coffre. Lit env. 187 cm × 115-120 cm, cuisine extractible à droite, coffre pour frigo 15 L à gauche. Livraison en France à partir de 200 €.</p>
         <ul class="models">
-          <li>Citroën Berlingo</li><li>Peugeot Partner</li><li>Peugeot Rifter</li><li>Renault Kangoo</li><li>VW Caddy</li><li>Opel Combo</li><li>Fiat Doblo</li><li>Toyota Proace City</li><li>Nissan Townstar</li><li>Mercedes Citan</li><li>Ford Connect</li><li>Ford Courier</li><li>Dacia Dokker</li><li>Dacia Jogger</li><li>Dacia Lodgy</li>
+          <li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/berlingo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën Berlingo</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/partner/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Partner</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/rifter/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Rifter</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/renault-kangoo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Renault Kangoo</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/caddy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Volkswagen Caddy</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/opel-combo-life/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Opel Combo Life</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/fiat-doblo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Doblo</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/proace-city/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Toyota Proace City</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nissan-townstar/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan Townstar</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/mercedes-citan/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Mercedes Citan / Classe T</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/tourneo-transit/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Tourneo / Transit Connect</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/ford-courier/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Tourneo / Transit Courier</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/dokker/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Dacia Dokker</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/dacia-jogger-lodgy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Dacia Jogger / Lodgy</a></li>
         </ul>
       </div>
       <div class="grid grid-3">
@@ -435,7 +439,7 @@ footer.site a{color:#fff}
             <p>Finition HPL noire qui repousse l'eau et les taches. L'option la plus durable, pensée pour la vie dehors.</p>
             <div class="prices"><div><small>Sans matelas</small><b>550 €</b></div><div><small>Avec matelas</small><b>700 €</b></div></div>
             <p class="ttc">Prix TTC, hors livraison</p>
-            <a class="btn btn-primary btn-block" data-shop="ludospace-carrossier" href="https://camperizatetodoen1.com/">Commander ce kit</a>
+            <a class="btn btn-primary btn-block" data-kit="ludospace" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
           </div>
         </article>
         <article class="product">
@@ -445,7 +449,7 @@ footer.site a{color:#fff}
             <p>Bois naturel brut, chaleureux et très esthétique. Peut être verni pour une protection renforcée.</p>
             <div class="prices"><div><small>Sans matelas</small><b>500 €</b></div><div><small>Avec matelas</small><b>650 €</b></div></div>
             <p class="ttc">Prix TTC, hors livraison</p>
-            <a class="btn btn-dark btn-block" data-shop="ludospace-pin" href="https://camperizatetodoen1.com/">Commander ce kit</a>
+            <a class="btn btn-dark btn-block" data-kit="ludospace" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
           </div>
         </article>
         <article class="product">
@@ -455,7 +459,7 @@ footer.site a{color:#fff}
             <p>Âme en peuplier légère, surface HPL ultra-résistante à l'eau et aux taches. Blanc ou gris anthracite.</p>
             <div class="prices"><div><small>Sans matelas</small><b>800 €</b></div><div><small>Avec matelas</small><b>950 €</b></div></div>
             <p class="ttc">Prix TTC, hors livraison</p>
-            <a class="btn btn-dark btn-block" data-shop="ludospace-hpl" href="https://camperizatetodoen1.com/">Commander ce kit</a>
+            <a class="btn btn-dark btn-block" data-kit="ludospace" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
           </div>
         </article>
       </div>
@@ -467,7 +471,7 @@ footer.site a{color:#fff}
         <h3>Kit camper van compact : Trafic, Transporter, Vito, Expert…</h3>
         <p>Couchage spacieux, cuisine extractible, coffre pour frigo jusqu'à 35 L. Hauteur adaptée : 56,5 cm si vous gardez la 2ᵉ rangée, 44,5 ou 36,5 cm sans sièges. Livraison en France à partir de 250 €.</p>
         <ul class="models">
-          <li>Renault Trafic</li><li>VW Transporter T4/T5/T6</li><li>VW Caravelle / Multivan</li><li>Mercedes Vito / Viano</li><li>Peugeot Expert / Traveller</li><li>Citroën Jumpy / SpaceTourer</li><li>Fiat Scudo / Talento</li><li>Opel Vivaro / Zafira</li><li>Toyota Proace</li><li>Ford Transit Custom</li><li>Nissan NV200 / NV300 / Primastar</li><li>Hyundai H1</li>
+          <li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/trafic/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Renault Trafic</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/transporter-t4-t5-t6/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Volkswagen Transporter T4 / T5 / T6</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/caravelle-t4-t5-t6/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Volkswagen Caravelle / Multivan</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/vito-viano/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Mercedes Vito / Viano</a></li><li><a href="https://www.camperizatetodoen1.com/fr/expert/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Expert</a></li><li><a href="https://www.camperizatetodoen1.com/fr/traveller/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Traveller</a></li><li><a href="https://www.camperizatetodoen1.com/fr/jumpy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën Jumpy</a></li><li><a href="https://www.camperizatetodoen1.com/fr/space-tourer/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën SpaceTourer</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/fiat-scudo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Scudo</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/talento/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Talento</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/opel-vivaro/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Opel Vivaro / Zafira Life</a></li><li><a href="https://www.camperizatetodoen1.com/fr/toyota-proace/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Toyota Proace</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/ford-transit-custom/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Transit / Tourneo Custom</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nv200/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan NV200</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nv300/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan NV300 / Primastar</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/hyundai-h1/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Hyundai H1</a></li>
         </ul>
       </div>
       <div class="grid grid-3">
@@ -478,7 +482,7 @@ footer.site a{color:#fff}
             <p>Finition HPL qui repousse l'eau et les taches sans laisser de trace. Notre meilleure vente.</p>
             <div class="prices"><div><small>Sans matelas</small><b>750 €</b></div><div><small>Avec matelas</small><b>900 €</b></div></div>
             <p class="ttc">Prix TTC, hors livraison</p>
-            <a class="btn btn-primary btn-block" data-shop="van-carrossier" href="https://camperizatetodoen1.com/">Commander ce kit</a>
+            <a class="btn btn-primary btn-block" data-kit="van" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
           </div>
         </article>
         <article class="product">
@@ -488,7 +492,7 @@ footer.site a{color:#fff}
             <p>Bois naturel brut au look authentique. Vernissable pour une meilleure protection.</p>
             <div class="prices"><div><small>Sans matelas</small><b>700 €</b></div><div><small>Avec matelas</small><b>850 €</b></div></div>
             <p class="ttc">Prix TTC, hors livraison</p>
-            <a class="btn btn-dark btn-block" data-shop="van-pin" href="https://camperizatetodoen1.com/">Commander ce kit</a>
+            <a class="btn btn-dark btn-block" data-kit="van" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
           </div>
         </article>
         <article class="product">
@@ -498,7 +502,7 @@ footer.site a{color:#fff}
             <p>Légèreté du peuplier, résistance maximale du HPL. Finition blanc ou gris anthracite.</p>
             <div class="prices"><div><small>Sans matelas</small><b>1000 €</b></div><div><small>Avec matelas</small><b>1150 €</b></div></div>
             <p class="ttc">Prix TTC, hors livraison</p>
-            <a class="btn btn-dark btn-block" data-shop="van-hpl" href="https://camperizatetodoen1.com/">Commander ce kit</a>
+            <a class="btn btn-dark btn-block" data-kit="van" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
           </div>
         </article>
       </div>
@@ -509,7 +513,7 @@ footer.site a{color:#fff}
       <div class="big-van">
         <h3>Grands fourgons : Master, Ducato, Jumper, Boxer, Sprinter, Crafter, Transit</h3>
         <p>Pour les grands volumes, chaque projet est différent (longueur, hauteur, sièges conservés, couchage transversal ou longitudinal). Nous étudions votre fourgon et vous envoyons un devis gratuit pour un kit amovible sur mesure, toujours sans VASP et sans perçage.</p>
-        <a class="btn btn-wa" data-wa="grand" href="https://wa.me/34665319287">Demander mon devis gratuit sur WhatsApp</a>
+        <div class="hero-ctas" style="margin:0"><a class="btn btn-primary" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/jumper-boxer-transit/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit Ducato / Jumper / Boxer</a><a class="btn btn-wa" href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Demander mon devis gratuit</a></div>
       </div>
     </div>
 
@@ -598,7 +602,7 @@ footer.site a{color:#fff}
     </details>
     <details>
       <summary>Est-il compatible avec mon modèle ?</summary>
-      <div class="a"><p>Très probablement. Ludospaces : Berlingo, Partner, Rifter, Kangoo, Caddy, Combo, Doblo, Dokker, Proace City, Townstar, Citan, Tourneo Connect et Courier, Jogger, Lodgy. Vans compacts : Trafic, Transporter T4/T5/T6, Caravelle, Multivan, Vito, Viano, Expert, Traveller, Jumpy, SpaceTourer, Scudo, Talento, Vivaro, Zafira, Proace, Transit Custom, NV200, NV300, Primastar, H1. Grands fourgons : sur devis.</p><p>Un doute sur votre année ou votre empattement ? <a href="https://wa.me/34665319287" data-wa="compat">Envoyez-nous une photo de votre coffre sur WhatsApp</a>, on vous répond rapidement.</p></div>
+      <div class="a"><p>Très probablement. Ludospaces : Berlingo, Partner, Rifter, Kangoo, Caddy, Combo, Doblo, Dokker, Proace City, Townstar, Citan, Tourneo Connect et Courier, Jogger, Lodgy. Vans compacts : Trafic, Transporter T4/T5/T6, Caravelle, Multivan, Vito, Viano, Expert, Traveller, Jumpy, SpaceTourer, Scudo, Talento, Vivaro, Zafira, Proace, Transit Custom, NV200, NV300, Primastar, H1. Grands fourgons : sur devis.</p><p>Un doute sur votre année ou votre empattement ? <a href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Écrivez-nous en indiquant votre modèle</a>, on vous répond rapidement.</p></div>
     </details>
     <details>
       <summary>Comment se passe la livraison en France ?</summary>
@@ -630,8 +634,8 @@ footer.site a{color:#fff}
     <h2 id="h-final">Votre prochain week-end en van commence ici.</h2>
     <p class="lead">Fabrication en ~3 semaines : commandez maintenant pour partir à temps. Pas de VASP, pas de perçage, pas d'intermédiaire. Juste un kit solide, livré monté, au prix atelier.</p>
     <div class="ctas">
-      <a class="btn btn-primary" data-shop="final" href="https://camperizatetodoen1.com/">Commander sur camperizatetodoen1.com</a>
-      <a class="btn btn-wa" data-wa="final" href="https://wa.me/34665319287">Une question ? WhatsApp</a>
+      <a class="btn btn-primary" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Commander sur camperizatetodoen1.com</a>
+      <a class="btn btn-wa" href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Une question ? Écrivez-nous</a>
     </div>
     <ul class="guarantees">
       <li>✓ Livré monté</li><li>✓ Fabriqué sur mesure</li><li>✓ Conseil avant achat</li><li>✓ Prix TTC affichés</li>
@@ -647,7 +651,7 @@ footer.site a{color:#fff}
       <div>
         <h3>kitamenagement.fr</h3>
         <p>Kits d'aménagement camper amovibles pour ludospaces et vans, conçus et fabriqués par l'atelier Camperizate. Sans homologation VASP, sans perçage, livrés partout en France.</p>
-        <p><a href="https://camperizatetodoen1.com/" data-shop="footer">Boutique principale : camperizatetodoen1.com →</a></p>
+        <p><a href="https://www.camperizatetodoen1.com/fr/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Boutique principale : camperizatetodoen1.com →</a></p>
       </div>
       <div>
         <h3>Atelier France</h3>
@@ -655,31 +659,23 @@ footer.site a{color:#fff}
       </div>
       <div>
         <h3>Contact</h3>
-        <p>WhatsApp : <a href="https://wa.me/34665319287" data-wa="footer">+34 665 319 287</a><br>
+        <p><a href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Écrivez-nous (formulaire → WhatsApp)</a><br>Tél. : <a href="tel:+34665319287">+34 665 319 287</a><br>
         E-mail : <a href="mailto:info@camperizatetodoen1.com">info@camperizatetodoen1.com</a></p>
       </div>
     </div>
-    <div class="legal">© <span id="y">2026</span> Camperizate · Tous les prix incluent la TVA · Les photos peuvent présenter des options.</div>
+    <div class="legal">© <span id="y">2026</span> Camperizate Todo en 1, S.L.U. · Tous les prix incluent la TVA · Les photos peuvent présenter des options.<br><a href="/mentions-legales/">Mentions légales</a> · <a href="/politique-de-confidentialite/">Politique de confidentialité</a></div>
   </div>
 </footer>
 
 <div class="sticky" aria-label="Actions rapides">
-  <a class="btn btn-wa" data-wa="sticky" href="https://wa.me/34665319287" aria-label="Nous écrire sur WhatsApp">WhatsApp</a>
+  <a class="btn btn-wa" href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener" aria-label="Nous écrire (formulaire puis WhatsApp)">Écrivez-nous</a>
   <a class="btn btn-primary" href="#compatibilite">Mon kit compatible</a>
 </div>
 
 <script>
 (function(){
-  var SHOP='https://camperizatetodoen1.com/';
-  var WA='https://wa.me/34665319287?text=';
-  function utm(content){return SHOP+'?utm_source=kitamenagement.fr&utm_medium=landing&utm_campaign=fr_sans_vasp&utm_content='+encodeURIComponent(content);}
-  function wa(msg){return WA+encodeURIComponent(msg);}
-  var baseMsg="Bonjour, je viens de kitamenagement.fr et je souhaite un kit d'aménagement amovible.";
-  document.querySelectorAll('[data-shop]').forEach(function(a){a.href=utm(a.dataset.shop);a.rel='noopener';});
-  document.querySelectorAll('[data-wa]').forEach(function(a){
-    a.href=wa(a.dataset.wa==='grand'?"Bonjour, je souhaite un devis pour un kit amovible pour mon grand fourgon (modèle, année, longueur) :":baseMsg);
-    a.target='_blank';a.rel='noopener';
-  });
+  var TALLY='https://tally.so/r/OD6BOp';
+  var CAT='https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&utm_medium=landing&utm_campaign=fr_sans_vasp';
 
   // Onglets
   var tabs=[].slice.call(document.querySelectorAll('[role=tab]'));
@@ -701,23 +697,27 @@ footer.site a{color:#fff}
 
   // Sélecteur de véhicule
   var data={
-    mini:{cat:'Kit ludospace · dès 500 € TTC',txt:"Bonne nouvelle : nous fabriquons un kit sur mesure pour votre {m}. Lit ~187 cm, cuisine extractible, coffre frigo 15 L. Livraison en France dès 200 €.",cta:'Voir les 3 finitions →'},
-    moyen:{cat:'Kit van compact · dès 700 € TTC',txt:"Bonne nouvelle : nous fabriquons un kit sur mesure pour votre {m}. Couchage spacieux, frigo jusqu'à 35 L, hauteur adaptée à vos sièges. Livraison en France dès 250 €.",cta:'Voir les 3 finitions →'},
-    grand:{cat:'Grand fourgon · sur devis',txt:"Pour votre {m}, nous concevons un kit amovible sur mesure. Envoyez-nous votre modèle et vos envies, devis gratuit.",cta:'Demander mon devis sur WhatsApp'}
+    mini:{cat:'Kit ludospace · dès 500 € TTC',txt:"Bonne nouvelle : nous fabriquons un kit sur mesure pour votre {m}. Lit ~187 cm, cuisine extractible, coffre frigo 15 L. Livraison en France dès 200 €."},
+    moyen:{cat:'Kit van compact · dès 700 € TTC',txt:"Bonne nouvelle : nous fabriquons un kit sur mesure pour votre {m}. Couchage spacieux, frigo jusqu'à 35 L, hauteur adaptée à vos sièges. Livraison en France dès 250 €."},
+    grand:{cat:'Grand fourgon · sur devis',txt:"Pour votre {m}, nous concevons un kit amovible sur mesure. Décrivez-nous votre fourgon, devis gratuit."}
   };
-  var sel=document.getElementById('vehicule'),res=document.getElementById('result');
+  var sel=document.getElementById('vehicule'),res=document.getElementById('result'),cta=document.getElementById('r-cta');
   sel.addEventListener('change',function(){
-    var v=sel.value,d=data[v];
+    var v=sel.value,d=data[v],o=sel.options[sel.selectedIndex];
     if(!d){res.classList.remove('show');return;}
-    var m=sel.options[sel.selectedIndex].text;
-    if(m==='Autre modèle')m='véhicule';
+    var m=o.text==='Autre modèle'?'véhicule':o.text,url=o.dataset.url;
     document.getElementById('r-cat').textContent=d.cat;
     document.getElementById('r-txt').textContent=d.txt.replace('{m}',m);
-    var cta=document.getElementById('r-cta');
-    cta.textContent=d.cta;
-    if(v==='grand'){cta.href=wa("Bonjour, je souhaite un devis pour un kit amovible pour mon "+m+" :");cta.target='_blank';cta.className='btn btn-wa btn-block';}
-    else{cta.href='#p-'+v;cta.removeAttribute('target');cta.className='btn btn-primary btn-block';}
-    cta.onclick=v==='grand'?null:function(e){e.preventDefault();select(v);document.querySelector('.tabs').scrollIntoView({behavior:'smooth',block:'start'});};
+    if(url){cta.href=url;cta.textContent='Voir le kit '+o.text+' →';cta.className='btn btn-primary btn-block';}
+    else{cta.href=TALLY;cta.textContent='Demander mon devis gratuit';cta.className='btn btn-wa btn-block';}
+    cta.target='_blank';cta.rel='noopener';
+    // Les boutons des fiches pointent vers la page du modèle choisi
+    document.querySelectorAll('[data-kit]').forEach(function(a){
+      var match=(a.dataset.kit==='ludospace'&&v==='mini')||(a.dataset.kit==='van'&&v==='moyen');
+      a.href=match?url:CAT;
+      a.textContent=match?'Commander pour mon '+o.text:'Voir le kit pour mon véhicule';
+    });
+    if(v!=='grand')select(v);
     res.classList.add('show');
   });
 
