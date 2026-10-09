@@ -1,8 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "camperizate",
+  "name": "crosscamper",
   "compatibility_date": "2025-09-01",
   "assets": {
-    "directory": "./web"
+    "directory": "./web",
+    "not_found_handling": "404-page"
   }
 }
