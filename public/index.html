@@ -3,209 +3,277 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Kit d'aménagement amovible pour van et ludospace, sans VASP | Kit Aménagement</title>
-<meta name="description" content="Kits d'aménagement camper amovibles pour Berlingo, Kangoo, Trafic, Transporter… Installation en 5 minutes sans perçage, sans homologation VASP. Prix direct atelier dès 500 € TTC, livraison partout en France.">
+<title>Kit camper amovible sans VASP pour ludospace et van | Camperizate</title>
+<meta name="description" content="Kits d'aménagement camper amovibles pour Berlingo, Kangoo, Trafic, Transporter… Posés en 5 minutes sans perçage, sans homologation VASP. Dès 500 € TTC, livrés montés partout en France.">
 <link rel="canonical" href="https://kitamenagement.fr/">
-<meta name="theme-color" content="#1f2a24">
+<meta name="theme-color" content="#513524">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Camperizate">
 <meta property="og:url" content="https://kitamenagement.fr/">
-<meta property="og:title" content="Kit d'aménagement amovible pour van : sans VASP, sans perçage">
-<meta property="og:description" content="Votre ludospace ou votre van devient camper en 5 minutes. Kits modulaires direct atelier, dès 500 € TTC, livrés montés en France.">
+<meta property="og:title" content="Kit camper amovible : sans VASP, sans perçage, dès 500 €">
+<meta property="og:description" content="Votre ludospace ou votre van devient camper en 5 minutes. Kits sur mesure direct atelier, livrés montés en France.">
 <meta property="og:image" content="https://kitamenagement.fr/img/og-kitamenagement.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preload" as="image" href="/img/hero-van-amenage-800.webp" imagesrcset="/img/hero-van-amenage-800.webp 800w, /img/hero-van-amenage.webp 1600w" imagesizes="100vw">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f2a24'/%3E%3Cpath d='M12 42V26a6 6 0 0 1 6-6h20l10 10h4v12H12z' fill='%23e8792b'/%3E%3Ccircle cx='22' cy='44' r='5' fill='%23f6f1e7'/%3E%3Ccircle cx='44' cy='44' r='5' fill='%23f6f1e7'/%3E%3C/svg%3E">
+<link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23513524'/%3E%3Cg stroke='%23fff' stroke-width='7' fill='none'%3E%3Cpath d='M32 10v26M14 20l16 16M50 20 34 36'/%3E%3C/g%3E%3Cpath d='M10 46h14a8 8 0 0 1 16 0h14v6H10z' fill='%23fff'/%3E%3C/svg%3E">
 
 <style>
+@font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:700 800;font-display:swap;src:url(/fonts/bricolage-grotesque-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Inter";font-style:normal;font-weight:400 700;font-display:swap;src:url(/fonts/inter-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
 :root{
-  --ink:#1f2a24; --ink-2:#3c4a42; --muted:#66736b;
-  --bg:#f6f1e7; --card:#fffdf8; --line:#e4dccb;
-  --accent:#e8792b; --accent-dk:#c75f15; --green:#2f6b4f; --wa:#1fa855;
-  --r:14px; --shadow:0 6px 24px rgba(31,42,36,.10);
+  --white:#FFFFFF;
+  --brown:#513524;
+  --brown-70:rgba(81,53,36,.72);
+  --line:rgba(81,53,36,.15);
+  --orange:#E95A26;
+  --orange-hover:#CF4B1C;
+  --sand:#EAE5DE;
+  --sand-2:#D5CEC4;
+  --blue:#DDE7E8;
+  --blue-2:#B8CCCE;
+  --r:4px;
   --maxw:1120px;
+  --head:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;padding-bottom:76px}
+body{margin:0;background:var(--white);color:var(--brown);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit}
-h1,h2,h3{line-height:1.15;margin:0 0 .5em;letter-spacing:-.01em}
-h1{font-size:clamp(1.9rem,7.5vw,3.3rem);font-weight:800}
-h2{font-size:clamp(1.55rem,5.5vw,2.4rem);font-weight:800}
-h3{font-size:1.15rem;font-weight:700}
 p{margin:0 0 1em}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
+h1,h2,h3{font-family:var(--head);font-weight:800;letter-spacing:-.02em;line-height:1.08;margin:0}
+h1{font-size:36px}
+h2{font-size:26px}
+h3{font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.2}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
 section{padding:56px 0}
-.eyebrow{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-dk);margin-bottom:.6em}
-.lead{font-size:1.08rem;color:var(--ink-2)}
-.center{text-align:center}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;min-height:52px;padding:14px 24px;border-radius:999px;font-weight:700;font-size:1rem;text-decoration:none;border:2px solid transparent;cursor:pointer;transition:transform .15s,background .15s}
-.btn:active{transform:scale(.98)}
-.btn-primary{background:var(--accent);color:#fff;box-shadow:0 6px 18px rgba(232,121,43,.35)}
-.btn-primary:hover{background:var(--accent-dk)}
-.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}
-.btn-ghost:hover{background:rgba(255,255,255,.12)}
-.btn-dark{background:var(--ink);color:#fff}
-.btn-wa{background:var(--wa);color:#fff}
-.btn-block{width:100%}
+[id]{scroll-margin-top:72px}
+.ico{width:24px;height:24px;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Section heading: eyebrow + H2 + orange rule */
+.kicker{display:block;font:700 13px/1.3 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+.sec-head{margin-bottom:28px;max-width:680px}
+.sec-head::after{content:"";display:block;width:48px;height:3px;background:var(--orange);margin-top:16px}
+.sec-head p{margin:16px 0 0;color:var(--brown-70)}
+
+/* Buttons */
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:52px;padding:12px 22px;border-radius:var(--r);font:600 17px/1.2 var(--body);text-decoration:none;text-align:center;border:1px solid transparent;cursor:pointer;transition:background-color .15s,color .15s,border-color .15s}
+.btn .ico{width:20px;height:20px}
+.btn-primary{background:var(--orange);color:var(--white)}
+.btn-primary:hover{background:var(--orange-hover)}
+.btn-line{background:transparent;color:var(--brown);border-color:var(--brown)}
+.btn-line:hover{background:var(--brown);color:var(--white)}
+.link{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.link:hover{color:var(--orange)}
+:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
 
 /* Header */
-.topbar{background:var(--ink);color:#f6f1e7;font-size:.82rem;text-align:center;padding:8px 16px}
-.topbar strong{color:#ffb27a}
-header.site{position:sticky;top:0;z-index:40;background:rgba(246,241,231,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
-.logo{font-weight:800;text-decoration:none;font-size:1.08rem;display:flex;align-items:center;gap:8px}
-.logo span{color:var(--accent-dk)}
-[id]{scroll-margin-top:72px}
-.gallery figure:last-child:nth-child(odd){grid-column:1/-1}
-.nav{display:none;gap:22px;font-size:.95rem}
-.nav a{text-decoration:none;color:var(--ink-2)}
-.nav a:hover{color:var(--accent-dk)}
-.header-cta{min-height:40px;padding:8px 16px;font-size:.9rem}
+.site-head{position:sticky;top:0;z-index:40;background:var(--white);border-bottom:1px solid var(--line)}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.brand{display:flex;align-items:center;min-height:44px}
+.brand img{width:148px;height:auto}
+.head-btn{width:auto;min-height:44px;padding:8px 16px;font-size:15px}
 
 /* Hero */
-.hero{position:relative;color:#fff;padding:0;overflow:hidden;background:var(--ink)}
-.hero picture img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,26,22,.45) 0%,rgba(20,26,22,.55) 40%,rgba(20,26,22,.92) 100%)}
-.hero .wrap{position:relative;z-index:1;padding-top:72px;padding-bottom:40px;min-height:88vh;display:flex;flex-direction:column;justify-content:flex-end}
-.hero h1 em{font-style:normal;color:#ffb27a}
-.hero .lead{color:#efe9dc;font-size:1.12rem;max-width:620px}
-.hero-ctas{display:flex;flex-direction:column;gap:12px;margin:22px 0 22px}
-.price-from{font-size:.95rem;color:#efe9dc;margin:0 0 18px}
-.price-from b{font-size:1.25rem;color:#fff}
-.badges{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0}
-.badges li{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:7px 12px;border-radius:999px;font-size:.85rem;font-weight:600}
-.badges svg{width:16px;height:16px;flex:none}
+.hero{padding:32px 0 48px}
+.hero-grid{display:grid;gap:28px}
+.hero h1{margin-bottom:16px}
+.hero h1 span{color:var(--orange)}
+.hero .lead{font-size:18px;color:var(--brown-70);margin-bottom:22px}
+.price-line{display:flex;align-items:baseline;gap:8px;margin-bottom:20px}
+.price-line b{font:800 32px/1 var(--head);letter-spacing:-.02em;color:var(--orange)}
+.price-line span{font-size:15px;color:var(--brown-70)}
+.assure{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px}
+.assure li{display:flex;align-items:center;gap:12px;font-weight:500}
+.hero-pic{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;background:var(--sand)}
+.hero-pic img{width:100%;height:100%;object-fit:cover;object-position:62% 55%}
 
-/* Proof strip */
-.proof{background:var(--card);border-bottom:1px solid var(--line);padding:18px 0}
-.proof ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:14px;text-align:center}
-.proof b{display:block;font-size:1.35rem;color:var(--green)}
-.proof span{font-size:.85rem;color:var(--muted)}
+/* Facts band */
+.facts{background:var(--sand);padding:0}
+.facts ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr}
+.facts li{padding:20px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.facts li:nth-child(2n){border-right:0}
+.facts b{display:block;font:800 26px/1.1 var(--head);letter-spacing:-.02em}
+.facts span{font-size:14px;color:var(--brown-70)}
 
-/* Pillars */
-.grid{display:grid;gap:16px}
-.pillar{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px}
-.pillar .ico{width:48px;height:48px;border-radius:12px;background:#fbe3d1;display:grid;place-items:center;margin-bottom:12px}
-.pillar .ico svg{width:26px;height:26px;stroke:var(--accent-dk)}
-.pillar p{color:var(--ink-2);margin:0}
+/* Finder */
+.finder-box{border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.finder-box label{display:block;font-weight:600;margin-bottom:10px}
+.select{position:relative}
+.select select{appearance:none;-webkit-appearance:none;width:100%;min-height:56px;padding:0 48px 0 16px;border:1px solid var(--brown);border-radius:var(--r);background:var(--white);color:var(--brown);font:500 17px var(--body);cursor:pointer}
+.select .ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none}
+.result{display:none;margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+.result.show{display:block}
+.result .r-cat{font:700 13px/1.3 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--brown-70);margin-bottom:6px}
+.result .r-price{font:800 30px/1.1 var(--head);letter-spacing:-.02em;color:var(--orange);margin-bottom:12px}
+.result ul{list-style:none;padding:0;margin:0 0 20px;display:grid;gap:8px}
+.result li{display:flex;gap:10px;align-items:flex-start}
+.result li .ico{width:20px;height:20px;margin-top:3px}
+.result .link{margin-top:6px}
+.cats{list-style:none;margin:20px 0 0;padding:0;border:1px solid var(--line);border-radius:var(--r)}
+.cats li+li{border-top:1px solid var(--line)}
+.cats a{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px;padding:12px 16px;text-decoration:none}
+.cats a:hover{background:var(--sand)}
+.cats .c-name{font-weight:600}
+.cats .c-name small{display:block;font-weight:400;font-size:14px;color:var(--brown-70)}
+.cats .c-price{font:800 19px/1 var(--head);color:var(--orange);white-space:nowrap}
+.help{margin:16px 0 0;font-size:15px;color:var(--brown-70)}
+
+/* Why */
+.why{background:var(--sand)}
+.why-list{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
+.why-list li{display:grid;grid-template-columns:44px 1fr;gap:4px 14px;padding:22px 0;border-bottom:1px solid var(--line)}
+.why-list .ico{width:28px;height:28px;margin-top:2px}
+.why-list h3{margin-bottom:6px}
+.why-list p{margin:0;color:var(--brown-70);font-size:16px}
 
 /* Steps */
-.steps{counter-reset:s;list-style:none;padding:0;margin:24px 0 0;display:grid;gap:12px}
-.steps li{counter-increment:s;position:relative;padding:16px 16px 16px 62px;background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
-.steps li::before{content:counter(s);position:absolute;left:16px;top:14px;width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;font-weight:800;display:grid;place-items:center}
-.steps b{display:block}
-
-/* Selector */
-.selector{background:var(--ink);color:#fff;border-radius:var(--r);padding:22px;margin:0 0 28px;box-shadow:var(--shadow)}
-.selector label{font-weight:700;display:block;margin-bottom:8px}
-.selector select{width:100%;min-height:52px;border-radius:12px;border:0;padding:0 14px;font-size:1rem;background:#fff;color:var(--ink)}
-.result{margin-top:16px;display:none;background:rgba(255,255,255,.08);border-radius:12px;padding:16px}
-.result.show{display:block}
-.result p{margin:0 0 12px}
-.result .r-cat{font-size:1.1rem;font-weight:800;color:#ffb27a}
+.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:12px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:14px;padding:18px;border:1px solid var(--line);border-radius:var(--r)}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--brown);border-radius:var(--r);font:800 19px var(--head)}
+.steps b{display:block;margin-bottom:2px}
+.steps span{color:var(--brown-70);font-size:16px}
 
 /* Catalogue */
-.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:18px;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:10px 16px;border-radius:999px;font-weight:700;font-size:.92rem;cursor:pointer;min-height:44px}
-.tab[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--brown);border-radius:var(--r);overflow:hidden;margin-bottom:24px}
+.tab{min-height:48px;padding:8px 6px;border:0;border-left:1px solid var(--brown);background:var(--white);color:var(--brown);font:600 14px/1.2 var(--body);cursor:pointer}
+.tab:first-child{border-left:0}
+.tab[aria-selected="true"]{background:var(--brown);color:var(--white)}
 .panel[hidden]{display:none}
-.cat-head{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:16px}
-.cat-head p{margin:0;color:var(--ink-2)}
-.models{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0;padding:0;list-style:none}
-.models a{display:inline-block;font-size:.82rem;background:#efe8d9;border-radius:999px;padding:6px 11px;text-decoration:none}
-.models a:hover{background:var(--accent);color:#fff}
-.product{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 10px rgba(31,42,36,.05)}
-.product .pic{position:relative;aspect-ratio:4/3;background:#e9e2d3}
+.panel-intro{margin-bottom:20px}
+.panel-intro h3{margin-bottom:8px}
+.panel-intro p{color:var(--brown-70);margin:0}
+.models{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;padding:0}
+.models a{display:inline-flex;align-items:center;min-height:40px;padding:6px 12px;border:1px solid var(--line);border-radius:var(--r);font-size:15px;text-decoration:none}
+.models a:hover{border-color:var(--brown)}
+.products{display:grid;gap:16px;margin-top:28px}
+.product{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;background:var(--white)}
+.product .pic{position:relative;aspect-ratio:4/3;background:var(--sand)}
 .product .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.tag{position:absolute;left:12px;top:12px;background:var(--accent);color:#fff;font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:999px}
-.tag.dark{background:var(--ink)}
-.product .body{padding:18px;display:flex;flex-direction:column;flex:1}
-.product .body p{color:var(--ink-2);font-size:.95rem}
-.prices{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:auto 0 14px}
-.prices div{background:var(--bg);border-radius:10px;padding:10px;text-align:center}
-.prices small{display:block;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.prices b{font-size:1.3rem}
-.ttc{font-size:.8rem;color:var(--muted);margin:-6px 0 12px}
-.included{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-top:20px}
-.included ul{margin:0;padding-left:1.1em}
-.included li{margin-bottom:6px}
-.options{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
-.opt{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:.9rem}
-.opt b{display:block;color:var(--accent-dk)}
-.big-van{background:var(--card);border:2px dashed var(--line);border-radius:var(--r);padding:22px}
+.tag{position:absolute;left:12px;top:12px;background:var(--white);color:var(--brown);font:700 12px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:7px 9px;border-radius:var(--r)}
+.product .body{padding:20px;display:flex;flex-direction:column;flex:1}
+.product h3{margin-bottom:8px}
+.product .desc{color:var(--brown-70);font-size:16px}
+.prices{display:grid;grid-template-columns:1fr 1fr;margin:auto 0 6px;border:1px solid var(--line);border-radius:var(--r)}
+.prices div{padding:12px}
+.prices div+div{border-left:1px solid var(--line)}
+.prices small{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--brown-70)}
+.prices b{font:800 26px/1.15 var(--head);letter-spacing:-.02em;color:var(--orange)}
+.ttc{font-size:14px;color:var(--brown-70);margin:0 0 16px}
+.big-van{border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.big-van p{color:var(--brown-70)}
+.big-van .btn+.btn{margin-top:12px}
+
+.kit-details{display:grid;gap:16px;margin-top:40px}
+.block{background:var(--sand);border-radius:var(--r);padding:22px 20px}
+.block h3{margin-bottom:14px}
+.incl{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.incl li{display:grid;grid-template-columns:28px 1fr;gap:12px}
+.incl .ico{margin-top:2px}
+.incl p{margin:0;font-size:16px}
+.price-list{list-style:none;margin:0;padding:0}
+.price-list li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px solid var(--line);font-size:16px}
+.price-list li:last-child{border-bottom:0}
+.price-list b{color:var(--orange);font-weight:700;white-space:nowrap;text-align:right}
+.price-list small{display:block;color:var(--brown-70);font-size:13px;font-weight:400}
+
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.gallery figure{margin:0}
+.gallery img{aspect-ratio:16/10;object-fit:cover;width:100%;border-radius:var(--r)}
+.gallery figcaption{font-size:14px;color:var(--brown-70);padding-top:6px}
+.gallery figure:last-child:nth-child(odd){grid-column:1/-1}
 
 /* VASP */
-.vasp{background:#e8efe9}
-.compare{display:grid;gap:14px;margin-top:22px}
-.col{border-radius:var(--r);padding:20px;background:var(--card);border:1px solid var(--line)}
-.col.good{border:2px solid var(--green)}
-.col h3{display:flex;align-items:center;gap:8px}
-.col ul{list-style:none;padding:0;margin:0}
-.col li{padding:8px 0 8px 30px;position:relative;border-top:1px solid var(--line)}
+.vasp{background:var(--blue)}
+.vasp .sec-head p{color:var(--brown)}
+.vasp-text p{max-width:720px}
+.compare{display:grid;gap:12px;margin-top:28px}
+.col{background:var(--white);border:1px solid var(--blue-2);border-radius:var(--r);padding:20px}
+.col.good{border:2px solid var(--brown)}
+.col h3{margin-bottom:12px}
+.col ul{list-style:none;margin:0;padding:0}
+.col li{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line);font-size:16px}
 .col li:first-child{border-top:0}
-.col.bad li::before{content:"✕";position:absolute;left:4px;color:#b3452b;font-weight:800}
-.col.good li::before{content:"✓";position:absolute;left:4px;color:var(--green);font-weight:800}
-.note{font-size:.85rem;color:var(--muted);margin-top:18px}
-
-/* Gallery */
-.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.gallery figure{margin:0;border-radius:12px;overflow:hidden;background:#e9e2d3;position:relative}
-.gallery img{aspect-ratio:16/10;object-fit:cover;width:100%}
-.gallery figcaption{position:absolute;left:0;right:0;bottom:0;padding:18px 10px 8px;font-size:.8rem;font-weight:700;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.7))}
+.col li .ico{width:20px;height:20px;margin-top:3px}
+.col.bad li{color:var(--brown-70)}
+.note{font-size:14px;color:var(--brown-70);margin:20px 0 0;max-width:820px}
 
 /* FAQ */
-.faq details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
-.faq summary{list-style:none;cursor:pointer;padding:16px 48px 16px 16px;font-weight:700;position:relative}
+.faq-list{border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:60px;padding:16px 0;font-weight:600;cursor:pointer}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:1.5rem;color:var(--accent-dk);font-weight:400}
-.faq details[open] summary::after{content:"–"}
-.faq .a{padding:0 16px 16px;color:var(--ink-2)}
+.faq summary .ico{transition:transform .2s}
+.faq details[open] summary .ico{transform:rotate(180deg)}
+.faq .a{padding:0 0 20px;color:var(--brown-70)}
 .faq .a p:last-child{margin:0}
 
-/* Final CTA */
-.final{background:var(--ink);color:#fff;text-align:center}
-.final .lead{color:#d9d3c5;max-width:640px;margin-left:auto;margin-right:auto}
-.final .ctas{display:flex;flex-direction:column;gap:12px;max-width:420px;margin:24px auto 0}
-.guarantees{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;margin-top:22px;font-size:.88rem;color:#d9d3c5;list-style:none;padding:0}
+/* Final */
+.final{background:var(--sand)}
+.final .sec-head{margin-left:auto;margin-right:auto}
+.final-actions{max-width:420px}
+.final-actions .help{margin-top:14px}
 
-footer.site{background:#151c18;color:#b9b3a6;font-size:.9rem;padding:40px 0 24px}
-footer.site h3{color:#fff;font-size:1rem}
-footer.site a{color:#fff}
-.foot-grid{display:grid;gap:24px}
-.foot-grid address{font-style:normal}
-.legal{border-top:1px solid #2b342f;margin-top:28px;padding-top:16px;font-size:.8rem}
+/* Footer */
+.site-foot{background:var(--brown);color:var(--white);padding:44px 0 28px;font-size:15px}
+.site-foot img{width:160px;margin-bottom:18px}
+.site-foot p{color:rgba(255,255,255,.78)}
+.site-foot a{color:var(--white)}
+.foot-grid{display:grid;gap:28px}
+.foot-grid h3{font-size:16px;margin-bottom:10px}
+.foot-grid address{font-style:normal;color:rgba(255,255,255,.78)}
+.contact-list{list-style:none;margin:0;padding:0}
+.contact-list li a{display:flex;align-items:center;gap:10px;min-height:44px;text-decoration:none}
+.contact-list li a:hover{text-decoration:underline}
+.contact-list .ico{width:20px;height:20px}
+.legal{border-top:1px solid rgba(255,255,255,.2);margin-top:28px;padding-top:18px;font-size:13px;color:rgba(255,255,255,.7)}
+.legal a{display:inline-block;min-height:44px;line-height:44px;margin-right:16px}
 
-/* Sticky mobile CTA */
-.sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;display:grid;grid-template-columns:1fr 1.4fr;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(255,253,248,.97);border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.08)}
-.sticky .btn{min-height:48px;padding:10px 12px;font-size:.95rem}
+/* Sticky CTA (mobile, shown only when no other orange button is in view) */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:var(--white);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .2s}
+.sticky.show{transform:none}
 
 @media (min-width:640px){
-  .hero-ctas{flex-direction:row}
-  .proof ul{grid-template-columns:repeat(4,1fr)}
-  .grid-2{grid-template-columns:repeat(2,1fr)}
-  .options{grid-template-columns:repeat(3,1fr)}
+  .facts ul{grid-template-columns:repeat(4,1fr)}
+  .facts li{border-bottom:0}
+  .facts li:nth-child(2n){border-right:1px solid var(--line)}
+  .facts li:last-child{border-right:0}
+  .products{grid-template-columns:repeat(2,1fr)}
   .gallery{grid-template-columns:repeat(3,1fr)}
   .gallery figure:last-child:nth-child(odd){grid-column:auto}
-  .final .ctas{flex-direction:row;max-width:none;justify-content:center}
+  .tab{font-size:15px}
+  .btn-auto{width:auto}
 }
 @media (min-width:960px){
-  body{padding-bottom:0}
-  .sticky{display:none}
-  .nav{display:flex}
+  body{font-size:17px}
+  h1{font-size:48px}
+  h2{font-size:34px}
   section{padding:88px 0}
-  .hero .wrap{min-height:min(86vh,760px);padding-bottom:64px}
-  .grid-4{grid-template-columns:repeat(4,1fr)}
-  .grid-3{grid-template-columns:repeat(3,1fr)}
-  .compare{grid-template-columns:1fr 1fr}
+  .brand img{width:172px}
+  .hero{padding:56px 0 72px}
+  .hero-grid{grid-template-columns:1.05fr 1fr;align-items:center;gap:56px}
+  .hero .btn{display:inline-flex;width:auto;min-width:260px}
+  .finder-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+  .finder-grid .cats{margin-top:0}
+  .why-list{grid-template-columns:repeat(2,1fr);column-gap:48px}
   .steps{grid-template-columns:repeat(3,1fr)}
+  .tabs{max-width:560px}
+  .products{grid-template-columns:repeat(3,1fr)}
+  .kit-details{grid-template-columns:1.2fr 1fr 1fr}
+  .compare{grid-template-columns:1fr 1fr}
+  .faq-wrap{display:grid;grid-template-columns:1fr 2fr;gap:56px}
+  .final .wrap{text-align:center}
+  .final .sec-head::after{margin-left:auto;margin-right:auto}
+  .final-actions{margin:0 auto}
   .foot-grid{grid-template-columns:2fr 1fr 1fr}
-  .selector{display:grid;grid-template-columns:1fr 1.2fr;gap:24px;align-items:center;padding:28px}
-  .result{margin-top:0}
+  .sticky{display:none}
 }
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
 
 <script type="application/ld+json">
@@ -215,8 +283,10 @@ footer.site a{color:#fff}
     {
       "@type":"LocalBusiness",
       "@id":"https://kitamenagement.fr/#atelier",
-      "name":"Kit Aménagement – Camperizate",
+      "name":"Camperizate",
+      "legalName":"Camperizate Todo en 1, S.L.U.",
       "url":"https://kitamenagement.fr/",
+      "logo":"https://kitamenagement.fr/img/camperizate-logo.svg",
       "image":"https://kitamenagement.fr/img/og-kitamenagement.jpg",
       "telephone":"+34665319287",
       "email":"info@camperizatetodoen1.com",
@@ -235,7 +305,7 @@ footer.site a{color:#fff}
     },
     {
       "@type":"Product",
-      "name":"Kit d'aménagement camper amovible pour fourgon compact",
+      "name":"Kit d'aménagement camper amovible pour van compact",
       "description":"Kit meuble camper amovible pour Trafic, Transporter, Vito, Expert, Jumpy, Vivaro, Transit Custom… Sans homologation VASP, sans perçage.",
       "image":"https://kitamenagement.fr/img/kit-hpl-blanc-salon.webp",
       "brand":{"@type":"Brand","name":"Camperizate"},
@@ -244,12 +314,14 @@ footer.site a{color:#fff}
     {
       "@type":"FAQPage",
       "mainEntity":[
-        {"@type":"Question","name":"Faut-il une homologation VASP pour ce kit ?","acceptedAnswer":{"@type":"Answer","text":"Non. Le kit n'est ni vissé ni boulonné à la carrosserie : il est considéré comme un chargement amovible. Votre véhicule ne subit aucune transformation, il n'y a donc ni réception VASP, ni passage en DREAL, ni modification de la carte grise."}},
-        {"@type":"Question","name":"Comment se passe la livraison en France ?","acceptedAnswer":{"@type":"Answer","text":"Le kit est fabriqué dans notre atelier en Espagne puis livré sur palette, déjà monté, partout en France métropolitaine. Livraison à partir de 200 € pour les ludospaces et 250 € pour les fourgons compacts, selon la destination."}},
-        {"@type":"Question","name":"Le kit est-il compatible avec mon véhicule ?","acceptedAnswer":{"@type":"Answer","text":"Nous fabriquons pour Berlingo, Partner, Rifter, Kangoo, Caddy, Combo, Doblo, Dokker, Proace City, Townstar, Citan, Tourneo Connect et Courier, Jogger, Lodgy, ainsi que Trafic, Transporter T4/T5/T6, Multivan, Vito, Viano, Expert, Jumpy, Scudo, Talento, Vivaro, Zafira, Proace, Transit Custom, NV200, NV300, Primastar et H1."}},
+        {"@type":"Question","name":"Faut-il une homologation VASP pour ce kit ?","acceptedAnswer":{"@type":"Answer","text":"Non. Le kit n'est ni vissé ni boulonné à la carrosserie : il est considéré comme un chargement amovible. Votre véhicule ne subit aucune transformation : pas de réception VASP, pas de passage en DREAL, pas de modification de la carte grise."}},
         {"@type":"Question","name":"Comment le kit se fixe-t-il au véhicule ?","acceptedAnswer":{"@type":"Answer","text":"Sans aucun perçage. Le module se pose dans l'espace de chargement et répartit son poids sur 3 points d'appui contrôlés. Pour rouler, on le sangle aux anneaux d'arrimage d'origine, comme n'importe quel chargement."}},
+        {"@type":"Question","name":"Le kit est-il compatible avec mon véhicule ?","acceptedAnswer":{"@type":"Answer","text":"Nous fabriquons pour Berlingo, Partner, Rifter, Kangoo, Caddy, Combo, Doblo, Dokker, Proace City, Townstar, Citan, Tourneo Connect et Courier, Jogger, Lodgy, ainsi que Trafic, Transporter T4/T5/T6, Caravelle, Multivan, Vito, Viano, Expert, Traveller, Jumpy, SpaceTourer, Scudo, Talento, Vivaro, Zafira, Proace, Transit Custom, NV200, NV300, Primastar et H1. Grands fourgons sur devis."}},
+        {"@type":"Question","name":"Comment se passe la livraison en France ?","acceptedAnswer":{"@type":"Answer","text":"Le kit est fabriqué dans notre atelier en Espagne puis livré sur palette, déjà monté, partout en France métropolitaine. Livraison à partir de 200 € pour un ludospace et 250 € pour un van compact, selon la destination."}},
         {"@type":"Question","name":"Combien de temps prend l'installation ?","acceptedAnswer":{"@type":"Answer","text":"Moins de 5 minutes une fois l'habitude prise, sans outil. Le démontage est encore plus rapide."}},
-        {"@type":"Question","name":"Quel est le délai de fabrication ?","acceptedAnswer":{"@type":"Answer","text":"Environ 3 semaines. Si le modèle est en stock, l'expédition est plus rapide."}}
+        {"@type":"Question","name":"Puis-je garder mes places assises ?","acceptedAnswer":{"@type":"Answer","text":"Oui, selon la configuration. Sur ludospace, vous pouvez conserver vos 5 places. Sur van compact, le kit fait 56,5 cm de haut si vous gardez la 2e rangée, ou 44,5 / 36,5 cm sans sièges."}},
+        {"@type":"Question","name":"Quelle finition choisir ?","acceptedAnswer":{"@type":"Answer","text":"Phénolique carrossier : notre meilleure vente, repousse l'eau et les taches. Pin : bois naturel brut, très esthétique, peut garder des traces. HPL de peuplier : le plus résistant et le plus léger, en blanc ou gris anthracite."}},
+        {"@type":"Question","name":"Quel est le délai de fabrication ?","acceptedAnswer":{"@type":"Answer","text":"Environ 3 semaines. Si votre modèle est en stock, l'expédition est plus rapide."}}
       ]
     }
   ]
@@ -258,162 +330,190 @@ footer.site a{color:#fff}
 </head>
 <body>
 
-<div class="topbar">🇫🇷 Livraison partout en France · <strong>Kit livré monté</strong> · Fabrication en ~3 semaines</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-timer" viewBox="0 0 24 24"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="15" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></symbol>
+    <symbol id="i-factory" viewBox="0 0 24 24"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+    <symbol id="i-msg" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+    <symbol id="i-bed" viewBox="0 0 24 24"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></symbol>
+    <symbol id="i-cook" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7"/><path d="m7.5 4.27 9 5.16"/></symbol>
+    <symbol id="i-table" viewBox="0 0 24 24"><path d="M3 8h18"/><path d="M5 8v12"/><path d="M19 8v12"/><path d="M8 4h8"/><path d="M12 4v4"/></symbol>
+  </defs>
+</svg>
 
-<header class="site">
+<header class="site-head">
   <div class="wrap">
-    <a href="#top" class="logo" aria-label="Kit Aménagement, accueil">
-      <svg width="28" height="28" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#1f2a24"/><path d="M12 42V26a6 6 0 0 1 6-6h20l10 10h4v12H12z" fill="#e8792b"/><circle cx="22" cy="44" r="5" fill="#f6f1e7"/><circle cx="44" cy="44" r="5" fill="#f6f1e7"/></svg>
-      <b style="font-weight:800">kit<span>aménagement</span>.fr</b>
-    </a>
-    <nav class="nav" aria-label="Navigation principale">
-      <a href="#avantages">Avantages</a>
-      <a href="#catalogue">Kits &amp; prix</a>
-      <a href="#vasp">Sans VASP</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-    <a href="#compatibilite" class="btn btn-primary header-cta">Mon véhicule</a>
+    <a href="#top" class="brand" aria-label="Camperizate, retour en haut de page"><img src="/img/camperizate-logo.svg" alt="Camperizate" width="172" height="23"></a>
+    <a href="#trouver" class="btn btn-line head-btn">Trouver mon kit</a>
   </div>
 </header>
 
 <main id="top">
 
-<!-- 1. HERO -->
+<!-- HERO -->
 <section class="hero" aria-labelledby="h1">
-  <picture>
-    <source type="image/webp" srcset="/img/hero-van-amenage-800.webp 800w, /img/hero-van-amenage.webp 1600w" sizes="100vw">
-    <img src="/img/hero-van-amenage.webp" alt="Ludospace aménagé en camper avec un kit en bois amovible, hayon ouvert face à la montagne" width="1600" height="800" fetchpriority="high">
-  </picture>
-  <div class="wrap">
-    <span class="eyebrow" style="color:#ffb27a">Direct fabricant · Ludospaces &amp; vans</span>
-    <h1 id="h1">Kit d'aménagement amovible pour van : <em>dormez dedans ce soir, sans VASP.</em></h1>
-    <p class="lead">Lit, cuisine, rangements et table : votre Berlingo, Kangoo ou Trafic devient un vrai camper <strong>en 5 minutes, sans perçage</strong>. Et lundi, il redevient votre véhicule de tous les jours. Zéro homologation, zéro passage en DREAL, zéro carte grise à modifier.</p>
-    <div class="hero-ctas">
-      <a href="#compatibilite" class="btn btn-primary">Trouver le kit pour mon véhicule →</a>
-      <a href="#catalogue" class="btn btn-ghost">Voir les kits et les prix</a>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker">Kit camper amovible · Ludospaces et vans</span>
+      <h1 id="h1">Votre van devient camper en 5 minutes. <span>Sans VASP.</span></h1>
+      <p class="lead">Lit, cuisine, rangements et table, posés sans perçage dans votre Berlingo, Kangoo ou Trafic. Lundi, il redevient votre véhicule de tous les jours. Aucune homologation, aucun passage en DREAL, carte grise inchangée.</p>
+      <p class="price-line"><b>Dès 500 €</b><span>TTC, prix direct atelier</span></p>
+      <a href="#trouver" class="btn btn-primary">Trouver mon kit <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+      <ul class="assure">
+        <li><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>Sans homologation VASP</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-timer"/></svg>Posé en 5 minutes, sans perçage</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-truck"/></svg>Livré monté partout en France</li>
+      </ul>
     </div>
-    <p class="price-from">À partir de <b>500 € TTC</b> · prix direct atelier</p>
-    <ul class="badges">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Sans VASP</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Sans perçage</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Livraison en France</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Direct atelier</li>
-    </ul>
+    <div class="hero-pic">
+      <picture>
+        <source type="image/webp" srcset="/img/hero-van-amenage-800.webp 800w, /img/hero-van-amenage.webp 1600w" sizes="(min-width:960px) 50vw, 100vw">
+        <img src="/img/hero-van-amenage.webp" alt="Ludospace aménagé avec un kit camper en bois, hayon ouvert face à la montagne" width="1600" height="800" fetchpriority="high">
+      </picture>
+    </div>
   </div>
 </section>
 
-<div class="proof">
+<div class="facts" aria-label="Chiffres clés">
   <div class="wrap">
     <ul>
       <li><b>&lt; 5 min</b><span>pour passer en mode camper</span></li>
       <li><b>0 €</b><span>d'homologation VASP</span></li>
       <li><b>30+</b><span>modèles de véhicules</span></li>
-      <li><b>~187 cm</b><span>de couchage (XL jusqu'à 220 cm)</span></li>
+      <li><b>187 cm</b><span>de couchage, jusqu'à 220 cm en XL</span></li>
     </ul>
   </div>
 </div>
 
-<!-- 2. PILIERS -->
-<section id="avantages" aria-labelledby="h-avantages">
+<!-- FINDER -->
+<section id="trouver" aria-labelledby="h-trouver">
   <div class="wrap">
-    <div class="center" style="max-width:720px;margin:0 auto 32px">
-      <span class="eyebrow">Pourquoi un kit amovible ?</span>
-      <h2 id="h-avantages">Pourquoi choisir nos kits amovibles ?</h2>
-      <p class="lead">Un aménagement fixe, c'est des semaines d'atelier, des milliers d'euros et un dossier administratif. Nos kits, c'est le plaisir du van… sans les contraintes.</p>
+    <div class="sec-head">
+      <span class="kicker">Compatibilité</span>
+      <h2 id="h-trouver">Trouvez le kit de votre véhicule</h2>
+      <p>Choisissez votre modèle : nous vous indiquons le kit, son prix et la livraison.</p>
     </div>
-    <div class="grid grid-2 grid-4">
-      <article class="pillar">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="m9 15 2 2 4-4"/></svg></div>
-        <h3>Aucune homologation VASP</h3>
-        <p>Le kit est un chargement amovible, pas une transformation. Pas de RTI, pas de DREAL, pas de nouvelle carte grise : vous économisez des centaines d'euros et des semaines d'attente.</p>
-      </article>
-      <article class="pillar">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-        <h3>Installé en 5 minutes</h3>
-        <p>Pas de perceuse, pas de vis dans la carrosserie. Vous glissez le module dans le coffre, vous le sanglez aux anneaux d'origine et c'est parti. Démontage encore plus rapide.</p>
-      </article>
-      <article class="pillar">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
-        <h3>Modulaire, sur mesure</h3>
-        <p>Conçu au centimètre pour votre modèle. Couchage, cuisine extractible, coffre frigo, table multiposition, options à la carte. Vous gardez vos places assises selon la configuration.</p>
-      </article>
-      <article class="pillar">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg></div>
-        <h3>Prix direct atelier</h3>
-        <p>Pas d'intermédiaire : nous dessinons, découpons et assemblons nous-mêmes. Panneaux phénoliques et HPL résistants à l'eau, quincaillerie pro, finitions soignées. Dès 500 € TTC.</p>
-      </article>
-    </div>
+    <div class="finder-grid">
+      <div class="finder-box">
+        <label for="vehicule">Mon véhicule</label>
+        <div class="select">
+          <select id="vehicule">
+            <option value="">Choisir mon modèle</option>
+            <optgroup label="Ludospaces">
+              <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/berlingo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën Berlingo</option>
+              <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/partner/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Partner</option>
+              <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/rifter/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Rifter</option>
+              <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/renault-kangoo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Renault Kangoo</option>
+              <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/caddy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Volkswagen Caddy</option>
+              <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/opel-combo-life/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Opel Combo Life</option>
+              <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/fiat-doblo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Doblo</option>
+              <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/proace-city/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Toyota Proace City</option>
+              <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nissan-townstar/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan Townstar</option>
+              <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/mercedes-citan/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Mercedes Citan / Classe T</option>
+              <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/tourneo-transit/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Tourneo / Transit Connect</option>
+              <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/ford-courier/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Tourneo / Transit Courier</option>
+              <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/dokker/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Dacia Dokker</option>
+              <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/dacia-jogger-lodgy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Dacia Jogger / Lodgy</option>
+            </optgroup>
+            <optgroup label="Vans compacts">
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/trafic/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Renault Trafic</option>
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/transporter-t4-t5-t6/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Volkswagen Transporter T4 / T5 / T6</option>
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/caravelle-t4-t5-t6/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Volkswagen Caravelle / Multivan</option>
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/vito-viano/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Mercedes Vito / Viano</option>
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/expert/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Expert</option>
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/traveller/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Traveller</option>
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/jumpy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën Jumpy</option>
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/space-tourer/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën SpaceTourer</option>
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/fiat-scudo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Scudo</option>
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/talento/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Talento</option>
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/opel-vivaro/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Opel Vivaro / Zafira Life</option>
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/toyota-proace/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Toyota Proace</option>
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/ford-transit-custom/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Transit / Tourneo Custom</option>
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nv200/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan NV200</option>
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nv300/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan NV300 / Primastar</option>
+              <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/hyundai-h1/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Hyundai H1</option>
+            </optgroup>
+            <optgroup label="Grands fourgons">
+              <option value="grand" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/jumper-boxer-transit/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Ducato / Citroën Jumper / Peugeot Boxer</option>
+              <option value="grand" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/jumper-boxer-transit/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Transit</option>
+              <option value="grand">Renault Master</option>
+              <option value="grand">Mercedes Sprinter / VW Crafter</option>
+              <option value="grand">Autre modèle</option>
+            </optgroup>
+          </select>
+          <svg class="ico" aria-hidden="true"><use href="#i-down"/></svg>
+        </div>
 
-    <ol class="steps" aria-label="Comment ça marche">
-      <li><b>Vous choisissez</b>votre modèle de véhicule, la finition et vos options.</li>
-      <li><b>Nous fabriquons</b>votre kit à l'atelier en ~3 semaines.</li>
-      <li><b>Vous recevez</b>le kit livré monté sur palette. 5 minutes plus tard, vous dormez dedans.</li>
+        <div class="result" id="result" aria-live="polite">
+          <p class="r-cat" id="r-cat"></p>
+          <p class="r-price" id="r-price"></p>
+          <ul id="r-list"></ul>
+          <a class="btn btn-primary" id="r-cta" href="#" target="_blank" rel="noopener">Voir le kit</a>
+          <a class="link" id="r-alt" href="#kits">Comparer les finitions</a>
+        </div>
+      </div>
+
+      <div>
+        <ul class="cats" aria-label="Prix par catégorie">
+          <li><a href="#kits" data-tab="mini"><span class="c-name">Ludospaces<small>Berlingo, Partner, Kangoo, Caddy, Combo…</small></span><span class="c-price">dès 500 €</span></a></li>
+          <li><a href="#kits" data-tab="moyen"><span class="c-name">Vans compacts<small>Trafic, Transporter, Vito, Expert, Vivaro…</small></span><span class="c-price">dès 700 €</span></a></li>
+          <li><a href="#kits" data-tab="grand"><span class="c-name">Grands fourgons<small>Ducato, Jumper, Boxer, Master, Sprinter…</small></span><span class="c-price">sur devis</span></a></li>
+        </ul>
+        <p class="help">Prix TTC, hors livraison (dès 200 € en France). Votre modèle n'est pas dans la liste ? <a href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Écrivez-nous</a>, nous vous répondons rapidement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why" id="avantages" aria-labelledby="h-why">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Pourquoi un kit amovible</span>
+      <h2 id="h-why">Le plaisir du van, sans les contraintes</h2>
+      <p>Un aménagement fixe, c'est des semaines d'atelier, des milliers d'euros et un dossier administratif. Nos kits, non.</p>
+    </div>
+    <ul class="why-list">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><div><h3>Aucune homologation VASP</h3><p>Le kit est un chargement amovible, pas une transformation. Pas de RTI, pas de DREAL, pas de nouvelle carte grise : vous économisez des centaines d'euros et des semaines d'attente.</p></div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-timer"/></svg><div><h3>Installé en 5 minutes</h3><p>Pas de perceuse, pas de vis dans la carrosserie. Vous glissez le module dans le coffre, vous le sanglez aux anneaux d'origine et c'est parti. Démontage encore plus rapide.</p></div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-grid"/></svg><div><h3>Modulaire, sur mesure</h3><p>Conçu au centimètre pour votre modèle : couchage, cuisine extractible, coffre frigo, table multiposition et options à la carte. Vous gardez vos places assises selon la configuration.</p></div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-factory"/></svg><div><h3>Prix direct atelier</h3><p>Pas d'intermédiaire : nous dessinons, découpons et assemblons nous-mêmes. Panneaux phénoliques et HPL résistants à l'eau, quincaillerie pro, finitions soignées.</p></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section aria-labelledby="h-steps">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Comment ça marche</span>
+      <h2 id="h-steps">Trois étapes, trois semaines</h2>
+    </div>
+    <ol class="steps">
+      <li><div><b>Vous choisissez</b><span>votre modèle de véhicule, la finition et vos options.</span></div></li>
+      <li><div><b>Nous fabriquons</b><span>votre kit à l'atelier en 3 semaines environ.</span></div></li>
+      <li><div><b>Vous recevez</b><span>le kit livré monté sur palette. Cinq minutes plus tard, vous dormez dedans.</span></div></li>
     </ol>
   </div>
 </section>
 
-<!-- 3. CATALOGUE / COMPATIBILITÉ -->
-<section id="catalogue" aria-labelledby="h-catalogue" style="background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+<!-- CATALOGUE -->
+<section id="kits" aria-labelledby="h-kits" style="padding-top:0">
   <div class="wrap">
-    <div class="center" style="max-width:720px;margin:0 auto 28px">
-      <span class="eyebrow">Catalogue &amp; compatibilité</span>
-      <h2 id="h-catalogue">Le kit fait pour votre véhicule</h2>
-      <p class="lead">Sélectionnez votre modèle : on vous dit tout de suite quel kit lui correspond et à quel prix.</p>
-    </div>
-
-    <div class="selector" id="compatibilite">
-      <div>
-        <label for="vehicule">Quel est votre véhicule ?</label>
-        <select id="vehicule">
-          <option value="">— Choisir mon modèle —</option>
-          <optgroup label="Ludospaces">
-            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/berlingo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën Berlingo</option>
-            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/partner/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Partner</option>
-            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/rifter/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Rifter</option>
-            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/renault-kangoo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Renault Kangoo</option>
-            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/caddy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Volkswagen Caddy</option>
-            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/opel-combo-life/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Opel Combo Life</option>
-            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/fiat-doblo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Doblo</option>
-            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/proace-city/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Toyota Proace City</option>
-            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nissan-townstar/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan Townstar</option>
-            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/mercedes-citan/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Mercedes Citan / Classe T</option>
-            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/tourneo-transit/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Tourneo / Transit Connect</option>
-            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/ford-courier/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Tourneo / Transit Courier</option>
-            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/dokker/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Dacia Dokker</option>
-            <option value="mini" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/dacia-jogger-lodgy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Dacia Jogger / Lodgy</option>
-          </optgroup>
-          <optgroup label="Vans compacts">
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/trafic/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Renault Trafic</option>
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/transporter-t4-t5-t6/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Volkswagen Transporter T4 / T5 / T6</option>
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/caravelle-t4-t5-t6/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Volkswagen Caravelle / Multivan</option>
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/vito-viano/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Mercedes Vito / Viano</option>
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/expert/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Expert</option>
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/traveller/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Traveller</option>
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/jumpy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën Jumpy</option>
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/space-tourer/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën SpaceTourer</option>
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/fiat-scudo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Scudo</option>
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/talento/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Talento</option>
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/opel-vivaro/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Opel Vivaro / Zafira Life</option>
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/toyota-proace/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Toyota Proace</option>
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/ford-transit-custom/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Transit / Tourneo Custom</option>
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nv200/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan NV200</option>
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nv300/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan NV300 / Primastar</option>
-            <option value="moyen" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/hyundai-h1/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Hyundai H1</option>
-          </optgroup>
-          <optgroup label="Grands fourgons">
-            <option value="grand" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/jumper-boxer-transit/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Ducato / Citroën Jumper / Peugeot Boxer</option>
-            <option value="grand" data-url="https://www.camperizatetodoen1.com/fr/kit-camperizacion/jumper-boxer-transit/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Transit</option>
-            <option value="grand">Renault Master</option>
-            <option value="grand">Mercedes Sprinter / VW Crafter</option>
-            <option value="grand">Autre modèle</option>
-          </optgroup>
-        </select>
-      </div>
-      <div class="result" id="result" aria-live="polite">
-        <p class="r-cat" id="r-cat"></p>
-        <p id="r-txt"></p>
-        <a class="btn btn-primary btn-block" id="r-cta" href="#catalogue">Voir le kit</a>
-      </div>
+    <div class="sec-head">
+      <span class="kicker">Kits et prix</span>
+      <h2 id="h-kits">Trois finitions pour chaque véhicule</h2>
     </div>
 
     <div class="tabs" role="tablist" aria-label="Catégories de véhicules">
@@ -422,122 +522,135 @@ footer.site a{color:#fff}
       <button class="tab" role="tab" id="t-grand" aria-controls="p-grand" aria-selected="false" tabindex="-1">Grands fourgons</button>
     </div>
 
-    <!-- Ludospaces -->
     <div class="panel" role="tabpanel" id="p-mini" aria-labelledby="t-mini">
-      <div class="cat-head">
-        <h3>Kit camper ludospace : Berlingo, Partner, Kangoo, Caddy…</h3>
-        <p>Plié avec le matelas, il tient dans le coffre. Lit env. 187 cm × 115-120 cm, cuisine extractible à droite, coffre pour frigo 15 L à gauche. Livraison en France à partir de 200 €.</p>
+      <div class="panel-intro">
+        <h3>Kit camper ludospace</h3>
+        <p>Plié avec le matelas, il tient dans le coffre. Lit d'environ 187 cm sur 115 à 120 cm, cuisine extractible à droite, coffre pour frigo 15 L à gauche. Livraison en France à partir de 200 €.</p>
         <ul class="models">
           <li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/berlingo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën Berlingo</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/partner/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Partner</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/rifter/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Rifter</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/renault-kangoo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Renault Kangoo</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/caddy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Volkswagen Caddy</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/opel-combo-life/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Opel Combo Life</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/fiat-doblo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Doblo</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/proace-city/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Toyota Proace City</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nissan-townstar/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan Townstar</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/mercedes-citan/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Mercedes Citan / Classe T</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/tourneo-transit/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Tourneo / Transit Connect</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/ford-courier/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Tourneo / Transit Courier</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/dokker/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Dacia Dokker</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/dacia-jogger-lodgy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Dacia Jogger / Lodgy</a></li>
         </ul>
       </div>
-      <div class="grid grid-3">
+      <div class="products">
         <article class="product">
-          <div class="pic"><span class="tag">★ Le plus vendu</span><img src="/img/kit-carrossier-lit.webp" alt="Kit camper ludospace en phénolique carrossier noir, lit déplié avec matelas gris" width="900" height="900" loading="lazy"></div>
+          <div class="pic"><span class="tag">Le plus vendu</span><img src="/img/kit-carrossier-lit.webp" alt="Kit camper ludospace en phénolique carrossier noir, lit déplié avec matelas gris" width="900" height="900" loading="lazy"></div>
           <div class="body">
             <h3>Phénolique carrossier</h3>
-            <p>Finition HPL noire qui repousse l'eau et les taches. L'option la plus durable, pensée pour la vie dehors.</p>
+            <p class="desc">Finition HPL noire qui repousse l'eau et les taches. L'option la plus durable.</p>
             <div class="prices"><div><small>Sans matelas</small><b>550 €</b></div><div><small>Avec matelas</small><b>700 €</b></div></div>
             <p class="ttc">Prix TTC, hors livraison</p>
-            <a class="btn btn-primary btn-block" data-kit="ludospace" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
+            <a class="btn btn-line" data-kit="mini" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
           </div>
         </article>
         <article class="product">
           <div class="pic"><img src="/img/kit-pin-rangement.webp" alt="Kit camper ludospace en contreplaqué de pin naturel avec tiroirs et rangements" width="900" height="900" loading="lazy"></div>
           <div class="body">
             <h3>Phénolique pin</h3>
-            <p>Bois naturel brut, chaleureux et très esthétique. Peut être verni pour une protection renforcée.</p>
+            <p class="desc">Bois naturel brut, chaleureux et très esthétique. Peut être verni pour une protection renforcée.</p>
             <div class="prices"><div><small>Sans matelas</small><b>500 €</b></div><div><small>Avec matelas</small><b>650 €</b></div></div>
             <p class="ttc">Prix TTC, hors livraison</p>
-            <a class="btn btn-dark btn-block" data-kit="ludospace" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
+            <a class="btn btn-line" data-kit="mini" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
           </div>
         </article>
         <article class="product">
-          <div class="pic"><span class="tag dark">Premium</span><img src="/img/kit-hpl-blanc-salon.webp" alt="Kit camper ludospace HPL blanc configuré en salon avec table centrale" width="900" height="675" loading="lazy"></div>
+          <div class="pic"><span class="tag">Premium</span><img src="/img/kit-hpl-blanc-salon.webp" alt="Kit camper ludospace HPL blanc configuré en salon avec table centrale" width="900" height="675" loading="lazy"></div>
           <div class="body">
             <h3>HPL de peuplier</h3>
-            <p>Âme en peuplier légère, surface HPL ultra-résistante à l'eau et aux taches. Blanc ou gris anthracite.</p>
+            <p class="desc">Âme en peuplier légère, surface HPL ultra-résistante à l'eau et aux taches. Blanc ou gris anthracite.</p>
             <div class="prices"><div><small>Sans matelas</small><b>800 €</b></div><div><small>Avec matelas</small><b>950 €</b></div></div>
             <p class="ttc">Prix TTC, hors livraison</p>
-            <a class="btn btn-dark btn-block" data-kit="ludospace" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
+            <a class="btn btn-line" data-kit="mini" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
           </div>
         </article>
       </div>
     </div>
 
-    <!-- Vans compacts -->
     <div class="panel" role="tabpanel" id="p-moyen" aria-labelledby="t-moyen" hidden>
-      <div class="cat-head">
-        <h3>Kit camper van compact : Trafic, Transporter, Vito, Expert…</h3>
-        <p>Couchage spacieux, cuisine extractible, coffre pour frigo jusqu'à 35 L. Hauteur adaptée : 56,5 cm si vous gardez la 2ᵉ rangée, 44,5 ou 36,5 cm sans sièges. Livraison en France à partir de 250 €.</p>
+      <div class="panel-intro">
+        <h3>Kit camper van compact</h3>
+        <p>Couchage spacieux, cuisine extractible, coffre pour frigo jusqu'à 35 L. Hauteur adaptée : 56,5 cm si vous gardez la 2<sup>e</sup> rangée, 44,5 ou 36,5 cm sans sièges. Livraison en France à partir de 250 €.</p>
         <ul class="models">
-          <li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/trafic/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Renault Trafic</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/transporter-t4-t5-t6/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Volkswagen Transporter T4 / T5 / T6</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/caravelle-t4-t5-t6/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Volkswagen Caravelle / Multivan</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/vito-viano/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Mercedes Vito / Viano</a></li><li><a href="https://www.camperizatetodoen1.com/fr/expert/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Expert</a></li><li><a href="https://www.camperizatetodoen1.com/fr/traveller/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Traveller</a></li><li><a href="https://www.camperizatetodoen1.com/fr/jumpy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën Jumpy</a></li><li><a href="https://www.camperizatetodoen1.com/fr/space-tourer/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën SpaceTourer</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/fiat-scudo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Scudo</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/talento/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Talento</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/opel-vivaro/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Opel Vivaro / Zafira Life</a></li><li><a href="https://www.camperizatetodoen1.com/fr/toyota-proace/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Toyota Proace</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/ford-transit-custom/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Transit / Tourneo Custom</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nv200/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan NV200</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nv300/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan NV300 / Primastar</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/hyundai-h1/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Hyundai H1</a></li>
+          <li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/trafic/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Renault Trafic</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/transporter-t4-t5-t6/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">VW Transporter T4 / T5 / T6</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/caravelle-t4-t5-t6/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">VW Caravelle / Multivan</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/vito-viano/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Mercedes Vito / Viano</a></li><li><a href="https://www.camperizatetodoen1.com/fr/expert/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Expert</a></li><li><a href="https://www.camperizatetodoen1.com/fr/traveller/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Peugeot Traveller</a></li><li><a href="https://www.camperizatetodoen1.com/fr/jumpy/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën Jumpy</a></li><li><a href="https://www.camperizatetodoen1.com/fr/space-tourer/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Citroën SpaceTourer</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/fiat-scudo/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Scudo</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/talento/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Fiat Talento</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/opel-vivaro/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Opel Vivaro / Zafira Life</a></li><li><a href="https://www.camperizatetodoen1.com/fr/toyota-proace/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Toyota Proace</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/ford-transit-custom/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Ford Transit / Tourneo Custom</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nv200/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan NV200</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/nv300/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Nissan NV300 / Primastar</a></li><li><a href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/hyundai-h1/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Hyundai H1</a></li>
         </ul>
       </div>
-      <div class="grid grid-3">
+      <div class="products">
         <article class="product">
-          <div class="pic"><span class="tag">★ Le plus vendu</span><img src="/img/kit-carrossier-lit.webp" alt="Kit camper pour van compact en phénolique carrossier, lit avec matelas" width="900" height="900" loading="lazy"></div>
+          <div class="pic"><span class="tag">Le plus vendu</span><img src="/img/kit-carrossier-lit.webp" alt="Kit camper pour van compact en phénolique carrossier, lit avec matelas" width="900" height="900" loading="lazy"></div>
           <div class="body">
             <h3>Phénolique carrossier</h3>
-            <p>Finition HPL qui repousse l'eau et les taches sans laisser de trace. Notre meilleure vente.</p>
+            <p class="desc">Finition HPL qui repousse l'eau et les taches sans laisser de trace. Notre meilleure vente.</p>
             <div class="prices"><div><small>Sans matelas</small><b>750 €</b></div><div><small>Avec matelas</small><b>900 €</b></div></div>
             <p class="ttc">Prix TTC, hors livraison</p>
-            <a class="btn btn-primary btn-block" data-kit="van" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
+            <a class="btn btn-line" data-kit="moyen" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
           </div>
         </article>
         <article class="product">
           <div class="pic"><img src="/img/kit-pin-rangement.webp" alt="Kit camper pour van compact en pin naturel avec rangements" width="900" height="900" loading="lazy"></div>
           <div class="body">
             <h3>Phénolique pin</h3>
-            <p>Bois naturel brut au look authentique. Vernissable pour une meilleure protection.</p>
+            <p class="desc">Bois naturel brut au look authentique. Vernissable pour une meilleure protection.</p>
             <div class="prices"><div><small>Sans matelas</small><b>700 €</b></div><div><small>Avec matelas</small><b>850 €</b></div></div>
             <p class="ttc">Prix TTC, hors livraison</p>
-            <a class="btn btn-dark btn-block" data-kit="van" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
+            <a class="btn btn-line" data-kit="moyen" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
           </div>
         </article>
         <article class="product">
-          <div class="pic"><span class="tag dark">Premium</span><img src="/img/kit-hpl-anthracite.webp" alt="Kit camper pour van en HPL gris anthracite, configuration salon" width="900" height="822" loading="lazy"></div>
+          <div class="pic"><span class="tag">Premium</span><img src="/img/kit-hpl-anthracite.webp" alt="Kit camper pour van en HPL gris anthracite, configuration salon" width="900" height="822" loading="lazy"></div>
           <div class="body">
             <h3>HPL de peuplier</h3>
-            <p>Légèreté du peuplier, résistance maximale du HPL. Finition blanc ou gris anthracite.</p>
+            <p class="desc">Légèreté du peuplier, résistance maximale du HPL. Finition blanc ou gris anthracite.</p>
             <div class="prices"><div><small>Sans matelas</small><b>1000 €</b></div><div><small>Avec matelas</small><b>1150 €</b></div></div>
             <p class="ttc">Prix TTC, hors livraison</p>
-            <a class="btn btn-dark btn-block" data-kit="van" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
+            <a class="btn btn-line" data-kit="moyen" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit pour mon véhicule</a>
           </div>
         </article>
       </div>
     </div>
 
-    <!-- Grands fourgons -->
     <div class="panel" role="tabpanel" id="p-grand" aria-labelledby="t-grand" hidden>
       <div class="big-van">
-        <h3>Grands fourgons : Master, Ducato, Jumper, Boxer, Sprinter, Crafter, Transit</h3>
-        <p>Pour les grands volumes, chaque projet est différent (longueur, hauteur, sièges conservés, couchage transversal ou longitudinal). Nous étudions votre fourgon et vous envoyons un devis gratuit pour un kit amovible sur mesure, toujours sans VASP et sans perçage.</p>
-        <div class="hero-ctas" style="margin:0"><a class="btn btn-primary" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/jumper-boxer-transit/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit Ducato / Jumper / Boxer</a><a class="btn btn-wa" href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Demander mon devis gratuit</a></div>
+        <h3>Grands fourgons : Ducato, Jumper, Boxer, Transit, Master, Sprinter, Crafter</h3>
+        <p>Pour les grands volumes, chaque projet est différent : longueur, hauteur, sièges conservés, couchage transversal ou longitudinal. Nous étudions votre fourgon et vous envoyons un devis gratuit pour un kit amovible sur mesure, toujours sans VASP et sans perçage.</p>
+        <a class="btn btn-line" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/jumper-boxer-transit/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Voir le kit Ducato / Jumper / Boxer</a>
+        <a class="btn btn-line" href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Demander mon devis gratuit</a>
       </div>
     </div>
 
-    <div class="included">
-      <h3>Inclus dans chaque kit</h3>
-      <ul>
-        <li><b>Lit pliant</b> : env. 187 cm (jusqu'à 220 cm en XL), matelas de 8 cm avec housse lavable et amovible (pack matelas)</li>
-        <li><b>Espace cuisine</b> : tiroir extractible pour réchaud ou Campingaz, prêt à cuisiner au hayon</li>
-        <li><b>Rangement optimisé</b> : coffre à ouverture par le dessus, logement frigo (15 L ludospace, 35 L van)</li>
-        <li><b>Table multiposition</b> : intérieur, extérieur, 3 hauteurs (repas, salon ou lit d'appoint)</li>
-      </ul>
-      <h3 style="margin-top:18px">Options à la carte</h3>
-      <div class="options">
-        <div class="opt"><b>+ 25 €</b>Équerre rabattable</div>
-        <div class="opt"><b>+ 25 €</b>Plateau frigo</div>
-        <div class="opt"><b>+ 50 €</b>Tiroir frigo coulissant</div>
-        <div class="opt"><b>+ 35 €</b>Égouttoir</div>
-        <div class="opt"><b>+ 100 €</b>Version 2+1</div>
-        <div class="opt"><b>dès 400 €</b>Lit type peigne</div>
+    <div class="kit-details">
+      <div class="block">
+        <h3>Inclus dans chaque kit</h3>
+        <ul class="incl">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-bed"/></svg><p><b>Lit pliant</b> : environ 187 cm (jusqu'à 220 cm en XL), matelas de 8 cm avec housse lavable et amovible (pack matelas).</p></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-cook"/></svg><p><b>Espace cuisine</b> : tiroir extractible pour réchaud ou Campingaz, prêt à cuisiner au hayon.</p></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-box"/></svg><p><b>Rangement</b> : coffre à ouverture par le dessus, logement frigo de 15 L (ludospace) ou 35 L (van).</p></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-table"/></svg><p><b>Table multiposition</b> : intérieur, extérieur, 3 hauteurs (repas, salon ou lit d'appoint).</p></li>
+        </ul>
       </div>
-      <p class="note">Accessoires disponibles : occultants isolants (149 €), frigo à compresseur 15 L (220 €) ou 35 L (300 €), batterie lithium auxiliaire (750 €, ou 975 € avec onduleur), réchaud (29 €), toilettes (110 €) et douche portables (75 €).</p>
+      <div class="block">
+        <h3>Options à la carte</h3>
+        <ul class="price-list">
+          <li>Équerre rabattable<b>+ 25 €</b></li>
+          <li>Plateau frigo<b>+ 25 €</b></li>
+          <li>Tiroir frigo coulissant<b>+ 50 €</b></li>
+          <li>Égouttoir<b>+ 35 €</b></li>
+          <li>Version 2+1<b>+ 100 €</b></li>
+          <li>Lit type peigne<b>dès 400 €</b></li>
+        </ul>
+      </div>
+      <div class="block">
+        <h3>Accessoires</h3>
+        <ul class="price-list">
+          <li>Occultants isolants<b>149 €</b></li>
+          <li>Frigo à compresseur 15 L<b>220 €</b></li>
+          <li>Frigo à compresseur 35 L<b>300 €</b></li>
+          <li><span>Batterie lithium auxiliaire<small>975 € avec onduleur</small></span><b>750 €</b></li>
+          <li><span>Réchaud<small>35 € avec 3 cartouches</small></span><b>29 €</b></li>
+          <li>Toilettes portables<b>110 €</b></li>
+          <li>Douche portable<b>75 €</b></li>
+        </ul>
+      </div>
     </div>
 
-    <div class="gallery" style="margin-top:20px">
+    <div class="gallery">
       <figure><img src="/img/option-tiroir-frigo.webp" alt="Tiroir frigo coulissant sur glissières" width="700" height="394" loading="lazy"><figcaption>Tiroir frigo coulissant</figcaption></figure>
       <figure><img src="/img/option-egouttoir.webp" alt="Cuisine extractible au hayon avec égouttoir" width="700" height="394" loading="lazy"><figcaption>Cuisine au hayon</figcaption></figure>
       <figure><img src="/img/accessoire-occultants.webp" alt="Occultants isolants posés sur les vitres d'un ludospace" width="700" height="394" loading="lazy"><figcaption>Occultants isolants</figcaption></figure>
@@ -545,38 +658,38 @@ footer.site a{color:#fff}
   </div>
 </section>
 
-<!-- 4. VASP -->
+<!-- VASP -->
 <section id="vasp" class="vasp" aria-labelledby="h-vasp">
   <div class="wrap">
-    <div style="max-width:760px">
-      <span class="eyebrow">Comprendre la VASP en 1 minute</span>
-      <h2 id="h-vasp">Aménagement fixe ou kit amovible : ce que dit la règle en France</h2>
-      <p class="lead">Dès qu'on <strong>fixe durablement</strong> des meubles dans un véhicule (vissage, perçage, boulonnage), on modifie ses caractéristiques. Pour rouler en règle, il faut alors une <strong>réception à titre isolé (RTI)</strong> pour obtenir la mention « VASP – autocaravane » sur la carte grise.</p>
-      <p>Concrètement : dossier technique, contrôle par la DREAL, attestations de conformité, nouvelle carte grise… et souvent plusieurs semaines d'attente et une facture salée. Sans cela, votre assurance peut refuser de vous couvrir en cas de sinistre.</p>
+    <div class="sec-head">
+      <span class="kicker">La règle en France</span>
+      <h2 id="h-vasp">Aménagement fixe ou kit amovible : pourquoi pas de VASP</h2>
+    </div>
+    <div class="vasp-text">
+      <p>Dès qu'on <strong>fixe durablement</strong> des meubles dans un véhicule (vissage, perçage, boulonnage), on modifie ses caractéristiques. Pour rouler en règle, il faut alors une <strong>réception à titre isolé (RTI)</strong> et la mention « VASP – autocaravane » sur la carte grise : dossier technique, contrôle par la DREAL, attestations, nouvelle carte grise, souvent plusieurs semaines d'attente et une facture salée. Sans cela, votre assurance peut refuser de vous couvrir en cas de sinistre.</p>
       <p><strong>Un kit amovible change tout :</strong> rien n'est fixé à la carrosserie, le véhicule n'est pas transformé. Votre aménagement est juridiquement un <em>chargement</em>, comme une valise ou une glacière.</p>
     </div>
-
     <div class="compare">
       <div class="col bad">
         <h3>Aménagement fixe</h3>
         <ul>
-          <li>Perçage et modification de la carrosserie</li>
-          <li>Homologation VASP / RTI obligatoire</li>
-          <li>Passage DREAL et nouvelle carte grise</li>
-          <li>Plusieurs milliers d'euros au total</li>
-          <li>Véhicule bloqué en mode camper</li>
-          <li>Décote à la revente pour un usage pro ou familial</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Perçage et modification de la carrosserie</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Homologation VASP / RTI obligatoire</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Passage DREAL et nouvelle carte grise</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Plusieurs milliers d'euros au total</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Véhicule bloqué en mode camper</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Décote à la revente pour un usage pro ou familial</li>
         </ul>
       </div>
       <div class="col good">
-        <h3>Kit amovible kitamenagement.fr</h3>
+        <h3>Kit amovible Camperizate</h3>
         <ul>
-          <li>Zéro perçage, véhicule 100 % d'origine</li>
-          <li>Aucune homologation VASP</li>
-          <li>Carte grise inchangée, assurance inchangée</li>
-          <li>Dès 500 € TTC, prix direct atelier</li>
-          <li>Camper le week-end, utilitaire ou familiale la semaine</li>
-          <li>Retiré en 5 minutes à la revente, ou réutilisé</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Zéro perçage, véhicule 100 % d'origine</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Aucune homologation VASP</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Carte grise et assurance inchangées</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Dès 500 € TTC, prix direct atelier</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Camper le week-end, utilitaire ou familiale la semaine</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Retiré en 5 minutes à la revente, ou réutilisé</li>
         </ul>
       </div>
     </div>
@@ -584,92 +697,98 @@ footer.site a{color:#fff}
   </div>
 </section>
 
-<!-- 5. FAQ -->
+<!-- FAQ -->
 <section id="faq" class="faq" aria-labelledby="h-faq">
-  <div class="wrap" style="max-width:820px">
-    <div class="center" style="margin-bottom:28px">
-      <span class="eyebrow">Questions fréquentes</span>
-      <h2 id="h-faq">Vous vous posez encore une question ?</h2>
+  <div class="wrap faq-wrap">
+    <div class="sec-head">
+      <span class="kicker">Questions fréquentes</span>
+      <h2 id="h-faq">Vos questions, nos réponses</h2>
+      <p>Une autre question ? <a href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Écrivez-nous</a>.</p>
     </div>
-
-    <details open>
-      <summary>Faut-il une homologation VASP pour ce kit ?</summary>
-      <div class="a"><p>Non. Le kit n'est ni vissé ni boulonné à la carrosserie : il est considéré comme un <strong>chargement amovible</strong>. Votre véhicule ne subit aucune transformation, donc pas de réception VASP, pas de passage en DREAL et pas de modification de la carte grise. Le contrôle technique se passe normalement (vous pouvez même retirer le kit avant).</p></div>
-    </details>
-    <details>
-      <summary>Comment le kit se fixe-t-il au véhicule ?</summary>
-      <div class="a"><p>Sans aucun perçage. Le module se pose dans l'espace de chargement et répartit son poids sur <strong>3 points d'appui contrôlés</strong> : vos sièges et votre plancher sont protégés. Pour rouler, on le sangle aux anneaux d'arrimage d'origine, comme n'importe quel chargement.</p></div>
-    </details>
-    <details>
-      <summary>Est-il compatible avec mon modèle ?</summary>
-      <div class="a"><p>Très probablement. Ludospaces : Berlingo, Partner, Rifter, Kangoo, Caddy, Combo, Doblo, Dokker, Proace City, Townstar, Citan, Tourneo Connect et Courier, Jogger, Lodgy. Vans compacts : Trafic, Transporter T4/T5/T6, Caravelle, Multivan, Vito, Viano, Expert, Traveller, Jumpy, SpaceTourer, Scudo, Talento, Vivaro, Zafira, Proace, Transit Custom, NV200, NV300, Primastar, H1. Grands fourgons : sur devis.</p><p>Un doute sur votre année ou votre empattement ? <a href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Écrivez-nous en indiquant votre modèle</a>, on vous répond rapidement.</p></div>
-    </details>
-    <details>
-      <summary>Comment se passe la livraison en France ?</summary>
-      <div class="a"><p>Votre kit est fabriqué dans notre atelier en Espagne puis expédié sur palette, <strong>déjà monté</strong>, partout en France métropolitaine. Livraison à partir de <strong>200 €</strong> pour un ludospace et <strong>250 €</strong> pour un van compact, selon la destination. Nous livrons aussi en Espagne, Italie, Portugal et Allemagne.</p></div>
-    </details>
-    <details>
-      <summary>Combien de temps faut-il pour l'installer ?</summary>
-      <div class="a"><p>Moins de 5 minutes une fois l'habitude prise, sans outil. Le démontage est encore plus rapide. Sur un ludospace, le kit plié avec son matelas tient dans le coffre : vous roulez normalement, votre camper est prête.</p></div>
-    </details>
-    <details>
-      <summary>Puis-je garder mes places assises ?</summary>
-      <div class="a"><p>Oui, selon la configuration. Sur ludospace, vous pouvez conserver vos 5 places en alternant mode camper et mode famille. Sur van compact, le kit fait 56,5 cm de haut si vous gardez la 2ᵉ rangée, ou 44,5 / 36,5 cm sans sièges pour plus de hauteur sous plafond.</p></div>
-    </details>
-    <details>
-      <summary>Quelle finition choisir ?</summary>
-      <div class="a"><p><strong>Phénolique carrossier</strong> : notre meilleure vente, finition qui repousse l'eau et les taches sans marquer. <strong>Pin</strong> : bois naturel brut, très esthétique, peut garder des traces (certains clients le vernissent). <strong>HPL de peuplier</strong> : le plus résistant et le plus léger, en blanc ou gris anthracite.</p></div>
-    </details>
-    <details>
-      <summary>Quel est le délai de fabrication ?</summary>
-      <div class="a"><p>Environ <strong>3 semaines</strong>. Si votre modèle est en stock, nous expédions plus vite. Écrivez-nous pour connaître le délai exact du moment.</p></div>
-    </details>
+    <div class="faq-list">
+      <details>
+        <summary>Faut-il une homologation VASP pour ce kit ?<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></summary>
+        <div class="a"><p>Non. Le kit n'est ni vissé ni boulonné à la carrosserie : il est considéré comme un <strong>chargement amovible</strong>. Votre véhicule ne subit aucune transformation, donc pas de réception VASP, pas de passage en DREAL et pas de modification de la carte grise. Le contrôle technique se passe normalement (vous pouvez même retirer le kit avant).</p></div>
+      </details>
+      <details>
+        <summary>Comment le kit se fixe-t-il au véhicule ?<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></summary>
+        <div class="a"><p>Sans aucun perçage. Le module se pose dans l'espace de chargement et répartit son poids sur <strong>3 points d'appui contrôlés</strong> : vos sièges et votre plancher sont protégés. Pour rouler, on le sangle aux anneaux d'arrimage d'origine, comme n'importe quel chargement.</p></div>
+      </details>
+      <details>
+        <summary>Est-il compatible avec mon modèle ?<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></summary>
+        <div class="a"><p>Très probablement. Ludospaces : Berlingo, Partner, Rifter, Kangoo, Caddy, Combo, Doblo, Dokker, Proace City, Townstar, Citan, Tourneo Connect et Courier, Jogger, Lodgy. Vans compacts : Trafic, Transporter T4/T5/T6, Caravelle, Multivan, Vito, Viano, Expert, Traveller, Jumpy, SpaceTourer, Scudo, Talento, Vivaro, Zafira, Proace, Transit Custom, NV200, NV300, Primastar, H1. Grands fourgons : sur devis.</p><p>Un doute sur votre année ou votre empattement ? <a href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Écrivez-nous en indiquant votre modèle</a>, nous vous répondons rapidement.</p></div>
+      </details>
+      <details>
+        <summary>Comment se passe la livraison en France ?<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></summary>
+        <div class="a"><p>Votre kit est fabriqué dans notre atelier en Espagne puis expédié sur palette, <strong>déjà monté</strong>, partout en France métropolitaine. Livraison à partir de <strong>200 €</strong> pour un ludospace et <strong>250 €</strong> pour un van compact, selon la destination. Nous livrons aussi en Espagne, Italie, Portugal et Allemagne.</p></div>
+      </details>
+      <details>
+        <summary>Combien de temps faut-il pour l'installer ?<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></summary>
+        <div class="a"><p>Moins de 5 minutes une fois l'habitude prise, sans outil. Le démontage est encore plus rapide. Sur un ludospace, le kit plié avec son matelas tient dans le coffre : vous roulez normalement, votre camper est prête.</p></div>
+      </details>
+      <details>
+        <summary>Puis-je garder mes places assises ?<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></summary>
+        <div class="a"><p>Oui, selon la configuration. Sur ludospace, vous pouvez conserver vos 5 places en alternant mode camper et mode famille. Sur van compact, le kit fait 56,5 cm de haut si vous gardez la 2<sup>e</sup> rangée, ou 44,5 / 36,5 cm sans sièges pour plus de hauteur sous plafond.</p></div>
+      </details>
+      <details>
+        <summary>Quelle finition choisir ?<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></summary>
+        <div class="a"><p><strong>Phénolique carrossier</strong> : notre meilleure vente, finition qui repousse l'eau et les taches sans marquer. <strong>Pin</strong> : bois naturel brut, très esthétique, peut garder des traces (certains clients le vernissent). <strong>HPL de peuplier</strong> : le plus résistant et le plus léger, en blanc ou gris anthracite.</p></div>
+      </details>
+      <details>
+        <summary>Quel est le délai de fabrication ?<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></summary>
+        <div class="a"><p>Environ <strong>3 semaines</strong>. Si votre modèle est en stock, nous expédions plus vite. Écrivez-nous pour connaître le délai exact du moment.</p></div>
+      </details>
+    </div>
   </div>
 </section>
 
-<!-- 6. CTA FINAL -->
+<!-- FINAL -->
 <section class="final" aria-labelledby="h-final">
   <div class="wrap">
-    <span class="eyebrow" style="color:#ffb27a">Délai de fabrication : ~3 semaines</span>
-    <h2 id="h-final">Votre prochain week-end en van commence ici.</h2>
-    <p class="lead">Fabrication en ~3 semaines : commandez maintenant pour partir à temps. Pas de VASP, pas de perçage, pas d'intermédiaire. Juste un kit solide, livré monté, au prix atelier.</p>
-    <div class="ctas">
-      <a class="btn btn-primary" href="https://www.camperizatetodoen1.com/fr/kit-camperizacion/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Commander sur camperizatetodoen1.com</a>
-      <a class="btn btn-wa" href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Une question ? Écrivez-nous</a>
+    <div class="sec-head">
+      <span class="kicker">Fabrication en 3 semaines</span>
+      <h2 id="h-final">Votre prochain week-end en van commence ici</h2>
+      <p>Pas de VASP, pas de perçage, pas d'intermédiaire. Un kit solide, livré monté, au prix atelier.</p>
     </div>
-    <ul class="guarantees">
-      <li>✓ Livré monté</li><li>✓ Fabriqué sur mesure</li><li>✓ Conseil avant achat</li><li>✓ Prix TTC affichés</li>
-    </ul>
+    <div class="final-actions">
+      <a href="#trouver" class="btn btn-primary">Trouver mon kit <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+      <p class="help">Une question avant de commander ? <a href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Écrivez-nous</a></p>
+    </div>
   </div>
 </section>
 
 </main>
 
-<footer class="site">
+<footer class="site-foot">
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <h3>kitamenagement.fr</h3>
-        <p>Kits d'aménagement camper amovibles pour ludospaces et vans, conçus et fabriqués par l'atelier Camperizate. Sans homologation VASP, sans perçage, livrés partout en France.</p>
-        <p><a href="https://www.camperizatetodoen1.com/fr/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Boutique principale : camperizatetodoen1.com →</a></p>
+        <img src="/img/camperizate-logo-white.svg" alt="Camperizate" width="160" height="21" loading="lazy">
+        <p>Kits d'aménagement camper amovibles pour ludospaces et vans, conçus et fabriqués dans notre atelier. Sans homologation VASP, sans perçage, livrés partout en France.</p>
+        <a class="link" href="https://www.camperizatetodoen1.com/fr/?utm_source=kitamenagement.fr&amp;utm_medium=landing&amp;utm_campaign=fr_sans_vasp">Boutique : camperizatetodoen1.com</a>
       </div>
       <div>
-        <h3>Atelier France</h3>
+        <h3>Atelier en France</h3>
         <address>Local n° 112<br>866 Avenue Maréchal Juin<br>30900 Nîmes</address>
       </div>
       <div>
         <h3>Contact</h3>
-        <p><a href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Écrivez-nous (formulaire → WhatsApp)</a><br>Tél. : <a href="tel:+34665319287">+34 665 319 287</a><br>
-        E-mail : <a href="mailto:info@camperizatetodoen1.com">info@camperizatetodoen1.com</a></p>
+        <ul class="contact-list">
+          <li><a href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-msg"/></svg>Écrivez-nous</a></li>
+          <li><a href="tel:+34665319287"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>+34 665 319 287</a></li>
+          <li><a href="mailto:info@camperizatetodoen1.com"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg>info@camperizatetodoen1.com</a></li>
+        </ul>
       </div>
     </div>
-    <div class="legal">© <span id="y">2026</span> Camperizate Todo en 1, S.L.U. · Tous les prix incluent la TVA · Les photos peuvent présenter des options.<br><a href="/mentions-legales/">Mentions légales</a> · <a href="/politique-de-confidentialite/">Politique de confidentialité</a></div>
+    <div class="legal">
+      <p>© <span id="y">2026</span> Camperizate Todo en 1, S.L.U. Tous les prix incluent la TVA. Les photos peuvent présenter des options.</p>
+      <a href="/mentions-legales/">Mentions légales</a><a href="/politique-de-confidentialite/">Politique de confidentialité</a>
+    </div>
   </div>
 </footer>
 
-<div class="sticky" aria-label="Actions rapides">
-  <a class="btn btn-wa" href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener" aria-label="Nous écrire (formulaire puis WhatsApp)">Écrivez-nous</a>
-  <a class="btn btn-primary" href="#compatibilite">Mon kit compatible</a>
+<div class="sticky" id="sticky" aria-hidden="true">
+  <a href="#trouver" class="btn btn-primary" tabindex="-1">Trouver mon kit <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
 </div>
 
 <script>
@@ -694,32 +813,56 @@ footer.site a{color:#fff}
       if(d){e.preventDefault();select(tabs[(i+d+tabs.length)%tabs.length].id.slice(2),true);}
     });
   });
+  document.querySelectorAll('[data-tab]').forEach(function(a){
+    a.addEventListener('click',function(){select(a.dataset.tab);});
+  });
 
   // Sélecteur de véhicule
   var data={
-    mini:{cat:'Kit ludospace · dès 500 € TTC',txt:"Bonne nouvelle : nous fabriquons un kit sur mesure pour votre {m}. Lit ~187 cm, cuisine extractible, coffre frigo 15 L. Livraison en France dès 200 €."},
-    moyen:{cat:'Kit van compact · dès 700 € TTC',txt:"Bonne nouvelle : nous fabriquons un kit sur mesure pour votre {m}. Couchage spacieux, frigo jusqu'à 35 L, hauteur adaptée à vos sièges. Livraison en France dès 250 €."},
-    grand:{cat:'Grand fourgon · sur devis',txt:"Pour votre {m}, nous concevons un kit amovible sur mesure. Décrivez-nous votre fourgon, devis gratuit."}
+    mini:{cat:'Kit ludospace',price:'dès 500 € TTC',items:['Lit d’environ 187 cm, jusqu’à 220 cm en XL','Cuisine extractible et coffre frigo 15 L','Livraison en France dès 200 €, kit livré monté']},
+    moyen:{cat:'Kit van compact',price:'dès 700 € TTC',items:['Couchage spacieux, hauteur adaptée à vos sièges','Cuisine extractible et coffre frigo jusqu’à 35 L','Livraison en France dès 250 €, kit livré monté']},
+    grand:{cat:'Grand fourgon',price:'sur devis',items:['Kit amovible conçu sur mesure pour votre fourgon','Toujours sans VASP et sans perçage','Devis gratuit, réponse rapide']}
   };
-  var sel=document.getElementById('vehicule'),res=document.getElementById('result'),cta=document.getElementById('r-cta');
+  var sel=document.getElementById('vehicule'),res=document.getElementById('result');
+  var cta=document.getElementById('r-cta'),alt=document.getElementById('r-alt'),list=document.getElementById('r-list');
+  var tick='<svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>';
   sel.addEventListener('change',function(){
     var v=sel.value,d=data[v],o=sel.options[sel.selectedIndex];
     if(!d){res.classList.remove('show');return;}
-    var m=o.text==='Autre modèle'?'véhicule':o.text,url=o.dataset.url;
-    document.getElementById('r-cat').textContent=d.cat;
-    document.getElementById('r-txt').textContent=d.txt.replace('{m}',m);
-    if(url){cta.href=url;cta.textContent='Voir le kit '+o.text+' →';cta.className='btn btn-primary btn-block';}
-    else{cta.href=TALLY;cta.textContent='Demander mon devis gratuit';cta.className='btn btn-wa btn-block';}
-    cta.target='_blank';cta.rel='noopener';
-    // Les boutons des fiches pointent vers la page du modèle choisi
+    var name=o.text==='Autre modèle'?'votre véhicule':o.text,url=o.dataset.url;
+    document.getElementById('r-cat').textContent=d.cat+' · '+name;
+    document.getElementById('r-price').textContent=d.price;
+    list.innerHTML=d.items.map(function(t){return '<li>'+tick+'<span>'+t+'</span></li>';}).join('');
+    if(v==='grand'){
+      cta.href=TALLY;cta.textContent='Demander mon devis gratuit';
+      if(url){alt.href=url;alt.textContent='Voir le kit Ducato / Jumper / Boxer';alt.target='_blank';}
+      else{alt.href='#kits';alt.textContent='En savoir plus';alt.removeAttribute('target');}
+    }else{
+      cta.href=url;cta.textContent='Voir le kit '+o.text;
+      alt.href='#kits';alt.textContent='Comparer les finitions et les prix';alt.removeAttribute('target');
+    }
     document.querySelectorAll('[data-kit]').forEach(function(a){
-      var match=(a.dataset.kit==='ludospace'&&v==='mini')||(a.dataset.kit==='van'&&v==='moyen');
+      var match=a.dataset.kit===v;
       a.href=match?url:CAT;
       a.textContent=match?'Commander pour mon '+o.text:'Voir le kit pour mon véhicule';
     });
-    if(v!=='grand')select(v);
+    select(v);
     res.classList.add('show');
   });
+
+  // Barre fixe mobile : visible uniquement quand aucun autre bouton orange n'est à l'écran
+  var sticky=document.getElementById('sticky');
+  if('IntersectionObserver' in window){
+    var seen=new Set();
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){e.isIntersecting?seen.add(e.target):seen.delete(e.target);});
+      var show=seen.size===0&&window.scrollY>200;
+      sticky.classList.toggle('show',show);
+      sticky.setAttribute('aria-hidden',!show);
+      sticky.querySelector('a').tabIndex=show?0:-1;
+    });
+    document.querySelectorAll('main .btn-primary, #trouver, .site-foot').forEach(function(el){io.observe(el);});
+  }
 
   document.getElementById('y').textContent=new Date().getFullYear();
 })();
