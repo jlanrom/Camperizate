@@ -32,30 +32,41 @@ TALLY = "https://tally.so/r/OD6BOp"
 # 1. LIENS STRIPE (Payment Links) — à remplir, voir docs/STRIPE.md
 # ---------------------------------------------------------------------------
 STRIPE = {
-    # Kits ludospace
-    "kit-mini-pin-sans": "",
-    "kit-mini-pin-avec": "",
-    "kit-mini-carrossier-sans": "",
-    "kit-mini-carrossier-avec": "",
-    "kit-mini-hpl-sans": "",
-    "kit-mini-hpl-avec": "",
-    # Kits van compact
-    "kit-moyen-pin-sans": "",
-    "kit-moyen-pin-avec": "",
-    "kit-moyen-carrossier-sans": "",
-    "kit-moyen-carrossier-avec": "",
-    "kit-moyen-hpl-sans": "",
-    "kit-moyen-hpl-avec": "",
+    # Kits : kit-<catégorie>-<finition>-<matelas sans|avec>-<retrait|livraison>
+    "kit-mini-pin-sans-retrait": "https://buy.stripe.com/8x2aEW88C5EJ5vJdWD6EU01",
+    "kit-mini-pin-avec-retrait": "https://buy.stripe.com/4gMdR8agKc37ganbOv6EU02",
+    "kit-mini-carrossier-sans-retrait": "https://buy.stripe.com/9B6fZg9cG8QVaQ3dWD6EU03",
+    "kit-mini-carrossier-avec-retrait": "https://buy.stripe.com/aFa28q9cG0kp0bpaKr6EU04",
+    "kit-mini-hpl-sans-retrait": "https://buy.stripe.com/eVq9ASbkOaZ38HV8Cj6EU05",
+    "kit-mini-hpl-avec-retrait": "https://buy.stripe.com/eVqbJ0ex0ebfaQ3f0H6EU06",
+    "kit-moyen-pin-sans-retrait": "https://buy.stripe.com/6oU8wO88Cc376zNf0H6EU07",
+    "kit-moyen-pin-avec-retrait": "https://buy.stripe.com/eVq5kCfB44AF4rF19R6EU08",
+    "kit-moyen-carrossier-sans-retrait": "https://buy.stripe.com/4gM9AS1Ke6IN7DRaKr6EU09",
+    "kit-moyen-carrossier-avec-retrait": "https://buy.stripe.com/8x228q2Oi3wBcYbdWD6EU0a",
+    "kit-moyen-hpl-sans-retrait": "https://buy.stripe.com/fZu28q9cG5EJ5vJg4L6EU0b",
+    "kit-moyen-hpl-avec-retrait": "https://buy.stripe.com/cNidR89cG7MR0bpdWD6EU0c",
+    "kit-mini-pin-sans-livraison": "https://buy.stripe.com/00w7sKdsWebf1ft9Gn6EU0d",
+    "kit-mini-pin-avec-livraison": "https://buy.stripe.com/fZufZg88C1ot3nB19R6EU0e",
+    "kit-mini-carrossier-sans-livraison": "https://buy.stripe.com/aFaaEWbkOc37bU7dWD6EU0f",
+    "kit-mini-carrossier-avec-livraison": "https://buy.stripe.com/dRm00ifB44AFgan19R6EU0g",
+    "kit-mini-hpl-sans-livraison": "https://buy.stripe.com/9B69ASgF84AFaQ35q76EU0h",
+    "kit-mini-hpl-avec-livraison": "https://buy.stripe.com/6oU14mfB43wB6zNcSz6EU0i",
+    "kit-moyen-pin-sans-livraison": "https://buy.stripe.com/14A3cu2Oi0kp8HV8Cj6EU0j",
+    "kit-moyen-pin-avec-livraison": "https://buy.stripe.com/4gM6oG0Ga8QV2jx19R6EU0k",
+    "kit-moyen-carrossier-sans-livraison": "https://buy.stripe.com/cNiaEW1Ke3wB9LZcSz6EU0l",
+    "kit-moyen-carrossier-avec-livraison": "https://buy.stripe.com/aFa4gygF88QV4rF8Cj6EU0m",
+    "kit-moyen-hpl-sans-livraison": "https://buy.stripe.com/dRm4gyfB4c377DRdWD6EU0n",
+    "kit-moyen-hpl-avec-livraison": "https://buy.stripe.com/3cI9ASagK8QVf6jbOv6EU0o",
     # Accessoires
-    "occultants": "",
-    "frigo-15": "",
-    "frigo-35": "",
-    "batterie": "",
-    "batterie-onduleur": "",
-    "rechaud": "",
-    "rechaud-cartouches": "",
-    "toilettes": "",
-    "douche": "",
+    "occultants": "https://buy.stripe.com/bJe3cufB40kp8HV3hZ6EU0p",
+    "frigo-15": "https://buy.stripe.com/8x24gy60u0kp9LZbOv6EU0q",
+    "frigo-35": "https://buy.stripe.com/00waEWfB43wB8HVcSz6EU0r",
+    "batterie": "https://buy.stripe.com/5kQeVc9cG7MR0bp8Cj6EU0s",
+    "batterie-onduleur": "https://buy.stripe.com/00w14mex0c378HVg4L6EU0t",
+    "rechaud": "https://buy.stripe.com/5kQbJ04Wq3wBbU7dWD6EU0u",
+    "rechaud-cartouches": "https://buy.stripe.com/cNi3cu3Sm4AF9LZ19R6EU0v",
+    "toilettes": "https://buy.stripe.com/6oU14m1Ke0kp5vJaKr6EU0w",
+    "douche": "https://buy.stripe.com/3cIeVcbkO4AF1ft19R6EU0x",
 }
 
 # ---------------------------------------------------------------------------
@@ -401,13 +412,14 @@ def boutique():
     var k=c==='moyen'?'moyen':'mini';
     document.querySelectorAll('[data-fin]').forEach(function(b){b.textContent='dès '+fmt(D.prix[k][b.dataset.fin]);});
     document.getElementById('mat-prix').textContent='+ '+fmt(D.matelas);
+    document.getElementById('liv-prix').textContent='+ '+fmt(D.livraison[k]);
     if(!c||c==='grand'){return;}
-    var fin=val('fin'),mat=val('mat');
-    var total=D.prix[c][fin]+(mat==='avec'?D.matelas:0);
+    var fin=val('fin'),mat=val('mat'),mode=val('mode');
+    var total=D.prix[c][fin]+(mat==='avec'?D.matelas:0)+(mode==='livraison'?D.livraison[c]:0);
     cat.textContent='Kit '+D.cat[c].toLowerCase()+' · '+o.text;
     sum.textContent=fmt(total)+' TTC';
-    ship.textContent='Retrait gratuit au showroom de Nîmes ou livraison montée en France dès '+D.livraison[c]+' €, à choisir au paiement.';
-    var link=D.liens['kit-'+c+'-'+fin+'-'+mat];
+    ship.textContent=mode==='livraison'?'Livraison comprise. Options à ajouter sur la page de paiement.':'Retrait gratuit à Nîmes. Options à ajouter sur la page de paiement.';
+    var link=D.liens['kit-'+c+'-'+fin+'-'+mat+'-'+mode];
     if(link){pay.href=link+(link.indexOf('?')<0?'?':'&')+'client_reference_id='+encodeURIComponent(sel.value);pay.textContent='Payer '+fmt(total)+' en ligne';pay.removeAttribute('target');pay.className='btn btn-primary';}
     else{pay.href=D.tally;pay.target='_blank';pay.textContent='Commander par message';pay.className='btn btn-primary';}
   }
@@ -427,7 +439,7 @@ def boutique():
   <div class="wrap">
     <span class="kicker">Boutique</span>
     <h1 id="h1">Commander votre kit camper</h1>
-    <p class="lead">Choisissez votre véhicule, la finition et le matelas. Paiement sécurisé par carte, fabrication en 3 semaines environ.</p>
+    <p class="lead">Choisissez votre véhicule, la finition, le matelas et la réception. Paiement sécurisé par carte, fabrication en 3 semaines environ.</p>
   </div>
 </section>
 
@@ -456,13 +468,20 @@ def boutique():
             <label class="choice"><input type="radio" name="mat" value="sans"><span>Sans matelas<small>Vous avez déjà le vôtre</small></span></label>
           </div>
         </fieldset>
+        <fieldset class="step step-mat" style="border:0;margin:24px 0 0;padding:0">
+          <h3><i>4</i>Réception</h3>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="mode" value="retrait" checked><span>Retrait au showroom de Nîmes<small>866 avenue du Maréchal Juin, sur rendez-vous</small></span><b>0 €</b></label>
+            <label class="choice"><input type="radio" name="mode" value="livraison"><span>Livraison à domicile<small>Kit monté, sur palette, France métropolitaine</small></span><b id="liv-prix"></b></label>
+          </div>
+        </fieldset>
         <div class="total" aria-live="polite">
           <p class="r-cat" id="r-cat"></p>
           <p class="sum" id="sum"></p>
           <p class="ship" id="ship"></p>
           <a class="btn btn-primary" id="pay" href="{TALLY}">Commander</a>
           <a class="btn btn-line" href="{TALLY}" target="_blank" rel="noopener">Une question avant de commander ?</a>
-          <div class="opts">Options à ajouter sur la page de paiement :<ul>{options}</ul></div>
+          <div class="opts">Options disponibles sur la page de paiement :<ul>{options}</ul></div>
         </div>
         <div class="devis">
           <h3>Grand fourgon : kit sur devis</h3>
@@ -479,7 +498,7 @@ def boutique():
     <div class="sec-head">
       <span class="kicker">Accessoires</span>
       <h2 id="h-acc">Pour partir équipé</h2>
-      <p>Livrés avec votre kit ou à retirer au showroom.</p>
+      <p>Livrés avec votre kit ou à retirer au showroom de Nîmes.</p>
     </div>
     <ul class="acc">
 {acc}
