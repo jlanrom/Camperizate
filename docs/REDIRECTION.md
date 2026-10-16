@@ -1,6 +1,6 @@
 # Redirigir camperizatetodoen1.com/fr/ a kitamenagement.fr
 
-**Todavía no está activado.** Este documento explica cómo hacerlo cuando se decida.
+**Activado el 16/10/2026** con la versión definitiva, colocada al principio del encabezado de Webnode (antes del Pixel de Facebook y de GTM).
 
 ## Qué hay preparado
 
