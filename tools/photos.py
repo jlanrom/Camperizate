@@ -53,9 +53,10 @@ def norm(txt):
 
 def index_modeles():
     idx = {}
-    for slug, nom, court, *_ in build.MODELES:
-        for cle in (slug, norm(court), norm(nom)):
-            idx[cle] = slug
+    for m in build.MODELES:
+        cles = [m["slug"], norm(m["court"]), norm(m["nom"])] + [v for v, _l, _c in m["variantes"]]
+        for cle in cles:
+            idx[cle] = m["slug"]
     return idx
 
 
@@ -127,7 +128,7 @@ def main():
     idx = index_modeles()
     par_modele, inconnus = collecter(args.dossier, idx)
     manifeste = json.loads(MANIFESTE.read_text(encoding="utf-8")) if MANIFESTE.exists() else {}
-    noms = {m[0]: m[1] for m in build.MODELES}
+    noms = {m["slug"]: m["nom"] for m in build.MODELES}
 
     for slug, fichiers in sorted(par_modele.items()):
         dest = SORTIE / slug
@@ -149,7 +150,7 @@ def main():
         print("\nModèle non reconnu (renommer le fichier ou le dossier) :")
         for x in inconnus:
             print("  ", x)
-        print("Noms acceptés :", ", ".join(sorted({m[0] for m in build.MODELES})))
+        print("Noms acceptés :", ", ".join(sorted(m["slug"] for m in build.MODELES)))
     print(f"\n{sum(len(v) for v in par_modele.values())} photo(s) traitée(s). Lancer ensuite : python3 tools/build.py")
 
 

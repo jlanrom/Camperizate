@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Boutique : kit camper amovible sans VASP | Camperizate</title>
-<meta name="description" content="Commandez votre kit d&#x27;aménagement amovible pour ludospace ou van : choisissez votre véhicule, la finition et le matelas, et payez en ligne. Dès 500 € TTC.">
+<meta name="description" content="Commandez votre kit d&#x27;aménagement amovible pour ludospace, van ou fourgon : choisissez votre véhicule, la finition et le matelas, et payez en ligne. Dès 500 € TTC.">
 <link rel="canonical" href="https://kitamenagement.fr/boutique/">
 <meta name="theme-color" content="#513524">
 <meta property="og:type" content="website">
@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="Camperizate">
 <meta property="og:url" content="https://kitamenagement.fr/boutique/">
 <meta property="og:title" content="Boutique : kit camper amovible sans VASP | Camperizate">
-<meta property="og:description" content="Commandez votre kit d&#x27;aménagement amovible pour ludospace ou van : choisissez votre véhicule, la finition et le matelas, et payez en ligne. Dès 500 € TTC.">
+<meta property="og:description" content="Commandez votre kit d&#x27;aménagement amovible pour ludospace, van ou fourgon : choisissez votre véhicule, la finition et le matelas, et payez en ligne. Dès 500 € TTC.">
 <meta property="og:image" content="https://kitamenagement.fr/img/og-kitamenagement.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -272,6 +272,12 @@ section{padding:52px 0}
 .price-table thead th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--brown-70);font-weight:600}
 .price-table td b{font:800 20px/1 var(--head);color:var(--orange);white-space:nowrap}
 .price-table small{display:block;color:var(--brown-70);font-size:13px}
+.price-table td img{float:left;width:44px;height:44px;object-fit:cover;border-radius:var(--r);margin:0 10px 0 0}
+.versions{margin-top:24px}
+.versions h3{margin-bottom:8px}
+.versions p{color:var(--brown-70)}
+.versions a{justify-content:space-between;gap:12px}
+.versions b{color:var(--orange);white-space:nowrap}
 .price-table tr:last-child td{border-bottom:0}
 .fix{max-width:720px;margin-top:20px}
 .videos{display:grid;gap:12px}
@@ -301,8 +307,15 @@ section{padding:52px 0}
 .total .ship{font-size:15px;color:var(--brown-70);margin-bottom:16px}
 .total .btn+.btn{margin-top:12px}
 .devis{display:none}
-.order.is-grand .step-fin,.order.is-grand .step-mat,.order.is-grand .total{display:none}
-.order.is-grand .devis{display:block}
+.order.is-devis .step-fin,.order.is-devis .step-mat,.order.is-devis .total{display:none}
+.order.is-devis .devis{display:block}
+.choice.with-img{justify-content:flex-start}
+.choice.with-img img{width:56px;height:56px;object-fit:cover;border-radius:var(--r);flex:none}
+.choice.with-img span{flex:1}
+.opts ul{list-style:none;padding:0;display:grid;gap:6px}
+.opts li{display:flex;align-items:center;gap:10px}
+.opts li img{width:40px;height:40px;object-fit:cover;border-radius:var(--r)}
+.acc-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r);background:var(--sand)}
 .opts{margin-top:14px;font-size:15px;color:var(--brown-70)}
 .opts ul{margin:6px 0 0;padding-left:1.2em}
 .acc{display:grid;gap:10px;list-style:none;margin:0;padding:0}
@@ -315,6 +328,8 @@ section{padding:52px 0}
 .info{display:grid;gap:10px;list-style:none;margin:0;padding:0}
 .info li{display:flex;gap:12px;align-items:flex-start}
 .info p{margin:0;color:var(--brown-70);font-size:15px}
+.info p+p{margin-top:10px}
+.info-list{margin:0 0 20px;padding-left:1.2em;display:grid;gap:6px}
 .model-links{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:8px}
 .model-links a{display:flex;align-items:center;min-height:48px;padding:10px 14px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;font-weight:600}
 .model-links a:hover{border-color:var(--brown);color:var(--orange)}
@@ -375,6 +390,23 @@ section{padding:52px 0}
     "offerCount": "6",
     "availability": "https://schema.org/InStock"
    }
+  },
+  {
+   "@type": "Product",
+   "name": "Kit d'aménagement camper amovible pour grand fourgon",
+   "image": "https://kitamenagement.fr/img/hero-van-amenage-800.webp",
+   "brand": {
+    "@type": "Brand",
+    "name": "Camperizate"
+   },
+   "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "EUR",
+    "lowPrice": "800",
+    "highPrice": "1250",
+    "offerCount": "6",
+    "availability": "https://schema.org/InStock"
+   }
   }
  ]
 }
@@ -428,17 +460,17 @@ section{padding:52px 0}
       <div class="step step-veh">
         <h3><i>1</i><label for="vehicule">Votre véhicule</label></h3>
         <div class="select">
-          <select id="vehicule" name="vehicule"><optgroup label="Kits ludospace"><option value="berlingo" data-cat="mini">Citroën Berlingo</option><option value="partner" data-cat="mini">Peugeot Partner</option><option value="rifter" data-cat="mini">Peugeot Rifter</option><option value="renault-kangoo" data-cat="mini">Renault Kangoo</option><option value="caddy" data-cat="mini">Volkswagen Caddy</option><option value="opel-combo-life" data-cat="mini">Opel Combo Life</option><option value="fiat-doblo" data-cat="mini">Fiat Doblo</option><option value="proace-city" data-cat="mini">Toyota Proace City</option><option value="nissan-townstar" data-cat="mini">Nissan Townstar</option><option value="mercedes-citan" data-cat="mini">Mercedes Citan / Classe T</option><option value="tourneo-transit" data-cat="mini">Ford Tourneo / Transit Connect</option><option value="ford-courier" data-cat="mini">Ford Tourneo / Transit Courier</option><option value="dokker" data-cat="mini">Dacia Dokker</option><option value="dacia-jogger-lodgy" data-cat="mini">Dacia Jogger / Lodgy</option></optgroup><optgroup label="Kits van compact"><option value="trafic" data-cat="moyen">Renault Trafic</option><option value="transporter-t4-t5-t6" data-cat="moyen">Volkswagen Transporter T4 / T5 / T6</option><option value="caravelle-t4-t5-t6" data-cat="moyen">Volkswagen Caravelle / Multivan</option><option value="vito-viano" data-cat="moyen">Mercedes Vito / Viano</option><option value="expert" data-cat="moyen">Peugeot Expert</option><option value="traveller" data-cat="moyen">Peugeot Traveller</option><option value="jumpy" data-cat="moyen">Citroën Jumpy</option><option value="space-tourer" data-cat="moyen">Citroën SpaceTourer</option><option value="fiat-scudo" data-cat="moyen">Fiat Scudo</option><option value="talento" data-cat="moyen">Fiat Talento</option><option value="opel-vivaro" data-cat="moyen">Opel Vivaro / Zafira Life</option><option value="toyota-proace" data-cat="moyen">Toyota Proace</option><option value="ford-transit-custom" data-cat="moyen">Ford Transit / Tourneo Custom</option><option value="nv200" data-cat="moyen">Nissan NV200</option><option value="nv300" data-cat="moyen">Nissan NV300 / Primastar</option><option value="hyundai-h1" data-cat="moyen">Hyundai H1</option></optgroup><optgroup label="Grands fourgons"><option value="jumper-boxer-transit" data-cat="grand">Fiat Ducato / Citroën Jumper / Peugeot Boxer</option><option value="ford-transit" data-cat="grand">Ford Transit</option><option value="autre" data-cat="grand">Autre modèle</option></optgroup></select>
+          <select id="vehicule" name="vehicule"><optgroup label="Kits ludospace et monospace"><option value="berlingo" data-cat="mini" data-fiche="berlingo">Citroën Berlingo (M)</option><option value="citroen-c8-peugeot-807" data-cat="mini" data-fiche="citroen-c8-peugeot-807">Citroën C8 / Peugeot 807</option><option value="dokker" data-cat="mini" data-fiche="dokker">Dacia Dokker</option><option value="dacia-jogger-lodgy" data-cat="mini" data-fiche="dacia-jogger-lodgy">Dacia Jogger / Lodgy</option><option value="fiat-doblo" data-cat="mini" data-fiche="fiat-doblo">Fiat Doblò</option><option value="tourneo-transit" data-cat="mini" data-fiche="tourneo-transit">Ford Transit / Tourneo Connect</option><option value="ford-courier" data-cat="mini" data-fiche="ford-courier">Ford Transit / Tourneo Courier</option><option value="mercedes-citan" data-cat="mini" data-fiche="mercedes-citan">Mercedes Citan / Classe T</option><option value="nissan-juke" data-cat="mini" data-fiche="nissan-juke">Nissan Juke</option><option value="nissan-townstar" data-cat="mini" data-fiche="nissan-townstar">Nissan Townstar</option><option value="opel-combo-life" data-cat="mini" data-fiche="opel-combo-life">Opel Combo / Combo Life</option><option value="partner" data-cat="mini" data-fiche="partner">Peugeot Partner / Partner Tepee</option><option value="rifter" data-cat="mini" data-fiche="rifter">Peugeot Rifter (M)</option><option value="renault-grand-scenic" data-cat="mini" data-fiche="renault-grand-scenic">Renault Grand Scénic</option><option value="renault-kangoo" data-cat="mini" data-fiche="renault-kangoo">Renault Kangoo</option><option value="proace-city" data-cat="mini" data-fiche="proace-city">Toyota Proace City</option><option value="caddy" data-cat="mini" data-fiche="caddy">Volkswagen Caddy</option><option value="vw-touran" data-cat="mini" data-fiche="vw-touran">Volkswagen Touran</option></optgroup><optgroup label="Kits van compact"><option value="berlingo-xl" data-cat="moyen" data-fiche="berlingo">Citroën Berlingo XL</option><option value="jumpy" data-cat="moyen" data-fiche="jumpy">Citroën Jumpy</option><option value="space-tourer" data-cat="moyen" data-fiche="space-tourer">Citroën SpaceTourer</option><option value="doblo-maxi" data-cat="moyen" data-fiche="fiat-doblo">Fiat Doblò Maxi</option><option value="fiat-scudo" data-cat="moyen" data-fiche="fiat-scudo">Fiat Scudo</option><option value="talento" data-cat="moyen" data-fiche="talento">Fiat Talento</option><option value="ford-transit-custom" data-cat="moyen" data-fiche="ford-transit-custom">Ford Transit / Tourneo Custom</option><option value="hyundai-h1" data-cat="moyen" data-fiche="hyundai-h1">Hyundai H1</option><option value="vito-viano" data-cat="moyen" data-fiche="vito-viano">Mercedes Vito / Viano</option><option value="nv200" data-cat="moyen" data-fiche="nv200">Nissan NV200 / Evalia</option><option value="nv300" data-cat="moyen" data-fiche="nv300">Nissan NV300 / Primastar</option><option value="opel-vivaro" data-cat="moyen" data-fiche="opel-vivaro">Opel Vivaro / Zafira</option><option value="expert" data-cat="moyen" data-fiche="expert">Peugeot Expert</option><option value="rifter-xl" data-cat="moyen" data-fiche="rifter">Peugeot Rifter XL</option><option value="traveller" data-cat="moyen" data-fiche="traveller">Peugeot Traveller</option><option value="kangoo-maxi" data-cat="moyen" data-fiche="renault-kangoo">Renault Kangoo Maxi</option><option value="trafic" data-cat="moyen" data-fiche="trafic">Renault Trafic</option><option value="toyota-proace" data-cat="moyen" data-fiche="toyota-proace">Toyota Proace / Proace Verso</option><option value="caddy-maxi" data-cat="moyen" data-fiche="caddy">Volkswagen Caddy Maxi</option><option value="caravelle-t4-t5-t6" data-cat="moyen" data-fiche="caravelle-t4-t5-t6">Volkswagen Caravelle / Multivan</option><option value="transporter-t4-t5-t6" data-cat="moyen" data-fiche="transporter-t4-t5-t6">Volkswagen Transporter T4 / T5 / T6 / T7</option></optgroup><optgroup label="Kits grand fourgon"><option value="jumper-boxer-transit" data-cat="grand" data-fiche="jumper-boxer-transit">Fiat Ducato / Citroën Jumper / Peugeot Boxer</option><option value="ford-transit" data-cat="grand" data-fiche="ford-transit">Ford Transit</option><option value="mercedes-sprinter" data-cat="grand" data-fiche="mercedes-sprinter">Mercedes Sprinter</option><option value="renault-master" data-cat="grand" data-fiche="renault-master">Renault Master / Opel Movano</option><option value="vw-crafter" data-cat="grand" data-fiche="vw-crafter">Volkswagen Crafter</option></optgroup><optgroup label="Autre"><option value="autre" data-cat="autre">Autre modèle</option></optgroup></select>
           <svg class="ico" aria-hidden="true"><use href="#i-down"/></svg>
         </div>
-        <p class="help">Modèle absent ? Choisissez « Autre modèle » ou <a href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">écrivez-nous</a>.</p>
+        <p class="help">Modèle absent ? Choisissez « Autre modèle » ou <a href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">écrivez-nous</a>. <a href="/kit-amenagement/">Voir les fiches des modèles</a>.</p>
       </div>
       <fieldset class="step step-fin" style="border:0;margin:0;padding:0">
         <h3><i>2</i>Finition</h3>
         <div class="choices">
-<label class="choice"><input type="radio" name="fin" value="pin"><span>Phénolique pin<small>Bois naturel, chaleureux, vernissable.</small></span><b data-fin="pin"></b></label>
-<label class="choice"><input type="radio" name="fin" value="carrossier" checked><span>Phénolique carrossier<small>Noir, repousse l&#x27;eau et les taches. Le plus vendu.</small></span><b data-fin="carrossier"></b></label>
-<label class="choice"><input type="radio" name="fin" value="hpl"><span>HPL de peuplier<small>Léger, ultra-résistant. Blanc ou anthracite.</small></span><b data-fin="hpl"></b></label>
+<label class="choice with-img"><input type="radio" name="fin" value="pin"><img src="https://storage.tally.so/b2a97ab2-3782-47d6-8e5d-04b1d5b1281a/materiales-muebles-1-X12.jpg" alt="" width="64" height="64" loading="lazy"><span>Phénolique pin<small>Contreplaqué phénolique de pin, finition bois naturel.</small></span><b data-fin="pin"></b></label>
+<label class="choice with-img"><input type="radio" name="fin" value="carrossier" checked><img src="https://storage.tally.so/5c1b8d35-41db-43ef-920d-f82a3c309563/materiales-muebles-0-X10.jpg" alt="" width="64" height="64" loading="lazy"><span>Phénolique carrossier<small>Contreplaqué phénolique antidérapant, noir. Le plus vendu.</small></span><b data-fin="carrossier"></b></label>
+<label class="choice with-img"><input type="radio" name="fin" value="hpl"><img src="https://storage.tally.so/306e225d-2e4c-4ff7-875d-a10f4b2fc2aa/materiales-muebles-2-X14.jpg" alt="" width="64" height="64" loading="lazy"><span>HPL de peuplier<small>Peuplier phénolique avec HPL, blanc ou anthracite. Notre finition premium.</small></span><b data-fin="hpl"></b></label>
         </div>
       </fieldset>
       <div>
@@ -463,11 +495,11 @@ section{padding:52px 0}
           <a class="btn btn-primary" id="pay" href="https://tally.so/r/OD6BOp">Commander</a>
           <a class="btn btn-line" href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Une question avant de commander ?</a>
           <p class="help">Kit fabriqué sur mesure : pas de droit de rétractation. Voir les <a href="/conditions-generales-de-vente/">CGV</a>.</p>
-          <div class="opts">Options disponibles sur la page de paiement :<ul><li>Équerre rabattable + 25 €</li><li>Plateau frigo + 25 €</li><li>Tiroir frigo coulissant + 50 €</li><li>Égouttoir + 35 €</li><li>Version 2+1 + 100 €</li></ul></div>
+          <div class="opts">Options à ajouter sur la page de paiement (<a href="/accessoires/#options">voir en détail</a>) :<ul><li><img src="https://storage.tally.so/af8abc34-4b58-437c-95ea-e1b6df7b584c/configuracion-especial-0-X8.jpg" alt="" width="40" height="40" loading="lazy">Équerre rabattable sur le tiroir cuisine <b>+ 25 €</b></li><li><img src="https://storage.tally.so/36fcc932-a705-4779-baec-984c37856438/configuracion-especial-1-X11.jpg" alt="" width="40" height="40" loading="lazy">Côté gauche : plateau <b>+ 25 €</b></li><li><img src="https://storage.tally.so/8a8ac0f2-1510-482a-9988-bba25b414bc2/configuracion-especial-2-X12.jpg" alt="" width="40" height="40" loading="lazy">Côté gauche : tiroir coulissant <b>+ 50 €</b></li><li><img src="https://storage.tally.so/5f855939-4067-4701-af5c-e8f30f3f2f69/codex-clipboard-c1a4ac56-971a-4334-9a95-9a2971d8bbdb.png" alt="" width="40" height="40" loading="lazy">Côté gauche : tiroir avec équerre rabattable <b>+ 75 €</b></li><li><img src="https://storage.tally.so/4b38c070-de6d-4a7c-9ae7-06627f7d8531/configuracion-especial-3-X13.jpg" alt="" width="40" height="40" loading="lazy">Égouttoir <b>+ 35 €</b></li><li><img src="https://storage.tally.so/4b072ce3-3b84-485a-b80c-d092ca5b0c1f/configuracion-especial-4-X14.jpg" alt="" width="40" height="40" loading="lazy">Version 2+1 <b>+ 100 €</b></li></ul></div>
         </div>
         <div class="devis">
-          <h3>Grand fourgon : kit sur devis</h3>
-          <p>Ducato, Jumper, Boxer, Transit, Master, Sprinter… Chaque kit est conçu pour votre fourgon, toujours sans VASP. Le devis est gratuit.</p>
+          <h3>Votre véhicule n'est pas dans la liste ?</h3>
+          <p>Nous fabriquons des kits pour beaucoup d'autres modèles. Dites-nous la marque, le modèle et l'année : nous vous répondons avec le prix, sans engagement.</p>
           <a class="btn btn-primary" href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Demander mon devis</a>
         </div>
       </div>
@@ -483,15 +515,15 @@ section{padding:52px 0}
       <p>Livrés avec votre kit ou à retirer au showroom de Nîmes.</p>
     </div>
     <ul class="acc">
-<li><div class="row"><div><h3>Occultants isolants</h3><small>9 couches, sur mesure pour votre modèle</small></div><b>149 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/bJe3cufB40kp8HV3hZ6EU0p">Acheter</a></li>
-<li><div class="row"><div><h3>Frigo à compresseur 15 L</h3><small>Pour ludospace</small></div><b>220 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/8x24gy60u0kp9LZbOv6EU0q">Acheter</a></li>
-<li><div class="row"><div><h3>Frigo à compresseur 35 L</h3><small>Pour van compact</small></div><b>300 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/00waEWfB43wB8HVcSz6EU0r">Acheter</a></li>
-<li><div class="row"><div><h3>Batterie lithium</h3><small>Sans onduleur</small></div><b>750 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/5kQeVc9cG7MR0bp8Cj6EU0s">Acheter</a></li>
-<li><div class="row"><div><h3>Batterie lithium + onduleur</h3><small>Prises 230 V à bord</small></div><b>975 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/00w14mex0c378HVg4L6EU0t">Acheter</a></li>
-<li><div class="row"><div><h3>Réchaud</h3><small>Réchaud seul</small></div><b>29 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/5kQbJ04Wq3wBbU7dWD6EU0u">Acheter</a></li>
-<li><div class="row"><div><h3>Réchaud + 3 cartouches</h3><small>Prêt à cuisiner</small></div><b>35 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/cNi3cu3Sm4AF9LZ19R6EU0v">Acheter</a></li>
-<li><div class="row"><div><h3>Toilettes portables</h3></div><b>110 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/6oU14m1Ke0kp5vJaKr6EU0w">Acheter</a></li>
-<li><div class="row"><div><h3>Douche portable</h3></div><b>75 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/3cIeVcbkO4AF1ft19R6EU0x">Acheter</a></li>
+<li id="occultants"><img class="acc-img" src="https://storage.tally.so/8d98c10c-92dd-4707-99bb-b8c50b90f0ba/extras-0-X8.jpg" alt="Occultants isolants" width="400" height="300" loading="lazy"><div class="row"><div><h3>Occultants isolants</h3><small>9 couches, sur mesure pour votre modèle</small></div><b>149 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/bJe3cufB40kp8HV3hZ6EU0p">Acheter</a></li>
+<li id="frigo"><img class="acc-img" src="https://storage.tally.so/282c1438-82f3-4bc7-978a-e49d2af18236/extras-1-X11.jpg" alt="Frigo à compresseur 15 L" width="400" height="300" loading="lazy"><div class="row"><div><h3>Frigo à compresseur 15 L</h3><small>Pour ludospace</small></div><b>220 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/8x24gy60u0kp9LZbOv6EU0q">Acheter</a></li>
+<li id="frigo-35"><img class="acc-img" src="https://storage.tally.so/282c1438-82f3-4bc7-978a-e49d2af18236/extras-1-X11.jpg" alt="Frigo à compresseur 35 L" width="400" height="300" loading="lazy"><div class="row"><div><h3>Frigo à compresseur 35 L</h3><small>Pour van compact et grand fourgon</small></div><b>300 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/00waEWfB43wB8HVcSz6EU0r">Acheter</a></li>
+<li id="batterie"><img class="acc-img" src="https://storage.tally.so/015e8874-b0ed-44ce-8637-66dd880395ea/bateria-sin-inversor.png" alt="Batterie lithium" width="400" height="300" loading="lazy"><div class="row"><div><h3>Batterie lithium</h3><small>Sans onduleur</small></div><b>750 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/5kQeVc9cG7MR0bp8Cj6EU0s">Acheter</a></li>
+<li id="batterie-onduleur"><img class="acc-img" src="https://storage.tally.so/ea94b591-c51c-4611-be52-360adab423e9/extras-2-X12.jpg" alt="Batterie lithium + onduleur" width="400" height="300" loading="lazy"><div class="row"><div><h3>Batterie lithium + onduleur</h3><small>Prises 230 V à bord</small></div><b>975 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/00w14mex0c378HVg4L6EU0t">Acheter</a></li>
+<li id="rechaud"><img class="acc-img" src="https://storage.tally.so/243ba676-56cc-4fee-be72-b30aef58c06e/extras-4-X14.jpg" alt="Réchaud" width="400" height="300" loading="lazy"><div class="row"><div><h3>Réchaud</h3><small>Réchaud seul</small></div><b>29 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/5kQbJ04Wq3wBbU7dWD6EU0u">Acheter</a></li>
+<li id="rechaud-cartouches"><img class="acc-img" src="https://storage.tally.so/243ba676-56cc-4fee-be72-b30aef58c06e/extras-4-X14.jpg" alt="Réchaud + 3 cartouches" width="400" height="300" loading="lazy"><div class="row"><div><h3>Réchaud + 3 cartouches</h3><small>Prêt à cuisiner</small></div><b>35 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/cNi3cu3Sm4AF9LZ19R6EU0v">Acheter</a></li>
+<li id="toilettes"><img class="acc-img" src="https://storage.tally.so/cce9dc8f-c7cb-4bf7-8687-c98655bb6908/extras-3-X13.jpg" alt="Toilettes portables" width="400" height="300" loading="lazy"><div class="row"><div><h3>Toilettes portables</h3><small>Format compact, se range dans le coffre</small></div><b>110 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/6oU14m1Ke0kp5vJaKr6EU0w">Acheter</a></li>
+<li id="douche"><img class="acc-img" src="https://storage.tally.so/e9eab5c0-4ff1-4bed-b3d8-e4c29dd6fd6e/extras-5-X15.jpg" alt="Douche portable" width="400" height="300" loading="lazy"><div class="row"><div><h3>Douche portable</h3><small>12 V, réservoir de 20 L</small></div><b>75 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/3cIeVcbkO4AF1ft19R6EU0x">Acheter</a></li>
     </ul>
   </div>
 </section>
@@ -517,8 +549,8 @@ section{padding:52px 0}
     <div class="foot-grid">
       <div>
         <img src="/img/camperizate-logo-white.svg" alt="Camperizate" width="160" height="21" loading="lazy">
-        <p>Kits camper amovibles pour ludospaces et vans, fabriqués dans notre atelier.</p>
-        <a class="link" href="/kit-amenagement/">Tous les modèles</a> · <a class="link" href="/boutique/">Boutique</a>
+        <p>Kits camper amovibles pour ludospaces, vans et fourgons, fabriqués dans notre atelier.</p>
+        <a class="link" href="/kit-amenagement/">Tous les modèles</a> · <a class="link" href="/boutique/">Boutique</a> · <a class="link" href="/accessoires/">Accessoires</a> · <a class="link" href="/guide-kit-meubles-camper/">Guide</a> · <a class="link" href="/contact/">Contact</a>
       </div>
       <div>
         <h3>Showroom en France</h3>
@@ -541,19 +573,19 @@ section{padding:52px 0}
 </footer>
 <script>
 (function(){
-  var D={"liens": {"kit-mini-pin-sans-retrait": "https://buy.stripe.com/8x2aEW88C5EJ5vJdWD6EU01", "kit-mini-pin-avec-retrait": "https://buy.stripe.com/4gMdR8agKc37ganbOv6EU02", "kit-mini-carrossier-sans-retrait": "https://buy.stripe.com/9B6fZg9cG8QVaQ3dWD6EU03", "kit-mini-carrossier-avec-retrait": "https://buy.stripe.com/aFa28q9cG0kp0bpaKr6EU04", "kit-mini-hpl-sans-retrait": "https://buy.stripe.com/eVq9ASbkOaZ38HV8Cj6EU05", "kit-mini-hpl-avec-retrait": "https://buy.stripe.com/eVqbJ0ex0ebfaQ3f0H6EU06", "kit-moyen-pin-sans-retrait": "https://buy.stripe.com/6oU8wO88Cc376zNf0H6EU07", "kit-moyen-pin-avec-retrait": "https://buy.stripe.com/eVq5kCfB44AF4rF19R6EU08", "kit-moyen-carrossier-sans-retrait": "https://buy.stripe.com/4gM9AS1Ke6IN7DRaKr6EU09", "kit-moyen-carrossier-avec-retrait": "https://buy.stripe.com/8x228q2Oi3wBcYbdWD6EU0a", "kit-moyen-hpl-sans-retrait": "https://buy.stripe.com/fZu28q9cG5EJ5vJg4L6EU0b", "kit-moyen-hpl-avec-retrait": "https://buy.stripe.com/cNidR89cG7MR0bpdWD6EU0c", "kit-mini-pin-sans-livraison": "https://buy.stripe.com/00w7sKdsWebf1ft9Gn6EU0d", "kit-mini-pin-avec-livraison": "https://buy.stripe.com/fZufZg88C1ot3nB19R6EU0e", "kit-mini-carrossier-sans-livraison": "https://buy.stripe.com/aFaaEWbkOc37bU7dWD6EU0f", "kit-mini-carrossier-avec-livraison": "https://buy.stripe.com/dRm00ifB44AFgan19R6EU0g", "kit-mini-hpl-sans-livraison": "https://buy.stripe.com/9B69ASgF84AFaQ35q76EU0h", "kit-mini-hpl-avec-livraison": "https://buy.stripe.com/6oU14mfB43wB6zNcSz6EU0i", "kit-moyen-pin-sans-livraison": "https://buy.stripe.com/14A3cu2Oi0kp8HV8Cj6EU0j", "kit-moyen-pin-avec-livraison": "https://buy.stripe.com/4gM6oG0Ga8QV2jx19R6EU0k", "kit-moyen-carrossier-sans-livraison": "https://buy.stripe.com/cNiaEW1Ke3wB9LZcSz6EU0l", "kit-moyen-carrossier-avec-livraison": "https://buy.stripe.com/aFa4gygF88QV4rF8Cj6EU0m", "kit-moyen-hpl-sans-livraison": "https://buy.stripe.com/dRm4gyfB4c377DRdWD6EU0n", "kit-moyen-hpl-avec-livraison": "https://buy.stripe.com/3cI9ASagK8QVf6jbOv6EU0o"}, "prix": {"mini": {"pin": 500, "carrossier": 550, "hpl": 800}, "moyen": {"pin": 700, "carrossier": 750, "hpl": 1000}}, "matelas": 150, "cat": {"mini": "Ludospace", "moyen": "Van compact", "grand": "Grand fourgon"}, "livraison": {"mini": 200, "moyen": 250, "grand": null}, "tally": "https://tally.so/r/OD6BOp"};
+  var D={"liens": {"kit-mini-pin-sans-retrait": "https://buy.stripe.com/8x2aEW88C5EJ5vJdWD6EU01", "kit-mini-pin-avec-retrait": "https://buy.stripe.com/4gMdR8agKc37ganbOv6EU02", "kit-mini-carrossier-sans-retrait": "https://buy.stripe.com/9B6fZg9cG8QVaQ3dWD6EU03", "kit-mini-carrossier-avec-retrait": "https://buy.stripe.com/aFa28q9cG0kp0bpaKr6EU04", "kit-mini-hpl-sans-retrait": "https://buy.stripe.com/eVq9ASbkOaZ38HV8Cj6EU05", "kit-mini-hpl-avec-retrait": "https://buy.stripe.com/eVqbJ0ex0ebfaQ3f0H6EU06", "kit-moyen-pin-sans-retrait": "https://buy.stripe.com/6oU8wO88Cc376zNf0H6EU07", "kit-moyen-pin-avec-retrait": "https://buy.stripe.com/eVq5kCfB44AF4rF19R6EU08", "kit-moyen-carrossier-sans-retrait": "https://buy.stripe.com/4gM9AS1Ke6IN7DRaKr6EU09", "kit-moyen-carrossier-avec-retrait": "https://buy.stripe.com/8x228q2Oi3wBcYbdWD6EU0a", "kit-moyen-hpl-sans-retrait": "https://buy.stripe.com/fZu28q9cG5EJ5vJg4L6EU0b", "kit-moyen-hpl-avec-retrait": "https://buy.stripe.com/cNidR89cG7MR0bpdWD6EU0c", "kit-mini-pin-sans-livraison": "https://buy.stripe.com/00w7sKdsWebf1ft9Gn6EU0d", "kit-mini-pin-avec-livraison": "https://buy.stripe.com/fZufZg88C1ot3nB19R6EU0e", "kit-mini-carrossier-sans-livraison": "https://buy.stripe.com/aFaaEWbkOc37bU7dWD6EU0f", "kit-mini-carrossier-avec-livraison": "https://buy.stripe.com/dRm00ifB44AFgan19R6EU0g", "kit-mini-hpl-sans-livraison": "https://buy.stripe.com/9B69ASgF84AFaQ35q76EU0h", "kit-mini-hpl-avec-livraison": "https://buy.stripe.com/6oU14mfB43wB6zNcSz6EU0i", "kit-moyen-pin-sans-livraison": "https://buy.stripe.com/14A3cu2Oi0kp8HV8Cj6EU0j", "kit-moyen-pin-avec-livraison": "https://buy.stripe.com/4gM6oG0Ga8QV2jx19R6EU0k", "kit-moyen-carrossier-sans-livraison": "https://buy.stripe.com/cNiaEW1Ke3wB9LZcSz6EU0l", "kit-moyen-carrossier-avec-livraison": "https://buy.stripe.com/aFa4gygF88QV4rF8Cj6EU0m", "kit-moyen-hpl-sans-livraison": "https://buy.stripe.com/dRm4gyfB4c377DRdWD6EU0n", "kit-moyen-hpl-avec-livraison": "https://buy.stripe.com/3cI9ASagK8QVf6jbOv6EU0o", "kit-grand-pin-sans-retrait": "https://buy.stripe.com/aFa3cuagK3wB3nB2dV6EU0y", "kit-grand-pin-avec-retrait": "https://buy.stripe.com/aFa9AS0Ga9UZ8HVf0H6EU0z", "kit-grand-carrossier-sans-retrait": "https://buy.stripe.com/4gMeVc4WqaZ31ft2dV6EU0A", "kit-grand-carrossier-avec-retrait": "https://buy.stripe.com/00w6oGfB41ot2jxaKr6EU0B", "kit-grand-hpl-sans-retrait": "https://buy.stripe.com/8x214m0Ga1ot2jx7yf6EU0C", "kit-grand-hpl-avec-retrait": "https://buy.stripe.com/9B66oGcoSd7bbU705N6EU0D", "kit-grand-pin-sans-livraison": "https://buy.stripe.com/6oU4gy60ud7bf6j6ub6EU0E", "kit-grand-pin-avec-livraison": "https://buy.stripe.com/00w8wOdsWaZ32jxcSz6EU0F", "kit-grand-carrossier-sans-livraison": "https://buy.stripe.com/8x25kC74y2sx9LZ6ub6EU0G", "kit-grand-carrossier-avec-livraison": "https://buy.stripe.com/7sY28q60ugjnaQ3g4L6EU0H", "kit-grand-hpl-sans-livraison": "https://buy.stripe.com/8x2cN4bkO7MR2jx6ub6EU0I", "kit-grand-hpl-avec-livraison": "https://buy.stripe.com/3cIdR84Wq3wB4rF8Cj6EU0J"}, "prix": {"mini": {"pin": 500, "carrossier": 550, "hpl": 800}, "moyen": {"pin": 700, "carrossier": 750, "hpl": 1000}, "grand": {"pin": 800, "carrossier": 850, "hpl": 1100}}, "matelas": 150, "cat": {"mini": "Ludospace", "moyen": "Van compact", "grand": "Grand fourgon"}, "livraison": {"mini": 200, "moyen": 250, "grand": 250}, "tally": "https://tally.so/r/OD6BOp"};
   var f=document.getElementById('commande'),sel=document.getElementById('vehicule');
   var pay=document.getElementById('pay'),sum=document.getElementById('sum'),cat=document.getElementById('r-cat'),ship=document.getElementById('ship');
   function val(n){var x=f.querySelector('input[name='+n+']:checked');return x?x.value:null;}
   function fmt(n){return n.toLocaleString('fr-FR')+' €';}
   function render(){
     var o=sel.options[sel.selectedIndex],c=o?o.dataset.cat:null;
-    f.classList.toggle('is-grand',c==='grand');
-    var k=c==='moyen'?'moyen':'mini';
+    f.classList.toggle('is-devis',c==='autre');
+    var k=D.prix[c]?c:'mini';
     document.querySelectorAll('[data-fin]').forEach(function(b){b.textContent='dès '+fmt(D.prix[k][b.dataset.fin]);});
     document.getElementById('mat-prix').textContent='+ '+fmt(D.matelas);
     document.getElementById('liv-prix').textContent='+ '+fmt(D.livraison[k]);
-    if(!c||c==='grand'){return;}
+    if(!c||c==='autre'){return;}
     var fin=val('fin'),mat=val('mat'),mode=val('mode');
     var total=D.prix[c][fin]+(mat==='avec'?D.matelas:0)+(mode==='livraison'?D.livraison[c]:0);
     cat.textContent='Kit '+D.cat[c].toLowerCase()+' · '+o.text;

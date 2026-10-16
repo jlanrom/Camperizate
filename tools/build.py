@@ -57,6 +57,19 @@ STRIPE = {
     "kit-moyen-carrossier-avec-livraison": "https://buy.stripe.com/aFa4gygF88QV4rF8Cj6EU0m",
     "kit-moyen-hpl-sans-livraison": "https://buy.stripe.com/dRm4gyfB4c377DRdWD6EU0n",
     "kit-moyen-hpl-avec-livraison": "https://buy.stripe.com/3cI9ASagK8QVf6jbOv6EU0o",
+    # Kits grand fourgon
+    "kit-grand-pin-sans-retrait": "https://buy.stripe.com/aFa3cuagK3wB3nB2dV6EU0y",
+    "kit-grand-pin-avec-retrait": "https://buy.stripe.com/aFa9AS0Ga9UZ8HVf0H6EU0z",
+    "kit-grand-carrossier-sans-retrait": "https://buy.stripe.com/4gMeVc4WqaZ31ft2dV6EU0A",
+    "kit-grand-carrossier-avec-retrait": "https://buy.stripe.com/00w6oGfB41ot2jxaKr6EU0B",
+    "kit-grand-hpl-sans-retrait": "https://buy.stripe.com/8x214m0Ga1ot2jx7yf6EU0C",
+    "kit-grand-hpl-avec-retrait": "https://buy.stripe.com/9B66oGcoSd7bbU705N6EU0D",
+    "kit-grand-pin-sans-livraison": "https://buy.stripe.com/6oU4gy60ud7bf6j6ub6EU0E",
+    "kit-grand-pin-avec-livraison": "https://buy.stripe.com/00w8wOdsWaZ32jxcSz6EU0F",
+    "kit-grand-carrossier-sans-livraison": "https://buy.stripe.com/8x25kC74y2sx9LZ6ub6EU0G",
+    "kit-grand-carrossier-avec-livraison": "https://buy.stripe.com/7sY28q60ugjnaQ3g4L6EU0H",
+    "kit-grand-hpl-sans-livraison": "https://buy.stripe.com/8x2cN4bkO7MR2jx6ub6EU0I",
+    "kit-grand-hpl-avec-livraison": "https://buy.stripe.com/3cIdR84Wq3wB4rF8Cj6EU0J",
     # Accessoires
     "occultants": "https://buy.stripe.com/bJe3cufB40kp8HV3hZ6EU0p",
     "frigo-15": "https://buy.stripe.com/8x24gy60u0kp9LZbOv6EU0q",
@@ -70,188 +83,13 @@ STRIPE = {
 }
 
 # ---------------------------------------------------------------------------
-# 2. CATALOGUE
+# 2. CATALOGUE : données dans tools/catalogue.py (prix et véhicules du formulaire Tally)
 # ---------------------------------------------------------------------------
-FINITIONS = [  # clé, nom, description, prix (mini, moyen) sans matelas
-    ("pin", "Phénolique pin", "Bois naturel, chaleureux, vernissable.", {"mini": 500, "moyen": 700}),
-    ("carrossier", "Phénolique carrossier", "Noir, repousse l'eau et les taches. Le plus vendu.", {"mini": 550, "moyen": 750}),
-    ("hpl", "HPL de peuplier", "Léger, ultra-résistant. Blanc ou anthracite.", {"mini": 800, "moyen": 1000}),
-]
-MATELAS = 150  # supplément matelas sur mesure
-CATEGORIES = {
-    "mini": {"nom": "Ludospace", "pluriel": "Kits ludospace", "livraison": 200},
-    "moyen": {"nom": "Van compact", "pluriel": "Kits van compact", "livraison": 250},
-    "grand": {"nom": "Grand fourgon", "pluriel": "Grands fourgons", "livraison": None},
-}
-# slug = dernier segment de l'ancienne URL camperizatetodoen1.com/fr/…
-VEHICULES = [
-    ("mini", "berlingo", "Citroën Berlingo"),
-    ("mini", "partner", "Peugeot Partner"),
-    ("mini", "rifter", "Peugeot Rifter"),
-    ("mini", "renault-kangoo", "Renault Kangoo"),
-    ("mini", "caddy", "Volkswagen Caddy"),
-    ("mini", "opel-combo-life", "Opel Combo Life"),
-    ("mini", "fiat-doblo", "Fiat Doblo"),
-    ("mini", "proace-city", "Toyota Proace City"),
-    ("mini", "nissan-townstar", "Nissan Townstar"),
-    ("mini", "mercedes-citan", "Mercedes Citan / Classe T"),
-    ("mini", "tourneo-transit", "Ford Tourneo / Transit Connect"),
-    ("mini", "ford-courier", "Ford Tourneo / Transit Courier"),
-    ("mini", "dokker", "Dacia Dokker"),
-    ("mini", "dacia-jogger-lodgy", "Dacia Jogger / Lodgy"),
-    ("moyen", "trafic", "Renault Trafic"),
-    ("moyen", "transporter-t4-t5-t6", "Volkswagen Transporter T4 / T5 / T6"),
-    ("moyen", "caravelle-t4-t5-t6", "Volkswagen Caravelle / Multivan"),
-    ("moyen", "vito-viano", "Mercedes Vito / Viano"),
-    ("moyen", "expert", "Peugeot Expert"),
-    ("moyen", "traveller", "Peugeot Traveller"),
-    ("moyen", "jumpy", "Citroën Jumpy"),
-    ("moyen", "space-tourer", "Citroën SpaceTourer"),
-    ("moyen", "fiat-scudo", "Fiat Scudo"),
-    ("moyen", "talento", "Fiat Talento"),
-    ("moyen", "opel-vivaro", "Opel Vivaro / Zafira Life"),
-    ("moyen", "toyota-proace", "Toyota Proace"),
-    ("moyen", "ford-transit-custom", "Ford Transit / Tourneo Custom"),
-    ("moyen", "nv200", "Nissan NV200"),
-    ("moyen", "nv300", "Nissan NV300 / Primastar"),
-    ("moyen", "hyundai-h1", "Hyundai H1"),
-    ("grand", "jumper-boxer-transit", "Fiat Ducato / Citroën Jumper / Peugeot Boxer"),
-    ("grand", "ford-transit", "Ford Transit"),
-    ("grand", "autre", "Autre modèle"),
-]
-OPTIONS = [  # proposées comme « articles facultatifs » sur la page de paiement Stripe
-    ("Équerre rabattable", "+ 25 €"),
-    ("Plateau frigo", "+ 25 €"),
-    ("Tiroir frigo coulissant", "+ 50 €"),
-    ("Égouttoir", "+ 35 €"),
-    ("Version 2+1", "+ 100 €"),
-]
-ACCESSOIRES = [  # clé Stripe, nom, détail, prix
-    ("occultants", "Occultants isolants", "9 couches, sur mesure pour votre modèle", 149),
-    ("frigo-15", "Frigo à compresseur 15 L", "Pour ludospace", 220),
-    ("frigo-35", "Frigo à compresseur 35 L", "Pour van compact", 300),
-    ("batterie", "Batterie lithium", "Sans onduleur", 750),
-    ("batterie-onduleur", "Batterie lithium + onduleur", "Prises 230 V à bord", 975),
-    ("rechaud", "Réchaud", "Réchaud seul", 29),
-    ("rechaud-cartouches", "Réchaud + 3 cartouches", "Prêt à cuisiner", 35),
-    ("toilettes", "Toilettes portables", "", 110),
-    ("douche", "Douche portable", "", 75),
-]
+from catalogue import (ACCESSOIRES, CATEGORIES, CONTENU, FINITIONS, FIXATION, FIXATION_GRAND, GROUPES,  # noqa: E402
+                       IMAGE_HPL_ANTHRACITE, INCLUS, MATELAS, MODELES, OPTIONS, REDIRECTIONS, REDIRECTIONS_PREFIXES)
 
-# ---------------------------------------------------------------------------
-# 3. FICHES MODÈLE
-# ---------------------------------------------------------------------------
-# Une fiche par modèle : (slug, nom complet, nom court, catégorie, anciennes URL Webnode, titre court optionnel)
-# Le slug reprend le dernier segment de l'ancienne URL camperizatetodoen1.com/fr/… pour faciliter la redirection.
-W = "/fr/kit-camperizacion/"
-MODELES = [
-    ("berlingo", "Citroën Berlingo", "Berlingo", "mini", [W + "berlingo/"], None),
-    ("partner", "Peugeot Partner et Partner Tepee", "Partner", "mini", [W + "partner/"], "Peugeot Partner et Tepee"),
-    ("rifter", "Peugeot Rifter", "Rifter", "mini", [W + "rifter/"], None),
-    ("renault-kangoo", "Renault Kangoo", "Kangoo", "mini", [W + "renault-kangoo/"], None),
-    ("caddy", "Volkswagen Caddy", "Caddy", "mini", [W + "caddy/"], "VW Caddy"),
-    ("opel-combo-life", "Opel Combo Life", "Combo Life", "mini", [W + "opel-combo-life/"], None),
-    ("fiat-doblo", "Fiat Doblò", "Doblò", "mini", [W + "fiat-doblo/"], None),
-    ("proace-city", "Toyota Proace City", "Proace City", "mini", [W + "proace-city/"], None),
-    ("nissan-townstar", "Nissan Townstar", "Townstar", "mini", [W + "nissan-townstar/"], None),
-    ("mercedes-citan", "Mercedes Citan et Classe T", "Citan", "mini", [W + "mercedes-citan/"], None),
-    ("tourneo-transit", "Ford Tourneo Connect et Transit Connect", "Tourneo Connect", "mini", [W + "tourneo-transit/"], "Ford Tourneo Connect"),
-    ("ford-courier", "Ford Tourneo Courier et Transit Courier", "Courier", "mini", [W + "ford-courier/"], "Ford Tourneo Courier"),
-    ("dokker", "Dacia Dokker", "Dokker", "mini", [W + "dokker/"], None),
-    ("dacia-jogger-lodgy", "Dacia Jogger et Lodgy", "Jogger", "mini", [W + "dacia-jogger-lodgy/"], None),
-    ("trafic", "Renault Trafic", "Trafic", "moyen", [W + "trafic/"], None),
-    ("transporter-t4-t5-t6", "Volkswagen Transporter T4, T5 et T6", "Transporter", "moyen", [W + "transporter-t4-t5-t6/"], "VW Transporter T4, T5, T6"),
-    ("caravelle-t4-t5-t6", "Volkswagen Caravelle et Multivan", "Caravelle", "moyen", [W + "caravelle-t4-t5-t6/"], "VW Caravelle et Multivan"),
-    ("vito-viano", "Mercedes Vito et Viano", "Vito", "moyen", [W + "vito-viano/"], None),
-    ("expert", "Peugeot Expert", "Expert", "moyen", ["/fr/expert/", W + "expert/"], None),
-    ("traveller", "Peugeot Traveller", "Traveller", "moyen", ["/fr/traveller/", W + "traveller/"], None),
-    ("jumpy", "Citroën Jumpy", "Jumpy", "moyen", ["/fr/jumpy/", W + "jumpy/"], None),
-    ("space-tourer", "Citroën SpaceTourer", "SpaceTourer", "moyen", ["/fr/space-tourer/", W + "space-tourer/"], None),
-    ("fiat-scudo", "Fiat Scudo", "Scudo", "moyen", [W + "fiat-scudo/"], None),
-    ("talento", "Fiat Talento", "Talento", "moyen", [W + "talento/"], None),
-    ("opel-vivaro", "Opel Vivaro et Zafira Life", "Vivaro", "moyen", [W + "opel-vivaro/"], None),
-    ("toyota-proace", "Toyota Proace", "Proace", "moyen", ["/fr/toyota-proace/", W + "toyota-proace/"], None),
-    ("ford-transit-custom", "Ford Transit Custom et Tourneo Custom", "Transit Custom", "moyen", [W + "ford-transit-custom/"], "Ford Transit Custom"),
-    ("nv200", "Nissan NV200", "NV200", "moyen", [W + "nv200/"], None),
-    ("nv300", "Nissan NV300 et Primastar", "NV300", "moyen", [W + "nv300/"], None),
-    ("hyundai-h1", "Hyundai H1", "H1", "moyen", [W + "hyundai-h1/"], None),
-    ("jumper-boxer-transit", "Fiat Ducato, Citroën Jumper et Peugeot Boxer", "Ducato", "grand", [W + "jumper-boxer-transit/"], "Ducato, Jumper, Boxer"),
-]
-
-# Contenu par catégorie (repris de la landing ; à enrichir modèle par modèle)
-CONTENU = {
-    "mini": {
-        "intro": "Votre {nom} devient mini camping-car en quelques minutes, puis redevient un véhicule de tous les jours. "
-                 "Le kit se pose dans le coffre sans perçage : pas de VASP, carte grise inchangée, et vous gardez vos 5 places.",
-        "inclus": [
-            ("i-bed", "Lit pliant", "187 cm, jusqu'à 220 cm en version XL."),
-            ("i-cook", "Cuisine", "Tiroir extractible pour le réchaud et la vaisselle."),
-            ("i-box", "Rangement", "Coffre et logement pour un frigo de 15 L."),
-            ("i-table", "Table", "À l'intérieur ou à l'extérieur, 3 hauteurs."),
-        ],
-        "faq": [("Garde-t-on les 5 places ?", "Oui. Sur ludospace, le kit se pose dans le coffre et vous gardez vos 5 places.")],
-        "image": ("/img/kit-carrossier-lit.webp", "Kit camper amovible en phénolique carrossier, lit déplié dans un ludospace", 900, 900),
-    },
-    "moyen": {
-        "intro": "Votre {nom} devient van aménagé en quelques minutes : lit, cuisine et rangements, à retirer quand vous voulez. "
-                 "Le kit s'adapte à vos sièges et se pose sans perçage : pas de VASP, carte grise inchangée.",
-        "inclus": [
-            ("i-bed", "Lit pliant", "Matelas sur mesure en option."),
-            ("i-cook", "Cuisine", "Tiroir extractible pour le réchaud et la vaisselle."),
-            ("i-box", "Rangement", "Logement pour un frigo jusqu'à 35 L."),
-            ("i-table", "Hauteur adaptée", "36,5 à 56,5 cm selon vos sièges."),
-        ],
-        "faq": [("Puis-je garder mes sièges arrière ?",
-                 "Oui. Le kit mesure 56,5 cm de haut avec la 2e rangée de sièges, 44,5 ou 36,5 cm sans sièges.")],
-        "image": ("/img/kit-hpl-anthracite.webp", "Kit camper amovible HPL gris anthracite en mode salon dans un van", 900, 822),
-    },
-    "grand": {
-        "intro": "Pour votre {nom}, nous concevons un kit amovible sur mesure : lit, cuisine et rangements, "
-                 "toujours sans perçage ni VASP. Le devis est gratuit.",
-        "inclus": [
-            ("i-bed", "Lit", "Conçu pour la largeur de votre fourgon."),
-            ("i-cook", "Cuisine", "Tiroir extractible, réchaud, vaisselle."),
-            ("i-box", "Rangement", "Coffres et logement frigo selon votre projet."),
-            ("i-shield", "Sans VASP", "Chargement amovible, rien n'est vissé."),
-        ],
-        "faq": [("Combien coûte un kit pour grand fourgon ?",
-                 "Chaque kit est conçu pour votre fourgon et votre usage : nous vous envoyons un devis gratuit après un premier échange.")],
-        "image": ("/img/hero-van-amenage-800.webp", "Véhicule aménagé avec un kit camper en bois, hayon ouvert", 800, 400),
-    },
-}
-FIXATION = ("Le kit se pose dans le coffre, repose sur 3 points d'appui contrôlés et se sangle aux anneaux "
-            "d'arrimage d'origine. Aucun perçage, rien n'est vissé.")
-
-# Données détaillées déjà vérifiées (prioritaires sur le contenu par catégorie)
-DETAILS = {
-    "dacia-jogger-lodgy": {
-        "intro": "Le Jogger devient mini camping-car en quelques minutes, puis redevient une voiture familiale pour la semaine. "
-                 "Le kit se pose dans le coffre sans perçage : pas de VASP, carte grise inchangée.",
-        "mesures": [
-            ("Lit déplié", "187 cm de long"),
-            ("Largeur du kit", "99 cm"),
-            ("Largeur du matelas", "125 cm"),
-            ("Hauteur", "36 cm"),
-            ("Profondeur, kit replié", "environ 95 cm"),
-            ("Places assises", "les 5 places restent utilisables"),
-        ],
-        "inclus": [
-            ("i-cook", "Tiroir cuisine", "Extractible, sur glissières renforcées (30 à 40 kg), pour le réchaud et la vaisselle."),
-            ("i-table", "Table extérieure", "Le couvercle du compartiment arrière se retire et sert de table."),
-            ("i-box", "Grand coffre", "À gauche, ouverture par le dessus et par l'avant."),
-            ("i-bed", "Lit dépliable", "En deux parties. Matelas sur mesure en option."),
-        ],
-        "fixation": "Le kit repose sur trois appuis : le plancher du coffre, un premier panneau dépliable posé sur les sièges rabattus "
-                    "et un second sur pieds escamotables. Le poids est réparti, rien n'est vissé.",
-        "videos": [("kUtbMAAaMW8", "Le kit Dacia Jogger en vidéo"), ("bdcMn_dis2A", "Montage du kit dans le coffre")],
-        "faq": [
-            ("Le même kit va-t-il dans un Lodgy et dans un Jogger ?",
-             "Oui. Le Lodgy (2012-2022) et le Jogger (depuis 2022) ont les mêmes mesures intérieures : c'est le même kit."),
-            ("Garde-t-on les 5 places ?",
-             "Oui. Kit replié dans le coffre, les 5 places restent utilisables."),
-        ],
-    },
-}
+# Liste des véhicules de la boutique et de la landing : (catégorie de prix, valeur, libellé, fiche)
+VEHICULES = [(cat, valeur, libelle, m["slug"]) for m in MODELES for valeur, libelle, cat in m["variantes"]]
 
 # Photos par modèle : générées par tools/photos.py (voir docs/PHOTOS.md)
 PHOTOS_JSON = ROOT / "tools" / "photos.json"
@@ -260,24 +98,22 @@ PHOTOS = json.loads(PHOTOS_JSON.read_text(encoding="utf-8")) if PHOTOS_JSON.exis
 
 def construire_fiches():
     fiches = []
-    for slug, nom, court, cat, anciens, titre in MODELES:
-        c = CONTENU[cat]
-        d = DETAILS.get(slug, {})
-        photos = PHOTOS.get(slug, [])
+    for m in MODELES:
+        c = CONTENU[m["groupe"]]
+        photos = PHOTOS.get(m["slug"], [])
         if photos:
             ph = photos[0]
-            image = (f"/img/modeles/{slug}/{ph['fichier']}", ph["alt"], ph["w"], ph["h"])
+            image = (f"/img/modeles/{m['slug']}/{ph['fichier']}", ph["alt"], ph["w"], ph["h"])
         else:
             image = c["image"]
         fiches.append({
-            "slug": slug, "nom": nom, "court": court, "categorie": cat, "anciens": anciens,
-            "titre": titre or nom, "image": image, "galerie": photos[1:],
-            "intro": d.get("intro", c["intro"].format(nom=nom)),
-            "inclus": d.get("inclus", c["inclus"]),
-            "fixation": d.get("fixation", FIXATION),
-            "mesures": d.get("mesures", []),
-            "videos": d.get("videos", []),
-            "faq": d.get("faq", c["faq"]),
+            "slug": m["slug"], "nom": m["nom"], "court": m["court"], "categorie": m["cat"], "groupe": m["groupe"],
+            "anciens": m["anciens"], "titre": m.get("titre") or m["nom"], "image": image, "galerie": photos[1:],
+            "intro": m.get("intro") or c["intro"].format(nom=m["nom"]),
+            "inclus": m.get("inclus") or c["inclus"],
+            "fixation": m.get("fixation") or (FIXATION_GRAND if m["cat"] == "grand" else FIXATION),
+            "mesures": m.get("mesures", []), "videos": m.get("videos", []),
+            "faq": m.get("faq") or c["faq"], "versions": m.get("versions", ""), "variantes": m["variantes"],
         })
     return fiches
 
@@ -315,6 +151,12 @@ EXTRA_CSS = """
 .price-table thead th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--brown-70);font-weight:600}
 .price-table td b{font:800 20px/1 var(--head);color:var(--orange);white-space:nowrap}
 .price-table small{display:block;color:var(--brown-70);font-size:13px}
+.price-table td img{float:left;width:44px;height:44px;object-fit:cover;border-radius:var(--r);margin:0 10px 0 0}
+.versions{margin-top:24px}
+.versions h3{margin-bottom:8px}
+.versions p{color:var(--brown-70)}
+.versions a{justify-content:space-between;gap:12px}
+.versions b{color:var(--orange);white-space:nowrap}
 .price-table tr:last-child td{border-bottom:0}
 .fix{max-width:720px;margin-top:20px}
 .videos{display:grid;gap:12px}
@@ -344,8 +186,15 @@ EXTRA_CSS = """
 .total .ship{font-size:15px;color:var(--brown-70);margin-bottom:16px}
 .total .btn+.btn{margin-top:12px}
 .devis{display:none}
-.order.is-grand .step-fin,.order.is-grand .step-mat,.order.is-grand .total{display:none}
-.order.is-grand .devis{display:block}
+.order.is-devis .step-fin,.order.is-devis .step-mat,.order.is-devis .total{display:none}
+.order.is-devis .devis{display:block}
+.choice.with-img{justify-content:flex-start}
+.choice.with-img img{width:56px;height:56px;object-fit:cover;border-radius:var(--r);flex:none}
+.choice.with-img span{flex:1}
+.opts ul{list-style:none;padding:0;display:grid;gap:6px}
+.opts li{display:flex;align-items:center;gap:10px}
+.opts li img{width:40px;height:40px;object-fit:cover;border-radius:var(--r)}
+.acc-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r);background:var(--sand)}
 .opts{margin-top:14px;font-size:15px;color:var(--brown-70)}
 .opts ul{margin:6px 0 0;padding-left:1.2em}
 .acc{display:grid;gap:10px;list-style:none;margin:0;padding:0}
@@ -358,6 +207,8 @@ EXTRA_CSS = """
 .info{display:grid;gap:10px;list-style:none;margin:0;padding:0}
 .info li{display:flex;gap:12px;align-items:flex-start}
 .info p{margin:0;color:var(--brown-70);font-size:15px}
+.info p+p{margin-top:10px}
+.info-list{margin:0 0 20px;padding-left:1.2em;display:grid;gap:6px}
 .model-links{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:8px}
 .model-links a{display:flex;align-items:center;min-height:48px;padding:10px 14px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;font-weight:600}
 .model-links a:hover{border-color:var(--brown);color:var(--orange)}
@@ -438,8 +289,8 @@ def footer(script=""):
     <div class="foot-grid">
       <div>
         <img src="/img/camperizate-logo-white.svg" alt="Camperizate" width="160" height="21" loading="lazy">
-        <p>Kits camper amovibles pour ludospaces et vans, fabriqués dans notre atelier.</p>
-        <a class="link" href="/kit-amenagement/">Tous les modèles</a> · <a class="link" href="/boutique/">Boutique</a>
+        <p>Kits camper amovibles pour ludospaces, vans et fourgons, fabriqués dans notre atelier.</p>
+        <a class="link" href="/kit-amenagement/">Tous les modèles</a> · <a class="link" href="/boutique/">Boutique</a> · <a class="link" href="/accessoires/">Accessoires</a> · <a class="link" href="/guide-kit-meubles-camper/">Guide</a> · <a class="link" href="/contact/">Contact</a>
       </div>
       <div>
         <h3>Showroom en France</h3>
@@ -477,29 +328,34 @@ def prix(cat, fin, avec):
 def boutique():
     url = f"{SITE}/boutique/"
     titre = "Boutique : kit camper amovible sans VASP | Camperizate"
-    desc = ("Commandez votre kit d'aménagement amovible pour ludospace ou van : choisissez votre véhicule, "
+    desc = ("Commandez votre kit d'aménagement amovible pour ludospace, van ou fourgon : choisissez votre véhicule, "
             "la finition et le matelas, et payez en ligne. Dès 500 € TTC.")
     groupes = []
     for cat in ("mini", "moyen", "grand"):
-        opts = "".join(f'<option value="{s}" data-cat="{c}">{e(n)}</option>' for c, s, n in VEHICULES if c == cat)
+        opts = "".join(f'<option value="{v}" data-cat="{c}" data-fiche="{f}">{e(n)}</option>'
+                       for c, v, n, f in sorted((x for x in VEHICULES if x[0] == cat), key=lambda x: x[2]))
         groupes.append(f'<optgroup label="{e(CATEGORIES[cat]["pluriel"])}">{opts}</optgroup>')
+    groupes.append('<optgroup label="Autre"><option value="autre" data-cat="autre">Autre modèle</option></optgroup>')
     finitions = "\n".join(
-        f'<label class="choice"><input type="radio" name="fin" value="{k}"{" checked" if k == "carrossier" else ""}>'
+        f'<label class="choice with-img"><input type="radio" name="fin" value="{k}"{" checked" if k == "carrossier" else ""}>'
+        f'<img src="{img}" alt="" width="64" height="64" loading="lazy">'
         f'<span>{e(n)}<small>{e(d)}</small></span><b data-fin="{k}"></b></label>'
-        for k, n, d, _ in FINITIONS)
-    options = "".join(f"<li>{e(n)} {e(p)}</li>" for n, p in OPTIONS)
+        for k, n, d, _, img in FINITIONS)
+    options = "".join(f'<li><img src="{img}" alt="" width="40" height="40" loading="lazy">{e(n)} <b>+ {p} €</b></li>'
+                      for _, n, _d, p, img in OPTIONS)
     def bouton_acc(k):
         if STRIPE.get(k):
             return f'<a class="btn btn-primary" href="{e(STRIPE[k])}">Acheter</a>'
         return f'<a class="btn btn-line" href="{TALLY}" target="_blank" rel="noopener">Commander par message</a>'
 
     acc = "\n".join(
-        f'<li><div class="row"><div><h3>{e(n)}</h3>{"<small>" + e(d) + "</small>" if d else ""}</div><b>{p} €</b></div>'
+        f'<li id="{ancre}"><img class="acc-img" src="{img}" alt="{e(n)}" width="400" height="300" loading="lazy">'
+        f'<div class="row"><div><h3>{e(n)}</h3>{"<small>" + e(d) + "</small>" if d else ""}</div><b>{p} €</b></div>'
         f'{bouton_acc(k)}</li>'
-        for k, n, d, p in ACCESSOIRES)
+        for k, ancre, n, d, p, img in ACCESSOIRES)
     data = {
         "liens": {k: v for k, v in STRIPE.items() if k.startswith("kit-")},
-        "prix": {c: {f[0]: f[3][c] for f in FINITIONS} for c in ("mini", "moyen")},
+        "prix": {c: {f[0]: f[3][c] for f in FINITIONS} for c in ("mini", "moyen", "grand")},
         "matelas": MATELAS,
         "cat": {k: v["nom"] for k, v in CATEGORIES.items()},
         "livraison": {k: v["livraison"] for k, v in CATEGORIES.items()},
@@ -514,6 +370,10 @@ def boutique():
          "image": SITE + "/img/kit-hpl-anthracite.webp", "brand": {"@type": "Brand", "name": "Camperizate"},
          "offers": {"@type": "AggregateOffer", "priceCurrency": "EUR", "lowPrice": str(prix("moyen", "pin", False)),
                     "highPrice": str(prix("moyen", "hpl", True)), "offerCount": "6", "availability": "https://schema.org/InStock"}},
+        {"@type": "Product", "name": "Kit d'aménagement camper amovible pour grand fourgon",
+         "image": SITE + "/img/hero-van-amenage-800.webp", "brand": {"@type": "Brand", "name": "Camperizate"},
+         "offers": {"@type": "AggregateOffer", "priceCurrency": "EUR", "lowPrice": str(prix("grand", "pin", False)),
+                    "highPrice": str(prix("grand", "hpl", True)), "offerCount": "6", "availability": "https://schema.org/InStock"}},
     ]}
     script = """<script>
 (function(){
@@ -524,12 +384,12 @@ def boutique():
   function fmt(n){return n.toLocaleString('fr-FR')+' €';}
   function render(){
     var o=sel.options[sel.selectedIndex],c=o?o.dataset.cat:null;
-    f.classList.toggle('is-grand',c==='grand');
-    var k=c==='moyen'?'moyen':'mini';
+    f.classList.toggle('is-devis',c==='autre');
+    var k=D.prix[c]?c:'mini';
     document.querySelectorAll('[data-fin]').forEach(function(b){b.textContent='dès '+fmt(D.prix[k][b.dataset.fin]);});
     document.getElementById('mat-prix').textContent='+ '+fmt(D.matelas);
     document.getElementById('liv-prix').textContent='+ '+fmt(D.livraison[k]);
-    if(!c||c==='grand'){return;}
+    if(!c||c==='autre'){return;}
     var fin=val('fin'),mat=val('mat'),mode=val('mode');
     var total=D.prix[c][fin]+(mat==='avec'?D.matelas:0)+(mode==='livraison'?D.livraison[c]:0);
     cat.textContent='Kit '+D.cat[c].toLowerCase()+' · '+o.text;
@@ -568,7 +428,7 @@ def boutique():
           <select id="vehicule" name="vehicule">{''.join(groupes)}</select>
           <svg class="ico" aria-hidden="true"><use href="#i-down"/></svg>
         </div>
-        <p class="help">Modèle absent ? Choisissez « Autre modèle » ou <a href="{TALLY}" target="_blank" rel="noopener">écrivez-nous</a>.</p>
+        <p class="help">Modèle absent ? Choisissez « Autre modèle » ou <a href="{TALLY}" target="_blank" rel="noopener">écrivez-nous</a>. <a href="/kit-amenagement/">Voir les fiches des modèles</a>.</p>
       </div>
       <fieldset class="step step-fin" style="border:0;margin:0;padding:0">
         <h3><i>2</i>Finition</h3>
@@ -598,11 +458,11 @@ def boutique():
           <a class="btn btn-primary" id="pay" href="{TALLY}">Commander</a>
           <a class="btn btn-line" href="{TALLY}" target="_blank" rel="noopener">Une question avant de commander ?</a>
           <p class="help">Kit fabriqué sur mesure : pas de droit de rétractation. Voir les <a href="/conditions-generales-de-vente/">CGV</a>.</p>
-          <div class="opts">Options disponibles sur la page de paiement :<ul>{options}</ul></div>
+          <div class="opts">Options à ajouter sur la page de paiement (<a href="/accessoires/#options">voir en détail</a>) :<ul>{options}</ul></div>
         </div>
         <div class="devis">
-          <h3>Grand fourgon : kit sur devis</h3>
-          <p>Ducato, Jumper, Boxer, Transit, Master, Sprinter… Chaque kit est conçu pour votre fourgon, toujours sans VASP. Le devis est gratuit.</p>
+          <h3>Votre véhicule n'est pas dans la liste ?</h3>
+          <p>Nous fabriquons des kits pour beaucoup d'autres modèles. Dites-nous la marque, le modèle et l'année : nous vous répondons avec le prix, sans engagement.</p>
           <a class="btn btn-primary" href="{TALLY}" target="_blank" rel="noopener">Demander mon devis</a>
         </div>
       </div>
@@ -651,87 +511,95 @@ def titre_fiche(m):
 
 
 def desc_fiche(m):
-    if m["categorie"] == "grand":
-        return (f"Kit camper amovible sur mesure pour {m['nom']} : lit, cuisine et rangements, "
-                f"sans perçage ni VASP. Devis gratuit, showroom à Nîmes.")
     bas = prix(m["categorie"], "pin", False)
-    return (f"Kit camper amovible pour {m['nom']} : lit, cuisine et rangements posés en 5 min, "
+    return (f"Kit camper amovible pour {m['nom']} : lit, cuisine et rangements posés en quelques minutes, "
             f"sans perçage ni VASP. Dès {bas} € TTC, showroom à Nîmes.")
+
+
+def nom_groupe(groupe):
+    return next(n for g, n, _ in GROUPES if g == groupe)
+
+
+def section_videos(videos, court):
+    if not videos:
+        return "", ""
+    boutons = "\n".join(
+        f'      <button type="button" class="yt" data-id="{v}" aria-label="Lire la vidéo : {e(t)}">'
+        f'<img src="https://i.ytimg.com/vi/{v}/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">'
+        f'<span>▶ {e(t)}</span></button>' for v, t in videos)
+    html_ = f"""
+<section aria-labelledby="h-videos">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">En vidéo</span><h2 id="h-videos">{e(court)} en situation</h2></div>
+    <div class="videos">
+{boutons}
+    </div>
+  </div>
+</section>"""
+    script = """<script>
+document.querySelectorAll('.yt').forEach(function(b){
+  b.addEventListener('click',function(){
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+b.dataset.id+'?autoplay=1&rel=0';
+    f.title=b.getAttribute('aria-label');f.allow='autoplay; encrypted-media; picture-in-picture';f.allowFullscreen=true;
+    var d=document.createElement('div');d.className='yt';d.appendChild(f);b.replaceWith(d);
+  });
+});
+</script>"""
+    return html_, script
+
+
+def faq_html(faq):
+    return "\n".join(
+        f'      <details><summary>{e(q)}<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></summary>'
+        f'<div class="a"><p>{e(a)}</p></div></details>' for q, a in faq)
 
 
 def fiche(m):
     url = f"{SITE}/kit-amenagement/{m['slug']}/"
     cat = m["categorie"]
     c = CATEGORIES[cat]
-    grand = cat == "grand"
     titre, desc = titre_fiche(m), desc_fiche(m)
     img, alt, w, h = m["image"]
     srcset = (f' srcset="{img[:-5]}-800.webp 800w, {img} 1600w" sizes="(min-width:960px) 50vw, 100vw"'
               if img.startswith("/img/modeles/") else "")
     faq = m["faq"] + FAQ_COMMUNE
-    commande = TALLY if grand else f"/boutique/?modele={m['slug']}#commande"
-    cible = ' target="_blank" rel="noopener"' if grand else ""
-    texte_cta = "Demander mon devis" if grand else "Commander ce kit"
-    graphe = []
-    if not grand:
-        bas, haut = prix(cat, "pin", False), prix(cat, "hpl", True)
-        graphe.append({"@type": "Product", "name": f"Kit d'aménagement amovible {m['nom']}", "description": desc,
-                       "image": SITE + img, "brand": {"@type": "Brand", "name": "Camperizate"},
-                       "offers": {"@type": "AggregateOffer", "priceCurrency": "EUR", "lowPrice": str(bas),
-                                  "highPrice": str(haut), "offerCount": str(len(FINITIONS) * 2),
-                                  "availability": "https://schema.org/InStock"}})
-    graphe.append({"@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Accueil", "item": SITE + "/"},
-        {"@type": "ListItem", "position": 2, "name": "Kits par modèle", "item": SITE + "/kit-amenagement/"},
-        {"@type": "ListItem", "position": 3, "name": m["nom"], "item": url}]})
-    graphe.append({"@type": "FAQPage", "mainEntity": [
-        {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]})
-    ld = {"@context": "https://schema.org", "@graph": graphe}
+    commande = f"/boutique/?modele={m['slug']}#commande"
+    bas, haut = prix(cat, "pin", False), prix(cat, "hpl", True)
+    ld = {"@context": "https://schema.org", "@graph": [
+        {"@type": "Product", "name": f"Kit d'aménagement amovible {m['nom']}", "description": desc, "image": SITE + img,
+         "brand": {"@type": "Brand", "name": "Camperizate"},
+         "offers": {"@type": "AggregateOffer", "priceCurrency": "EUR", "lowPrice": str(bas), "highPrice": str(haut),
+                    "offerCount": str(len(FINITIONS) * 2), "availability": "https://schema.org/InStock"}},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Accueil", "item": SITE + "/"},
+            {"@type": "ListItem", "position": 2, "name": "Kits par modèle", "item": SITE + "/kit-amenagement/"},
+            {"@type": "ListItem", "position": 3, "name": m["nom"], "item": url}]},
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
+    ]}
 
     inclus = "\n".join(
         f'        <li><svg class="ico" aria-hidden="true"><use href="#{i}"/></svg><span><b>{e(t)}</b>{e(d)}</span></li>'
         for i, t, d in m["inclus"])
-    faq_html = "\n".join(
-        f'      <details><summary>{e(q)}<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></summary>'
-        f'<div class="a"><p>{e(a)}</p></div></details>' for q, a in faq)
 
-    if grand:
-        prix_ligne = '<p class="price-line"><b>Sur devis</b><span>gratuit, sans engagement</span></p>'
-        section_prix = f"""
-<section id="prix" class="kits" aria-labelledby="h-prix">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="kicker">Prix</span>
-      <h2 id="h-prix">Un kit conçu pour votre fourgon</h2>
-      <p>Dites-nous votre modèle, sa longueur et votre usage : nous vous envoyons un devis gratuit.</p>
-    </div>
-    <a href="{TALLY}" class="btn btn-primary" style="max-width:420px" target="_blank" rel="noopener">Demander mon devis <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
-  </div>
-</section>"""
-    else:
-        prix_ligne = f'<p class="price-line"><b>Dès {prix(cat, "pin", False)} €</b><span>TTC, direct atelier</span></p>'
-        lignes = "\n".join(
-            f"          <tr><td>{e(n)}<small>{e(d)}</small></td><td><b>{p[cat]} €</b></td><td><b>{p[cat] + MATELAS} €</b></td></tr>"
-            for _, n, d, p in FINITIONS)
-        fond = "kits" if m["mesures"] else ""
-        section_prix = f"""
-<section id="prix" class="{fond}" aria-labelledby="h-prix">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="kicker">Prix</span>
-      <h2 id="h-prix">Trois finitions, un prix atelier</h2>
-      <p>Prix TTC, hors livraison (dès {c['livraison']} € en France, retrait gratuit à Nîmes).</p>
-    </div>
-    <table class="price-table">
-      <thead><tr><th>Finition</th><th>Sans matelas</th><th>Avec matelas</th></tr></thead>
-      <tbody>
-{lignes}
-      </tbody>
-    </table>
-    <p class="help">Options et accessoires (occultants, frigo, batterie, version 2+1…) : <a href="/boutique/#accessoires">voir la boutique</a>.</p>
-    <a href="{commande}" class="btn btn-primary" style="margin-top:20px;max-width:420px">Commander ce kit <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
-  </div>
-</section>"""
+    # Versions (Berlingo M / XL…) : une ligne par variante, avec son prix
+    versions = ""
+    if len(m["variantes"]) > 1 or m["versions"]:
+        lignes_v = "".join(
+            f'<li><a href="/boutique/?modele={v}#commande"><span>{e(lib)}</span>'
+            f'<b>dès {prix(vc, "pin", False)} €</b></a></li>' for v, lib, vc in m["variantes"]) if len(m["variantes"]) > 1 else ""
+        versions = f"""
+    <div class="versions">
+      <h3>Versions</h3>
+      {f'<p>{e(m["versions"])}</p>' if m["versions"] else ""}
+      {f'<ul class="model-links">{lignes_v}</ul>' if lignes_v else ""}
+    </div>"""
+
+    lignes = "\n".join(
+        f'          <tr><td><img src="{im}" alt="" width="48" height="48" loading="lazy">{e(n)}<small>{e(d)}</small></td>'
+        f'<td><b>{p[cat]} €</b></td><td><b>{p[cat] + MATELAS} €</b></td></tr>'
+        for _, n, d, p, im in FINITIONS)
 
     section_mesures = ""
     if m["mesures"]:
@@ -742,7 +610,7 @@ def fiche(m):
     <div class="sec-head">
       <span class="kicker">Mesures</span>
       <h2 id="h-mesures">Dimensions du kit {e(m['court'])}</h2>
-      <p>Chaque kit est ajusté au coffre du véhicule. Une question sur une cote ? <a href="{TALLY}" target="_blank" rel="noopener">Écrivez-nous</a>.</p>
+      <p>Chaque kit est ajusté à votre véhicule : nous vérifions les mesures avec vous avant la fabrication. Une question ? <a href="{TALLY}" target="_blank" rel="noopener">Écrivez-nous</a>.</p>
     </div>
     <table class="specs"><tbody>
 {mesures}
@@ -765,40 +633,16 @@ def fiche(m):
   </div>
 </section>"""
 
-    section_videos, script = "", ""
-    if m["videos"]:
-        videos = "\n".join(
-            f'      <button type="button" class="yt" data-id="{v}" aria-label="Lire la vidéo : {e(t)}">'
-            f'<img src="https://i.ytimg.com/vi/{v}/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">'
-            f'<span>▶ {e(t)}</span></button>' for v, t in m["videos"])
-        section_videos = f"""
-<section aria-labelledby="h-videos">
-  <div class="wrap">
-    <div class="sec-head"><span class="kicker">En vidéo</span><h2 id="h-videos">Le kit {e(m['court'])} en situation</h2></div>
-    <div class="videos">
-{videos}
-    </div>
-  </div>
-</section>"""
-        script = """<script>
-document.querySelectorAll('.yt').forEach(function(b){
-  b.addEventListener('click',function(){
-    var f=document.createElement('iframe');
-    f.src='https://www.youtube-nocookie.com/embed/'+b.dataset.id+'?autoplay=1&rel=0';
-    f.title=b.getAttribute('aria-label');f.allow='autoplay; encrypted-media; picture-in-picture';f.allowFullscreen=true;
-    var d=document.createElement('div');d.className='yt';d.appendChild(f);b.replaceWith(d);
-  });
-});
-</script>"""
+    videos_html, script = section_videos(m["videos"], f"Le kit {m['court']}")
 
-    autres = [x for x in FICHES if x["categorie"] == cat and x["slug"] != m["slug"]]
+    autres = [x for x in FICHES if x["groupe"] == m["groupe"] and x["slug"] != m["slug"]]
     liens_autres = "".join(f'<li><a href="/kit-amenagement/{x["slug"]}/">{e(x["nom"])}</a></li>' for x in autres)
     section_autres = f"""
 <section aria-labelledby="h-autres">
   <div class="wrap">
-    <div class="sec-head"><span class="kicker">{e(c['pluriel'])}</span><h2 id="h-autres">Autres modèles compatibles</h2></div>
+    <div class="sec-head"><span class="kicker">{e(nom_groupe(m['groupe']))}</span><h2 id="h-autres">Autres modèles compatibles</h2></div>
     <ul class="model-links">{liens_autres}</ul>
-    <p class="help"><a href="/kit-amenagement/">Voir tous les modèles</a></p>
+    <p class="help"><a href="/kit-amenagement/">Voir tous les modèles</a> · <a href="/accessoires/">Options et accessoires</a> · <a href="/guide-kit-meubles-camper/">Le guide du kit camper</a></p>
   </div>
 </section>""" if autres else ""
 
@@ -815,9 +659,9 @@ document.querySelectorAll('.yt').forEach(function(b){
       <span class="kicker">Kit camper amovible · sans VASP</span>
       <h1 id="h1">Kit d'aménagement amovible pour {e(m['nom'])}</h1>
       <p class="lead">{e(m['intro'])}</p>
-      {prix_ligne}
+      <p class="price-line"><b>Dès {bas} €</b><span>TTC, direct atelier</span></p>
       <div class="ctas">
-        <a href="{commande}" class="btn btn-primary"{cible}>{texte_cta} <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+        <a href="{commande}" class="btn btn-primary">Commander ce kit <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
         <a href="{TALLY}" class="btn btn-line" target="_blank" rel="noopener">Poser une question</a>
       </div>
       <ul class="chips">
@@ -839,15 +683,33 @@ document.querySelectorAll('.yt').forEach(function(b){
   </div>
 </section>
 {section_mesures}
-{section_prix}
+
+<section id="prix" class="{'kits' if m['mesures'] else ''}" aria-labelledby="h-prix">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Prix</span>
+      <h2 id="h-prix">Trois finitions, un prix atelier</h2>
+      <p>Prix TTC du kit {e(c['nom'].lower())}, hors livraison (dès {c['livraison']} € en France, retrait gratuit à Nîmes).</p>
+    </div>
+    <table class="price-table">
+      <thead><tr><th>Finition</th><th>Sans matelas</th><th>Avec matelas</th></tr></thead>
+      <tbody>
+{lignes}
+      </tbody>
+    </table>
+    {versions}
+    <p class="help">Options (tiroirs, égouttoir, version 2+1…) et accessoires (occultants, frigo, batterie…) : <a href="/accessoires/">voir en détail</a>.</p>
+    <a href="{commande}" class="btn btn-primary" style="margin-top:20px;max-width:420px">Commander ce kit <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+  </div>
+</section>
 {section_galerie}
-{section_videos}
+{videos_html}
 
 <section class="showroom" aria-labelledby="h-showroom">
   <div class="wrap">
     <div class="sec-head"><span class="kicker">Showroom</span><h2 id="h-showroom">Venez voir nos kits à Nîmes</h2></div>
     <address>Local n° 112, 866 avenue du Maréchal Juin<br>30900 Nîmes</address>
-    <a href="{TALLY}" class="btn btn-line" style="max-width:420px" target="_blank" rel="noopener">Prévenir de ma visite</a>
+    <a href="/contact/" class="btn btn-line" style="max-width:420px">Préparer ma visite</a>
   </div>
 </section>
 
@@ -855,7 +717,7 @@ document.querySelectorAll('.yt').forEach(function(b){
   <div class="wrap faq-wrap">
     <div class="sec-head"><span class="kicker">Questions fréquentes</span><h2 id="h-faq">Kit {e(m['court'])} : en bref</h2></div>
     <div class="faq-list">
-{faq_html}
+{faq_html(faq)}
     </div>
   </div>
 </section>
@@ -868,25 +730,32 @@ document.querySelectorAll('.yt').forEach(function(b){
 # ---------------------------------------------------------------------------
 # Catalogue des modèles
 # ---------------------------------------------------------------------------
-def liste_modeles(cat):
+def liste_modeles(groupe):
     return "".join(f'<li><a href="/kit-amenagement/{m["slug"]}/">{e(m["nom"])}</a></li>'
-                   for m in FICHES if m["categorie"] == cat)
+                   for m in FICHES if m["groupe"] == groupe)
+
+
+SOUS_TITRES = {
+    "ludospace": "dès 500 € TTC · vous gardez vos 5 places",
+    "monospace": "dès 500 € TTC · couchage pour 1 ou 2 personnes",
+    "van": "dès 700 € TTC · hauteur adaptée à vos sièges · versions XL et Maxi des ludospaces",
+    "fourgon": "dès 800 € TTC · lit 180 à 190 cm",
+}
+ANCRES = {"ludospace": "ludospaces", "monospace": "monospaces", "van": "vans", "fourgon": "fourgons"}
 
 
 def catalogue():
     url = f"{SITE}/kit-amenagement/"
-    titre = "Kit aménagement par modèle : ludospace et van | Camperizate"
-    desc = ("Trouvez le kit camper amovible de votre véhicule : Berlingo, Kangoo, Partner, Trafic, Transporter, Vito… "
-            "Sans perçage ni VASP, dès 500 € TTC.")
+    titre = "Kit aménagement par modèle : ludospace, van, fourgon | Camperizate"
+    desc = ("Trouvez le kit camper amovible de votre véhicule : Berlingo, Kangoo, Partner, Trafic, Transporter, Vito, "
+            "Ducato… Sans perçage ni VASP, dès 500 € TTC.")
     blocs = []
-    for cat, ancre, sous in (("mini", "ludospaces", "dès 500 € TTC · vous gardez vos 5 places"),
-                             ("moyen", "vans", "dès 700 € TTC · hauteur adaptée à vos sièges"),
-                             ("grand", "fourgons", "sur devis")):
+    for groupe, nom, _ in GROUPES:
         blocs.append(f"""
-    <div class="cat-block" id="{ancre}">
-      <h2>{e(CATEGORIES[cat]['pluriel'])}</h2>
-      <p class="help">{e(sous)}</p>
-      <ul class="model-links">{liste_modeles(cat)}</ul>
+    <div class="cat-block" id="{ANCRES[groupe]}">
+      <h2>{e(nom)}</h2>
+      <p class="help">{e(SOUS_TITRES[groupe])}</p>
+      <ul class="model-links">{liste_modeles(groupe)}</ul>
     </div>""")
     ld = {"@context": "https://schema.org", "@type": "ItemList", "itemListElement": [
         {"@type": "ListItem", "position": i + 1, "name": m["nom"], "url": f"{SITE}/kit-amenagement/{m['slug']}/"}
@@ -909,6 +778,298 @@ def catalogue():
 </main>
 """
     return head(titre, desc, url, ld) + header("/boutique/", "Boutique") + body + footer()
+
+
+# ---------------------------------------------------------------------------
+# Pages de contenu : accessoires, occultants, matelas, guide, contact
+# ---------------------------------------------------------------------------
+def page_simple(chemin, titre, desc, kicker, h1, lead, contenu, ld=None, script="", cta=("/boutique/", "Boutique"), crumb=None):
+    url = f"{SITE}{chemin}"
+    fil = crumb or h1
+    body = f"""
+<main id="top">
+<nav class="crumbs wrap" aria-label="Fil d'Ariane"><ol><li><a href="/">Accueil</a></li><li aria-current="page">{e(fil)}</li></ol></nav>
+<section class="shop-hero" aria-labelledby="h1">
+  <div class="wrap">
+    <span class="kicker">{e(kicker)}</span>
+    <h1 id="h1">{e(h1)}</h1>
+    <p class="lead">{lead}</p>
+  </div>
+</section>
+{contenu}
+</main>
+"""
+    return head(titre, desc, url, ld) + header(*cta) + body + footer(script)
+
+
+def bouton_stripe(cle, texte="Acheter"):
+    if STRIPE.get(cle):
+        return f'<a class="btn btn-primary" href="{e(STRIPE[cle])}">{texte}</a>'
+    return f'<a class="btn btn-line" href="{TALLY}" target="_blank" rel="noopener">Commander par message</a>'
+
+
+def accessoires():
+    inclus = "\n".join(
+        f'<li><img class="acc-img" src="{img}" alt="{e(n)}" width="400" height="300" loading="lazy">'
+        f'<div class="row"><div><h3>{e(n)}</h3><small>{e(d)}</small></div><b>Inclus</b></div></li>'
+        for n, d, img in INCLUS)
+    options = "\n".join(
+        f'<li id="{ancre}"><img class="acc-img" src="{img}" alt="{e(n)}" width="400" height="300" loading="lazy">'
+        f'<div class="row"><div><h3>{e(n)}</h3><small>{e(d)}</small></div><b>+ {p} €</b></div></li>'
+        for ancre, n, d, p, img in OPTIONS)
+    acc = "\n".join(
+        f'<li id="{ancre}"><img class="acc-img" src="{img}" alt="{e(n)}" width="400" height="300" loading="lazy">'
+        f'<div class="row"><div><h3>{e(n)}</h3><small>{e(d)}</small></div><b>{p} €</b></div>{bouton_stripe(k)}</li>'
+        for k, ancre, n, d, p, img in ACCESSOIRES)
+    contenu = f"""
+<section class="kits" aria-labelledby="h-inclus">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">De série</span><h2 id="h-inclus">Inclus dans chaque kit</h2>
+      <p>Lit, table, tiroir cuisine à droite et coffre à gauche. Les options ci-dessous remplacent ou complètent ces éléments.</p></div>
+    <ul class="acc">
+{inclus}
+    </ul>
+  </div>
+</section>
+<section id="options" aria-labelledby="h-options">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">Options du kit</span><h2 id="h-options">Adaptez le kit à votre façon de voyager</h2>
+      <p>Toutes les options sont facultatives. Vous les ajoutez sur la page de paiement de votre kit, après l'avoir choisi dans la <a href="/boutique/">boutique</a>.</p></div>
+    <ul class="acc">
+{options}
+    </ul>
+    <a class="btn btn-primary" href="/boutique/#commande" style="margin-top:20px;max-width:420px">Configurer mon kit</a>
+  </div>
+</section>
+<section id="accessoires-seuls" class="kits" aria-labelledby="h-acc">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">Accessoires</span><h2 id="h-acc">Pour partir équipé</h2>
+      <p>Livrés avec votre kit ou à retirer au showroom de Nîmes. Les occultants sont faits sur mesure : indiquez votre modèle au paiement.</p></div>
+    <ul class="acc">
+{acc}
+    </ul>
+  </div>
+</section>"""
+    return page_simple("/accessoires/", "Options et accessoires pour kit camper amovible | Camperizate",
+                       "Options du kit camper (tiroirs, équerre, égouttoir, version 2+1) et accessoires : occultants isolants, "
+                       "frigo à compresseur, batterie lithium, réchaud, douche et toilettes portables. Prix TTC.",
+                       "Options et accessoires", "Options et accessoires du kit camper",
+                       "Tout ce qui complète votre kit : les options à choisir à la commande et les accessoires pour partir équipé.",
+                       contenu)
+
+
+def occultants():
+    k = next(a for a in ACCESSOIRES if a[0] == "occultants")
+    faq = [("Les occultants vont-ils sur toutes les vitres ?",
+            "Oui. Le jeu couvre toutes les vitres de votre véhicule, découpées sur mesure pour votre modèle."),
+           ("Comment se fixent-ils ?", "Avec des ventouses intégrées à l'isolant : ils se posent et se retirent en quelques secondes, sans outil."),
+           ("Isolent-ils du froid et du chaud ?", "Oui. Les 9 couches limitent les pertes de chaleur la nuit et coupent le soleil le jour. "
+            "Ils occultent aussi totalement : personne ne voit l'intérieur.")]
+    videos_html, script = section_videos([("wbGcR5GZ1Fg", "Les occultants en vidéo")], "Les occultants")
+    contenu = f"""
+<section class="kits" aria-labelledby="h-produit">
+  <div class="wrap fiche-grid">
+    <div class="pic"><img src="{k[5]}" alt="Occultants isolants posés sur les vitres d'un van" width="800" height="600" loading="lazy" style="border-radius:var(--r);width:100%"></div>
+    <div>
+      <h2 id="h-produit">Occultants isolants 9 couches</h2>
+      <p class="price-line"><b>{k[4]} €</b><span>TTC, le jeu complet</span></p>
+      <ul class="info-list">
+        <li>Toutes les vitres du véhicule, découpées pour votre modèle</li>
+        <li>Isolant 9 couches, finition grise</li>
+        <li>Fixation par ventouses, sans perçage ni adhésif</li>
+        <li>Nuit noire et intimité totale, même en ville</li>
+      </ul>
+      <div class="ctas">{bouton_stripe("occultants", "Acheter les occultants")}
+        <a class="btn btn-line" href="{TALLY}" target="_blank" rel="noopener">Une question ?</a></div>
+      <p class="help">Fabriqués sur mesure : pas de droit de rétractation. Indiquez votre modèle et son année au paiement.</p>
+    </div>
+  </div>
+</section>
+{videos_html}
+<section class="faq" aria-labelledby="h-faq">
+  <div class="wrap faq-wrap">
+    <div class="sec-head"><span class="kicker">Questions fréquentes</span><h2 id="h-faq">Occultants : en bref</h2></div>
+    <div class="faq-list">
+{faq_html(faq)}
+    </div>
+  </div>
+</section>"""
+    ld = {"@context": "https://schema.org", "@graph": [
+        {"@type": "Product", "name": "Occultants isolants 9 couches", "image": k[5], "brand": {"@type": "Brand", "name": "Camperizate"},
+         "offers": {"@type": "Offer", "priceCurrency": "EUR", "price": str(k[4]), "availability": "https://schema.org/InStock",
+                    "url": f"{SITE}/occultants-isolants/"}},
+        {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]}]}
+    return page_simple("/occultants-isolants/", "Occultants isolants pour van sur mesure | Camperizate",
+                       f"Occultants isotherme 9 couches pour toutes les vitres de votre van ou ludospace, sur mesure, fixation par ventouses. {k[4]} € TTC.",
+                       "Accessoire", "Occultants isolants sur mesure pour van",
+                       "Noir complet, intimité et isolation : un jeu d'occultants pour toutes les vitres, découpé pour votre modèle.",
+                       contenu, ld, script, crumb="Occultants isolants")
+
+
+def matelas():
+    faq = [("Le matelas est-il vendu seul ?", "Non : il est fabriqué avec votre kit, aux mesures du lit. Vous le choisissez à la commande du kit (+ 150 €)."),
+           ("Peut-on le replier dans le coffre ?", "Oui. Il est en plusieurs pièces et se range dans le coffre avec le kit replié."),
+           ("Quelle épaisseur ?", "8 cm de mousse haute densité D30 (30 kg/m³), ferme et confortable pour dormir plusieurs nuits.")]
+    videos_html, script = section_videos([("fRCdNFoSC8M", "Le matelas en vidéo"), ("kUtbMAAaMW8", "Le lit monté")], "Le matelas")
+    contenu = f"""
+<section class="kits" aria-labelledby="h-produit">
+  <div class="wrap two">
+    <div>
+      <h2 id="h-produit">Un matelas aux mesures de votre lit</h2>
+      <p class="price-line"><b>+ {MATELAS} €</b><span>TTC, avec votre kit</span></p>
+      <table class="specs"><tbody>
+        <tr><th scope="row">Mousse</th><td>haute densité D30 (30 kg/m³)</td></tr>
+        <tr><th scope="row">Épaisseur</th><td>8 cm</td></tr>
+        <tr><th scope="row">Pièces</th><td>en plusieurs pièces, 3 pièces pour les monospaces</td></tr>
+        <tr><th scope="row">Mesures</th><td>découpé pour le lit de votre kit</td></tr>
+      </tbody></table>
+    </div>
+    <div>
+      <p>Chaque kit a ses propres mesures : nous coupons le matelas pour qu'il couvre tout le lit, sans trou ni débord. Il se range en pièces dans le coffre avec le kit.</p>
+      <div class="ctas"><a class="btn btn-primary" href="/boutique/#commande">Choisir mon kit avec matelas</a></div>
+      <p class="help">Fabriqué sur mesure : pas de droit de rétractation.</p>
+    </div>
+  </div>
+</section>
+{videos_html}
+<section class="faq" aria-labelledby="h-faq">
+  <div class="wrap faq-wrap">
+    <div class="sec-head"><span class="kicker">Questions fréquentes</span><h2 id="h-faq">Matelas : en bref</h2></div>
+    <div class="faq-list">
+{faq_html(faq)}
+    </div>
+  </div>
+</section>"""
+    ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]}
+    return page_simple("/matelas-camper/", "Matelas camper sur mesure pour van | Camperizate",
+                       f"Matelas camper sur mesure en mousse D30 de 8 cm, découpé pour le lit de votre kit amovible. + {MATELAS} € avec le kit.",
+                       "Matelas", "Matelas camper sur mesure", "Une mousse ferme de 8 cm, découpée pour le lit de votre kit et rangée en pièces dans le coffre.",
+                       contenu, ld, script, crumb="Matelas camper")
+
+
+def guide():
+    lignes_prix = "".join(
+        f'<tr><td><a href="/kit-amenagement/#{ANCRES[g]}">{e(n)}</a></td>'
+        f'<td><b>dès {prix(cat, "pin", False)} €</b></td><td>dès {CATEGORIES[cat]["livraison"]} €</td></tr>'
+        for g, n, cat in GROUPES)
+    finitions = "".join(
+        f'<li><img class="acc-img" src="{img}" alt="{e(n)}" width="400" height="300" loading="lazy">'
+        f'<div class="row"><div><h3>{e(n)}</h3><small>{e(d)}</small></div></div></li>' for _, n, d, _p, img in FINITIONS)
+    faq = FAQ_COMMUNE + [
+        ("Combien de temps pour monter le kit ?", "Quelques minutes. Le kit se pose dans le coffre et le lit se déplie ; pour rouler, tout se replie."),
+        ("Le kit passe-t-il le contrôle technique ?", "Oui : c'est un chargement amovible, le véhicule n'est pas modifié. Vous pouvez aussi le retirer avant le contrôle."),
+        ("Puis-je voir un kit avant d'acheter ?", "Oui, au showroom de Nîmes, sur rendez-vous."),
+    ]
+    contenu = f"""
+<section class="kits" aria-labelledby="h-principe">
+  <div class="wrap two">
+    <div class="sec-head"><span class="kicker">1. Le principe</span><h2 id="h-principe">Un kit amovible, pas un aménagement fixe</h2></div>
+    <div>
+      <p>Le kit réunit le lit, la cuisine et les rangements dans un meuble qui se pose dans le coffre. Il n'est ni vissé ni percé : c'est un chargement, comme une valise.</p>
+      <p>Résultat : <b>pas d'homologation VASP</b>, carte grise inchangée, et vous retrouvez votre véhicule normal quand vous retirez le kit. <a href="/#vasp">Pourquoi pas de VASP ?</a></p>
+    </div>
+  </div>
+</section>
+<section aria-labelledby="h-vehicule">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">2. Votre véhicule</span><h2 id="h-vehicule">Un kit fabriqué pour votre modèle</h2>
+      <p>Le prix dépend de la taille du véhicule. Les versions longues des ludospaces (Berlingo XL, Kangoo Maxi…) prennent le kit van compact.</p></div>
+    <table class="price-table">
+      <thead><tr><th>Véhicule</th><th>Kit</th><th>Livraison en France</th></tr></thead>
+      <tbody>{lignes_prix}</tbody>
+    </table>
+    <p class="help"><a href="/kit-amenagement/">Trouver la fiche de mon modèle</a></p>
+  </div>
+</section>
+<section class="kits" aria-labelledby="h-finition">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">3. La finition</span><h2 id="h-finition">Pin, carrossier ou HPL</h2>
+      <p>Les trois finitions ont la même structure. Elles changent l'aspect, le poids et la résistance aux taches.</p></div>
+    <ul class="acc">{finitions}</ul>
+  </div>
+</section>
+<section aria-labelledby="h-confort">
+  <div class="wrap two">
+    <div class="sec-head"><span class="kicker">4. Le confort</span><h2 id="h-confort">Matelas, options et accessoires</h2></div>
+    <div>
+      <p>Le <a href="/matelas-camper/">matelas sur mesure</a> (mousse D30, 8 cm) s'ajoute pour {MATELAS} €. À la commande, vous pouvez aussi choisir des
+      <a href="/accessoires/#options">options</a> : tiroir à gauche, équerre rabattable, égouttoir, version 2+1 pour un vélo.</p>
+      <p>Pour partir équipé : <a href="/occultants-isolants/">occultants isolants</a>, frigo à compresseur, batterie lithium, réchaud, douche et toilettes portables. <a href="/accessoires/">Voir les accessoires</a>.</p>
+    </div>
+  </div>
+</section>
+<section class="kits" aria-labelledby="h-montage">
+  <div class="wrap two">
+    <div class="sec-head"><span class="kicker">5. Le montage</span><h2 id="h-montage">Quelques minutes, sans outil</h2></div>
+    <div>
+      <p>{e(FIXATION)}</p>
+      <p>Pour rouler, le lit se replie et le kit reste dans le coffre ; sur les ludospaces, les 5 places restent utilisables.</p>
+    </div>
+  </div>
+</section>
+<section aria-labelledby="h-commande">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">6. La commande</span><h2 id="h-commande">De la commande à la route</h2></div>
+    <ol class="steps-merci">
+      <li><b>Vous commandez</b> dans la <a href="/boutique/">boutique</a> : véhicule, finition, matelas, livraison ou retrait. Paiement par carte.</li>
+      <li><b>Sous 48 h ouvrées</b>, nous vérifions avec vous les mesures de votre véhicule.</li>
+      <li><b>Environ 3 semaines</b> de fabrication dans notre atelier, moins si votre modèle est en stock.</li>
+      <li><b>Livraison</b> du kit monté sur palette en France, ou <b>retrait gratuit</b> au showroom de Nîmes.</li>
+    </ol>
+    <div class="ctas" style="margin-top:24px"><a class="btn btn-primary" href="/boutique/#commande">Configurer mon kit</a>
+      <a class="btn btn-line" href="/contact/">Visiter le showroom</a></div>
+  </div>
+</section>
+<section class="faq" aria-labelledby="h-faq">
+  <div class="wrap faq-wrap">
+    <div class="sec-head"><span class="kicker">Questions fréquentes</span><h2 id="h-faq">Kit meubles camper : en bref</h2></div>
+    <div class="faq-list">
+{faq_html(faq)}
+    </div>
+  </div>
+</section>"""
+    ld = {"@context": "https://schema.org", "@graph": [
+        {"@type": "Article", "headline": "Kit meubles camper : le guide pour aménager son van",
+         "author": {"@type": "Organization", "name": "Camperizate"}, "publisher": {"@type": "Organization", "name": "Camperizate"},
+         "mainEntityOfPage": f"{SITE}/guide-kit-meubles-camper/", "dateModified": date.today().isoformat()},
+        {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]}]}
+    return page_simple("/guide-kit-meubles-camper/", "Kit meubles camper : le guide pour aménager son van | Camperizate",
+                       "Comment choisir et installer un kit meubles camper amovible : véhicule, finition, matelas, options, montage, "
+                       "commande. Sans VASP, dès 500 € TTC.",
+                       "Guide", "Kit meubles camper : le guide pour aménager son van",
+                       "Six étapes pour comprendre le kit, choisir le bon pour votre véhicule et partir.", contenu, ld, crumb="Guide du kit camper")
+
+
+def contact():
+    contenu = f"""
+<section class="kits" aria-labelledby="h-lieux">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">Nous rendre visite</span><h2 id="h-lieux">Showroom en France, atelier en Espagne</h2></div>
+    <ul class="info">
+      <li><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg><div><h3>Showroom de Nîmes</h3>
+        <p>Local n° 112, 866 avenue du Maréchal Juin, 30900 Nîmes.<br>Sur rendez-vous : voir les kits, essayer un matelas, retirer votre commande.</p>
+        <p><a href="https://www.google.com/maps/search/?api=1&amp;query=866+avenue+du+Mar%C3%A9chal+Juin+30900+N%C3%AEmes" target="_blank" rel="noopener">Ouvrir dans Google Maps</a></p></div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-factory"/></svg><div><h3>Atelier de fabrication</h3>
+        <p>Carrer de Vulcà 1B, 08530 La Garriga (Barcelone), Espagne.<br>Sur rendez-vous.</p>
+        <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Carrer+de+Vulc%C3%A0+1B+08530+La+Garriga" target="_blank" rel="noopener">Ouvrir dans Google Maps</a></p></div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-msg"/></svg><div><h3>Nous écrire</h3>
+        <p>Formulaire : réponse rapide par WhatsApp.<br>Téléphone et WhatsApp : <a href="tel:+34665319287">+34 665 319 287</a><br>
+        E-mail : <a href="mailto:info@camperizatetodoen1.com">info@camperizatetodoen1.com</a></p>
+        <p><a class="btn btn-primary" href="{TALLY}" target="_blank" rel="noopener">Écrivez-nous</a></p></div></li>
+    </ul>
+  </div>
+</section>"""
+    ld = {"@context": "https://schema.org", "@type": "LocalBusiness", "@id": f"{SITE}/#atelier", "name": "Camperizate",
+          "url": f"{SITE}/contact/", "telephone": "+34665319287", "email": "info@camperizatetodoen1.com",
+          "address": {"@type": "PostalAddress", "streetAddress": "866 Avenue du Maréchal Juin, Local n° 112",
+                      "postalCode": "30900", "addressLocality": "Nîmes", "addressCountry": "FR"}}
+    return page_simple("/contact/", "Contact et showroom à Nîmes | Camperizate",
+                       "Venez voir nos kits camper au showroom de Nîmes, 866 avenue du Maréchal Juin, sur rendez-vous, "
+                       "ou écrivez-nous : réponse rapide par WhatsApp.",
+                       "Contact", "Contact et showroom à Nîmes",
+                       "Venez voir et essayer nos kits à Nîmes, ou posez-nous vos questions : nous répondons vite, en français.",
+                       contenu, ld, crumb="Contact")
 
 
 # ---------------------------------------------------------------------------
@@ -941,16 +1102,16 @@ def merci():
 
 
 # ---------------------------------------------------------------------------
-# Landing (écrite à la main) : on ne met à jour que la liste des modèles
+# Landing (écrite à la main) : on ne met à jour que la liste des modèles et le sélecteur
 # ---------------------------------------------------------------------------
 def maj_landing():
     chemin = PUBLIC / "index.html"
     src = chemin.read_text(encoding="utf-8")
     cols = "".join(f"""
       <div>
-        <h3>{e(CATEGORIES[cat]['pluriel'])}</h3>
-        <ul class="all-models">{liste_modeles(cat)}</ul>
-      </div>""" for cat in ("mini", "moyen", "grand"))
+        <h3>{e(nom)}</h3>
+        <ul class="all-models">{liste_modeles(groupe)}</ul>
+      </div>""" for groupe, nom, _ in GROUPES)
     bloc = f"""<!-- MODELES:debut -->
 <section id="modeles" aria-labelledby="h-modeles">
   <div class="wrap">
@@ -960,7 +1121,7 @@ def maj_landing():
     </div>
     <div class="all-models-grid">{cols}
     </div>
-    <p class="help"><a href="/kit-amenagement/">Voir tous les kits par modèle</a></p>
+    <p class="help"><a href="/kit-amenagement/">Voir tous les kits par modèle</a> · <a href="/guide-kit-meubles-camper/">Le guide du kit camper</a></p>
   </div>
 </section>
 <style>
@@ -970,19 +1131,60 @@ def maj_landing():
 .all-models li{{break-inside:avoid}}
 .all-models a{{display:inline-flex;align-items:center;min-height:40px;font-size:15px;text-underline-offset:3px}}
 .all-models a:hover{{color:var(--orange)}}
-@media (min-width:960px){{.all-models-grid{{grid-template-columns:1fr 1fr 1fr}}.all-models{{columns:1}}}}
+@media (min-width:960px){{.all-models-grid{{grid-template-columns:repeat(4,1fr)}}.all-models{{columns:1}}}}
 </style>
 <!-- MODELES:fin -->"""
     src = re.sub(r"<!-- MODELES:debut -->.*?<!-- MODELES:fin -->", lambda _: bloc, src, flags=re.S)
+    opts = ['            <option value="">Choisir mon modèle</option>']
+    for cat in ("mini", "moyen", "grand"):
+        opts.append(f'            <optgroup label="{e(CATEGORIES[cat]["pluriel"])}">')
+        for c, v, n, f in sorted((x for x in VEHICULES if x[0] == cat), key=lambda x: x[2]):
+            opts.append(f'              <option value="{c}" data-slug="{v}" data-fiche="{f}">{e(n)}</option>')
+        opts.append('            </optgroup>')
+    opts.append('            <option value="autre">Autre modèle</option>')
+    vehicules = "<!-- VEHICULES:debut -->\n" + "\n".join(opts) + "\n<!-- VEHICULES:fin -->"
+    src = re.sub(r"<!-- VEHICULES:debut -->.*?<!-- VEHICULES:fin -->", lambda _: vehicules, src, flags=re.S)
     slugs = json.dumps([m["slug"] for m in FICHES])
     src = re.sub(r"var FICHES=\[.*?\];", lambda _: f"var FICHES={slugs};", src)
     chemin.write_text(src, encoding="utf-8")
-    print("mis à jour public/index.html (liste des modèles)")
+    print("mis à jour public/index.html (modèles et sélecteur)")
+
+
+# ---------------------------------------------------------------------------
+# Redirections : table ancienne URL -> nouvelle, et script à coller dans Webnode
+# ---------------------------------------------------------------------------
+def table_redirections():
+    table = {k: SITE + v for k, v in REDIRECTIONS.items()}
+    for m in FICHES:
+        for ancien in m["anciens"]:
+            table[ancien] = f"{SITE}/kit-amenagement/{m['slug']}/"
+    return dict(sorted(table.items()))
+
+
+def script_webnode(table):
+    exact = json.dumps(table, ensure_ascii=False, separators=(",", ":"))
+    prefixes = json.dumps([[k, SITE + v] for k, v in REDIRECTIONS_PREFIXES.items()], ensure_ascii=False, separators=(",", ":"))
+    return f"""<!-- Redirection camperizatetodoen1.com/fr/ -> kitamenagement.fr (généré par tools/build.py) -->
+<script>
+(function(){{
+  var p=location.pathname;
+  if(p.indexOf('/fr/')!==0&&p!=='/fr')return;
+  if(p.charAt(p.length-1)!=='/')p+='/';
+  var M={exact};
+  var P={prefixes};
+  var d=M[p];
+  if(!d){{for(var i=0;i<P.length;i++){{if(p.indexOf(P[i][0])===0){{d=P[i][1];break;}}}}}}
+  if(d)location.replace(d);
+}})();
+</script>
+"""
 
 
 def sitemap():
     today = date.today().isoformat()
-    urls = ["/", "/kit-amenagement/", "/boutique/"] + [f"/kit-amenagement/{m['slug']}/" for m in FICHES]
+    urls = ["/", "/kit-amenagement/", "/boutique/", "/accessoires/", "/guide-kit-meubles-camper/",
+            "/occultants-isolants/", "/matelas-camper/", "/contact/"]
+    urls += [f"/kit-amenagement/{m['slug']}/" for m in FICHES]
     urls += ["/conditions-generales-de-vente/", "/mentions-legales/", "/politique-de-confidentialite/"]
     rows = "\n".join(f"  <url><loc>{SITE}{u}</loc><lastmod>{today}</lastmod></url>" for u in urls)
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{rows}\n</urlset>\n'
@@ -1000,14 +1202,18 @@ def main():
     ecrire("merci/index.html", merci())
     for m in FICHES:
         ecrire(f"kit-amenagement/{m['slug']}/index.html", fiche(m))
-    ecrire("sitemap.xml", sitemap())
     ecrire("kit-amenagement/index.html", catalogue())
+    ecrire("accessoires/index.html", accessoires())
+    ecrire("occultants-isolants/index.html", occultants())
+    ecrire("matelas-camper/index.html", matelas())
+    ecrire("guide-kit-meubles-camper/index.html", guide())
+    ecrire("contact/index.html", contact())
+    ecrire("sitemap.xml", sitemap())
     maj_landing()
-    table = {"/fr/": f"{SITE}/", "/fr/kit-camperizacion/": f"{SITE}/kit-amenagement/", "/fr/tienda/": f"{SITE}/boutique/"}
-    for m in FICHES:
-        for ancien in m["anciens"]:
-            table[ancien] = f"{SITE}/kit-amenagement/{m['slug']}/"
+    table = table_redirections()
     (ROOT / "tools" / "redirections.json").write_text(json.dumps(table, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    (ROOT / "docs" / "redirection-webnode.html").write_text(script_webnode(table), encoding="utf-8")
+    print(f"redirections : {len(table)} URL exactes + {len(REDIRECTIONS_PREFIXES)} préfixes")
     vides = [k for k, v in STRIPE.items() if not v]
     print(f"liens Stripe manquants : {len(vides)}/{len(STRIPE)}")
 

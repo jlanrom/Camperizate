@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Kit aménagement Ducato, Jumper, Boxer amovible | Camperizate</title>
-<meta name="description" content="Kit camper amovible sur mesure pour Fiat Ducato, Citroën Jumper et Peugeot Boxer : lit, cuisine et rangements, sans perçage ni VASP. Devis gratuit, showroom à Nîmes.">
+<meta name="description" content="Kit camper amovible pour Fiat Ducato, Citroën Jumper et Peugeot Boxer : lit, cuisine et rangements posés en quelques minutes, sans perçage ni VASP. Dès 800 € TTC, showroom à Nîmes.">
 <link rel="canonical" href="https://kitamenagement.fr/kit-amenagement/jumper-boxer-transit/">
 <meta name="theme-color" content="#513524">
 <meta property="og:type" content="product">
@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="Camperizate">
 <meta property="og:url" content="https://kitamenagement.fr/kit-amenagement/jumper-boxer-transit/">
 <meta property="og:title" content="Kit aménagement Ducato, Jumper, Boxer amovible | Camperizate">
-<meta property="og:description" content="Kit camper amovible sur mesure pour Fiat Ducato, Citroën Jumper et Peugeot Boxer : lit, cuisine et rangements, sans perçage ni VASP. Devis gratuit, showroom à Nîmes.">
+<meta property="og:description" content="Kit camper amovible pour Fiat Ducato, Citroën Jumper et Peugeot Boxer : lit, cuisine et rangements posés en quelques minutes, sans perçage ni VASP. Dès 800 € TTC, showroom à Nîmes.">
 <meta property="og:image" content="https://kitamenagement.fr/img/og-kitamenagement.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -272,6 +272,12 @@ section{padding:52px 0}
 .price-table thead th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--brown-70);font-weight:600}
 .price-table td b{font:800 20px/1 var(--head);color:var(--orange);white-space:nowrap}
 .price-table small{display:block;color:var(--brown-70);font-size:13px}
+.price-table td img{float:left;width:44px;height:44px;object-fit:cover;border-radius:var(--r);margin:0 10px 0 0}
+.versions{margin-top:24px}
+.versions h3{margin-bottom:8px}
+.versions p{color:var(--brown-70)}
+.versions a{justify-content:space-between;gap:12px}
+.versions b{color:var(--orange);white-space:nowrap}
 .price-table tr:last-child td{border-bottom:0}
 .fix{max-width:720px;margin-top:20px}
 .videos{display:grid;gap:12px}
@@ -301,8 +307,15 @@ section{padding:52px 0}
 .total .ship{font-size:15px;color:var(--brown-70);margin-bottom:16px}
 .total .btn+.btn{margin-top:12px}
 .devis{display:none}
-.order.is-grand .step-fin,.order.is-grand .step-mat,.order.is-grand .total{display:none}
-.order.is-grand .devis{display:block}
+.order.is-devis .step-fin,.order.is-devis .step-mat,.order.is-devis .total{display:none}
+.order.is-devis .devis{display:block}
+.choice.with-img{justify-content:flex-start}
+.choice.with-img img{width:56px;height:56px;object-fit:cover;border-radius:var(--r);flex:none}
+.choice.with-img span{flex:1}
+.opts ul{list-style:none;padding:0;display:grid;gap:6px}
+.opts li{display:flex;align-items:center;gap:10px}
+.opts li img{width:40px;height:40px;object-fit:cover;border-radius:var(--r)}
+.acc-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r);background:var(--sand)}
 .opts{margin-top:14px;font-size:15px;color:var(--brown-70)}
 .opts ul{margin:6px 0 0;padding-left:1.2em}
 .acc{display:grid;gap:10px;list-style:none;margin:0;padding:0}
@@ -315,6 +328,8 @@ section{padding:52px 0}
 .info{display:grid;gap:10px;list-style:none;margin:0;padding:0}
 .info li{display:flex;gap:12px;align-items:flex-start}
 .info p{margin:0;color:var(--brown-70);font-size:15px}
+.info p+p{margin-top:10px}
+.info-list{margin:0 0 20px;padding-left:1.2em;display:grid;gap:6px}
 .model-links{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:8px}
 .model-links a{display:flex;align-items:center;min-height:48px;padding:10px 14px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;font-weight:600}
 .model-links a:hover{border-color:var(--brown);color:var(--orange)}
@@ -343,6 +358,24 @@ section{padding:52px 0}
  "@context": "https://schema.org",
  "@graph": [
   {
+   "@type": "Product",
+   "name": "Kit d'aménagement amovible Fiat Ducato, Citroën Jumper et Peugeot Boxer",
+   "description": "Kit camper amovible pour Fiat Ducato, Citroën Jumper et Peugeot Boxer : lit, cuisine et rangements posés en quelques minutes, sans perçage ni VASP. Dès 800 € TTC, showroom à Nîmes.",
+   "image": "https://kitamenagement.fr/img/hero-van-amenage-800.webp",
+   "brand": {
+    "@type": "Brand",
+    "name": "Camperizate"
+   },
+   "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "EUR",
+    "lowPrice": "800",
+    "highPrice": "1250",
+    "offerCount": "6",
+    "availability": "https://schema.org/InStock"
+   }
+  },
+  {
    "@type": "BreadcrumbList",
    "itemListElement": [
     {
@@ -370,10 +403,10 @@ section{padding:52px 0}
    "mainEntity": [
     {
      "@type": "Question",
-     "name": "Combien coûte un kit pour grand fourgon ?",
+     "name": "Le kit tient-il pendant la conduite ?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Chaque kit est conçu pour votre fourgon et votre usage : nous vous envoyons un devis gratuit après un premier échange."
+      "text": "Oui, comme tout chargement : il s'arrime aux anneaux du véhicule et se replie pendant la route."
      }
     },
     {
@@ -440,10 +473,10 @@ section{padding:52px 0}
     <div>
       <span class="kicker">Kit camper amovible · sans VASP</span>
       <h1 id="h1">Kit d'aménagement amovible pour Fiat Ducato, Citroën Jumper et Peugeot Boxer</h1>
-      <p class="lead">Pour votre Fiat Ducato, Citroën Jumper et Peugeot Boxer, nous concevons un kit amovible sur mesure : lit, cuisine et rangements, toujours sans perçage ni VASP. Le devis est gratuit.</p>
-      <p class="price-line"><b>Sur devis</b><span>gratuit, sans engagement</span></p>
+      <p class="lead">Votre Fiat Ducato, Citroën Jumper et Peugeot Boxer devient fourgon aménagé sans travaux : lit, cuisine et rangements, posés sans perçage et retirés quand vous en avez besoin pour travailler. Pas de VASP, carte grise inchangée.</p>
+      <p class="price-line"><b>Dès 800 €</b><span>TTC, direct atelier</span></p>
       <div class="ctas">
-        <a href="https://tally.so/r/OD6BOp" class="btn btn-primary" target="_blank" rel="noopener">Demander mon devis <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+        <a href="/boutique/?modele=jumper-boxer-transit#commande" class="btn btn-primary">Commander ce kit <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
         <a href="https://tally.so/r/OD6BOp" class="btn btn-line" target="_blank" rel="noopener">Poser une question</a>
       </div>
       <ul class="chips">
@@ -459,34 +492,70 @@ section{padding:52px 0}
   <div class="wrap">
     <div class="sec-head"><span class="kicker">Le kit Ducato</span><h2 id="h-kit">Ce que comprend le kit</h2></div>
     <ul class="incl">
-        <li><svg class="ico" aria-hidden="true"><use href="#i-bed"/></svg><span><b>Lit</b>Conçu pour la largeur de votre fourgon.</span></li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-cook"/></svg><span><b>Cuisine</b>Tiroir extractible, réchaud, vaisselle.</span></li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-box"/></svg><span><b>Rangement</b>Coffres et logement frigo selon votre projet.</span></li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><span><b>Sans VASP</b>Chargement amovible, rien n&#x27;est vissé.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-bed"/></svg><span><b>Lit</b>180 à 190 × 120 cm, matelas sur mesure en option.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-cook"/></svg><span><b>Cuisine</b>Tiroir extractible pour un réchaud d&#x27;un feu ou plus.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-box"/></svg><span><b>Rangement</b>Coffres, modules sur les passages de roue, logement frigo Fr40.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-table"/></svg><span><b>Table</b>Hauteur réglable.</span></li>
     </ul>
-    <p class="fix">Le kit se pose dans le coffre, repose sur 3 points d&#x27;appui contrôlés et se sangle aux anneaux d&#x27;arrimage d&#x27;origine. Aucun perçage, rien n&#x27;est vissé.</p>
+    <p class="fix">Le kit se pose sur le plancher, s&#x27;arrime aux anneaux du fourgon et se replie pendant la route. Les glissières des tiroirs sont renforcées (30 à 40 kg). Aucun perçage, rien n&#x27;est vissé.</p>
   </div>
 </section>
 
+<section aria-labelledby="h-mesures">
+  <div class="wrap two">
+    <div class="sec-head">
+      <span class="kicker">Mesures</span>
+      <h2 id="h-mesures">Dimensions du kit Ducato</h2>
+      <p>Chaque kit est ajusté à votre véhicule : nous vérifions les mesures avec vous avant la fabrication. Une question ? <a href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Écrivez-nous</a>.</p>
+    </div>
+    <table class="specs"><tbody>
+          <tr><th scope="row">Lit</th><td>180 à 190 × 120 cm</td></tr>
+          <tr><th scope="row">Largeur du kit</th><td>environ 170 cm, en 3 parties</td></tr>
+          <tr><th scope="row">Hauteur</th><td>40, 44 ou 48 cm selon le montage</td></tr>
+          <tr><th scope="row">Places assises</th><td>5 ou 6 places selon les sièges montés</td></tr>
+          <tr><th scope="row">Frigo</th><td>logement pour un frigo à compresseur type Fr40 ou plus</td></tr>
+          <tr><th scope="row">Générations</th><td>1994-2002, 2002-2006, 2006-2014 et depuis 2014</td></tr>
+    </tbody></table>
+  </div>
+</section>
 
 <section id="prix" class="kits" aria-labelledby="h-prix">
   <div class="wrap">
     <div class="sec-head">
       <span class="kicker">Prix</span>
-      <h2 id="h-prix">Un kit conçu pour votre fourgon</h2>
-      <p>Dites-nous votre modèle, sa longueur et votre usage : nous vous envoyons un devis gratuit.</p>
+      <h2 id="h-prix">Trois finitions, un prix atelier</h2>
+      <p>Prix TTC du kit grand fourgon, hors livraison (dès 250 € en France, retrait gratuit à Nîmes).</p>
     </div>
-    <a href="https://tally.so/r/OD6BOp" class="btn btn-primary" style="max-width:420px" target="_blank" rel="noopener">Demander mon devis <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+    <table class="price-table">
+      <thead><tr><th>Finition</th><th>Sans matelas</th><th>Avec matelas</th></tr></thead>
+      <tbody>
+          <tr><td><img src="https://storage.tally.so/b2a97ab2-3782-47d6-8e5d-04b1d5b1281a/materiales-muebles-1-X12.jpg" alt="" width="48" height="48" loading="lazy">Phénolique pin<small>Contreplaqué phénolique de pin, finition bois naturel.</small></td><td><b>800 €</b></td><td><b>950 €</b></td></tr>
+          <tr><td><img src="https://storage.tally.so/5c1b8d35-41db-43ef-920d-f82a3c309563/materiales-muebles-0-X10.jpg" alt="" width="48" height="48" loading="lazy">Phénolique carrossier<small>Contreplaqué phénolique antidérapant, noir. Le plus vendu.</small></td><td><b>850 €</b></td><td><b>1000 €</b></td></tr>
+          <tr><td><img src="https://storage.tally.so/306e225d-2e4c-4ff7-875d-a10f4b2fc2aa/materiales-muebles-2-X14.jpg" alt="" width="48" height="48" loading="lazy">HPL de peuplier<small>Peuplier phénolique avec HPL, blanc ou anthracite. Notre finition premium.</small></td><td><b>1100 €</b></td><td><b>1250 €</b></td></tr>
+      </tbody>
+    </table>
+    
+    <p class="help">Options (tiroirs, égouttoir, version 2+1…) et accessoires (occultants, frigo, batterie…) : <a href="/accessoires/">voir en détail</a>.</p>
+    <a href="/boutique/?modele=jumper-boxer-transit#commande" class="btn btn-primary" style="margin-top:20px;max-width:420px">Commander ce kit <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
   </div>
 </section>
 
 
+<section aria-labelledby="h-videos">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">En vidéo</span><h2 id="h-videos">Le kit Ducato en situation</h2></div>
+    <div class="videos">
+      <button type="button" class="yt" data-id="Sr2Taz2WiM0" aria-label="Lire la vidéo : Le kit grand fourgon en vidéo"><img src="https://i.ytimg.com/vi/Sr2Taz2WiM0/hqdefault.jpg" alt="" width="480" height="360" loading="lazy"><span>▶ Le kit grand fourgon en vidéo</span></button>
+      <button type="button" class="yt" data-id="YYaN5GDxf_4" aria-label="Lire la vidéo : Le kit grand fourgon monté"><img src="https://i.ytimg.com/vi/YYaN5GDxf_4/hqdefault.jpg" alt="" width="480" height="360" loading="lazy"><span>▶ Le kit grand fourgon monté</span></button>
+    </div>
+  </div>
+</section>
 
 <section class="showroom" aria-labelledby="h-showroom">
   <div class="wrap">
     <div class="sec-head"><span class="kicker">Showroom</span><h2 id="h-showroom">Venez voir nos kits à Nîmes</h2></div>
     <address>Local n° 112, 866 avenue du Maréchal Juin<br>30900 Nîmes</address>
-    <a href="https://tally.so/r/OD6BOp" class="btn btn-line" style="max-width:420px" target="_blank" rel="noopener">Prévenir de ma visite</a>
+    <a href="/contact/" class="btn btn-line" style="max-width:420px">Préparer ma visite</a>
   </div>
 </section>
 
@@ -494,13 +563,20 @@ section{padding:52px 0}
   <div class="wrap faq-wrap">
     <div class="sec-head"><span class="kicker">Questions fréquentes</span><h2 id="h-faq">Kit Ducato : en bref</h2></div>
     <div class="faq-list">
-      <details><summary>Combien coûte un kit pour grand fourgon ?<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="a"><p>Chaque kit est conçu pour votre fourgon et votre usage : nous vous envoyons un devis gratuit après un premier échange.</p></div></details>
+      <details><summary>Le kit tient-il pendant la conduite ?<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="a"><p>Oui, comme tout chargement : il s&#x27;arrime aux anneaux du véhicule et se replie pendant la route.</p></div></details>
       <details><summary>Faut-il une homologation VASP ?<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="a"><p>Non. Le kit n&#x27;est ni vissé ni percé : c&#x27;est un chargement amovible. Pas de VASP, pas de DREAL, carte grise inchangée.</p></div></details>
       <details><summary>Quel est le délai ?<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="a"><p>Environ 3 semaines de fabrication, plus rapide si votre modèle est en stock.</p></div></details>
     </div>
   </div>
 </section>
 
+<section aria-labelledby="h-autres">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">Grands fourgons</span><h2 id="h-autres">Autres modèles compatibles</h2></div>
+    <ul class="model-links"><li><a href="/kit-amenagement/ford-transit/">Ford Transit</a></li><li><a href="/kit-amenagement/renault-master/">Renault Master et Opel Movano</a></li><li><a href="/kit-amenagement/mercedes-sprinter/">Mercedes Sprinter</a></li><li><a href="/kit-amenagement/vw-crafter/">Volkswagen Crafter</a></li></ul>
+    <p class="help"><a href="/kit-amenagement/">Voir tous les modèles</a> · <a href="/accessoires/">Options et accessoires</a> · <a href="/guide-kit-meubles-camper/">Le guide du kit camper</a></p>
+  </div>
+</section>
 </main>
 
 <footer class="site-foot">
@@ -508,8 +584,8 @@ section{padding:52px 0}
     <div class="foot-grid">
       <div>
         <img src="/img/camperizate-logo-white.svg" alt="Camperizate" width="160" height="21" loading="lazy">
-        <p>Kits camper amovibles pour ludospaces et vans, fabriqués dans notre atelier.</p>
-        <a class="link" href="/kit-amenagement/">Tous les modèles</a> · <a class="link" href="/boutique/">Boutique</a>
+        <p>Kits camper amovibles pour ludospaces, vans et fourgons, fabriqués dans notre atelier.</p>
+        <a class="link" href="/kit-amenagement/">Tous les modèles</a> · <a class="link" href="/boutique/">Boutique</a> · <a class="link" href="/accessoires/">Accessoires</a> · <a class="link" href="/guide-kit-meubles-camper/">Guide</a> · <a class="link" href="/contact/">Contact</a>
       </div>
       <div>
         <h3>Showroom en France</h3>
@@ -530,6 +606,15 @@ section{padding:52px 0}
     </div>
   </div>
 </footer>
-
+<script>
+document.querySelectorAll('.yt').forEach(function(b){
+  b.addEventListener('click',function(){
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+b.dataset.id+'?autoplay=1&rel=0';
+    f.title=b.getAttribute('aria-label');f.allow='autoplay; encrypted-media; picture-in-picture';f.allowFullscreen=true;
+    var d=document.createElement('div');d.className='yt';d.appendChild(f);b.replaceWith(d);
+  });
+});
+</script>
 </body>
 </html>
