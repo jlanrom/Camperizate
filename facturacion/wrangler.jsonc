@@ -1,0 +1,34 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "facturacion-stripe-holded",
+  "main": "src/index.js",
+  "compatibility_date": "2025-09-01",
+  "observability": { "enabled": true },
+  // Réglages non secrets. Les secrets (STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, HOLDED_API_KEY)
+  // se définissent dans Cloudflare : Workers > facturacion-stripe-holded > Settings > Variables and Secrets.
+  "vars": {
+    // Mode test : true = n'écrit rien dans Holded, n'envoie aucun e-mail, journalise seulement.
+    "DRY_RUN": "true",
+    // Ne traiter que les paiements des liens de kitamenagement.fr (métadonnée « site » des Payment Links).
+    "SITE_METADATA": "kitamenagement.fr",
+    // TVA par défaut (comme les factures actuelles). À valider avec le gestor (OSS pour la France ?).
+    "TAX_KEY": "s_iva_21",
+    "TAX_RATE": "21",
+    // Par pays, ex. {"FR":{"key":"<clé Holded TVA FR 20 %>","rate":20}} une fois la taxe créée dans Holded.
+    "TAX_BY_COUNTRY": "{}",
+    // Compte de ventes utilisé par vos factures actuelles.
+    "HOLDED_SALES_ACCOUNT_ID": "67d01537b71b6257a30c39cb",
+    // Moyen de paiement « TARJETA BANCARIA ».
+    "HOLDED_PAYMENT_METHOD_ID": "6a591285b8a9e7007a0e35e2",
+    // Série « Línea SO » pour les bons de commande.
+    "HOLDED_ORDER_SERIES_ID": "67d01533b71b6257a30c391c",
+    // Série de factures (vide = série par défaut de Holded). Conseillé : une série dédiée à la web FR.
+    "HOLDED_INVOICE_SERIES_ID": "",
+    // Trésorerie Holded où enregistrer le paiement (vide = facture sans paiement enregistré).
+    "HOLDED_TREASURY_ID": "",
+    // false = factures en brouillon (comme aujourd'hui). true = approuvées (numéro définitif, VeriFactu).
+    "APPROVE_INVOICE": "false",
+    // true = envoyer aussi la facture au client (seulement si APPROVE_INVOICE = true).
+    "SEND_INVOICE": "false"
+  }
+}

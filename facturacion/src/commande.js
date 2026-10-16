@@ -1,0 +1,183 @@
+// Transforme une Checkout Session Stripe en commande, lignes Holded et e-mail client.
+
+const CGV = "https://kitamenagement.fr/conditions-generales-de-vente/";
+const SHOWROOM = "Local n° 112, 866 avenue du Maréchal Juin, 30900 Nîmes";
+const CONTACT = "WhatsApp +34 665 319 287 · info@camperizatetodoen1.com";
+
+const arrondi = (n, d = 2) => Math.round((n + Number.EPSILON) * 10 ** d) / 10 ** d;
+const euros = (n) => `${n.toFixed(2).replace(".", ",")} €`;
+
+/** Taxe à appliquer : par pays si configuré (ex. OSS), sinon taxe par défaut. */
+export function taxePour(pays, config) {
+  const parPays = JSON.parse(config.TAX_BY_COUNTRY || "{}");
+  if (pays && parPays[pays]) return { cle: parPays[pays].key, taux: Number(parPays[pays].rate) };
+  return { cle: config.TAX_KEY || "s_iva_21", taux: Number(config.TAX_RATE ?? 21) };
+}
+
+export function lireCommande(session) {
+  const client = session.customer_details || {};
+  const livraisonInfo = session.collected_information?.shipping_details || session.shipping_details || null;
+  const champs = Object.fromEntries((session.custom_fields || []).map((c) => [c.key, c.text?.value || c.dropdown?.value || c.numeric?.value || ""]));
+  const lignes = (session.line_items?.data || []).map((li) => {
+    const produit = li.price?.product || {};
+    const quantite = li.quantity || 1;
+    return {
+      nom: produit.name || li.description,
+      description: produit.description || "",
+      cle: produit.metadata?.cle || "",
+      quantite,
+      totalTTC: (li.amount_total ?? li.amount_subtotal) / 100,
+    };
+  });
+  const livraison = lignes.some((l) => l.cle.startsWith("livraison"));
+  const estKit = lignes.some((l) => l.cle.startsWith("kit-"));
+  return {
+    sessionId: session.id,
+    paymentIntentId: typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id,
+    metadataPaiement: typeof session.payment_intent === "object" ? session.payment_intent?.metadata || {} : {},
+    date: session.created,
+    email: (client.email || "").trim().toLowerCase(),
+    nom: client.name || livraisonInfo?.name || client.email,
+    telephone: client.phone || "",
+    adresse: client.address || {},
+    livraisonAdresse: livraisonInfo?.address || null,
+    vehicule: champs.modele || "",
+    modeleSite: session.client_reference_id || "",
+    lignes,
+    totalTTC: session.amount_total / 100,
+    livraison,
+    estKit,
+    langue: "fr",
+  };
+}
+
+/** Lignes au format Holded v1 : prix unitaire HT (subtotal), taxe en %. */
+export function lignesHolded(commande, config) {
+  const { cle, taux } = taxePour(commande.adresse?.country, config);
+  return commande.lignes.map((l) => {
+    const unitTTC = l.totalTTC / l.quantite;
+    const item = {
+      name: l.nom,
+      desc: l.description,
+      units: l.quantite,
+      subtotal: arrondi(unitTTC / (1 + taux / 100), 4),
+      tax: taux,
+      taxes: [cle],
+      sku: l.cle,
+    };
+    if (config.HOLDED_SALES_ACCOUNT_ID) item.accountingAccountId = config.HOLDED_SALES_ACCOUNT_ID;
+    return item;
+  });
+}
+
+/** Total TTC que Holded recalculera à partir des lignes (pour détecter un écart d'arrondi). */
+export function totalRecalcule(items) {
+  return arrondi(items.reduce((s, i) => s + arrondi(i.subtotal * i.units * (1 + i.tax / 100), 2), 0), 2);
+}
+
+function adresseTexte(a) {
+  if (!a) return "";
+  return [a.line1, a.line2, `${a.postal_code || ""} ${a.city || ""}`.trim(), a.country].filter(Boolean).join(", ");
+}
+
+export function contactHolded(commande) {
+  const a = commande.adresse || {};
+  return {
+    name: commande.nom,
+    email: commande.email,
+    mobile: commande.telephone,
+    type: "client",
+    isperson: true,
+    CustomId: `stripe:${commande.email}`,
+    billAddress: {
+      address: [a.line1, a.line2].filter(Boolean).join(", "),
+      city: a.city || "",
+      postalCode: a.postal_code || "",
+      province: a.state || "",
+      countryCode: a.country || "",
+    },
+  };
+}
+
+export function documentHolded(commande, contactId, config, { type }) {
+  const items = lignesHolded(commande, config);
+  const doc = {
+    contactId,
+    date: commande.date,
+    desc: `Commande web kitamenagement.fr${commande.vehicule ? ` – ${commande.vehicule}` : ""}`,
+    notes: [
+      `Stripe : ${commande.sessionId}`,
+      commande.vehicule && `Véhicule : ${commande.vehicule}`,
+      commande.modeleSite && `Modèle choisi sur le site : ${commande.modeleSite}`,
+      commande.livraison ? `Livraison : ${adresseTexte(commande.livraisonAdresse)}` : "Retrait au showroom de Nîmes",
+      commande.telephone && `Tél. : ${commande.telephone}`,
+    ].filter(Boolean).join("\n"),
+    items,
+    language: commande.langue,
+    currency: "eur",
+  };
+  if (type === "salesorder" && config.HOLDED_ORDER_SERIES_ID) doc.numSerieId = config.HOLDED_ORDER_SERIES_ID;
+  if (type === "invoice") {
+    if (config.HOLDED_INVOICE_SERIES_ID) doc.numSerieId = config.HOLDED_INVOICE_SERIES_ID;
+    if (config.HOLDED_PAYMENT_METHOD_ID) doc.paymentMethodId = config.HOLDED_PAYMENT_METHOD_ID;
+    doc.approveDoc = config.APPROVE_INVOICE === "true";
+  }
+  if (commande.livraison && commande.livraisonAdresse) {
+    const s = commande.livraisonAdresse;
+    Object.assign(doc, {
+      shippingAddress: [s.line1, s.line2].filter(Boolean).join(", "),
+      shippingPostalCode: s.postal_code || "",
+      shippingCity: s.city || "",
+      shippingCountry: s.country || "",
+    });
+  }
+  return doc;
+}
+
+/** E-mail de confirmation de commande (texte), envoyé via Holded avec le bon de commande en PDF. */
+export function emailCommande(commande, numero) {
+  const prenom = (commande.nom || "").split(" ")[0];
+  const lignes = commande.lignes.map((l) => `• ${l.quantite > 1 ? `${l.quantite} × ` : ""}${l.nom} : ${euros(l.totalTTC)}`).join("\n");
+  const reception = commande.livraison
+    ? `Livraison du kit monté, sur palette, à l'adresse : ${adresseTexte(commande.livraisonAdresse)}.`
+    : `Retrait gratuit au showroom : ${SHOWROOM}.`;
+  const etapes = commande.estKit
+    ? [
+        "1. Sous 48 h ouvrées, nous vous contactons pour vérifier les mesures de votre véhicule.",
+        "2. Fabrication dans notre atelier : environ 3 semaines (plus rapide si votre modèle est en stock).",
+        commande.livraison
+          ? "3. Livraison : le transporteur vous appelle pour fixer le jour. À la réception, vérifiez le colis et notez toute réserve auprès du transporteur."
+          : "3. Retrait : nous convenons ensemble du jour où vous passez au showroom de Nîmes.",
+      ]
+    : [
+        "1. Nous préparons votre commande et vous contactons pour convenir du retrait ou de l'envoi avec votre kit.",
+      ];
+  const texte = [
+    `Bonjour ${prenom},`,
+    "",
+    `Merci pour votre commande${numero ? ` n° ${numero}` : ""} ! Votre paiement est confirmé. Vous trouverez le bon de commande en pièce jointe.`,
+    "",
+    "Votre commande",
+    lignes,
+    `Total payé : ${euros(commande.totalTTC)} TTC`,
+    commande.vehicule ? `Véhicule : ${commande.vehicule}` : "",
+    reception,
+    "",
+    "Et maintenant ?",
+    ...etapes,
+    "",
+    "Bon à savoir",
+    "• Vous disposez de 14 jours après la réception pour vous rétracter (sauf produit fabriqué selon vos spécifications particulières).",
+    "• Tous nos produits bénéficient de la garantie légale de conformité de 2 ans.",
+    `• Nos conditions générales de vente : ${CGV}`,
+    "",
+    `Une question ? Écrivez-nous : ${CONTACT}.`,
+    "",
+    "À très bientôt sur la route,",
+    "L'équipe Camperizate",
+  ].filter((l, i, arr) => !(l === "" && arr[i - 1] === "")).join("\n");
+  return {
+    subject: `Votre commande Camperizate${numero ? ` n° ${numero}` : ""} est confirmée`,
+    message: texte,
+  };
+}
