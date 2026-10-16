@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Kit aménagement par modèle : ludospace et van | Camperizate</title>
-<meta name="description" content="Trouvez le kit camper amovible de votre véhicule : Berlingo, Kangoo, Partner, Trafic, Transporter, Vito… Sans perçage ni VASP, dès 500 € TTC.">
+<title>Kit aménagement par modèle : ludospace, van, fourgon | Camperizate</title>
+<meta name="description" content="Trouvez le kit camper amovible de votre véhicule : Berlingo, Kangoo, Partner, Trafic, Transporter, Vito, Ducato… Sans perçage ni VASP, dès 500 € TTC.">
 <link rel="canonical" href="https://kitamenagement.fr/kit-amenagement/">
 <meta name="theme-color" content="#513524">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:site_name" content="Camperizate">
 <meta property="og:url" content="https://kitamenagement.fr/kit-amenagement/">
-<meta property="og:title" content="Kit aménagement par modèle : ludospace et van | Camperizate">
-<meta property="og:description" content="Trouvez le kit camper amovible de votre véhicule : Berlingo, Kangoo, Partner, Trafic, Transporter, Vito… Sans perçage ni VASP, dès 500 € TTC.">
+<meta property="og:title" content="Kit aménagement par modèle : ludospace, van, fourgon | Camperizate">
+<meta property="og:description" content="Trouvez le kit camper amovible de votre véhicule : Berlingo, Kangoo, Partner, Trafic, Transporter, Vito, Ducato… Sans perçage ni VASP, dès 500 € TTC.">
 <meta property="og:image" content="https://kitamenagement.fr/img/og-kitamenagement.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -272,6 +272,12 @@ section{padding:52px 0}
 .price-table thead th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--brown-70);font-weight:600}
 .price-table td b{font:800 20px/1 var(--head);color:var(--orange);white-space:nowrap}
 .price-table small{display:block;color:var(--brown-70);font-size:13px}
+.price-table td img{float:left;width:44px;height:44px;object-fit:cover;border-radius:var(--r);margin:0 10px 0 0}
+.versions{margin-top:24px}
+.versions h3{margin-bottom:8px}
+.versions p{color:var(--brown-70)}
+.versions a{justify-content:space-between;gap:12px}
+.versions b{color:var(--orange);white-space:nowrap}
 .price-table tr:last-child td{border-bottom:0}
 .fix{max-width:720px;margin-top:20px}
 .videos{display:grid;gap:12px}
@@ -301,8 +307,15 @@ section{padding:52px 0}
 .total .ship{font-size:15px;color:var(--brown-70);margin-bottom:16px}
 .total .btn+.btn{margin-top:12px}
 .devis{display:none}
-.order.is-grand .step-fin,.order.is-grand .step-mat,.order.is-grand .total{display:none}
-.order.is-grand .devis{display:block}
+.order.is-devis .step-fin,.order.is-devis .step-mat,.order.is-devis .total{display:none}
+.order.is-devis .devis{display:block}
+.choice.with-img{justify-content:flex-start}
+.choice.with-img img{width:56px;height:56px;object-fit:cover;border-radius:var(--r);flex:none}
+.choice.with-img span{flex:1}
+.opts ul{list-style:none;padding:0;display:grid;gap:6px}
+.opts li{display:flex;align-items:center;gap:10px}
+.opts li img{width:40px;height:40px;object-fit:cover;border-radius:var(--r)}
+.acc-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r);background:var(--sand)}
 .opts{margin-top:14px;font-size:15px;color:var(--brown-70)}
 .opts ul{margin:6px 0 0;padding-left:1.2em}
 .acc{display:grid;gap:10px;list-style:none;margin:0;padding:0}
@@ -315,6 +328,8 @@ section{padding:52px 0}
 .info{display:grid;gap:10px;list-style:none;margin:0;padding:0}
 .info li{display:flex;gap:12px;align-items:flex-start}
 .info p{margin:0;color:var(--brown-70);font-size:15px}
+.info p+p{margin-top:10px}
+.info-list{margin:0 0 20px;padding-left:1.2em;display:grid;gap:6px}
 .model-links{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:8px}
 .model-links a{display:flex;align-items:center;min-height:48px;padding:10px 14px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;font-weight:600}
 .model-links a:hover{border-color:var(--brown);color:var(--orange)}
@@ -376,7 +391,7 @@ section{padding:52px 0}
   {
    "@type": "ListItem",
    "position": 6,
-   "name": "Opel Combo Life",
+   "name": "Opel Combo et Combo Life",
    "url": "https://kitamenagement.fr/kit-amenagement/opel-combo-life/"
   },
   {
@@ -430,104 +445,152 @@ section{padding:52px 0}
   {
    "@type": "ListItem",
    "position": 15,
+   "name": "Citroën C8 et Peugeot 807",
+   "url": "https://kitamenagement.fr/kit-amenagement/citroen-c8-peugeot-807/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 16,
+   "name": "Renault Grand Scénic",
+   "url": "https://kitamenagement.fr/kit-amenagement/renault-grand-scenic/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 17,
+   "name": "Volkswagen Touran",
+   "url": "https://kitamenagement.fr/kit-amenagement/vw-touran/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 18,
+   "name": "Nissan Juke",
+   "url": "https://kitamenagement.fr/kit-amenagement/nissan-juke/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 19,
    "name": "Renault Trafic",
    "url": "https://kitamenagement.fr/kit-amenagement/trafic/"
   },
   {
    "@type": "ListItem",
-   "position": 16,
-   "name": "Volkswagen Transporter T4, T5 et T6",
+   "position": 20,
+   "name": "Volkswagen Transporter T4, T5, T6 et T7",
    "url": "https://kitamenagement.fr/kit-amenagement/transporter-t4-t5-t6/"
   },
   {
    "@type": "ListItem",
-   "position": 17,
+   "position": 21,
    "name": "Volkswagen Caravelle et Multivan",
    "url": "https://kitamenagement.fr/kit-amenagement/caravelle-t4-t5-t6/"
   },
   {
    "@type": "ListItem",
-   "position": 18,
+   "position": 22,
    "name": "Mercedes Vito et Viano",
    "url": "https://kitamenagement.fr/kit-amenagement/vito-viano/"
   },
   {
    "@type": "ListItem",
-   "position": 19,
+   "position": 23,
    "name": "Peugeot Expert",
    "url": "https://kitamenagement.fr/kit-amenagement/expert/"
   },
   {
    "@type": "ListItem",
-   "position": 20,
+   "position": 24,
    "name": "Peugeot Traveller",
    "url": "https://kitamenagement.fr/kit-amenagement/traveller/"
   },
   {
    "@type": "ListItem",
-   "position": 21,
+   "position": 25,
    "name": "Citroën Jumpy",
    "url": "https://kitamenagement.fr/kit-amenagement/jumpy/"
   },
   {
    "@type": "ListItem",
-   "position": 22,
+   "position": 26,
    "name": "Citroën SpaceTourer",
    "url": "https://kitamenagement.fr/kit-amenagement/space-tourer/"
   },
   {
    "@type": "ListItem",
-   "position": 23,
+   "position": 27,
+   "name": "Toyota Proace et Proace Verso",
+   "url": "https://kitamenagement.fr/kit-amenagement/toyota-proace/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 28,
    "name": "Fiat Scudo",
    "url": "https://kitamenagement.fr/kit-amenagement/fiat-scudo/"
   },
   {
    "@type": "ListItem",
-   "position": 24,
+   "position": 29,
    "name": "Fiat Talento",
    "url": "https://kitamenagement.fr/kit-amenagement/talento/"
   },
   {
    "@type": "ListItem",
-   "position": 25,
+   "position": 30,
    "name": "Opel Vivaro et Zafira Life",
    "url": "https://kitamenagement.fr/kit-amenagement/opel-vivaro/"
   },
   {
    "@type": "ListItem",
-   "position": 26,
-   "name": "Toyota Proace",
-   "url": "https://kitamenagement.fr/kit-amenagement/toyota-proace/"
-  },
-  {
-   "@type": "ListItem",
-   "position": 27,
+   "position": 31,
    "name": "Ford Transit Custom et Tourneo Custom",
    "url": "https://kitamenagement.fr/kit-amenagement/ford-transit-custom/"
   },
   {
    "@type": "ListItem",
-   "position": 28,
-   "name": "Nissan NV200",
+   "position": 32,
+   "name": "Nissan NV200 et Evalia",
    "url": "https://kitamenagement.fr/kit-amenagement/nv200/"
   },
   {
    "@type": "ListItem",
-   "position": 29,
+   "position": 33,
    "name": "Nissan NV300 et Primastar",
    "url": "https://kitamenagement.fr/kit-amenagement/nv300/"
   },
   {
    "@type": "ListItem",
-   "position": 30,
+   "position": 34,
    "name": "Hyundai H1",
    "url": "https://kitamenagement.fr/kit-amenagement/hyundai-h1/"
   },
   {
    "@type": "ListItem",
-   "position": 31,
+   "position": 35,
    "name": "Fiat Ducato, Citroën Jumper et Peugeot Boxer",
    "url": "https://kitamenagement.fr/kit-amenagement/jumper-boxer-transit/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 36,
+   "name": "Ford Transit",
+   "url": "https://kitamenagement.fr/kit-amenagement/ford-transit/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 37,
+   "name": "Renault Master et Opel Movano",
+   "url": "https://kitamenagement.fr/kit-amenagement/renault-master/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 38,
+   "name": "Mercedes Sprinter",
+   "url": "https://kitamenagement.fr/kit-amenagement/mercedes-sprinter/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 39,
+   "name": "Volkswagen Crafter",
+   "url": "https://kitamenagement.fr/kit-amenagement/vw-crafter/"
   }
  ]
 }
@@ -576,19 +639,24 @@ section{padding:52px 0}
 <section class="kits" aria-label="Modèles compatibles">
   <div class="wrap">
     <div class="cat-block" id="ludospaces">
-      <h2>Kits ludospace</h2>
+      <h2>Ludospaces</h2>
       <p class="help">dès 500 € TTC · vous gardez vos 5 places</p>
-      <ul class="model-links"><li><a href="/kit-amenagement/berlingo/">Citroën Berlingo</a></li><li><a href="/kit-amenagement/partner/">Peugeot Partner et Partner Tepee</a></li><li><a href="/kit-amenagement/rifter/">Peugeot Rifter</a></li><li><a href="/kit-amenagement/renault-kangoo/">Renault Kangoo</a></li><li><a href="/kit-amenagement/caddy/">Volkswagen Caddy</a></li><li><a href="/kit-amenagement/opel-combo-life/">Opel Combo Life</a></li><li><a href="/kit-amenagement/fiat-doblo/">Fiat Doblò</a></li><li><a href="/kit-amenagement/proace-city/">Toyota Proace City</a></li><li><a href="/kit-amenagement/nissan-townstar/">Nissan Townstar</a></li><li><a href="/kit-amenagement/mercedes-citan/">Mercedes Citan et Classe T</a></li><li><a href="/kit-amenagement/tourneo-transit/">Ford Tourneo Connect et Transit Connect</a></li><li><a href="/kit-amenagement/ford-courier/">Ford Tourneo Courier et Transit Courier</a></li><li><a href="/kit-amenagement/dokker/">Dacia Dokker</a></li><li><a href="/kit-amenagement/dacia-jogger-lodgy/">Dacia Jogger et Lodgy</a></li></ul>
+      <ul class="model-links"><li><a href="/kit-amenagement/berlingo/">Citroën Berlingo</a></li><li><a href="/kit-amenagement/partner/">Peugeot Partner et Partner Tepee</a></li><li><a href="/kit-amenagement/rifter/">Peugeot Rifter</a></li><li><a href="/kit-amenagement/renault-kangoo/">Renault Kangoo</a></li><li><a href="/kit-amenagement/caddy/">Volkswagen Caddy</a></li><li><a href="/kit-amenagement/opel-combo-life/">Opel Combo et Combo Life</a></li><li><a href="/kit-amenagement/fiat-doblo/">Fiat Doblò</a></li><li><a href="/kit-amenagement/proace-city/">Toyota Proace City</a></li><li><a href="/kit-amenagement/nissan-townstar/">Nissan Townstar</a></li><li><a href="/kit-amenagement/mercedes-citan/">Mercedes Citan et Classe T</a></li><li><a href="/kit-amenagement/tourneo-transit/">Ford Tourneo Connect et Transit Connect</a></li><li><a href="/kit-amenagement/ford-courier/">Ford Tourneo Courier et Transit Courier</a></li><li><a href="/kit-amenagement/dokker/">Dacia Dokker</a></li><li><a href="/kit-amenagement/dacia-jogger-lodgy/">Dacia Jogger et Lodgy</a></li></ul>
+    </div>
+    <div class="cat-block" id="monospaces">
+      <h2>Monospaces et SUV</h2>
+      <p class="help">dès 500 € TTC · couchage pour 1 ou 2 personnes</p>
+      <ul class="model-links"><li><a href="/kit-amenagement/citroen-c8-peugeot-807/">Citroën C8 et Peugeot 807</a></li><li><a href="/kit-amenagement/renault-grand-scenic/">Renault Grand Scénic</a></li><li><a href="/kit-amenagement/vw-touran/">Volkswagen Touran</a></li><li><a href="/kit-amenagement/nissan-juke/">Nissan Juke</a></li></ul>
     </div>
     <div class="cat-block" id="vans">
-      <h2>Kits van compact</h2>
-      <p class="help">dès 700 € TTC · hauteur adaptée à vos sièges</p>
-      <ul class="model-links"><li><a href="/kit-amenagement/trafic/">Renault Trafic</a></li><li><a href="/kit-amenagement/transporter-t4-t5-t6/">Volkswagen Transporter T4, T5 et T6</a></li><li><a href="/kit-amenagement/caravelle-t4-t5-t6/">Volkswagen Caravelle et Multivan</a></li><li><a href="/kit-amenagement/vito-viano/">Mercedes Vito et Viano</a></li><li><a href="/kit-amenagement/expert/">Peugeot Expert</a></li><li><a href="/kit-amenagement/traveller/">Peugeot Traveller</a></li><li><a href="/kit-amenagement/jumpy/">Citroën Jumpy</a></li><li><a href="/kit-amenagement/space-tourer/">Citroën SpaceTourer</a></li><li><a href="/kit-amenagement/fiat-scudo/">Fiat Scudo</a></li><li><a href="/kit-amenagement/talento/">Fiat Talento</a></li><li><a href="/kit-amenagement/opel-vivaro/">Opel Vivaro et Zafira Life</a></li><li><a href="/kit-amenagement/toyota-proace/">Toyota Proace</a></li><li><a href="/kit-amenagement/ford-transit-custom/">Ford Transit Custom et Tourneo Custom</a></li><li><a href="/kit-amenagement/nv200/">Nissan NV200</a></li><li><a href="/kit-amenagement/nv300/">Nissan NV300 et Primastar</a></li><li><a href="/kit-amenagement/hyundai-h1/">Hyundai H1</a></li></ul>
+      <h2>Vans compacts</h2>
+      <p class="help">dès 700 € TTC · hauteur adaptée à vos sièges · versions XL et Maxi des ludospaces</p>
+      <ul class="model-links"><li><a href="/kit-amenagement/trafic/">Renault Trafic</a></li><li><a href="/kit-amenagement/transporter-t4-t5-t6/">Volkswagen Transporter T4, T5, T6 et T7</a></li><li><a href="/kit-amenagement/caravelle-t4-t5-t6/">Volkswagen Caravelle et Multivan</a></li><li><a href="/kit-amenagement/vito-viano/">Mercedes Vito et Viano</a></li><li><a href="/kit-amenagement/expert/">Peugeot Expert</a></li><li><a href="/kit-amenagement/traveller/">Peugeot Traveller</a></li><li><a href="/kit-amenagement/jumpy/">Citroën Jumpy</a></li><li><a href="/kit-amenagement/space-tourer/">Citroën SpaceTourer</a></li><li><a href="/kit-amenagement/toyota-proace/">Toyota Proace et Proace Verso</a></li><li><a href="/kit-amenagement/fiat-scudo/">Fiat Scudo</a></li><li><a href="/kit-amenagement/talento/">Fiat Talento</a></li><li><a href="/kit-amenagement/opel-vivaro/">Opel Vivaro et Zafira Life</a></li><li><a href="/kit-amenagement/ford-transit-custom/">Ford Transit Custom et Tourneo Custom</a></li><li><a href="/kit-amenagement/nv200/">Nissan NV200 et Evalia</a></li><li><a href="/kit-amenagement/nv300/">Nissan NV300 et Primastar</a></li><li><a href="/kit-amenagement/hyundai-h1/">Hyundai H1</a></li></ul>
     </div>
     <div class="cat-block" id="fourgons">
       <h2>Grands fourgons</h2>
-      <p class="help">sur devis</p>
-      <ul class="model-links"><li><a href="/kit-amenagement/jumper-boxer-transit/">Fiat Ducato, Citroën Jumper et Peugeot Boxer</a></li></ul>
+      <p class="help">dès 800 € TTC · lit 180 à 190 cm</p>
+      <ul class="model-links"><li><a href="/kit-amenagement/jumper-boxer-transit/">Fiat Ducato, Citroën Jumper et Peugeot Boxer</a></li><li><a href="/kit-amenagement/ford-transit/">Ford Transit</a></li><li><a href="/kit-amenagement/renault-master/">Renault Master et Opel Movano</a></li><li><a href="/kit-amenagement/mercedes-sprinter/">Mercedes Sprinter</a></li><li><a href="/kit-amenagement/vw-crafter/">Volkswagen Crafter</a></li></ul>
     </div>
     <p class="help" style="margin-top:28px">Modèle absent ? <a href="https://tally.so/r/OD6BOp" target="_blank" rel="noopener">Écrivez-nous</a> : nous avons sûrement déjà un kit pour lui.</p>
   </div>
@@ -600,8 +668,8 @@ section{padding:52px 0}
     <div class="foot-grid">
       <div>
         <img src="/img/camperizate-logo-white.svg" alt="Camperizate" width="160" height="21" loading="lazy">
-        <p>Kits camper amovibles pour ludospaces et vans, fabriqués dans notre atelier.</p>
-        <a class="link" href="/kit-amenagement/">Tous les modèles</a> · <a class="link" href="/boutique/">Boutique</a>
+        <p>Kits camper amovibles pour ludospaces, vans et fourgons, fabriqués dans notre atelier.</p>
+        <a class="link" href="/kit-amenagement/">Tous les modèles</a> · <a class="link" href="/boutique/">Boutique</a> · <a class="link" href="/accessoires/">Accessoires</a> · <a class="link" href="/guide-kit-meubles-camper/">Guide</a> · <a class="link" href="/contact/">Contact</a>
       </div>
       <div>
         <h3>Showroom en France</h3>

@@ -1,36 +1,39 @@
 # Pagos con Stripe (Payment Links)
 
 La tienda (`/boutique/`) no tiene servidor: cada botón de compra abre un **Payment Link** de Stripe.
-Todo está creado en la cuenta **Camperizatetodoen1** (modo real) el 16/10/2026.
-Los enlaces están en `STRIPE` dentro de `tools/build.py`; tras cambiarlos, ejecuta `python3 tools/build.py`.
+Todo está en la cuenta **Camperizatetodoen1** (modo real). Los enlaces están en `STRIPE` dentro de `tools/build.py`;
+tras cambiarlos, ejecuta `python3 tools/build.py`. Los precios salen del formulario Tally «Configura tu mueble»
+(`tools/catalogue.py`).
 
 ## Cómo está montado
 
-- **Productos** (precios TTC, IVA incluido; metadato `site=kitamenagement.fr` y `cle`):
-  6 kits (ludospace / van compact × pin / carrossier / HPL), «Matelas sur mesure» 150 €,
-  «Livraison – kit ludospace» 200 €, «Livraison – kit van compact» 250 €,
-  5 opciones (équerre 25, plateau frigo 25, tiroir frigo 50, égouttoir 35, version 2+1 100)
-  y 9 accesorios.
-- **24 enlaces de kit** = 6 kits × con/sin colchón × retirada/entrega. El colchón y la entrega van como líneas
-  aparte, así el recibo sale desglosado. Las 5 opciones aparecen como **artículos opcionales** en la página de pago.
-- **9 enlaces de accesorios**, con cantidad ajustable de 1 a 5. Se entregan con el kit o se recogen en Nîmes.
-- Todos los enlaces: dirección de facturación y teléfono obligatorios; campo «Modèle et année du véhicule»
-  (kits y occultants); los de entrega piden dirección de envío en Francia; tras pagar → `https://kitamenagement.fr/merci/`.
-- La web añade `?client_reference_id=<modelo>` (p. ej. `berlingo`): en el pago verás qué vehículo eligió en la tienda.
+- **Kits** (precios TTC, IVA incluido; metadatos `site=kitamenagement.fr` y `cle`, que usa la facturación a Holded):
 
-La conexión de Stripe usada no permite crear **tarifas de envío**: por eso la entrega es un producto más
-y el cliente la elige en la tienda (paso 4), no en la página de pago.
+  | Kit | Pino | Carrossier | HPL | Entrega en Francia |
+  | --- | --- | --- | --- | --- |
+  | Ludospace y monovolumen (`mini`) | 500 € | 550 € | 800 € | 200 € |
+  | Van compacto, XL y Maxi (`moyen`) | 700 € | 750 € | 1.000 € | 250 € |
+  | Gran furgón (`grand`) | 800 € | 850 € | 1.100 € | 250 € |
+
+  Colchón: +150 €. Retirada en Nîmes: gratis.
+- **36 enlaces de kit** = 3 categorías × 3 acabados × con/sin colchón × retirada/entrega. El colchón y la entrega van
+  como líneas aparte, así el recibo sale desglosado.
+- **6 opciones** como artículos opcionales en todos los enlaces de kit (como en el formulario Tally):
+  escuadra abatible en el cajón de cocina +25, lado izquierdo bandeja +25, lado izquierdo cajón +50,
+  lado izquierdo cajón con escuadra +75, escurridor +35, versión 2+1 +100.
+- **9 enlaces de accesorios**, con cantidad de 1 a 5.
+- Todos: dirección de facturación y teléfono obligatorios, campo «Modèle et année du véhicule» (kits y occultants),
+  dirección de envío en Francia en los de entrega, aviso «sur mesure : pas de droit de rétractation» y CGV junto al
+  botón, y tras pagar → `https://kitamenagement.fr/merci/`.
+- La web añade `?client_reference_id=<modelo>` (p. ej. `berlingo-xl`): en el pago se ve qué vehículo eligió.
+- Imágenes de los productos: las del formulario Tally (`storage.tally.so`).
 
 ## Pendiente en el panel de Stripe
 
-1. **Ajustes → Detalles públicos**: añadir la URL de condiciones
-   `https://kitamenagement.fr/conditions-generales-de-vente/`. Después se puede activar en cada enlace la casilla
-   obligatoria «Acepto las CGV». Hasta entonces, cada enlace lo indica con una frase junto al botón de pago.
-2. **IVA**: los precios están marcados como «IVA incluido». Confirmar con el gestor el tratamiento de las ventas
-   a Francia (OSS o IVA francés) y si activar Stripe Tax.
-3. **Facturas**: si las necesitáis para Holded, se puede activar «crear factura tras el pago» en cada enlace
-   (Stripe cobra una pequeña comisión por factura).
-4. Hacer **una compra real de prueba** (por ejemplo, el réchaud de 29 €) y reembolsarla, para ver el recorrido completo.
+1. **Ajustes → Detalles públicos**: poner la URL de las CGV `https://kitamenagement.fr/conditions-generales-de-vente/`
+   para poder activar la casilla obligatoria de aceptación en los enlaces.
+2. **IVA**: confirmar con el gestor el tratamiento de las ventas a Francia (ver `facturacion/README.md`).
+3. Hacer **una compra real de prueba** (réchaud de 29 €) y reembolsarla.
 
 ## Enlaces
 
@@ -60,6 +63,18 @@ y el cliente la elige en la tienda (paso 4), no en la página de pago.
 | `kit-moyen-carrossier-avec-livraison` | https://buy.stripe.com/aFa4gygF88QV4rF8Cj6EU0m |
 | `kit-moyen-hpl-sans-livraison` | https://buy.stripe.com/dRm4gyfB4c377DRdWD6EU0n |
 | `kit-moyen-hpl-avec-livraison` | https://buy.stripe.com/3cI9ASagK8QVf6jbOv6EU0o |
+| `kit-grand-pin-sans-retrait` | https://buy.stripe.com/aFa3cuagK3wB3nB2dV6EU0y |
+| `kit-grand-pin-avec-retrait` | https://buy.stripe.com/aFa9AS0Ga9UZ8HVf0H6EU0z |
+| `kit-grand-carrossier-sans-retrait` | https://buy.stripe.com/4gMeVc4WqaZ31ft2dV6EU0A |
+| `kit-grand-carrossier-avec-retrait` | https://buy.stripe.com/00w6oGfB41ot2jxaKr6EU0B |
+| `kit-grand-hpl-sans-retrait` | https://buy.stripe.com/8x214m0Ga1ot2jx7yf6EU0C |
+| `kit-grand-hpl-avec-retrait` | https://buy.stripe.com/9B66oGcoSd7bbU705N6EU0D |
+| `kit-grand-pin-sans-livraison` | https://buy.stripe.com/6oU4gy60ud7bf6j6ub6EU0E |
+| `kit-grand-pin-avec-livraison` | https://buy.stripe.com/00w8wOdsWaZ32jxcSz6EU0F |
+| `kit-grand-carrossier-sans-livraison` | https://buy.stripe.com/8x25kC74y2sx9LZ6ub6EU0G |
+| `kit-grand-carrossier-avec-livraison` | https://buy.stripe.com/7sY28q60ugjnaQ3g4L6EU0H |
+| `kit-grand-hpl-sans-livraison` | https://buy.stripe.com/8x2cN4bkO7MR2jx6ub6EU0I |
+| `kit-grand-hpl-avec-livraison` | https://buy.stripe.com/3cIdR84Wq3wB4rF8Cj6EU0J |
 | `occultants` | https://buy.stripe.com/bJe3cufB40kp8HV3hZ6EU0p |
 | `frigo-15` | https://buy.stripe.com/8x24gy60u0kp9LZbOv6EU0q |
 | `frigo-35` | https://buy.stripe.com/00waEWfB43wB8HVcSz6EU0r |

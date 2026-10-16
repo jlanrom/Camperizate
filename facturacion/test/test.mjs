@@ -72,7 +72,7 @@ assert.equal(totalRecalcule(items), 900);
 assert.equal(cmd.email, "marie.dupont@example.fr");
 assert.equal(cmd.livraison, true);
 console.log("✓ lignes HT/TTC : 900,00 € Stripe = 900,00 € recalculé dans Holded");
-for (const total of [50000, 65000, 70000, 95000, 115000, 2900, 3500, 14900, 97500]) {
+for (const total of [50000, 65000, 70000, 95000, 115000, 80000, 85000, 110000, 125000, 2500, 7500, 2900, 3500, 14900, 97500]) {
   const t = totalRecalcule(lignesHolded({ lignes: [{ nom: "x", cle: "x", quantite: 1, totalTTC: total / 100 }], adresse: {} }, ENV));
   assert.equal(t, total / 100, `arrondi ${total}`);
 }

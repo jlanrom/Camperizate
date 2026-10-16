@@ -22,6 +22,9 @@ Option B — Cloudflare Pages : créer un projet relié au repo, *production bra
 - `/` — landing page (écrite à la main)
 - `/boutique/` — boutique, paiement par liens Stripe (générée)
 - `/kit-amenagement/` — catalogue des modèles (généré)
+- `/accessoires/`, `/occultants-isolants/`, `/matelas-camper/` — options et accessoires (générés)
+- `/guide-kit-meubles-camper/` — guide (généré, remplace /fr/kitmueblescamper/)
+- `/contact/` — showroom de Nîmes et atelier (généré)
 - `/kit-amenagement/<modèle>/` — fiches modèle (générées, une par modèle de `MODELES`)
 - `/merci/` — retour après paiement, noindex (générée)
 - `/conditions-generales-de-vente/` — CGV
@@ -43,6 +46,9 @@ futur script de redirection côté Webnode). Ne pas modifier ces pages à la mai
 puis le relancer.
 
 - Liens de paiement : dictionnaire `STRIPE` en haut du script. Guide de création : `docs/STRIPE.md`.
-- Ajouter une fiche modèle : ajouter une ligne à `MODELES` (et, si on a des données vérifiées, une entrée à `DETAILS`).
+- Données (modèles, prix, options, accessoires, redirections) : `tools/catalogue.py`, repris du formulaire Tally
+  « Configura tu mueble ». Ajouter un modèle = ajouter une entrée à `MODELES`.
+- Redirections : `tools/redirections.json` (table) et `docs/redirection-webnode.html` (script à coller dans
+  l'en-tête de Webnode le jour de la bascule ; voir docs/REDIRECTION.md).
 - La landing est écrite à la main ; le script ne remplace que le bloc entre `<!-- MODELES:debut -->` et `<!-- MODELES:fin -->` et la liste `var FICHES=[…]`.
 - Photos des fiches : `python3 tools/photos.py <dossier>` puis `python3 tools/build.py` (voir `docs/PHOTOS.md`).
