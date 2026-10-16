@@ -51,28 +51,29 @@ export function lireCommande(session) {
   };
 }
 
-/** Lignes au format Holded v1 : prix unitaire HT (subtotal), taxe en %. */
+/** Lignes au format Holded v2 : prix unitaire HT (price), clé de taxe. Le taux sert au contrôle du total. */
 export function lignesHolded(commande, config) {
   const { cle, taux } = taxePour(commande.adresse?.country, config);
   return commande.lignes.map((l) => {
     const unitTTC = l.totalTTC / l.quantite;
     const item = {
       name: l.nom,
-      desc: l.description,
+      description: l.description || null,
       units: l.quantite,
-      subtotal: arrondi(unitTTC / (1 + taux / 100), 4),
-      tax: taux,
+      price: arrondi(unitTTC / (1 + taux / 100), 4),
       taxes: [cle],
-      sku: l.cle,
+      sku: l.cle || null,
+      type: "product",
     };
-    if (config.HOLDED_SALES_ACCOUNT_ID) item.accountingAccountId = config.HOLDED_SALES_ACCOUNT_ID;
+    if (config.HOLDED_SALES_ACCOUNT_ID) item.account = config.HOLDED_SALES_ACCOUNT_ID;
+    Object.defineProperty(item, "taux", { value: taux, enumerable: false });
     return item;
   });
 }
 
 /** Total TTC que Holded recalculera à partir des lignes (pour détecter un écart d'arrondi). */
 export function totalRecalcule(items) {
-  return arrondi(items.reduce((s, i) => s + arrondi(i.subtotal * i.units * (1 + i.tax / 100), 2), 0), 2);
+  return arrondi(items.reduce((s, i) => s + arrondi(i.price * i.units * (1 + i.taux / 100), 2), 0), 2);
 }
 
 function adresseTexte(a) {
@@ -80,31 +81,32 @@ function adresseTexte(a) {
   return [a.line1, a.line2, `${a.postal_code || ""} ${a.city || ""}`.trim(), a.country].filter(Boolean).join(", ");
 }
 
+export const dateISO = (unix) => new Date(unix * 1000).toISOString().slice(0, 10);
+
 export function contactHolded(commande) {
   const a = commande.adresse || {};
   return {
     name: commande.nom,
     email: commande.email,
-    mobile: commande.telephone,
+    mobile: commande.telephone || null,
     type: "client",
-    isperson: true,
-    CustomId: `stripe:${commande.email}`,
-    billAddress: {
+    is_person: true,
+    tags: ["web-fr", "stripe"],
+    bill_address: {
       address: [a.line1, a.line2].filter(Boolean).join(", "),
       city: a.city || "",
-      postalCode: a.postal_code || "",
+      postal_code: a.postal_code || "",
       province: a.state || "",
-      countryCode: a.country || "",
+      country_code: a.country || "",
     },
   };
 }
 
 export function documentHolded(commande, contactId, config, { type }) {
-  const items = lignesHolded(commande, config);
   const doc = {
-    contactId,
-    date: commande.date,
-    desc: `Commande web kitamenagement.fr${commande.vehicule ? ` – ${commande.vehicule}` : ""}`,
+    contact_id: contactId,
+    date: dateISO(commande.date),
+    description: `Commande web kitamenagement.fr${commande.vehicule ? ` – ${commande.vehicule}` : ""}`,
     notes: [
       `Stripe : ${commande.sessionId}`,
       commande.vehicule && `Véhicule : ${commande.vehicule}`,
@@ -112,24 +114,14 @@ export function documentHolded(commande, contactId, config, { type }) {
       commande.livraison ? `Livraison : ${adresseTexte(commande.livraisonAdresse)}` : "Retrait au showroom de Nîmes",
       commande.telephone && `Tél. : ${commande.telephone}`,
     ].filter(Boolean).join("\n"),
-    items,
+    items: lignesHolded(commande, config),
     language: commande.langue,
-    currency: "eur",
+    currency: "EUR",
   };
-  if (type === "salesorder" && config.HOLDED_ORDER_SERIES_ID) doc.numSerieId = config.HOLDED_ORDER_SERIES_ID;
+  if (type === "salesorder" && config.HOLDED_ORDER_SERIES_ID) doc.number_line_id = config.HOLDED_ORDER_SERIES_ID;
   if (type === "invoice") {
-    if (config.HOLDED_INVOICE_SERIES_ID) doc.numSerieId = config.HOLDED_INVOICE_SERIES_ID;
-    if (config.HOLDED_PAYMENT_METHOD_ID) doc.paymentMethodId = config.HOLDED_PAYMENT_METHOD_ID;
-    doc.approveDoc = config.APPROVE_INVOICE === "true";
-  }
-  if (commande.livraison && commande.livraisonAdresse) {
-    const s = commande.livraisonAdresse;
-    Object.assign(doc, {
-      shippingAddress: [s.line1, s.line2].filter(Boolean).join(", "),
-      shippingPostalCode: s.postal_code || "",
-      shippingCity: s.city || "",
-      shippingCountry: s.country || "",
-    });
+    if (config.HOLDED_INVOICE_SERIES_ID) doc.number_line_id = config.HOLDED_INVOICE_SERIES_ID;
+    if (config.HOLDED_PAYMENT_METHOD_ID) doc.payment_method_id = config.HOLDED_PAYMENT_METHOD_ID;
   }
   return doc;
 }
