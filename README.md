@@ -5,7 +5,7 @@ Fichier unique `public/index.html` (HTML + CSS + JS inline, aucune dépendance),
 
 ## Déploiement Cloudflare
 
-Worker : `kitamenagement` · branche de production : `kitamenagement`
+Worker Cloudflare : `fr-camperizate` · branche de production : `kitamenagement`
 (chaque push sur cette branche redéploie automatiquement le site).
 
 Option A — Worker (static assets), depuis la racine de cette branche :
@@ -21,7 +21,8 @@ Option B — Cloudflare Pages : créer un projet relié au repo, *production bra
 
 - `/` — landing page (écrite à la main)
 - `/boutique/` — boutique, paiement par liens Stripe (générée)
-- `/kit-amenagement/<modèle>/` — fiches modèle (générées)
+- `/kit-amenagement/` — catalogue des modèles (généré)
+- `/kit-amenagement/<modèle>/` — fiches modèle (générées, une par modèle de `MODELES`)
 - `/merci/` — retour après paiement, noindex (générée)
 - `/conditions-generales-de-vente/` — CGV
 - `/mentions-legales/` — mentions légales (Camperizate Todo en 1, S.L.U.)
@@ -42,4 +43,6 @@ futur script de redirection côté Webnode). Ne pas modifier ces pages à la mai
 puis le relancer.
 
 - Liens de paiement : dictionnaire `STRIPE` en haut du script. Guide de création : `docs/STRIPE.md`.
-- Ajouter une fiche modèle : ajouter une entrée à `FICHES`.
+- Ajouter une fiche modèle : ajouter une ligne à `MODELES` (et, si on a des données vérifiées, une entrée à `DETAILS`).
+- La landing est écrite à la main ; le script ne remplace que le bloc entre `<!-- MODELES:debut -->` et `<!-- MODELES:fin -->` et la liste `var FICHES=[…]`.
+- Photos des fiches : `python3 tools/photos.py <dossier>` puis `python3 tools/build.py` (voir `docs/PHOTOS.md`).

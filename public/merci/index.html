@@ -316,6 +316,14 @@ section{padding:52px 0}
 .info{display:grid;gap:10px;list-style:none;margin:0;padding:0}
 .info li{display:flex;gap:12px;align-items:flex-start}
 .info p{margin:0;color:var(--brown-70);font-size:15px}
+.model-links{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:8px}
+.model-links a{display:flex;align-items:center;min-height:48px;padding:10px 14px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;font-weight:600}
+.model-links a:hover{border-color:var(--brown);color:var(--orange)}
+.cat-block+.cat-block{margin-top:36px}
+.cat-block h2{margin-bottom:4px}
+.cat-block .help{margin:0 0 14px}
+@media (min-width:640px){.model-links{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:960px){.model-links{grid-template-columns:repeat(3,1fr)}}
 @media (min-width:640px){.videos{grid-template-columns:1fr 1fr}.acc{grid-template-columns:repeat(2,1fr)}.choices.three{grid-template-columns:repeat(3,1fr)}.choices.three .choice{flex-direction:column;align-items:flex-start}}
 @media (min-width:960px){
   .fiche-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:48px;align-items:start}
@@ -382,7 +390,7 @@ section{padding:52px 0}
       <div>
         <img src="/img/camperizate-logo-white.svg" alt="Camperizate" width="160" height="21" loading="lazy">
         <p>Kits camper amovibles pour ludospaces et vans, fabriqués dans notre atelier.</p>
-        <a class="link" href="/boutique/">Boutique</a>
+        <a class="link" href="/kit-amenagement/">Tous les modèles</a> · <a class="link" href="/boutique/">Boutique</a>
       </div>
       <div>
         <h3>Showroom en France</h3>
