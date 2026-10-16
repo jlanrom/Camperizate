@@ -141,14 +141,90 @@ ACCESSOIRES = [  # clé Stripe, nom, détail, prix
 # ---------------------------------------------------------------------------
 # 3. FICHES MODÈLE
 # ---------------------------------------------------------------------------
-FICHES = [
-    {
-        "slug": "dacia-jogger-lodgy",
-        "ancien": "/fr/kit-camperizacion/dacia-jogger-lodgy/",
-        "nom": "Dacia Jogger et Lodgy",
-        "court": "Jogger",
-        "categorie": "mini",
+# Une fiche par modèle : (slug, nom complet, nom court, catégorie, anciennes URL Webnode, titre court optionnel)
+# Le slug reprend le dernier segment de l'ancienne URL camperizatetodoen1.com/fr/… pour faciliter la redirection.
+W = "/fr/kit-camperizacion/"
+MODELES = [
+    ("berlingo", "Citroën Berlingo", "Berlingo", "mini", [W + "berlingo/"], None),
+    ("partner", "Peugeot Partner et Partner Tepee", "Partner", "mini", [W + "partner/"], "Peugeot Partner et Tepee"),
+    ("rifter", "Peugeot Rifter", "Rifter", "mini", [W + "rifter/"], None),
+    ("renault-kangoo", "Renault Kangoo", "Kangoo", "mini", [W + "renault-kangoo/"], None),
+    ("caddy", "Volkswagen Caddy", "Caddy", "mini", [W + "caddy/"], "VW Caddy"),
+    ("opel-combo-life", "Opel Combo Life", "Combo Life", "mini", [W + "opel-combo-life/"], None),
+    ("fiat-doblo", "Fiat Doblò", "Doblò", "mini", [W + "fiat-doblo/"], None),
+    ("proace-city", "Toyota Proace City", "Proace City", "mini", [W + "proace-city/"], None),
+    ("nissan-townstar", "Nissan Townstar", "Townstar", "mini", [W + "nissan-townstar/"], None),
+    ("mercedes-citan", "Mercedes Citan et Classe T", "Citan", "mini", [W + "mercedes-citan/"], None),
+    ("tourneo-transit", "Ford Tourneo Connect et Transit Connect", "Tourneo Connect", "mini", [W + "tourneo-transit/"], "Ford Tourneo Connect"),
+    ("ford-courier", "Ford Tourneo Courier et Transit Courier", "Courier", "mini", [W + "ford-courier/"], "Ford Tourneo Courier"),
+    ("dokker", "Dacia Dokker", "Dokker", "mini", [W + "dokker/"], None),
+    ("dacia-jogger-lodgy", "Dacia Jogger et Lodgy", "Jogger", "mini", [W + "dacia-jogger-lodgy/"], None),
+    ("trafic", "Renault Trafic", "Trafic", "moyen", [W + "trafic/"], None),
+    ("transporter-t4-t5-t6", "Volkswagen Transporter T4, T5 et T6", "Transporter", "moyen", [W + "transporter-t4-t5-t6/"], "VW Transporter T4, T5, T6"),
+    ("caravelle-t4-t5-t6", "Volkswagen Caravelle et Multivan", "Caravelle", "moyen", [W + "caravelle-t4-t5-t6/"], "VW Caravelle et Multivan"),
+    ("vito-viano", "Mercedes Vito et Viano", "Vito", "moyen", [W + "vito-viano/"], None),
+    ("expert", "Peugeot Expert", "Expert", "moyen", ["/fr/expert/", W + "expert/"], None),
+    ("traveller", "Peugeot Traveller", "Traveller", "moyen", ["/fr/traveller/", W + "traveller/"], None),
+    ("jumpy", "Citroën Jumpy", "Jumpy", "moyen", ["/fr/jumpy/", W + "jumpy/"], None),
+    ("space-tourer", "Citroën SpaceTourer", "SpaceTourer", "moyen", ["/fr/space-tourer/", W + "space-tourer/"], None),
+    ("fiat-scudo", "Fiat Scudo", "Scudo", "moyen", [W + "fiat-scudo/"], None),
+    ("talento", "Fiat Talento", "Talento", "moyen", [W + "talento/"], None),
+    ("opel-vivaro", "Opel Vivaro et Zafira Life", "Vivaro", "moyen", [W + "opel-vivaro/"], None),
+    ("toyota-proace", "Toyota Proace", "Proace", "moyen", ["/fr/toyota-proace/", W + "toyota-proace/"], None),
+    ("ford-transit-custom", "Ford Transit Custom et Tourneo Custom", "Transit Custom", "moyen", [W + "ford-transit-custom/"], "Ford Transit Custom"),
+    ("nv200", "Nissan NV200", "NV200", "moyen", [W + "nv200/"], None),
+    ("nv300", "Nissan NV300 et Primastar", "NV300", "moyen", [W + "nv300/"], None),
+    ("hyundai-h1", "Hyundai H1", "H1", "moyen", [W + "hyundai-h1/"], None),
+    ("jumper-boxer-transit", "Fiat Ducato, Citroën Jumper et Peugeot Boxer", "Ducato", "grand", [W + "jumper-boxer-transit/"], "Ducato, Jumper, Boxer"),
+]
+
+# Contenu par catégorie (repris de la landing ; à enrichir modèle par modèle)
+CONTENU = {
+    "mini": {
+        "intro": "Votre {nom} devient mini camping-car en quelques minutes, puis redevient un véhicule de tous les jours. "
+                 "Le kit se pose dans le coffre sans perçage : pas de VASP, carte grise inchangée, et vous gardez vos 5 places.",
+        "inclus": [
+            ("i-bed", "Lit pliant", "187 cm, jusqu'à 220 cm en version XL."),
+            ("i-cook", "Cuisine", "Tiroir extractible pour le réchaud et la vaisselle."),
+            ("i-box", "Rangement", "Coffre et logement pour un frigo de 15 L."),
+            ("i-table", "Table", "À l'intérieur ou à l'extérieur, 3 hauteurs."),
+        ],
+        "faq": [("Garde-t-on les 5 places ?", "Oui. Sur ludospace, le kit se pose dans le coffre et vous gardez vos 5 places.")],
         "image": ("/img/kit-carrossier-lit.webp", "Kit camper amovible en phénolique carrossier, lit déplié dans un ludospace", 900, 900),
+    },
+    "moyen": {
+        "intro": "Votre {nom} devient van aménagé en quelques minutes : lit, cuisine et rangements, à retirer quand vous voulez. "
+                 "Le kit s'adapte à vos sièges et se pose sans perçage : pas de VASP, carte grise inchangée.",
+        "inclus": [
+            ("i-bed", "Lit pliant", "Matelas sur mesure en option."),
+            ("i-cook", "Cuisine", "Tiroir extractible pour le réchaud et la vaisselle."),
+            ("i-box", "Rangement", "Logement pour un frigo jusqu'à 35 L."),
+            ("i-table", "Hauteur adaptée", "36,5 à 56,5 cm selon vos sièges."),
+        ],
+        "faq": [("Puis-je garder mes sièges arrière ?",
+                 "Oui. Le kit mesure 56,5 cm de haut avec la 2e rangée de sièges, 44,5 ou 36,5 cm sans sièges.")],
+        "image": ("/img/kit-hpl-anthracite.webp", "Kit camper amovible HPL gris anthracite en mode salon dans un van", 900, 822),
+    },
+    "grand": {
+        "intro": "Pour votre {nom}, nous concevons un kit amovible sur mesure : lit, cuisine et rangements, "
+                 "toujours sans perçage ni VASP. Le devis est gratuit.",
+        "inclus": [
+            ("i-bed", "Lit", "Conçu pour la largeur de votre fourgon."),
+            ("i-cook", "Cuisine", "Tiroir extractible, réchaud, vaisselle."),
+            ("i-box", "Rangement", "Coffres et logement frigo selon votre projet."),
+            ("i-shield", "Sans VASP", "Chargement amovible, rien n'est vissé."),
+        ],
+        "faq": [("Combien coûte un kit pour grand fourgon ?",
+                 "Chaque kit est conçu pour votre fourgon et votre usage : nous vous envoyons un devis gratuit après un premier échange.")],
+        "image": ("/img/hero-van-amenage-800.webp", "Véhicule aménagé avec un kit camper en bois, hayon ouvert", 800, 400),
+    },
+}
+FIXATION = ("Le kit se pose dans le coffre, repose sur 3 points d'appui contrôlés et se sangle aux anneaux "
+            "d'arrimage d'origine. Aucun perçage, rien n'est vissé.")
+
+# Données détaillées déjà vérifiées (prioritaires sur le contenu par catégorie)
+DETAILS = {
+    "dacia-jogger-lodgy": {
         "intro": "Le Jogger devient mini camping-car en quelques minutes, puis redevient une voiture familiale pour la semaine. "
                  "Le kit se pose dans le coffre sans perçage : pas de VASP, carte grise inchangée.",
         "mesures": [
@@ -175,7 +251,38 @@ FICHES = [
              "Oui. Kit replié dans le coffre, les 5 places restent utilisables."),
         ],
     },
-]
+}
+
+# Photos par modèle : générées par tools/photos.py (voir docs/PHOTOS.md)
+PHOTOS_JSON = ROOT / "tools" / "photos.json"
+PHOTOS = json.loads(PHOTOS_JSON.read_text(encoding="utf-8")) if PHOTOS_JSON.exists() else {}
+
+
+def construire_fiches():
+    fiches = []
+    for slug, nom, court, cat, anciens, titre in MODELES:
+        c = CONTENU[cat]
+        d = DETAILS.get(slug, {})
+        photos = PHOTOS.get(slug, [])
+        if photos:
+            ph = photos[0]
+            image = (f"/img/modeles/{slug}/{ph['fichier']}", ph["alt"], ph["w"], ph["h"])
+        else:
+            image = c["image"]
+        fiches.append({
+            "slug": slug, "nom": nom, "court": court, "categorie": cat, "anciens": anciens,
+            "titre": titre or nom, "image": image, "galerie": photos[1:],
+            "intro": d.get("intro", c["intro"].format(nom=nom)),
+            "inclus": d.get("inclus", c["inclus"]),
+            "fixation": d.get("fixation", FIXATION),
+            "mesures": d.get("mesures", []),
+            "videos": d.get("videos", []),
+            "faq": d.get("faq", c["faq"]),
+        })
+    return fiches
+
+
+FICHES = construire_fiches()
 
 FAQ_COMMUNE = [
     ("Faut-il une homologation VASP ?",
@@ -251,6 +358,14 @@ EXTRA_CSS = """
 .info{display:grid;gap:10px;list-style:none;margin:0;padding:0}
 .info li{display:flex;gap:12px;align-items:flex-start}
 .info p{margin:0;color:var(--brown-70);font-size:15px}
+.model-links{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:8px}
+.model-links a{display:flex;align-items:center;min-height:48px;padding:10px 14px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;font-weight:600}
+.model-links a:hover{border-color:var(--brown);color:var(--orange)}
+.cat-block+.cat-block{margin-top:36px}
+.cat-block h2{margin-bottom:4px}
+.cat-block .help{margin:0 0 14px}
+@media (min-width:640px){.model-links{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:960px){.model-links{grid-template-columns:repeat(3,1fr)}}
 @media (min-width:640px){.videos{grid-template-columns:1fr 1fr}.acc{grid-template-columns:repeat(2,1fr)}.choices.three{grid-template-columns:repeat(3,1fr)}.choices.three .choice{flex-direction:column;align-items:flex-start}}
 @media (min-width:960px){
   .fiche-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:48px;align-items:start}
@@ -323,7 +438,7 @@ def footer(script=""):
       <div>
         <img src="/img/camperizate-logo-white.svg" alt="Camperizate" width="160" height="21" loading="lazy">
         <p>Kits camper amovibles pour ludospaces et vans, fabriqués dans notre atelier.</p>
-        <a class="link" href="/boutique/">Boutique</a>
+        <a class="link" href="/kit-amenagement/">Tous les modèles</a> · <a class="link" href="/boutique/">Boutique</a>
       </div>
       <div>
         <h3>Showroom en France</h3>
@@ -528,44 +643,142 @@ def boutique():
 # ---------------------------------------------------------------------------
 # Fiche modèle
 # ---------------------------------------------------------------------------
+def titre_fiche(m):
+    t = f"Kit aménagement {m['titre']} amovible | Camperizate"
+    return t if len(t) <= 62 else f"Kit aménagement {m['titre']} | Camperizate"
+
+
+def desc_fiche(m):
+    if m["categorie"] == "grand":
+        return (f"Kit camper amovible sur mesure pour {m['nom']} : lit, cuisine et rangements, "
+                f"sans perçage ni VASP. Devis gratuit, showroom à Nîmes.")
+    bas = prix(m["categorie"], "pin", False)
+    return (f"Kit camper amovible pour {m['nom']} : lit, cuisine et rangements posés en 5 min, "
+            f"sans perçage ni VASP. Dès {bas} € TTC, showroom à Nîmes.")
+
+
 def fiche(m):
     url = f"{SITE}/kit-amenagement/{m['slug']}/"
     cat = m["categorie"]
     c = CATEGORIES[cat]
-    bas, haut = prix(cat, "pin", False), prix(cat, "hpl", True)
-    titre = f"Kit aménagement {m['nom']} amovible | Camperizate"
-    desc = (f"Kit camper amovible pour {m['nom']} : lit, cuisine et rangements posés en 5 min, "
-            f"sans perçage ni VASP. Dès {bas} € TTC, showroom à Nîmes.")
+    grand = cat == "grand"
+    titre, desc = titre_fiche(m), desc_fiche(m)
     img, alt, w, h = m["image"]
+    srcset = (f' srcset="{img[:-5]}-800.webp 800w, {img} 1600w" sizes="(min-width:960px) 50vw, 100vw"'
+              if img.startswith("/img/modeles/") else "")
     faq = m["faq"] + FAQ_COMMUNE
-    commande = f"/boutique/?modele={m['slug']}#commande"
-    ld = {"@context": "https://schema.org", "@graph": [
-        {"@type": "Product", "name": f"Kit d'aménagement amovible {m['nom']}", "description": desc, "image": SITE + img,
-         "brand": {"@type": "Brand", "name": "Camperizate"},
-         "offers": {"@type": "AggregateOffer", "priceCurrency": "EUR", "lowPrice": str(bas), "highPrice": str(haut),
-                    "offerCount": str(len(FINITIONS) * 2), "availability": "https://schema.org/InStock"}},
-        {"@type": "BreadcrumbList", "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Accueil", "item": SITE + "/"},
-            {"@type": "ListItem", "position": 2, "name": c["pluriel"], "item": SITE + "/#kits"},
-            {"@type": "ListItem", "position": 3, "name": m["nom"], "item": url}]},
-        {"@type": "FAQPage", "mainEntity": [
-            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
-    ]}
-    mesures = "\n".join(f'          <tr><th scope="row">{e(k)}</th><td>{e(v)}</td></tr>' for k, v in m["mesures"])
+    commande = TALLY if grand else f"/boutique/?modele={m['slug']}#commande"
+    cible = ' target="_blank" rel="noopener"' if grand else ""
+    texte_cta = "Demander mon devis" if grand else "Commander ce kit"
+    graphe = []
+    if not grand:
+        bas, haut = prix(cat, "pin", False), prix(cat, "hpl", True)
+        graphe.append({"@type": "Product", "name": f"Kit d'aménagement amovible {m['nom']}", "description": desc,
+                       "image": SITE + img, "brand": {"@type": "Brand", "name": "Camperizate"},
+                       "offers": {"@type": "AggregateOffer", "priceCurrency": "EUR", "lowPrice": str(bas),
+                                  "highPrice": str(haut), "offerCount": str(len(FINITIONS) * 2),
+                                  "availability": "https://schema.org/InStock"}})
+    graphe.append({"@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Accueil", "item": SITE + "/"},
+        {"@type": "ListItem", "position": 2, "name": "Kits par modèle", "item": SITE + "/kit-amenagement/"},
+        {"@type": "ListItem", "position": 3, "name": m["nom"], "item": url}]})
+    graphe.append({"@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]})
+    ld = {"@context": "https://schema.org", "@graph": graphe}
+
     inclus = "\n".join(
         f'        <li><svg class="ico" aria-hidden="true"><use href="#{i}"/></svg><span><b>{e(t)}</b>{e(d)}</span></li>'
         for i, t, d in m["inclus"])
-    lignes = "\n".join(
-        f"          <tr><td>{e(n)}<small>{e(d)}</small></td><td><b>{p[cat]} €</b></td><td><b>{p[cat] + MATELAS} €</b></td></tr>"
-        for _, n, d, p in FINITIONS)
-    videos = "\n".join(
-        f'      <button type="button" class="yt" data-id="{v}" aria-label="Lire la vidéo : {e(t)}">'
-        f'<img src="https://i.ytimg.com/vi/{v}/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">'
-        f'<span>▶ {e(t)}</span></button>' for v, t in m["videos"])
     faq_html = "\n".join(
         f'      <details><summary>{e(q)}<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></summary>'
         f'<div class="a"><p>{e(a)}</p></div></details>' for q, a in faq)
-    script = """<script>
+
+    if grand:
+        prix_ligne = '<p class="price-line"><b>Sur devis</b><span>gratuit, sans engagement</span></p>'
+        section_prix = f"""
+<section id="prix" class="kits" aria-labelledby="h-prix">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Prix</span>
+      <h2 id="h-prix">Un kit conçu pour votre fourgon</h2>
+      <p>Dites-nous votre modèle, sa longueur et votre usage : nous vous envoyons un devis gratuit.</p>
+    </div>
+    <a href="{TALLY}" class="btn btn-primary" style="max-width:420px" target="_blank" rel="noopener">Demander mon devis <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+  </div>
+</section>"""
+    else:
+        prix_ligne = f'<p class="price-line"><b>Dès {prix(cat, "pin", False)} €</b><span>TTC, direct atelier</span></p>'
+        lignes = "\n".join(
+            f"          <tr><td>{e(n)}<small>{e(d)}</small></td><td><b>{p[cat]} €</b></td><td><b>{p[cat] + MATELAS} €</b></td></tr>"
+            for _, n, d, p in FINITIONS)
+        fond = "kits" if m["mesures"] else ""
+        section_prix = f"""
+<section id="prix" class="{fond}" aria-labelledby="h-prix">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Prix</span>
+      <h2 id="h-prix">Trois finitions, un prix atelier</h2>
+      <p>Prix TTC, hors livraison (dès {c['livraison']} € en France, retrait gratuit à Nîmes).</p>
+    </div>
+    <table class="price-table">
+      <thead><tr><th>Finition</th><th>Sans matelas</th><th>Avec matelas</th></tr></thead>
+      <tbody>
+{lignes}
+      </tbody>
+    </table>
+    <p class="help">Options et accessoires (occultants, frigo, batterie, version 2+1…) : <a href="/boutique/#accessoires">voir la boutique</a>.</p>
+    <a href="{commande}" class="btn btn-primary" style="margin-top:20px;max-width:420px">Commander ce kit <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+  </div>
+</section>"""
+
+    section_mesures = ""
+    if m["mesures"]:
+        mesures = "\n".join(f'          <tr><th scope="row">{e(k)}</th><td>{e(v)}</td></tr>' for k, v in m["mesures"])
+        section_mesures = f"""
+<section aria-labelledby="h-mesures">
+  <div class="wrap two">
+    <div class="sec-head">
+      <span class="kicker">Mesures</span>
+      <h2 id="h-mesures">Dimensions du kit {e(m['court'])}</h2>
+      <p>Chaque kit est ajusté au coffre du véhicule. Une question sur une cote ? <a href="{TALLY}" target="_blank" rel="noopener">Écrivez-nous</a>.</p>
+    </div>
+    <table class="specs"><tbody>
+{mesures}
+    </tbody></table>
+  </div>
+</section>"""
+
+    section_galerie = ""
+    if m["galerie"]:
+        figs = "\n".join(
+            f'      <figure><img src="/img/modeles/{m["slug"]}/{ph["fichier"][:-5]}-800.webp" alt="{e(ph["alt"])}" width="{ph["w"]}" height="{ph["h"]}" loading="lazy"></figure>'
+            for ph in m["galerie"])
+        section_galerie = f"""
+<section aria-labelledby="h-photos">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">En images</span><h2 id="h-photos">Le kit {e(m['court'])} en photos</h2></div>
+    <div class="gallery">
+{figs}
+    </div>
+  </div>
+</section>"""
+
+    section_videos, script = "", ""
+    if m["videos"]:
+        videos = "\n".join(
+            f'      <button type="button" class="yt" data-id="{v}" aria-label="Lire la vidéo : {e(t)}">'
+            f'<img src="https://i.ytimg.com/vi/{v}/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">'
+            f'<span>▶ {e(t)}</span></button>' for v, t in m["videos"])
+        section_videos = f"""
+<section aria-labelledby="h-videos">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">En vidéo</span><h2 id="h-videos">Le kit {e(m['court'])} en situation</h2></div>
+    <div class="videos">
+{videos}
+    </div>
+  </div>
+</section>"""
+        script = """<script>
 document.querySelectorAll('.yt').forEach(function(b){
   b.addEventListener('click',function(){
     var f=document.createElement('iframe');
@@ -575,22 +788,34 @@ document.querySelectorAll('.yt').forEach(function(b){
   });
 });
 </script>"""
+
+    autres = [x for x in FICHES if x["categorie"] == cat and x["slug"] != m["slug"]]
+    liens_autres = "".join(f'<li><a href="/kit-amenagement/{x["slug"]}/">{e(x["nom"])}</a></li>' for x in autres)
+    section_autres = f"""
+<section aria-labelledby="h-autres">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">{e(c['pluriel'])}</span><h2 id="h-autres">Autres modèles compatibles</h2></div>
+    <ul class="model-links">{liens_autres}</ul>
+    <p class="help"><a href="/kit-amenagement/">Voir tous les modèles</a></p>
+  </div>
+</section>""" if autres else ""
+
     body = f"""
 <main id="top">
 <nav class="crumbs wrap" aria-label="Fil d'Ariane">
-  <ol><li><a href="/">Accueil</a></li><li><a href="/#kits">{e(c['pluriel'])}</a></li><li aria-current="page">{e(m['nom'])}</li></ol>
+  <ol><li><a href="/">Accueil</a></li><li><a href="/kit-amenagement/">Kits par modèle</a></li><li aria-current="page">{e(m['nom'])}</li></ol>
 </nav>
 
 <section class="fiche-hero" aria-labelledby="h1">
   <div class="wrap fiche-grid">
-    <div class="pic"><img src="{img}" alt="{e(alt)}" width="{w}" height="{h}" fetchpriority="high"></div>
+    <div class="pic"><img src="{img}"{srcset} alt="{e(alt)}" width="{w}" height="{h}" fetchpriority="high"></div>
     <div>
       <span class="kicker">Kit camper amovible · sans VASP</span>
       <h1 id="h1">Kit d'aménagement amovible pour {e(m['nom'])}</h1>
       <p class="lead">{e(m['intro'])}</p>
-      <p class="price-line"><b>Dès {bas} €</b><span>TTC, direct atelier</span></p>
+      {prix_ligne}
       <div class="ctas">
-        <a href="{commande}" class="btn btn-primary">Commander ce kit <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+        <a href="{commande}" class="btn btn-primary"{cible}>{texte_cta} <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
         <a href="{TALLY}" class="btn btn-line" target="_blank" rel="noopener">Poser une question</a>
       </div>
       <ul class="chips">
@@ -611,50 +836,14 @@ document.querySelectorAll('.yt').forEach(function(b){
     <p class="fix">{e(m['fixation'])}</p>
   </div>
 </section>
-
-<section aria-labelledby="h-mesures">
-  <div class="wrap two">
-    <div class="sec-head">
-      <span class="kicker">Mesures</span>
-      <h2 id="h-mesures">Dimensions du kit {e(m['court'])}</h2>
-      <p>Chaque kit est ajusté au coffre du véhicule. Une question sur une cote ? <a href="{TALLY}" target="_blank" rel="noopener">Écrivez-nous</a>.</p>
-    </div>
-    <table class="specs"><tbody>
-{mesures}
-    </tbody></table>
-  </div>
-</section>
-
-<section id="prix" class="kits" aria-labelledby="h-prix">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="kicker">Prix</span>
-      <h2 id="h-prix">Trois finitions, un prix atelier</h2>
-      <p>Prix TTC, hors livraison (dès {c['livraison']} € en France, retrait gratuit à Nîmes).</p>
-    </div>
-    <table class="price-table">
-      <thead><tr><th>Finition</th><th>Sans matelas</th><th>Avec matelas</th></tr></thead>
-      <tbody>
-{lignes}
-      </tbody>
-    </table>
-    <p class="help">Options et accessoires (occultants, frigo, batterie, version 2+1…) : <a href="/boutique/#accessoires">voir la boutique</a>.</p>
-    <a href="{commande}" class="btn btn-primary" style="margin-top:20px;max-width:420px">Commander ce kit <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
-  </div>
-</section>
-
-<section aria-labelledby="h-videos">
-  <div class="wrap">
-    <div class="sec-head"><span class="kicker">En vidéo</span><h2 id="h-videos">Le kit {e(m['court'])} en situation</h2></div>
-    <div class="videos">
-{videos}
-    </div>
-  </div>
-</section>
+{section_mesures}
+{section_prix}
+{section_galerie}
+{section_videos}
 
 <section class="showroom" aria-labelledby="h-showroom">
   <div class="wrap">
-    <div class="sec-head"><span class="kicker">Showroom</span><h2 id="h-showroom">Venez voir le kit à Nîmes</h2></div>
+    <div class="sec-head"><span class="kicker">Showroom</span><h2 id="h-showroom">Venez voir nos kits à Nîmes</h2></div>
     <address>Local n° 112, 866 avenue du Maréchal Juin<br>30900 Nîmes</address>
     <a href="{TALLY}" class="btn btn-line" style="max-width:420px" target="_blank" rel="noopener">Prévenir de ma visite</a>
   </div>
@@ -668,9 +857,56 @@ document.querySelectorAll('.yt').forEach(function(b){
     </div>
   </div>
 </section>
+{section_autres}
 </main>
 """
     return head(titre, desc, url, ld, og_type="product") + header("#prix", "Voir les prix") + body + footer(script)
+
+
+# ---------------------------------------------------------------------------
+# Catalogue des modèles
+# ---------------------------------------------------------------------------
+def liste_modeles(cat):
+    return "".join(f'<li><a href="/kit-amenagement/{m["slug"]}/">{e(m["nom"])}</a></li>'
+                   for m in FICHES if m["categorie"] == cat)
+
+
+def catalogue():
+    url = f"{SITE}/kit-amenagement/"
+    titre = "Kit aménagement par modèle : ludospace et van | Camperizate"
+    desc = ("Trouvez le kit camper amovible de votre véhicule : Berlingo, Kangoo, Partner, Trafic, Transporter, Vito… "
+            "Sans perçage ni VASP, dès 500 € TTC.")
+    blocs = []
+    for cat, ancre, sous in (("mini", "ludospaces", "dès 500 € TTC · vous gardez vos 5 places"),
+                             ("moyen", "vans", "dès 700 € TTC · hauteur adaptée à vos sièges"),
+                             ("grand", "fourgons", "sur devis")):
+        blocs.append(f"""
+    <div class="cat-block" id="{ancre}">
+      <h2>{e(CATEGORIES[cat]['pluriel'])}</h2>
+      <p class="help">{e(sous)}</p>
+      <ul class="model-links">{liste_modeles(cat)}</ul>
+    </div>""")
+    ld = {"@context": "https://schema.org", "@type": "ItemList", "itemListElement": [
+        {"@type": "ListItem", "position": i + 1, "name": m["nom"], "url": f"{SITE}/kit-amenagement/{m['slug']}/"}
+        for i, m in enumerate(FICHES)]}
+    body = f"""
+<main id="top">
+<nav class="crumbs wrap" aria-label="Fil d'Ariane"><ol><li><a href="/">Accueil</a></li><li aria-current="page">Kits par modèle</li></ol></nav>
+<section class="shop-hero" aria-labelledby="h1">
+  <div class="wrap">
+    <span class="kicker">Kits par modèle</span>
+    <h1 id="h1">Le kit d'aménagement de votre véhicule</h1>
+    <p class="lead">Chaque kit est fabriqué pour un modèle précis. Choisissez le vôtre pour voir le kit, les prix et les mesures.</p>
+  </div>
+</section>
+<section class="kits" aria-label="Modèles compatibles">
+  <div class="wrap">{''.join(blocs)}
+    <p class="help" style="margin-top:28px">Modèle absent ? <a href="{TALLY}" target="_blank" rel="noopener">Écrivez-nous</a> : nous avons sûrement déjà un kit pour lui.</p>
+  </div>
+</section>
+</main>
+"""
+    return head(titre, desc, url, ld) + header("/boutique/", "Boutique") + body + footer()
 
 
 # ---------------------------------------------------------------------------
@@ -696,9 +932,49 @@ def merci():
             + header("/", "Accueil") + body + footer())
 
 
+# ---------------------------------------------------------------------------
+# Landing (écrite à la main) : on ne met à jour que la liste des modèles
+# ---------------------------------------------------------------------------
+def maj_landing():
+    chemin = PUBLIC / "index.html"
+    src = chemin.read_text(encoding="utf-8")
+    cols = "".join(f"""
+      <div>
+        <h3>{e(CATEGORIES[cat]['pluriel'])}</h3>
+        <ul class="all-models">{liste_modeles(cat)}</ul>
+      </div>""" for cat in ("mini", "moyen", "grand"))
+    bloc = f"""<!-- MODELES:debut -->
+<section id="modeles" aria-labelledby="h-modeles">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Modèles compatibles</span>
+      <h2 id="h-modeles">Un kit pour chaque véhicule</h2>
+    </div>
+    <div class="all-models-grid">{cols}
+    </div>
+    <p class="help"><a href="/kit-amenagement/">Voir tous les kits par modèle</a></p>
+  </div>
+</section>
+<style>
+.all-models-grid{{display:grid;gap:24px}}
+.all-models-grid h3{{margin-bottom:8px}}
+.all-models{{list-style:none;margin:0;padding:0;columns:2;column-gap:16px}}
+.all-models li{{break-inside:avoid}}
+.all-models a{{display:inline-flex;align-items:center;min-height:40px;font-size:15px;text-underline-offset:3px}}
+.all-models a:hover{{color:var(--orange)}}
+@media (min-width:960px){{.all-models-grid{{grid-template-columns:1fr 1fr 1fr}}.all-models{{columns:1}}}}
+</style>
+<!-- MODELES:fin -->"""
+    src = re.sub(r"<!-- MODELES:debut -->.*?<!-- MODELES:fin -->", lambda _: bloc, src, flags=re.S)
+    slugs = json.dumps([m["slug"] for m in FICHES])
+    src = re.sub(r"var FICHES=\[.*?\];", lambda _: f"var FICHES={slugs};", src)
+    chemin.write_text(src, encoding="utf-8")
+    print("mis à jour public/index.html (liste des modèles)")
+
+
 def sitemap():
     today = date.today().isoformat()
-    urls = ["/", "/boutique/"] + [f"/kit-amenagement/{m['slug']}/" for m in FICHES]
+    urls = ["/", "/kit-amenagement/", "/boutique/"] + [f"/kit-amenagement/{m['slug']}/" for m in FICHES]
     urls += ["/conditions-generales-de-vente/", "/mentions-legales/", "/politique-de-confidentialite/"]
     rows = "\n".join(f"  <url><loc>{SITE}{u}</loc><lastmod>{today}</lastmod></url>" for u in urls)
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{rows}\n</urlset>\n'
@@ -717,7 +993,12 @@ def main():
     for m in FICHES:
         ecrire(f"kit-amenagement/{m['slug']}/index.html", fiche(m))
     ecrire("sitemap.xml", sitemap())
-    table = {m["ancien"]: f"{SITE}/kit-amenagement/{m['slug']}/" for m in FICHES}
+    ecrire("kit-amenagement/index.html", catalogue())
+    maj_landing()
+    table = {"/fr/": f"{SITE}/", "/fr/kit-camperizacion/": f"{SITE}/kit-amenagement/", "/fr/tienda/": f"{SITE}/boutique/"}
+    for m in FICHES:
+        for ancien in m["anciens"]:
+            table[ancien] = f"{SITE}/kit-amenagement/{m['slug']}/"
     (ROOT / "tools" / "redirections.json").write_text(json.dumps(table, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     vides = [k for k, v in STRIPE.items() if not v]
     print(f"liens Stripe manquants : {len(vides)}/{len(STRIPE)}")
