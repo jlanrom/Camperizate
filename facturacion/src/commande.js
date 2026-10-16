@@ -167,7 +167,9 @@ export function emailCommande(commande, numero) {
     ...etapes,
     "",
     "Bon à savoir",
-    "• Vous disposez de 14 jours après la réception pour vous rétracter (sauf produit fabriqué selon vos spécifications particulières).",
+    commande.estKit || commande.lignes.some((l) => ["matelas", "occultants"].includes(l.cle))
+      ? "• Votre kit est fabriqué sur mesure pour votre véhicule : il n'est donc pas soumis au droit de rétractation (art. L221-28, 3° du Code de la consommation)."
+      : "• Accessoires standard : vous disposez de 14 jours après la réception pour vous rétracter.",
     "• Tous nos produits bénéficient de la garantie légale de conformité de 2 ans.",
     `• Nos conditions générales de vente : ${CGV}`,
     "",

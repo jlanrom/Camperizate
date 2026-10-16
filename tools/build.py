@@ -597,6 +597,7 @@ def boutique():
           <p class="ship" id="ship"></p>
           <a class="btn btn-primary" id="pay" href="{TALLY}">Commander</a>
           <a class="btn btn-line" href="{TALLY}" target="_blank" rel="noopener">Une question avant de commander ?</a>
+          <p class="help">Kit fabriqué sur mesure : pas de droit de rétractation. Voir les <a href="/conditions-generales-de-vente/">CGV</a>.</p>
           <div class="opts">Options disponibles sur la page de paiement :<ul>{options}</ul></div>
         </div>
         <div class="devis">
@@ -633,7 +634,7 @@ def boutique():
       <li><svg class="ico" aria-hidden="true"><use href="#i-factory"/></svg><div><h3>3 semaines environ</h3><p>Fabrication dans notre atelier, plus rapide si votre modèle est en stock.</p></div></li>
       <li><svg class="ico" aria-hidden="true"><use href="#i-truck"/></svg><div><h3>Livré monté</h3><p>Sur palette partout en France, ou retrait gratuit à Nîmes, 866 avenue du Maréchal Juin.</p></div></li>
     </ul>
-    <p class="note">En commandant, vous acceptez nos <a href="/conditions-generales-de-vente/">conditions générales de vente</a>.</p>
+    <p class="note">Les kits, matelas et occultants sont fabriqués sur mesure pour votre véhicule : ils ne peuvent pas faire l'objet d'un droit de rétractation (art. L221-28, 3° du Code de la consommation). En commandant, vous acceptez nos <a href="/conditions-generales-de-vente/">conditions générales de vente</a>.</p>
   </div>
 </section>
 </main>
@@ -926,7 +927,7 @@ def merci():
       <li><b>Environ 3 semaines</b> : fabrication dans notre atelier (plus rapide si votre modèle est en stock).</li>
       <li><b>Livraison ou retrait</b> : kit livré monté sur palette, ou retrait au showroom de Nîmes à la date convenue.</li>
     </ol>
-    <p class="help">Rétractation sous 14 jours, garantie légale de 2 ans : voir nos <a href="/conditions-generales-de-vente/">conditions générales de vente</a>.</p>
+    <p class="help">Kit fabriqué sur mesure (sans droit de rétractation), garantie légale de 2 ans : voir nos <a href="/conditions-generales-de-vente/">conditions générales de vente</a>.</p>
     <div class="ctas" style="margin-top:20px">
       <a class="btn btn-primary" href="{TALLY}" target="_blank" rel="noopener">Nous écrire</a>
       <a class="btn btn-line" href="/">Retour à l'accueil</a>
