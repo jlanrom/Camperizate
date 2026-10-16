@@ -276,9 +276,17 @@ def header(lien, texte):
 <header class="site-head">
   <div class="wrap">
     <a href="/" class="brand" aria-label="Camperizate, accueil"><img src="/img/camperizate-logo.svg" alt="Camperizate" width="172" height="23"></a>
+    <nav class="nav" id="menu" aria-label="Menu principal">
+      <a href="/kit-amenagement/">Modèles</a>
+      <a href="/accessoires/">Accessoires</a>
+      <a href="/guide-kit-meubles-camper/">Guide</a>
+      <a href="/contact/">Contact</a>
+    </nav>
     <a href="{lien}" class="btn btn-line head-btn">{texte}</a>
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="menu" aria-label="Menu"><span></span></button>
   </div>
 </header>
+<script>(function(){{var h=document.querySelector('.site-head'),b=h&&h.querySelector('.nav-toggle');if(!b)return;b.addEventListener('click',function(){{b.setAttribute('aria-expanded',h.classList.toggle('open'))}});h.querySelectorAll('.nav a').forEach(function(a){{a.addEventListener('click',function(){{h.classList.remove('open');b.setAttribute('aria-expanded','false')}})}})}})();</script>
 """
 
 
