@@ -1,86 +1,42 @@
 #!/usr/bin/env python3
-"""Génère les pages dynamiques de kitamenagement.fr.
+"""Génère les sites kitamenagement.fr (public/) et kitcampermodulare.it (public-it/).
 
-Usage :  python3 tools/build.py
+Usage :  python3 tools/build.py          les deux sites
+         python3 tools/build.py fr       seulement la France
+         python3 tools/build.py it       seulement l'Italie
 
-Écrit :
-- public/boutique/index.html              la boutique (paiement par liens Stripe)
-- public/kit-amenagement/<slug>/index.html une fiche par modèle de FICHES
-- public/merci/index.html                 page de retour après paiement
-- public/sitemap.xml
-- tools/redirections.json                 ancienne URL Webnode → nouvelle fiche
+Commun aux deux sites : ce script (gabarits), tools/catalogue.py (modèles, prix des kits, options),
+tools/videos.csv, tools/photos.json, le CSS de public/index.html, les images et les polices.
+Propre à chaque site : tools/sites/fr.py et tools/sites/it.py (domaine, livraison, liens Stripe, redirections)
+et, pour l'Italie, la traduction tools/sites/it_textes.py (texte français -> texte italien).
 
-Le CSS est repris de public/index.html (une seule source de style).
-Ne pas modifier les pages générées à la main : modifier ce script puis le relancer.
+Écrit pour la France :
+- public/boutique/, public/kit-amenagement/<slug>/, public/merci/, pages de contenu, public/sitemap.xml
+- public/index.html : seulement la liste des modèles et le sélecteur (le reste est écrit à la main)
+Écrit pour l'Italie : public-it/ entier (pages traduites, images copiées, pages légales de tools/sites/it_pages/).
+Et : tools/redirections.json, docs/redirection-webnode*.html (anciennes URL /fr/ et /it/ de Webnode).
 
-LIENS DE PAIEMENT : coller chaque URL de Payment Link Stripe dans STRIPE ci-dessous.
-Tant qu'un lien est vide, le bouton correspondant propose de commander par message.
-La liste des liens à créer et leur réglage sont dans docs/STRIPE.md.
+Ne pas modifier les pages générées à la main : modifier ce script ou les fichiers de tools/ puis le relancer.
 """
 import html
 import json
 import re
+import shutil
+import sys
 from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
-SITE = "https://kitamenagement.fr"
 TALLY = "https://tally.so/r/OD6BOp"
 
 # ---------------------------------------------------------------------------
-# 1. LIENS STRIPE (Payment Links) — à remplir, voir docs/STRIPE.md
+# 1. SITE : par défaut la France ; build_it() bascule ces valeurs pour l'Italie (tools/sites/it.py)
 # ---------------------------------------------------------------------------
-STRIPE = {
-    # Kits : kit-<catégorie>-<finition>-<matelas sans|avec>-<retrait|livraison>
-    "kit-mini-pin-sans-retrait": "https://buy.stripe.com/8x2aEW88C5EJ5vJdWD6EU01",
-    "kit-mini-pin-avec-retrait": "https://buy.stripe.com/4gMdR8agKc37ganbOv6EU02",
-    "kit-mini-carrossier-sans-retrait": "https://buy.stripe.com/9B6fZg9cG8QVaQ3dWD6EU03",
-    "kit-mini-carrossier-avec-retrait": "https://buy.stripe.com/aFa28q9cG0kp0bpaKr6EU04",
-    "kit-mini-hpl-sans-retrait": "https://buy.stripe.com/eVq9ASbkOaZ38HV8Cj6EU05",
-    "kit-mini-hpl-avec-retrait": "https://buy.stripe.com/eVqbJ0ex0ebfaQ3f0H6EU06",
-    "kit-moyen-pin-sans-retrait": "https://buy.stripe.com/6oU8wO88Cc376zNf0H6EU07",
-    "kit-moyen-pin-avec-retrait": "https://buy.stripe.com/eVq5kCfB44AF4rF19R6EU08",
-    "kit-moyen-carrossier-sans-retrait": "https://buy.stripe.com/4gM9AS1Ke6IN7DRaKr6EU09",
-    "kit-moyen-carrossier-avec-retrait": "https://buy.stripe.com/8x228q2Oi3wBcYbdWD6EU0a",
-    "kit-moyen-hpl-sans-retrait": "https://buy.stripe.com/fZu28q9cG5EJ5vJg4L6EU0b",
-    "kit-moyen-hpl-avec-retrait": "https://buy.stripe.com/cNidR89cG7MR0bpdWD6EU0c",
-    "kit-mini-pin-sans-livraison": "https://buy.stripe.com/00w7sKdsWebf1ft9Gn6EU0d",
-    "kit-mini-pin-avec-livraison": "https://buy.stripe.com/fZufZg88C1ot3nB19R6EU0e",
-    "kit-mini-carrossier-sans-livraison": "https://buy.stripe.com/aFaaEWbkOc37bU7dWD6EU0f",
-    "kit-mini-carrossier-avec-livraison": "https://buy.stripe.com/dRm00ifB44AFgan19R6EU0g",
-    "kit-mini-hpl-sans-livraison": "https://buy.stripe.com/9B69ASgF84AFaQ35q76EU0h",
-    "kit-mini-hpl-avec-livraison": "https://buy.stripe.com/6oU14mfB43wB6zNcSz6EU0i",
-    "kit-moyen-pin-sans-livraison": "https://buy.stripe.com/14A3cu2Oi0kp8HV8Cj6EU0j",
-    "kit-moyen-pin-avec-livraison": "https://buy.stripe.com/4gM6oG0Ga8QV2jx19R6EU0k",
-    "kit-moyen-carrossier-sans-livraison": "https://buy.stripe.com/cNiaEW1Ke3wB9LZcSz6EU0l",
-    "kit-moyen-carrossier-avec-livraison": "https://buy.stripe.com/aFa4gygF88QV4rF8Cj6EU0m",
-    "kit-moyen-hpl-sans-livraison": "https://buy.stripe.com/dRm4gyfB4c377DRdWD6EU0n",
-    "kit-moyen-hpl-avec-livraison": "https://buy.stripe.com/3cI9ASagK8QVf6jbOv6EU0o",
-    # Kits grand fourgon
-    "kit-grand-pin-sans-retrait": "https://buy.stripe.com/aFa3cuagK3wB3nB2dV6EU0y",
-    "kit-grand-pin-avec-retrait": "https://buy.stripe.com/aFa9AS0Ga9UZ8HVf0H6EU0z",
-    "kit-grand-carrossier-sans-retrait": "https://buy.stripe.com/4gMeVc4WqaZ31ft2dV6EU0A",
-    "kit-grand-carrossier-avec-retrait": "https://buy.stripe.com/00w6oGfB41ot2jxaKr6EU0B",
-    "kit-grand-hpl-sans-retrait": "https://buy.stripe.com/8x214m0Ga1ot2jx7yf6EU0C",
-    "kit-grand-hpl-avec-retrait": "https://buy.stripe.com/9B66oGcoSd7bbU705N6EU0D",
-    "kit-grand-pin-sans-livraison": "https://buy.stripe.com/6oU4gy60ud7bf6j6ub6EU0E",
-    "kit-grand-pin-avec-livraison": "https://buy.stripe.com/00w8wOdsWaZ32jxcSz6EU0F",
-    "kit-grand-carrossier-sans-livraison": "https://buy.stripe.com/8x25kC74y2sx9LZ6ub6EU0G",
-    "kit-grand-carrossier-avec-livraison": "https://buy.stripe.com/7sY28q60ugjnaQ3g4L6EU0H",
-    "kit-grand-hpl-sans-livraison": "https://buy.stripe.com/8x2cN4bkO7MR2jx6ub6EU0I",
-    "kit-grand-hpl-avec-livraison": "https://buy.stripe.com/3cIdR84Wq3wB4rF8Cj6EU0J",
-    # Accessoires
-    "occultants": "https://buy.stripe.com/bJe3cufB40kp8HV3hZ6EU0p",
-    "frigo-15": "https://buy.stripe.com/8x24gy60u0kp9LZbOv6EU0q",
-    "frigo-35": "https://buy.stripe.com/00waEWfB43wB8HVcSz6EU0r",
-    "batterie": "https://buy.stripe.com/5kQeVc9cG7MR0bp8Cj6EU0s",
-    "batterie-onduleur": "https://buy.stripe.com/00w14mex0c378HVg4L6EU0t",
-    "rechaud": "https://buy.stripe.com/5kQbJ04Wq3wBbU7dWD6EU0u",
-    "rechaud-cartouches": "https://buy.stripe.com/cNi3cu3Sm4AF9LZ19R6EU0v",
-    "toilettes": "https://buy.stripe.com/6oU14m1Ke0kp5vJaKr6EU0w",
-    "douche": "https://buy.stripe.com/3cIeVcbkO4AF1ft19R6EU0x",
-}
+from sites import fr as FR  # noqa: E402
+from sites import it as IT  # noqa: E402
+SITE = FR.SITE
+STRIPE = FR.STRIPE
 
 # ---------------------------------------------------------------------------
 # 2. CATALOGUE : données dans tools/catalogue.py (prix et véhicules du formulaire Tally)
@@ -1197,25 +1153,31 @@ def maj_landing():
 # ---------------------------------------------------------------------------
 # Redirections : table ancienne URL -> nouvelle, et script à coller dans Webnode
 # ---------------------------------------------------------------------------
-def table_redirections():
-    table = {k: SITE + v for k, v in REDIRECTIONS.items()}
+def table_redirections(cfg=None):
+    """Ancienne URL Webnode -> nouvelle URL complète. France : catalogue.py ; Italie : sites/it.py."""
+    if cfg is IT:
+        return dict(sorted({k: IT.SITE + v for k, v in IT.REDIRECTIONS.items()}.items()))
+    table = {k: FR.SITE + v for k, v in REDIRECTIONS.items()}
     for m in FICHES:
         for ancien in m["anciens"]:
-            table[ancien] = f"{SITE}/kit-amenagement/{m['slug']}/"
+            table[ancien] = f"{FR.SITE}/kit-amenagement/{m['slug']}/"
     return dict(sorted(table.items()))
 
 
-def script_webnode(table):
+def script_webnode(table, prefixes, prueba=False):
+    """Script à coller dans l'en-tête de Webnode : redirige les anciennes pages /fr/ et /it/."""
     exact = json.dumps(table, ensure_ascii=False, separators=(",", ":"))
-    prefixes = json.dumps([[k, SITE + v] for k, v in REDIRECTIONS_PREFIXES.items()], ensure_ascii=False, separators=(",", ":"))
-    return f"""<!-- Redirection camperizatetodoen1.com/fr/ -> kitamenagement.fr (généré par tools/build.py) -->
+    pref = json.dumps(prefixes, ensure_ascii=False, separators=(",", ":"))
+    garde = "  if(location.search.indexOf('prueba-redireccion')<0)return;\n" if prueba else ""
+    version = "VERSION DE PRUEBA : solo redirige con ?prueba-redireccion en la URL" if prueba else "VERSION DEFINITIVA"
+    return f"""<!-- Redirection camperizatetodoen1.com/fr/ -> kitamenagement.fr et /it/ -> kitcampermodulare.it ({version}) - généré par tools/build.py -->
 <script>
 (function(){{
-  var p=location.pathname;
-  if(p.indexOf('/fr/')!==0&&p!=='/fr')return;
+{garde}  var p=location.pathname;
+  if(!/^\\/(fr|it)(\\/|$)/.test(p))return;
   if(p.charAt(p.length-1)!=='/')p+='/';
   var M={exact};
-  var P={prefixes};
+  var P={pref};
   var d=M[p];
   if(!d){{for(var i=0;i<P.length;i++){{if(p.indexOf(P[i][0])===0){{d=P[i][1];break;}}}}}}
   if(d)location.replace(d);
@@ -1234,33 +1196,104 @@ def sitemap():
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{rows}\n</urlset>\n'
 
 
-def ecrire(chemin, contenu):
-    out = PUBLIC / chemin
+def ecrire(chemin, contenu, racine=None):
+    out = (racine or PUBLIC) / chemin
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(contenu, encoding="utf-8")
     print("écrit", out.relative_to(ROOT))
 
 
-def main():
-    ecrire("boutique/index.html", boutique())
-    ecrire("merci/index.html", merci())
+def pages():
+    """Toutes les pages générées, chemin -> HTML, avec les réglages du site actif (SITE, STRIPE, livraison)."""
+    p = {"boutique/index.html": boutique(), "merci/index.html": merci()}
     for m in FICHES:
-        ecrire(f"kit-amenagement/{m['slug']}/index.html", fiche(m))
-    ecrire("kit-amenagement/index.html", catalogue())
-    ecrire("accessoires/index.html", accessoires())
-    ecrire("occultants-isolants/index.html", occultants())
-    ecrire("matelas-camper/index.html", matelas())
-    ecrire("guide-kit-meubles-camper/index.html", guide())
-    ecrire("contact/index.html", contact())
-    ecrire("sitemap.xml", sitemap())
+        p[f"kit-amenagement/{m['slug']}/index.html"] = fiche(m)
+    p.update({
+        "kit-amenagement/index.html": catalogue(),
+        "accessoires/index.html": accessoires(),
+        "occultants-isolants/index.html": occultants(),
+        "matelas-camper/index.html": matelas(),
+        "guide-kit-meubles-camper/index.html": guide(),
+        "contact/index.html": contact(),
+        "sitemap.xml": sitemap(),
+    })
+    return p
+
+
+def activer(cfg):
+    """Bascule les réglages propres au site (domaine, liens Stripe, prix de livraison)."""
+    global SITE, STRIPE
+    SITE, STRIPE = cfg.SITE, cfg.STRIPE
+    for cat, prix_liv in cfg.LIVRAISON.items():
+        CATEGORIES[cat]["livraison"] = prix_liv
+
+
+def build_fr():
+    activer(FR)
+    for chemin, contenu in pages().items():
+        ecrire(chemin, contenu)
     maj_landing()
-    table = table_redirections()
-    (ROOT / "tools" / "redirections.json").write_text(json.dumps(table, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    (ROOT / "docs" / "redirection-webnode.html").write_text(script_webnode(table), encoding="utf-8")
-    print(f"redirections : {len(table)} URL exactes + {len(REDIRECTIONS_PREFIXES)} préfixes")
     vides = [k for k, v in STRIPE.items() if not v]
-    print(f"liens Stripe manquants : {len(vides)}/{len(STRIPE)}")
+    print(f"France : liens Stripe manquants {len(vides)}/{len(STRIPE)}")
+
+
+def build_it():
+    """Italie : mêmes gabarits avec les réglages italiens, puis traduction (tools/i18n.py) vers public-it/."""
+    from i18n import Localiseur
+    activer(IT)
+    noms = {m[k] for m in MODELES for k in ("nom", "court") if " et " not in m[k]}
+    noms |= {m["titre"] for m in MODELES if m.get("titre") and " et " not in m["titre"]}
+    noms |= {lib for m in MODELES for _, lib, _ in m["variantes"]}
+    loc = Localiseur(IT, FR.SITE, noms)
+    sortie = ROOT / IT.SORTIE
+    if sortie.exists():
+        shutil.rmtree(sortie)
+    contenus = pages()
+    contenus["index.html"] = (PUBLIC / "index.html").read_text(encoding="utf-8")
+    for chemin, contenu in contenus.items():
+        ecrire(loc.chemin_fichier(chemin), loc.page(contenu, xml=chemin.endswith(".xml")), sortie)
+    # Fichiers communs copiés tels quels
+    for dossier in ("img", "fonts"):
+        shutil.copytree(PUBLIC / dossier, sortie / dossier)
+    shutil.copy(PUBLIC / "_headers", sortie / "_headers")
+    (sortie / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {IT.SITE}/sitemap.xml\n", encoding="utf-8")
+    # Pages légales écrites à la main en italien
+    for f in (ROOT / "tools" / "sites" / "it_pages").rglob("*.html"):
+        rel = f.relative_to(ROOT / "tools" / "sites" / "it_pages")
+        ecrire(str(rel), f.read_text(encoding="utf-8"), sortie)
+    activer(FR)
+    vides = [k for k, v in IT.STRIPE.items() if not v]
+    print(f"Italie : liens Stripe manquants {len(vides)}/{len(IT.STRIPE)}")
+    return loc.rapport(ROOT / "tools" / "sites" / "it_a_traduire.txt")
+
+
+def redirections():
+    fr = table_redirections(FR)
+    it = table_redirections(IT) if IT.REDIRECTION_ACTIVE else {}
+    table = dict(sorted({**fr, **it}.items()))
+    prefixes = [[k, FR.SITE + v] for k, v in REDIRECTIONS_PREFIXES.items() if k != "/fr/"]
+    if IT.REDIRECTION_ACTIVE:
+        prefixes += [[k, IT.SITE + v] for k, v in IT.REDIRECTIONS_PREFIXES.items() if k != "/it/"]
+    prefixes += [["/fr/", FR.SITE + REDIRECTIONS_PREFIXES["/fr/"]]]
+    if IT.REDIRECTION_ACTIVE:
+        prefixes += [["/it/", IT.SITE + IT.REDIRECTIONS_PREFIXES["/it/"]]]
+    (ROOT / "tools" / "redirections.json").write_text(json.dumps(table, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    (ROOT / "docs" / "redirection-webnode.html").write_text(script_webnode(table, prefixes), encoding="utf-8")
+    (ROOT / "docs" / "redirection-webnode-prueba.html").write_text(script_webnode(table, prefixes, prueba=True), encoding="utf-8")
+    print(f"redirections : {len(fr)} URL /fr/ + {len(it)} URL /it/, {len(prefixes)} préfixes")
+
+
+def main(cibles):
+    cibles = cibles or ["fr", "it"]
+    if "fr" in cibles:
+        build_fr()
+    ok = True
+    if "it" in cibles:
+        ok = build_it()
+    redirections()
+    if not ok:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
