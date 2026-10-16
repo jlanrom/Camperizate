@@ -8,7 +8,7 @@
   // se définissent dans Cloudflare : Workers > facturacion-stripe-holded > Settings > Variables and Secrets.
   "vars": {
     // Mode test : true = n'écrit rien dans Holded, n'envoie aucun e-mail, journalise seulement.
-    "DRY_RUN": "true",
+    "DRY_RUN": "false",
     // Ne traiter que les paiements des liens de kitamenagement.fr (métadonnée « site » des Payment Links).
     "SITE_METADATA": "kitamenagement.fr",
     // TVA par défaut (comme les factures actuelles). À valider avec le gestor (OSS pour la France ?).
