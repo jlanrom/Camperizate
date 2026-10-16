@@ -19,22 +19,27 @@ Option B — Cloudflare Pages : créer un projet relié au repo, *production bra
 
 ## Pages
 
-- `/` — landing page
+- `/` — landing page (écrite à la main)
+- `/boutique/` — boutique, paiement par liens Stripe (générée)
+- `/kit-amenagement/<modèle>/` — fiches modèle (générées)
+- `/merci/` — retour après paiement, noindex (générée)
+- `/conditions-generales-de-vente/` — CGV
 - `/mentions-legales/` — mentions légales (Camperizate Todo en 1, S.L.U.)
 - `/politique-de-confidentialite/` — politique de confidentialité / cookies (aucun cookie déposé)
 
 ## Liens
 
-- Produits : pages françaises de la boutique `https://www.camperizatetodoen1.com/fr/kit-camperizacion/<modèle>/`
-  (avec paramètres UTM). Le sélecteur de véhicule met à jour les boutons des fiches vers le modèle choisi.
+- Produits : les boutons « Commander » de la landing et des fiches mènent à `/boutique/`
+  avec le modèle et la finition présélectionnés (`?modele=…&finition=…`).
 - Contact (« Écrivez-nous ») : formulaire `https://tally.so/r/OD6BOp`, le même que le bouton WhatsApp
   de camperizatetodoen1.com.
 
-## Fiches modèle
+## Pages générées
 
-Générées par `python3 tools/fiches.py` à partir de la liste `MODELES` du script
-(une entrée par modèle : mesures, contenu du kit, vidéos, FAQ, lien de commande).
-Le script écrit `public/kit-amenagement/<modèle>/index.html`, régénère `public/sitemap.xml`
-et `tools/redirections.json` (ancienne URL camperizatetodoen1.com/fr/… → nouvelle fiche),
-qui servira au script de redirection côté Webnode. Ne pas modifier les fiches à la main :
-modifier le script puis le relancer.
+`python3 tools/build.py` génère la boutique, les fiches modèle, la page merci, `public/sitemap.xml`
+et `tools/redirections.json` (ancienne URL camperizatetodoen1.com/fr/… → nouvelle fiche, pour le
+futur script de redirection côté Webnode). Ne pas modifier ces pages à la main : modifier le script
+puis le relancer.
+
+- Liens de paiement : dictionnaire `STRIPE` en haut du script. Guide de création : `docs/STRIPE.md`.
+- Ajouter une fiche modèle : ajouter une entrée à `FICHES`.
