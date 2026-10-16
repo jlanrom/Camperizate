@@ -1161,13 +1161,16 @@ def table_redirections():
     return dict(sorted(table.items()))
 
 
-def script_webnode(table):
+def script_webnode(table, prueba=False):
+    """prueba=True : ne redirige que si l'URL contient ?prueba-redireccion (test sans toucher les visiteurs)."""
     exact = json.dumps(table, ensure_ascii=False, separators=(",", ":"))
+    garde = "  if(location.search.indexOf('prueba-redireccion')<0)return;\n" if prueba else ""
+    titre = "VERSION DE PRUEBA : solo redirige con ?prueba-redireccion en la URL" if prueba else "VERSION DEFINITIVA"
     prefixes = json.dumps([[k, SITE + v] for k, v in REDIRECTIONS_PREFIXES.items()], ensure_ascii=False, separators=(",", ":"))
-    return f"""<!-- Redirection camperizatetodoen1.com/fr/ -> kitamenagement.fr (généré par tools/build.py) -->
+    return f"""<!-- Redirection camperizatetodoen1.com/fr/ -> kitamenagement.fr ({titre}) - généré par tools/build.py -->
 <script>
 (function(){{
-  var p=location.pathname;
+{garde}  var p=location.pathname;
   if(p.indexOf('/fr/')!==0&&p!=='/fr')return;
   if(p.charAt(p.length-1)!=='/')p+='/';
   var M={exact};
@@ -1213,6 +1216,7 @@ def main():
     table = table_redirections()
     (ROOT / "tools" / "redirections.json").write_text(json.dumps(table, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     (ROOT / "docs" / "redirection-webnode.html").write_text(script_webnode(table), encoding="utf-8")
+    (ROOT / "docs" / "redirection-webnode-prueba.html").write_text(script_webnode(table, prueba=True), encoding="utf-8")
     print(f"redirections : {len(table)} URL exactes + {len(REDIRECTIONS_PREFIXES)} préfixes")
     vides = [k for k, v in STRIPE.items() if not v]
     print(f"liens Stripe manquants : {len(vides)}/{len(STRIPE)}")

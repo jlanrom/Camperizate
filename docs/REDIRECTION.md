@@ -6,17 +6,30 @@
 
 - `tools/redirections.json`: las 54 URL antiguas de `/fr/` con su página nueva. Incluye todas las que traen
   tráfico según Search Console (fichas de modelo, catálogo, guía, contacto, tienda, occultants, colchones…).
-- `docs/redirection-webnode.html`: el script listo para pegar. Se genera solo con `python3 tools/build.py`.
+- `docs/redirection-webnode-prueba.html`: **versión de prueba**. Solo redirige si la URL lleva `?prueba-redireccion`;
+  los visitantes normales no notan nada.
+- `docs/redirection-webnode.html`: **versión definitiva**. Redirige a todo el mundo.
+- Los dos se generan solos con `python3 tools/build.py`.
   - Solo actúa en las páginas que empiezan por `/fr/`: la web española, italiana, etc. no se tocan.
   - Primero busca la URL exacta; si no está, aplica una regla general
     (`/fr/tienda/…` → tienda, `/fr/kit-camperizacion/…` → catálogo, cualquier otra `/fr/…` → portada).
 
-## Cómo activarlo
+## Paso 1: probar sin afectar a nadie
 
 1. Webnode → Ajustes → **Encabezado HTML** (código en el `<head>` de todas las páginas).
-2. Pegar el contenido de `docs/redirection-webnode.html` y publicar.
-3. Probar 3 o 4 URL antiguas (por ejemplo `/fr/kit-camperizacion/berlingo/`): deben abrir la ficha nueva.
-4. Search Console: dar de alta `kitamenagement.fr` y enviar `https://kitamenagement.fr/sitemap.xml`.
+2. Pegar el contenido de `docs/redirection-webnode-prueba.html` (debajo de lo que ya haya) y publicar.
+3. Abrir, por ejemplo:
+   - `https://www.camperizatetodoen1.com/fr/kit-camperizacion/berlingo/?prueba-redireccion` → ficha Berlingo nueva
+   - `https://www.camperizatetodoen1.com/fr/kitmueblescamper/?prueba-redireccion` → guía nueva
+   - `https://www.camperizatetodoen1.com/fr/?prueba-redireccion` → portada nueva
+   - `https://www.camperizatetodoen1.com/fr/kit-camperizacion/berlingo/` (sin el añadido) → sigue en Webnode
+   - `https://www.camperizatetodoen1.com/` → sigue en la web española
+
+## Paso 2: activarlo de verdad
+
+1. En el mismo sitio de Webnode, **sustituir** el script de prueba por el de `docs/redirection-webnode.html` y publicar.
+2. Repetir las pruebas sin el añadido: ahora todas las URL en francés deben llevar a kitamenagement.fr.
+3. Search Console: dar de alta `kitamenagement.fr` y enviar `https://kitamenagement.fr/sitemap.xml`.
 
 ## Cómo desactivarlo
 
