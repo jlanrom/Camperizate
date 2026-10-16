@@ -38,12 +38,15 @@ function faux() {
     majMetadataPaiement: async (id, m) => { appels.push(["stripe.meta", m]); Object.assign(metaPI, m); },
   };
   const holded = {
-    contactsParCustomId: async (c) => { appels.push(["contacts?", c]); return []; },
-    creerContact: async (c) => { appels.push(["creerContact", c]); return { status: 1, id: "c1" }; },
-    creerDocument: async (t, d) => { appels.push(["creer", t, d]); return { status: 1, id: t === "invoice" ? "f1" : "so1" }; },
-    lireDocument: async () => ({ docNumber: "SO260001" }),
-    envoyerDocument: async (t, id, e) => { appels.push(["envoyer", t, id, e]); return { status: 1 }; },
-    payerDocument: async (t, id, p) => { appels.push(["payer", t, id, p]); return { status: 1 }; },
+    contactParEmail: async (e) => { appels.push(["contact?", e]); return null; },
+    creerContact: async (c) => { appels.push(["creerContact", c]); return { id: "c1" }; },
+    creerCommande: async (d) => { appels.push(["creer", "salesorder", d]); return { id: "so1" }; },
+    lireCommande: async () => ({ number: "SO260001" }),
+    envoyerCommande: async (id, e) => { appels.push(["envoyer", "salesorder", id, e]); return {}; },
+    creerFacture: async (d) => { appels.push(["creer", "invoice", d]); return { id: "f1" }; },
+    approuverFacture: async (id) => { appels.push(["approuver", id]); return {}; },
+    envoyerFacture: async (id, e) => { appels.push(["envoyer", "invoice", id, e]); return {}; },
+    payerFacture: async (id, p) => { appels.push(["payer", "invoice", id, p]); return {}; },
   };
   return { stripe, holded, appels, metaPI };
 }
@@ -62,7 +65,9 @@ console.log("✓ signature Stripe (valide, fausse, expirée, refus HTTP 400)");
 const cmd = lireCommande(session());
 const items = lignesHolded(cmd, ENV);
 assert.equal(items.length, 3);
-assert.equal(items[0].subtotal, 454.5455);
+assert.equal(items[0].price, 454.5455);
+assert.deepEqual(items[0].taxes, ["s_iva_21"]);
+assert.equal(items[0].account, "67d01537b71b6257a30c39cb");
 assert.equal(totalRecalcule(items), 900);
 assert.equal(cmd.email, "marie.dupont@example.fr");
 assert.equal(cmd.livraison, true);
@@ -80,18 +85,23 @@ assert.equal(r.ok, true);
 const etapes = f.appels.map((a) => a[0] + (a[1] && typeof a[1] === "string" ? ":" + a[1] : ""));
 console.log("  appels :", etapes.join(" → "));
 const so = f.appels.find((a) => a[0] === "creer" && a[1] === "salesorder")[2];
-assert.equal(so.contactId, "c1");
-assert.equal(so.numSerieId, "67d01533b71b6257a30c391c");
-assert.equal(so.shippingCity, "Nîmes");
+assert.equal(so.contact_id, "c1");
+assert.equal(so.number_line_id, "67d01533b71b6257a30c391c");
+assert.match(so.date, /^\d{4}-\d{2}-\d{2}$/);
+assert.match(so.notes, /Nîmes/);
+const ct = f.appels.find((a) => a[0] === "creerContact")[1];
+assert.equal(ct.is_person, true);
+assert.equal(ct.bill_address.postal_code, "30000");
 const fac = f.appels.find((a) => a[0] === "creer" && a[1] === "invoice")[2];
-assert.equal(fac.approveDoc, false);
-assert.equal(fac.paymentMethodId, "6a591285b8a9e7007a0e35e2");
+assert.equal(fac.payment_method_id, "6a591285b8a9e7007a0e35e2");
+assert.equal(f.appels.some((a) => a[0] === "approuver"), false);
 const mail = f.appels.find((a) => a[0] === "envoyer")[3];
-assert.equal(mail.emails, "marie.dupont@example.fr");
+assert.deepEqual(mail.emails, ["marie.dupont@example.fr"]);
 assert.match(mail.subject, /SO260001/);
 assert.ok(mail.subject.length >= 10 && mail.message.length >= 20);
 const pay = f.appels.find((a) => a[0] === "payer")[3];
 assert.equal(pay.amount, 900);
+assert.equal(pay.treasury_id, "tresorerie1");
 console.log("✓ contact → bon de commande → e-mail → facture brouillon → paiement");
 
 // 4. Idempotence : Stripe renvoie le même événement

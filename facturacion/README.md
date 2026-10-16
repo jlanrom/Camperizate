@@ -6,7 +6,7 @@ Cloudflare, independiente de la web) hace todo esto solo:
 ```
 Pago en Stripe ──webhook──► Worker /stripe
                                │ 1. comprueba la firma de Stripe y que el pago es de kitamenagement.fr
-                               │ 2. Holded: busca el cliente por e-mail o lo crea
+                               │ 2. Holded: busca el cliente por e-mail exacto o lo crea
                                │ 3. Holded: crea el PEDIDO (serie «Línea SO»)
                                │ 4. Holded: envía el pedido al cliente por e-mail (PDF + resumen,
                                │            plazos de entrega, derecho de desistimiento, CGV)
@@ -36,7 +36,7 @@ se ven en Stripe → Desarrolladores → Webhooks y en los registros del Worker 
 
 ## Instalación (una vez)
 
-1. **Clave de Holded**: Holded → Configuración → Desarrolladores → API → crear clave.
+1. **Clave de Holded (API v2)**: Holded → Configuración → Desarrolladores → API → crear clave con permisos de contactos, pedidos de venta y facturas (lectura y escritura).
 2. **Clave restringida de Stripe**: Stripe → Desarrolladores → Claves API → «Crear clave restringida» con
    permisos *Checkout Sessions: lectura*, *Products: lectura*, *PaymentIntents: escritura*.
 3. **Publicar el Worker** en Cloudflare: Workers → Crear → Importar un repositorio →
@@ -59,7 +59,7 @@ se ven en Stripe → Desarrolladores → Webhooks y en los registros del Worker 
 
 - `node test/test.mjs`: pruebas sin red (firma, IVA y redondeos de todo el catálogo, recorrido completo,
   reenvío sin duplicados, pagos de otras webs, modo prueba) y vista previa del correo.
-- Texto del correo y del pedido: `src/commande.js`. Llamadas a Holded: `src/holded.js` (API invoicing v1).
+- Texto del correo y del pedido: `src/commande.js`. Llamadas a Holded: `src/holded.js` (API v2, `Authorization: Bearer`).
 
 ## Pendiente para más adelante
 

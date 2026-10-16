@@ -15,7 +15,8 @@ function egal(a, b) {
 
 /** Vérifie l'en-tête Stripe-Signature (schéma v1, tolérance 5 min). Lève une erreur si invalide. */
 export async function verifierSignature(corps, entete, secret, maintenant = Date.now() / 1000, tolerance = 300) {
-  if (!entete || !secret) throw new Error("signature absente");
+  if (!secret) throw new Error("STRIPE_WEBHOOK_SECRET manquant dans Cloudflare (type Secret)");
+  if (!entete) throw new Error("signature absente");
   const parts = Object.fromEntries([]);
   const v1 = [];
   for (const morceau of entete.split(",")) {

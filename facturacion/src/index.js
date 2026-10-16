@@ -6,7 +6,7 @@
 
 import { verifierSignature, clientStripe } from "./stripe.js";
 import { clientHolded } from "./holded.js";
-import { lireCommande, contactHolded, documentHolded, emailCommande, lignesHolded, totalRecalcule } from "./commande.js";
+import { lireCommande, contactHolded, documentHolded, emailCommande, lignesHolded, totalRecalcule, dateISO } from "./commande.js";
 
 const EVENEMENTS = new Set(["checkout.session.completed", "checkout.session.async_payment_succeeded"]);
 
@@ -47,22 +47,22 @@ export async function traiterSession(sessionId, env, deps = {}) {
     return { dry: true, commande, journal };
   }
 
-  // 1. Contact (recherché par CustomId = stripe:<email>, sinon créé)
+  // 1. Contact (recherché par e-mail exact, sinon créé)
   if (!fait.holded_contact) {
-    const trouves = await holded.contactsParCustomId(`stripe:${commande.email}`);
-    const id = Array.isArray(trouves) && trouves[0]?.id ? trouves[0].id : (await holded.creerContact(contactHolded(commande))).id;
+    const existant = await holded.contactParEmail(commande.email);
+    const id = existant?.id || (await holded.creerContact(contactHolded(commande))).id;
     await memoriser("holded_contact", id);
-    log(`contact ${id}`);
+    log(`contact ${id}${existant ? " (existant)" : " (créé)"}`);
   }
 
   // 2. Bon de commande
   let numero = fait.holded_commande_num || "";
   if (!fait.holded_commande) {
-    const r = await holded.creerDocument("salesorder", documentHolded(commande, fait.holded_contact, env, { type: "salesorder" }));
+    const r = await holded.creerCommande(documentHolded(commande, fait.holded_contact, env, { type: "salesorder" }));
     await memoriser("holded_commande", r.id);
     try {
-      const doc = await holded.lireDocument("salesorder", r.id);
-      numero = doc.docNumber || doc.number || "";
+      const doc = await holded.lireCommande(r.id);
+      numero = doc.number || doc.document_number || doc.doc_number || doc.docNumber || "";
       if (numero) await memoriser("holded_commande_num", numero);
     } catch (e) { log(`numéro de commande non lu : ${e.message}`); }
     log(`bon de commande ${r.id} ${numero}`);
@@ -71,19 +71,24 @@ export async function traiterSession(sessionId, env, deps = {}) {
   // 3. E-mail de confirmation au client (bon de commande en PDF + texte : récapitulatif, délais, CGV)
   if (!fait.holded_mail && commande.email) {
     const { subject, message } = emailCommande(commande, numero);
-    await holded.envoyerDocument("salesorder", fait.holded_commande, { emails: commande.email, subject, message });
+    await holded.envoyerCommande(fait.holded_commande, { emails: [commande.email], subject, message });
     await memoriser("holded_mail", "envoye");
     log(`e-mail envoyé à ${commande.email}`);
   }
 
-  // 4. Facture (brouillon par défaut, approuvée si APPROVE_INVOICE=true)
+  // 4. Facture (brouillon par défaut ; approuvée si APPROVE_INVOICE=true)
   if (!fait.holded_facture) {
-    const r = await holded.creerDocument("invoice", documentHolded(commande, fait.holded_contact, env, { type: "invoice" }));
+    const r = await holded.creerFacture(documentHolded(commande, fait.holded_contact, env, { type: "invoice" }));
     await memoriser("holded_facture", r.id);
     log(`facture ${r.id}`);
-    if (env.APPROVE_INVOICE === "true" && env.SEND_INVOICE === "true" && commande.email) {
-      await holded.envoyerDocument("invoice", r.id, {
-        emails: commande.email,
+  }
+  if (env.APPROVE_INVOICE === "true" && !fait.holded_facture_ok) {
+    await holded.approuverFacture(fait.holded_facture);
+    await memoriser("holded_facture_ok", "approuvee");
+    log("facture approuvée");
+    if (env.SEND_INVOICE === "true" && commande.email) {
+      await holded.envoyerFacture(fait.holded_facture, {
+        emails: [commande.email],
         subject: "Votre facture Camperizate",
         message: "Bonjour, vous trouverez ci-joint la facture de votre commande. Merci pour votre confiance ! L'équipe Camperizate",
       });
@@ -93,11 +98,11 @@ export async function traiterSession(sessionId, env, deps = {}) {
 
   // 5. Paiement enregistré sur la facture (si une trésorerie Holded est configurée)
   if (!fait.holded_paiement && env.HOLDED_TREASURY_ID) {
-    await holded.payerDocument("invoice", fait.holded_facture, {
-      date: commande.date,
+    await holded.payerFacture(fait.holded_facture, {
+      date: dateISO(commande.date),
       amount: commande.totalTTC,
-      treasury: env.HOLDED_TREASURY_ID,
-      desc: `Stripe ${commande.paymentIntentId || commande.sessionId}`,
+      treasury_id: env.HOLDED_TREASURY_ID,
+      description: `Stripe ${commande.paymentIntentId || commande.sessionId}`,
     });
     await memoriser("holded_paiement", "ok");
     log("paiement enregistré");
