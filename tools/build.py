@@ -96,7 +96,40 @@ PHOTOS_JSON = ROOT / "tools" / "photos.json"
 PHOTOS = json.loads(PHOTOS_JSON.read_text(encoding="utf-8")) if PHOTOS_JSON.exists() else {}
 
 
+VIDEOS_CSV = ROOT / "tools" / "videos.csv"
+
+
+def youtube_id(texte):
+    """Accepte une URL YouTube (watch?v=, youtu.be/, shorts/, embed/, live/) ou un identifiant seul."""
+    texte = texte.strip()
+    m = re.search(r"(?:v=|youtu\.be/|shorts/|embed/|live/)([A-Za-z0-9_-]{11})", texte)
+    if m:
+        return m.group(1)
+    if re.fullmatch(r"[A-Za-z0-9_-]{11}", texte):
+        return texte
+    raise SystemExit(f"tools/videos.csv : URL YouTube non reconnue : {texte!r}")
+
+
+def lire_videos():
+    """tools/videos.csv (modele,url,titre) : si un modèle y figure, ses lignes remplacent les vidéos de catalogue.py."""
+    import csv
+    if not VIDEOS_CSV.exists():
+        return {}
+    slugs = {m["slug"] for m in MODELES}
+    out = {}
+    with VIDEOS_CSV.open(encoding="utf-8-sig", newline="") as f:
+        for i, ligne in enumerate(csv.DictReader(f), start=2):
+            slug, url = (ligne.get("modele") or "").strip(), (ligne.get("url") or "").strip()
+            if not slug or not url:
+                continue
+            if slug not in slugs:
+                raise SystemExit(f"tools/videos.csv ligne {i} : modèle inconnu {slug!r}")
+            out.setdefault(slug, []).append((youtube_id(url), (ligne.get("titre") or "").strip() or "Le kit en vidéo"))
+    return out
+
+
 def construire_fiches():
+    VIDEOS = lire_videos()
     fiches = []
     for m in MODELES:
         c = CONTENU[m["groupe"]]
@@ -112,7 +145,7 @@ def construire_fiches():
             "intro": m.get("intro") or c["intro"].format(nom=m["nom"]),
             "inclus": m.get("inclus") or c["inclus"],
             "fixation": m.get("fixation") or (FIXATION_GRAND if m["cat"] == "grand" else FIXATION),
-            "mesures": m.get("mesures", []), "videos": m.get("videos", []),
+            "mesures": m.get("mesures", []), "videos": VIDEOS.get(m["slug"], m.get("videos", [])),
             "faq": m.get("faq") or c["faq"], "versions": m.get("versions", ""), "variantes": m["variantes"],
         })
     return fiches
@@ -610,10 +643,13 @@ def fiche(m):
         for _, n, d, p, im in FINITIONS)
 
     section_mesures = ""
+    # fonds alternés : kit (sable) · vidéos (blanc) · prix (sable si vidéos) · photos (blanc) · mesures
+    prix_sable = bool(m["videos"])
+    mesures_cls = ' class="kits"' if (m["galerie"] or not prix_sable) else ""
     if m["mesures"]:
         mesures = "\n".join(f'          <tr><th scope="row">{e(k)}</th><td>{e(v)}</td></tr>' for k, v in m["mesures"])
         section_mesures = f"""
-<section aria-labelledby="h-mesures">
+<section{mesures_cls} aria-labelledby="h-mesures">
   <div class="wrap two">
     <div class="sec-head">
       <span class="kicker">Mesures</span>
@@ -690,9 +726,9 @@ def fiche(m):
     <p class="fix">{e(m['fixation'])}</p>
   </div>
 </section>
-{section_mesures}
+{videos_html}
 
-<section id="prix" class="{'kits' if m['mesures'] else ''}" aria-labelledby="h-prix">
+<section id="prix" class="{'kits' if videos_html else ''}" aria-labelledby="h-prix">
   <div class="wrap">
     <div class="sec-head">
       <span class="kicker">Prix</span>
@@ -711,7 +747,7 @@ def fiche(m):
   </div>
 </section>
 {section_galerie}
-{videos_html}
+{section_mesures}
 
 <section class="showroom" aria-labelledby="h-showroom">
   <div class="wrap">
