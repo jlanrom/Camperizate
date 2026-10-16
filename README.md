@@ -29,3 +29,12 @@ Option B — Cloudflare Pages : créer un projet relié au repo, *production bra
   (avec paramètres UTM). Le sélecteur de véhicule met à jour les boutons des fiches vers le modèle choisi.
 - Contact (« Écrivez-nous ») : formulaire `https://tally.so/r/OD6BOp`, le même que le bouton WhatsApp
   de camperizatetodoen1.com.
+
+## Fiches modèle
+
+Générées par `python3 tools/fiches.py` à partir de la liste `MODELES` du script
+(une entrée par modèle : mesures, contenu du kit, vidéos, FAQ, lien de commande).
+Le script écrit `public/kit-amenagement/<modèle>/index.html`, régénère `public/sitemap.xml`
+et `tools/redirections.json` (ancienne URL camperizatetodoen1.com/fr/… → nouvelle fiche),
+qui servira au script de redirection côté Webnode. Ne pas modifier les fiches à la main :
+modifier le script puis le relancer.
