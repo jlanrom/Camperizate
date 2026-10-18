@@ -50,6 +50,7 @@ MOTIFS = {
     "depuis {}": "dal {}",
     "Frigo à compresseur {} L": "Frigo a compressore {} L",
     "Dès {} €": "Da {} €",
+    "{}/5 · {} avis Google": "{}/5 · {} recensioni Google",
     "dès {} €": "da {} €",
 }
 
@@ -293,6 +294,10 @@ TEXTES = {
     "Environ 3 semaines de fabrication, plus rapide si votre modèle est en stock.": "Circa 3 settimane di fabbricazione, meno se il tuo modello è disponibile in magazzino.",
     "Prêt à partir ?": "Pronto a partire?",
     "Votre prochain week-end en van commence ici": "Il tuo prossimo weekend in van comincia qui",
+
+    # --- Recensioni ---
+    "Avis clients": "Recensioni",
+    "Ils voyagent avec nos kits": "Viaggiano con i nostri kit",
 
     # --- Negozio --------------------------------------------------------------------------------
     "Boutique : kit camper amovible sans VASP | Camperizate": "Negozio: kit camper rimovibile senza omologazione | Camperizate",

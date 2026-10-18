@@ -204,6 +204,18 @@ section{padding:52px 0}
 .col.bad li{color:var(--brown-70)}
 .note{font-size:13px;color:var(--brown-70);margin:16px 0 0;max-width:820px}
 
+/* Avis */
+.avis-note{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:600;text-decoration:none;color:var(--brown)}
+.avis-note span{color:var(--orange);font-size:20px}
+.avis-note:hover{color:var(--orange)}
+.avis-liste{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.avis-liste figure{margin:0;height:100%;display:flex;flex-direction:column;gap:12px;padding:20px;background:var(--white);border:1px solid var(--line);border-radius:var(--r)}
+.avis-etoiles{color:var(--orange);letter-spacing:2px}
+.avis-liste blockquote{margin:0;font-size:16px;line-height:1.6;flex:1}
+.avis-liste figcaption{display:flex;flex-direction:column;gap:2px;font-size:15px}
+.avis-liste figcaption span,.avis-trad{color:var(--brown-70);font-size:14px}
+@media (min-width:640px){.avis-liste{grid-template-columns:1fr 1fr}}
+@media (min-width:1100px){.avis-liste{grid-template-columns:repeat(4,1fr)}}
 /* FAQ */
 .faq-list{border-top:1px solid var(--line)}
 .faq details{border-bottom:1px solid var(--line)}

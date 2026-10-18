@@ -114,4 +114,24 @@ REDIRECTIONS_PREFIXES = {
     "/it/": "/",
 }
 
+# Recensioni Google (scheda Camperizate di La Garriga): stessi dati della Francia, testi in italiano.
+AVIS_GOOGLE = {"note": 4.5, "nombre": 255, "url": "https://www.google.com/maps?cid=12150316368005830472"}
+AVIS = [
+    dict(nom="Luca T.", date="2026-08", note=5, vehicule="",
+         texte="Eccezionale!! Costi contenuti, funzionale e personalizzato al massimo, ma la cosa migliore è la disponibilità e "
+               "la serietà delle persone che lavorano in questa azienda. Avevo alcune esigenze e le hanno soddisfatte in pieno. "
+               "Consegna programmata perfettamente con sponda idraulica. Se dovessi acquistarne un altro non avrei esitazioni."),
+    dict(nom="Jian N.", date="2025-10", note=5, vehicule="",
+         texte="Il kit realizzato è di buona qualità e si adatta perfettamente al mio furgone. È stato ordinato e consegnato in "
+               "Italia in due settimane. Le finiture e gli accorgimenti sono ottimi. La struttura non si muove e non vibra "
+               "minimamente. Anche i materassi hanno la larghezza e lunghezza perfetta!"),
+    dict(nom="Nerea N.", date="2026-10", note=5, vehicule="Dacia Jogger", traduit="spagnolo",
+         texte="Ho appena comprato un modulo per il mio Jogger ed è venuto perfetto: curano ogni dettaglio per sfruttare tutto lo "
+               "spazio. Sono professionisti che ti seguono e ti spiegano tutto nel dettaglio."),
+    dict(nom="Davide G.", date="2022-10", note=5, vehicule="Dacia Dokker",
+         texte="Ho ordinato un kit per Dacia Dokker. Comunicazione perfetta, tempi molto rapidi. Il prodotto è perfetto e ha un "
+               "prezzo competitivo."),
+]
+AVIS_DONNEES = True
+
 from sites.it_textes import TEXTES, MOTIFS, SCRIPTS  # noqa: E402,F401
