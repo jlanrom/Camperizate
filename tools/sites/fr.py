@@ -60,3 +60,25 @@ STRIPE = {
     "toilettes": "https://buy.stripe.com/6oU14m1Ke0kp5vJaKr6EU0w",
     "douche": "https://buy.stripe.com/3cIeVcbkO4AF1ft19R6EU0x",
 }
+
+# Avis Google (fiche Camperizate de La Garriga). Note et nombre : à mettre à jour de temps en temps.
+AVIS_GOOGLE = {"note": 4.5, "nombre": 255, "url": "https://www.google.com/maps?cid=12150316368005830472"}
+# Avis affichés sur le site (vrais avis Google). traduit = texte traduit par nous depuis la langue indiquée.
+AVIS = [
+    dict(nom="Zoé B.", date="2026-09", note=5, vehicule="Peugeot Expert",
+         texte="Nous avons commandé un kit d'aménagement pour notre Peugeot Expert et nous en sommes vraiment très contents. "
+               "Le kit est pratique, bien pensé et surtout très confortable. Le matelas est vraiment top, le frigo aussi, et les "
+               "occultants sont parfaitement adaptés à notre véhicule. Nous avons pu profiter pleinement de l'ensemble lors d'un "
+               "road trip de plusieurs milliers de kilomètres."),
+    dict(nom="Eric H.", date="", note=5, vehicule="Citroën Jumpy", traduit="espagnol",
+         texte="Le kit est génial, facile à installer dans le Jumpy. Nous venons de le recevoir et nous allons faire un petit "
+               "essai ce week-end. Merci et bonne chance à cette entreprise !"),
+    dict(nom="Ysf K.", date="2026-06", note=5, vehicule="",
+         texte="Très satisfait par la qualité du produit : tout a été réalisé avec précision et une finition irréprochable ! "
+               "En arrivant à leur atelier de Barcelone, j'ai été extrêmement bien accueilli. Je recommande vivement cet atelier."),
+    dict(nom="Van' Bou", date="2025-10", note=5, vehicule="",
+         texte="Merci à l'équipe pour sa fiabilité, son savoir-faire, sa communication personnalisée, sa réactivité, sa rapidité. "
+               "Le kit est vraiment parfait. Une expérience client 5 étoiles !"),
+]
+# Note et avis aussi dans les données structurées (aggregateRating, review) des produits.
+AVIS_DONNEES = True

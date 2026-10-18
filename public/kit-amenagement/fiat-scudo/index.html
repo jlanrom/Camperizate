@@ -203,6 +203,18 @@ section{padding:52px 0}
 .col.bad li{color:var(--brown-70)}
 .note{font-size:13px;color:var(--brown-70);margin:16px 0 0;max-width:820px}
 
+/* Avis */
+.avis-note{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:600;text-decoration:none;color:var(--brown)}
+.avis-note span{color:var(--orange);font-size:20px}
+.avis-note:hover{color:var(--orange)}
+.avis-liste{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.avis-liste figure{margin:0;height:100%;display:flex;flex-direction:column;gap:12px;padding:20px;background:var(--white);border:1px solid var(--line);border-radius:var(--r)}
+.avis-etoiles{color:var(--orange);letter-spacing:2px}
+.avis-liste blockquote{margin:0;font-size:16px;line-height:1.6;flex:1}
+.avis-liste figcaption{display:flex;flex-direction:column;gap:2px;font-size:15px}
+.avis-liste figcaption span,.avis-trad{color:var(--brown-70);font-size:14px}
+@media (min-width:640px){.avis-liste{grid-template-columns:1fr 1fr}}
+@media (min-width:1100px){.avis-liste{grid-template-columns:repeat(4,1fr)}}
 /* FAQ */
 .faq-list{border-top:1px solid var(--line)}
 .faq details{border-bottom:1px solid var(--line)}
@@ -393,7 +405,70 @@ section{padding:52px 0}
     "highPrice": "1150",
     "offerCount": "6",
     "availability": "https://schema.org/InStock"
-   }
+   },
+   "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.5",
+    "bestRating": "5",
+    "reviewCount": "255"
+   },
+   "review": [
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Zoé B."
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Nous avons commandé un kit d'aménagement pour notre Peugeot Expert et nous en sommes vraiment très contents. Le kit est pratique, bien pensé et surtout très confortable. Le matelas est vraiment top, le frigo aussi, et les occultants sont parfaitement adaptés à notre véhicule. Nous avons pu profiter pleinement de l'ensemble lors d'un road trip de plusieurs milliers de kilomètres.",
+     "datePublished": "2026-09"
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Eric H."
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Le kit est génial, facile à installer dans le Jumpy. Nous venons de le recevoir et nous allons faire un petit essai ce week-end. Merci et bonne chance à cette entreprise !"
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Ysf K."
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Très satisfait par la qualité du produit : tout a été réalisé avec précision et une finition irréprochable ! En arrivant à leur atelier de Barcelone, j'ai été extrêmement bien accueilli. Je recommande vivement cet atelier.",
+     "datePublished": "2026-06"
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Van' Bou"
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Merci à l'équipe pour sa fiabilité, son savoir-faire, sa communication personnalisée, sa réactivité, sa rapidité. Le kit est vraiment parfait. Une expérience client 5 étoiles !",
+     "datePublished": "2025-10"
+    }
+   ]
   },
   {
    "@type": "BreadcrumbList",
@@ -587,6 +662,23 @@ section{padding:52px 0}
     <div class="sec-head"><span class="kicker">Showroom</span><h2 id="h-showroom">Venez voir nos kits à Nîmes</h2></div>
     <address>Local n° 112, 866 avenue du Maréchal Juin<br>30900 Nîmes</address>
     <a href="/contact/" class="btn btn-line" style="max-width:420px">Préparer ma visite</a>
+  </div>
+</section>
+
+
+<section class="avis " aria-labelledby="h-avis">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Avis clients</span>
+      <h2 id="h-avis">Ils voyagent avec nos kits</h2>
+      <p><a class="avis-note" href="https://www.google.com/maps?cid=12150316368005830472" target="_blank" rel="noopener"><span aria-hidden="true">★</span> 4,5/5 · 255 avis Google</a></p>
+    </div>
+    <ul class="avis-liste">
+      <li><figure><div class="avis-etoiles" aria-hidden="true">★★★★★</div><!-- i18n:off --><blockquote>Nous avons commandé un kit d&#x27;aménagement pour notre Peugeot Expert et nous en sommes vraiment très contents. Le kit est pratique, bien pensé et surtout très confortable. Le matelas est vraiment top, le frigo aussi, et les occultants sont parfaitement adaptés à notre véhicule. Nous avons pu profiter pleinement de l&#x27;ensemble lors d&#x27;un road trip de plusieurs milliers de kilomètres.</blockquote><figcaption><b>Zoé B.</b><span>Peugeot Expert · septembre 2026</span></figcaption><!-- i18n:on --></figure></li>
+      <li><figure><div class="avis-etoiles" aria-hidden="true">★★★★★</div><!-- i18n:off --><blockquote>Le kit est génial, facile à installer dans le Jumpy. Nous venons de le recevoir et nous allons faire un petit essai ce week-end. Merci et bonne chance à cette entreprise !</blockquote><figcaption><b>Eric H.</b><span>Citroën Jumpy</span><small class="avis-trad">Traduit de l'espagnol</small></figcaption><!-- i18n:on --></figure></li>
+      <li><figure><div class="avis-etoiles" aria-hidden="true">★★★★★</div><!-- i18n:off --><blockquote>Très satisfait par la qualité du produit : tout a été réalisé avec précision et une finition irréprochable ! En arrivant à leur atelier de Barcelone, j&#x27;ai été extrêmement bien accueilli. Je recommande vivement cet atelier.</blockquote><figcaption><b>Ysf K.</b><span>juin 2026</span></figcaption><!-- i18n:on --></figure></li>
+      <li><figure><div class="avis-etoiles" aria-hidden="true">★★★★★</div><!-- i18n:off --><blockquote>Merci à l&#x27;équipe pour sa fiabilité, son savoir-faire, sa communication personnalisée, sa réactivité, sa rapidité. Le kit est vraiment parfait. Une expérience client 5 étoiles !</blockquote><figcaption><b>Van&#x27; Bou</b><span>octobre 2025</span></figcaption><!-- i18n:on --></figure></li>
+    </ul>
   </div>
 </section>
 

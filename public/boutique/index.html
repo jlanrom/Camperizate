@@ -203,6 +203,18 @@ section{padding:52px 0}
 .col.bad li{color:var(--brown-70)}
 .note{font-size:13px;color:var(--brown-70);margin:16px 0 0;max-width:820px}
 
+/* Avis */
+.avis-note{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:600;text-decoration:none;color:var(--brown)}
+.avis-note span{color:var(--orange);font-size:20px}
+.avis-note:hover{color:var(--orange)}
+.avis-liste{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.avis-liste figure{margin:0;height:100%;display:flex;flex-direction:column;gap:12px;padding:20px;background:var(--white);border:1px solid var(--line);border-radius:var(--r)}
+.avis-etoiles{color:var(--orange);letter-spacing:2px}
+.avis-liste blockquote{margin:0;font-size:16px;line-height:1.6;flex:1}
+.avis-liste figcaption{display:flex;flex-direction:column;gap:2px;font-size:15px}
+.avis-liste figcaption span,.avis-trad{color:var(--brown-70);font-size:14px}
+@media (min-width:640px){.avis-liste{grid-template-columns:1fr 1fr}}
+@media (min-width:1100px){.avis-liste{grid-template-columns:repeat(4,1fr)}}
 /* FAQ */
 .faq-list{border-top:1px solid var(--line)}
 .faq details{border-bottom:1px solid var(--line)}
@@ -392,7 +404,70 @@ section{padding:52px 0}
     "highPrice": "950",
     "offerCount": "6",
     "availability": "https://schema.org/InStock"
-   }
+   },
+   "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.5",
+    "bestRating": "5",
+    "reviewCount": "255"
+   },
+   "review": [
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Zoé B."
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Nous avons commandé un kit d'aménagement pour notre Peugeot Expert et nous en sommes vraiment très contents. Le kit est pratique, bien pensé et surtout très confortable. Le matelas est vraiment top, le frigo aussi, et les occultants sont parfaitement adaptés à notre véhicule. Nous avons pu profiter pleinement de l'ensemble lors d'un road trip de plusieurs milliers de kilomètres.",
+     "datePublished": "2026-09"
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Eric H."
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Le kit est génial, facile à installer dans le Jumpy. Nous venons de le recevoir et nous allons faire un petit essai ce week-end. Merci et bonne chance à cette entreprise !"
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Ysf K."
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Très satisfait par la qualité du produit : tout a été réalisé avec précision et une finition irréprochable ! En arrivant à leur atelier de Barcelone, j'ai été extrêmement bien accueilli. Je recommande vivement cet atelier.",
+     "datePublished": "2026-06"
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Van' Bou"
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Merci à l'équipe pour sa fiabilité, son savoir-faire, sa communication personnalisée, sa réactivité, sa rapidité. Le kit est vraiment parfait. Une expérience client 5 étoiles !",
+     "datePublished": "2025-10"
+    }
+   ]
   },
   {
    "@type": "Product",
@@ -409,7 +484,70 @@ section{padding:52px 0}
     "highPrice": "1150",
     "offerCount": "6",
     "availability": "https://schema.org/InStock"
-   }
+   },
+   "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.5",
+    "bestRating": "5",
+    "reviewCount": "255"
+   },
+   "review": [
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Zoé B."
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Nous avons commandé un kit d'aménagement pour notre Peugeot Expert et nous en sommes vraiment très contents. Le kit est pratique, bien pensé et surtout très confortable. Le matelas est vraiment top, le frigo aussi, et les occultants sont parfaitement adaptés à notre véhicule. Nous avons pu profiter pleinement de l'ensemble lors d'un road trip de plusieurs milliers de kilomètres.",
+     "datePublished": "2026-09"
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Eric H."
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Le kit est génial, facile à installer dans le Jumpy. Nous venons de le recevoir et nous allons faire un petit essai ce week-end. Merci et bonne chance à cette entreprise !"
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Ysf K."
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Très satisfait par la qualité du produit : tout a été réalisé avec précision et une finition irréprochable ! En arrivant à leur atelier de Barcelone, j'ai été extrêmement bien accueilli. Je recommande vivement cet atelier.",
+     "datePublished": "2026-06"
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Van' Bou"
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Merci à l'équipe pour sa fiabilité, son savoir-faire, sa communication personnalisée, sa réactivité, sa rapidité. Le kit est vraiment parfait. Une expérience client 5 étoiles !",
+     "datePublished": "2025-10"
+    }
+   ]
   },
   {
    "@type": "Product",
@@ -426,7 +564,70 @@ section{padding:52px 0}
     "highPrice": "1250",
     "offerCount": "6",
     "availability": "https://schema.org/InStock"
-   }
+   },
+   "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.5",
+    "bestRating": "5",
+    "reviewCount": "255"
+   },
+   "review": [
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Zoé B."
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Nous avons commandé un kit d'aménagement pour notre Peugeot Expert et nous en sommes vraiment très contents. Le kit est pratique, bien pensé et surtout très confortable. Le matelas est vraiment top, le frigo aussi, et les occultants sont parfaitement adaptés à notre véhicule. Nous avons pu profiter pleinement de l'ensemble lors d'un road trip de plusieurs milliers de kilomètres.",
+     "datePublished": "2026-09"
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Eric H."
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Le kit est génial, facile à installer dans le Jumpy. Nous venons de le recevoir et nous allons faire un petit essai ce week-end. Merci et bonne chance à cette entreprise !"
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Ysf K."
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Très satisfait par la qualité du produit : tout a été réalisé avec précision et une finition irréprochable ! En arrivant à leur atelier de Barcelone, j'ai été extrêmement bien accueilli. Je recommande vivement cet atelier.",
+     "datePublished": "2026-06"
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Van' Bou"
+     },
+     "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+     },
+     "reviewBody": "Merci à l'équipe pour sa fiabilité, son savoir-faire, sa communication personnalisée, sa réactivité, sa rapidité. Le kit est vraiment parfait. Une expérience client 5 étoiles !",
+     "datePublished": "2025-10"
+    }
+   ]
   }
  ]
 }
@@ -552,6 +753,23 @@ section{padding:52px 0}
 <li id="rechaud-cartouches"><img class="acc-img" src="https://storage.tally.so/243ba676-56cc-4fee-be72-b30aef58c06e/extras-4-X14.jpg" alt="Réchaud + 3 cartouches" width="400" height="300" loading="lazy"><div class="row"><div><h3>Réchaud + 3 cartouches</h3><small>Prêt à cuisiner</small></div><b>35 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/cNi3cu3Sm4AF9LZ19R6EU0v">Acheter</a></li>
 <li id="toilettes"><img class="acc-img" src="https://storage.tally.so/cce9dc8f-c7cb-4bf7-8687-c98655bb6908/extras-3-X13.jpg" alt="Toilettes portables" width="400" height="300" loading="lazy"><div class="row"><div><h3>Toilettes portables</h3><small>Format compact, se range dans le coffre</small></div><b>110 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/6oU14m1Ke0kp5vJaKr6EU0w">Acheter</a></li>
 <li id="douche"><img class="acc-img" src="https://storage.tally.so/e9eab5c0-4ff1-4bed-b3d8-e4c29dd6fd6e/extras-5-X15.jpg" alt="Douche portable" width="400" height="300" loading="lazy"><div class="row"><div><h3>Douche portable</h3><small>12 V, réservoir de 20 L</small></div><b>75 €</b></div><a class="btn btn-primary" href="https://buy.stripe.com/3cIeVcbkO4AF1ft19R6EU0x">Acheter</a></li>
+    </ul>
+  </div>
+</section>
+
+
+<section class="avis kits" aria-labelledby="h-avis">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Avis clients</span>
+      <h2 id="h-avis">Ils voyagent avec nos kits</h2>
+      <p><a class="avis-note" href="https://www.google.com/maps?cid=12150316368005830472" target="_blank" rel="noopener"><span aria-hidden="true">★</span> 4,5/5 · 255 avis Google</a></p>
+    </div>
+    <ul class="avis-liste">
+      <li><figure><div class="avis-etoiles" aria-hidden="true">★★★★★</div><!-- i18n:off --><blockquote>Nous avons commandé un kit d&#x27;aménagement pour notre Peugeot Expert et nous en sommes vraiment très contents. Le kit est pratique, bien pensé et surtout très confortable. Le matelas est vraiment top, le frigo aussi, et les occultants sont parfaitement adaptés à notre véhicule. Nous avons pu profiter pleinement de l&#x27;ensemble lors d&#x27;un road trip de plusieurs milliers de kilomètres.</blockquote><figcaption><b>Zoé B.</b><span>Peugeot Expert · septembre 2026</span></figcaption><!-- i18n:on --></figure></li>
+      <li><figure><div class="avis-etoiles" aria-hidden="true">★★★★★</div><!-- i18n:off --><blockquote>Le kit est génial, facile à installer dans le Jumpy. Nous venons de le recevoir et nous allons faire un petit essai ce week-end. Merci et bonne chance à cette entreprise !</blockquote><figcaption><b>Eric H.</b><span>Citroën Jumpy</span><small class="avis-trad">Traduit de l'espagnol</small></figcaption><!-- i18n:on --></figure></li>
+      <li><figure><div class="avis-etoiles" aria-hidden="true">★★★★★</div><!-- i18n:off --><blockquote>Très satisfait par la qualité du produit : tout a été réalisé avec précision et une finition irréprochable ! En arrivant à leur atelier de Barcelone, j&#x27;ai été extrêmement bien accueilli. Je recommande vivement cet atelier.</blockquote><figcaption><b>Ysf K.</b><span>juin 2026</span></figcaption><!-- i18n:on --></figure></li>
+      <li><figure><div class="avis-etoiles" aria-hidden="true">★★★★★</div><!-- i18n:off --><blockquote>Merci à l&#x27;équipe pour sa fiabilité, son savoir-faire, sa communication personnalisée, sa réactivité, sa rapidité. Le kit est vraiment parfait. Une expérience client 5 étoiles !</blockquote><figcaption><b>Van&#x27; Bou</b><span>octobre 2025</span></figcaption><!-- i18n:on --></figure></li>
     </ul>
   </div>
 </section>

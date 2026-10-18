@@ -79,6 +79,8 @@ class Localiseur:
         return f'{m.group(1)}="{html.escape(self._ou_signaler(valeur))}"'
 
     def _json(self, x):
+        if isinstance(x, dict) and x.get("@type") in ("Review", "AggregateRating"):
+            return x  # avis : déjà dans la langue du site
         if isinstance(x, dict):
             return {k: (self._ou_signaler(v) if k in CLES_JSON and isinstance(v, str) else self._json(v)) for k, v in x.items()}
         if isinstance(x, list):
@@ -123,10 +125,17 @@ class Localiseur:
     # --- page ---------------------------------------------------------------------------------
     def page(self, doc, xml=False):
         if not xml:
+            # Zones déjà dans la langue du site (avis clients) : mises de côté, puis remises telles quelles
+            gardes = []
+            def garder(m):
+                gardes.append(m.group(0))
+                return f"<!--garde:{len(gardes) - 1}-->"
+            doc = re.sub(r"<!-- i18n:off -->.*?<!-- i18n:on -->", garder, doc, flags=re.S)
             m = re.search(r"<title>(.*?)</title>", doc, re.S)
             self.page_courante = html.unescape(m.group(1)) if m else ""
             parties = TOKENS.split(doc)
             doc = "".join(self._balise(p) if p.startswith("<") else self._texte_brut(p) for p in parties if p)
+            doc = re.sub(r"<!--garde:(\d+)-->", lambda m: gardes[int(m.group(1))], doc)
         return self.chemin(doc)
 
     def rapport(self, fichier):

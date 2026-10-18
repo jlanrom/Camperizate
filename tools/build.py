@@ -37,6 +37,7 @@ from sites import fr as FR  # noqa: E402
 from sites import it as IT  # noqa: E402
 SITE = FR.SITE
 STRIPE = FR.STRIPE
+CFG = FR
 
 # ---------------------------------------------------------------------------
 # 2. CATALOGUE : données dans tools/catalogue.py (prix et véhicules du formulaire Tally)
@@ -319,6 +320,63 @@ def prix(cat, fin, avec):
     return base + (MATELAS if avec else 0)
 
 
+
+# ---------------------------------------------------------------------------
+# Avis clients (vrais avis Google, choisis par site dans tools/sites/<pays>.py)
+# ---------------------------------------------------------------------------
+MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
+MESI = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"]
+
+
+def note_txt():
+    return f"{CFG.AVIS_GOOGLE['note']:.1f}".replace(".", ",")
+
+
+def donnees_avis():
+    """aggregateRating + review pour un Product (si AVIS_DONNEES)."""
+    if not getattr(CFG, "AVIS_DONNEES", False):
+        return {}
+    g = CFG.AVIS_GOOGLE
+    revues = []
+    for a in CFG.AVIS:
+        r = {"@type": "Review", "author": {"@type": "Person", "name": a["nom"]},
+             "reviewRating": {"@type": "Rating", "ratingValue": str(a["note"]), "bestRating": "5"}, "reviewBody": a["texte"]}
+        if a["date"]:
+            r["datePublished"] = a["date"]
+        revues.append(r)
+    return {"aggregateRating": {"@type": "AggregateRating", "ratingValue": str(g["note"]), "bestRating": "5",
+                                "reviewCount": str(g["nombre"])}, "review": revues}
+
+
+def section_avis(classe=""):
+    """Bloc visible : note Google + avis. Les textes des avis ne passent pas par la traduction (déjà dans la langue du site)."""
+    g = CFG.AVIS_GOOGLE
+    mois = MESI if CFG is IT else MOIS
+    cartes = []
+    for a in CFG.AVIS:
+        date = f"{mois[int(a['date'][5:7]) - 1]} {a['date'][:4]}" if a["date"] else ""
+        meta = " · ".join(x for x in (a.get("vehicule", ""), date) if x)
+        prefixe = "Tradotto dallo " if CFG is IT else "Traduit de l'"
+        trad = f'<small class="avis-trad">{prefixe}{a["traduit"]}</small>' if a.get("traduit") else ""
+        cartes.append(
+            f'      <li><figure><div class="avis-etoiles" aria-hidden="true">{"★" * a["note"]}</div>'
+            f'<!-- i18n:off --><blockquote>{e(a["texte"])}</blockquote>'
+            f'<figcaption><b>{e(a["nom"])}</b>{"<span>" + e(meta) + "</span>" if meta else ""}{trad}</figcaption><!-- i18n:on -->'
+            f'</figure></li>')
+    return f"""
+<section class="avis {classe}" aria-labelledby="h-avis">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Avis clients</span>
+      <h2 id="h-avis">Ils voyagent avec nos kits</h2>
+      <p><a class="avis-note" href="{g['url']}" target="_blank" rel="noopener"><span aria-hidden="true">★</span> {note_txt()}/5 · {g['nombre']} avis Google</a></p>
+    </div>
+    <ul class="avis-liste">
+{chr(10).join(cartes)}
+    </ul>
+  </div>
+</section>"""
+
 # ---------------------------------------------------------------------------
 # Boutique
 # ---------------------------------------------------------------------------
@@ -362,15 +420,15 @@ def boutique():
         {"@type": "Product", "name": "Kit d'aménagement camper amovible pour ludospace",
          "image": SITE + "/img/kit-carrossier-lit.webp", "brand": {"@type": "Brand", "name": "Camperizate"},
          "offers": {"@type": "AggregateOffer", "priceCurrency": "EUR", "lowPrice": str(prix("mini", "pin", False)),
-                    "highPrice": str(prix("mini", "hpl", True)), "offerCount": "6", "availability": "https://schema.org/InStock"}},
+                    "highPrice": str(prix("mini", "hpl", True)), "offerCount": "6", "availability": "https://schema.org/InStock"}, **donnees_avis()},
         {"@type": "Product", "name": "Kit d'aménagement camper amovible pour van compact",
          "image": SITE + "/img/kit-hpl-anthracite.webp", "brand": {"@type": "Brand", "name": "Camperizate"},
          "offers": {"@type": "AggregateOffer", "priceCurrency": "EUR", "lowPrice": str(prix("moyen", "pin", False)),
-                    "highPrice": str(prix("moyen", "hpl", True)), "offerCount": "6", "availability": "https://schema.org/InStock"}},
+                    "highPrice": str(prix("moyen", "hpl", True)), "offerCount": "6", "availability": "https://schema.org/InStock"}, **donnees_avis()},
         {"@type": "Product", "name": "Kit d'aménagement camper amovible pour grand fourgon",
          "image": SITE + "/img/hero-van-amenage-800.webp", "brand": {"@type": "Brand", "name": "Camperizate"},
          "offers": {"@type": "AggregateOffer", "priceCurrency": "EUR", "lowPrice": str(prix("grand", "pin", False)),
-                    "highPrice": str(prix("grand", "hpl", True)), "offerCount": "6", "availability": "https://schema.org/InStock"}},
+                    "highPrice": str(prix("grand", "hpl", True)), "offerCount": "6", "availability": "https://schema.org/InStock"}, **donnees_avis()},
     ]}
     script = """<script>
 (function(){
@@ -480,6 +538,8 @@ def boutique():
   </div>
 </section>
 
+{section_avis('kits')}
+
 <section class="showroom" aria-labelledby="h-info">
   <div class="wrap">
     <div class="sec-head">
@@ -567,7 +627,7 @@ def fiche(m):
         {"@type": "Product", "name": f"Kit d'aménagement amovible {m['nom']}", "description": desc, "image": SITE + img,
          "brand": {"@type": "Brand", "name": "Camperizate"},
          "offers": {"@type": "AggregateOffer", "priceCurrency": "EUR", "lowPrice": str(bas), "highPrice": str(haut),
-                    "offerCount": str(len(FINITIONS) * 2), "availability": "https://schema.org/InStock"}},
+                    "offerCount": str(len(FINITIONS) * 2), "availability": "https://schema.org/InStock"}, **donnees_avis()},
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Accueil", "item": SITE + "/"},
             {"@type": "ListItem", "position": 2, "name": "Kits par modèle", "item": SITE + "/kit-amenagement/"},
@@ -712,6 +772,8 @@ def fiche(m):
     <a href="/contact/" class="btn btn-line" style="max-width:420px">Préparer ma visite</a>
   </div>
 </section>
+
+{section_avis()}
 
 <section class="faq" aria-labelledby="h-faq">
   <div class="wrap faq-wrap">
@@ -1104,6 +1166,17 @@ def merci():
 # ---------------------------------------------------------------------------
 # Landing (écrite à la main) : on ne met à jour que la liste des modèles et le sélecteur
 # ---------------------------------------------------------------------------
+def landing_avis(src):
+    """Remplace le bloc d'avis et la note des produits de la landing par ceux du site actif."""
+    src = re.sub(r"<!-- AVIS:debut -->.*?<!-- AVIS:fin -->", lambda _: "<!-- AVIS:debut -->" + section_avis() + "\n<!-- AVIS:fin -->",
+                 src, flags=re.S)
+    def remplace(m):
+        d = json.loads(m.group(1))
+        d.update(donnees_avis())
+        return json.dumps(d, ensure_ascii=False, separators=(",", ":")) + m.group(2)
+    return re.sub(r'^\s*(\{"@type":"Product".*\})(,?)$', lambda m: "    " + remplace(m), src, flags=re.M)
+
+
 def maj_landing():
     chemin = PUBLIC / "index.html"
     src = chemin.read_text(encoding="utf-8")
@@ -1135,6 +1208,11 @@ def maj_landing():
 </style>
 <!-- MODELES:fin -->"""
     src = re.sub(r"<!-- MODELES:debut -->.*?<!-- MODELES:fin -->", lambda _: bloc, src, flags=re.S)
+    # Produits du JSON-LD sur une ligne (une fois), puis avis et note du site actif
+    def compacter(m):
+        return "    " + json.dumps(json.loads(m.group(1)), ensure_ascii=False, separators=(",", ":")) + m.group(2)
+    src = re.sub(r'^    (\{\n\s*"@type":"Product".*?\n    \})(,?)$', compacter, src, flags=re.S | re.M)
+    src = landing_avis(src)
     opts = ['            <option value="">Choisir mon modèle</option>']
     for cat in ("mini", "moyen", "grand"):
         opts.append(f'            <optgroup label="{e(CATEGORIES[cat]["pluriel"])}">')
@@ -1147,7 +1225,7 @@ def maj_landing():
     slugs = json.dumps([m["slug"] for m in FICHES])
     src = re.sub(r"var FICHES=\[.*?\];", lambda _: f"var FICHES={slugs};", src)
     chemin.write_text(src, encoding="utf-8")
-    print("mis à jour public/index.html (modèles et sélecteur)")
+    print("mis à jour public/index.html (modèles, sélecteur, avis)")
 
 
 # ---------------------------------------------------------------------------
@@ -1222,8 +1300,8 @@ def pages():
 
 def activer(cfg):
     """Bascule les réglages propres au site (domaine, liens Stripe, prix de livraison)."""
-    global SITE, STRIPE
-    SITE, STRIPE = cfg.SITE, cfg.STRIPE
+    global SITE, STRIPE, CFG
+    SITE, STRIPE, CFG = cfg.SITE, cfg.STRIPE, cfg
     for cat, prix_liv in cfg.LIVRAISON.items():
         CATEGORIES[cat]["livraison"] = prix_liv
 
@@ -1249,7 +1327,7 @@ def build_it():
     if sortie.exists():
         shutil.rmtree(sortie)
     contenus = pages()
-    contenus["index.html"] = (PUBLIC / "index.html").read_text(encoding="utf-8")
+    contenus["index.html"] = landing_avis((PUBLIC / "index.html").read_text(encoding="utf-8"))
     for chemin, contenu in contenus.items():
         ecrire(loc.chemin_fichier(chemin), loc.page(contenu, xml=chemin.endswith(".xml")), sortie)
     # Fichiers communs copiés tels quels
