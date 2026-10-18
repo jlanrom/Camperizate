@@ -5,7 +5,7 @@ import { signer, verifierSignature } from "../src/stripe.js";
 import { lignesHolded, totalRecalcule, lireCommande, emailCommande } from "../src/commande.js";
 
 const ENV = {
-  DRY_RUN: "false", SITE_METADATA: "kitamenagement.fr", TAX_KEY: "s_iva_21", TAX_RATE: "21", TAX_BY_COUNTRY: "{}",
+  DRY_RUN: "false", SITE_METADATA: "kitamenagement.fr,kitcampermodulare.it", TAX_KEY: "s_iva_21", TAX_RATE: "21", TAX_BY_COUNTRY: "{}",
   HOLDED_SALES_ACCOUNT_ID: "67d01537b71b6257a30c39cb", HOLDED_PAYMENT_METHOD_ID: "6a591285b8a9e7007a0e35e2",
   HOLDED_ORDER_SERIES_ID: "67d01533b71b6257a30c391c", HOLDED_INVOICE_SERIES_ID: "", HOLDED_TREASURY_ID: "tresorerie1",
   APPROVE_INVOICE: "false", SEND_INVOICE: "false", STRIPE_WEBHOOK_SECRET: "whsec_test",
@@ -118,6 +118,31 @@ assert.equal(ig.ignore, true);
 assert.equal(g.appels.length, 0);
 console.log("✓ paiement hors kitamenagement.fr ignoré");
 
+// 5 bis. Commande italienne : retrait à La Garriga, e-mail en italien
+const sIT = session({
+  metadata: { site: "kitcampermodulare.it" }, amount_total: 55000, collected_information: null,
+  customer_details: { email: "luca@example.it", name: "Luca Rossi", phone: "+393331234567",
+    address: { line1: "Via Roma 1", city: "Torino", postal_code: "10100", country: "IT" } },
+  custom_fields: [{ key: "modele", text: { value: "Fiat Doblò 2019" } }, { key: "ritiro", dropdown: { value: "lagarriga" } }],
+  line_items: { data: [ligne("Kit camper multispazio – Fenolico antiscivolo", "kit-mini-carrossier", 55000)] },
+});
+const cIT = lireCommande(sIT);
+assert.equal(cIT.langue, "it");
+assert.equal(cIT.livraison, false);
+const fIT = faux();
+fIT.stripe.session = async () => sIT;
+const rIT = await traiterSession("cs_it", ENV, fIT);
+assert.equal(rIT.ok, true);
+const soIT = fIT.appels.find((a) => a[0] === "creer" && a[1] === "salesorder")[2];
+assert.match(soIT.description, /kitcampermodulare\.it/);
+assert.match(soIT.notes, /La Garriga/);
+assert.equal(soIT.language, "it");
+assert.deepEqual(fIT.appels.find((a) => a[0] === "creerContact")[1].tags, ["web-it", "stripe"]);
+const mIT = fIT.appels.find((a) => a[0] === "envoyer")[3];
+assert.match(mIT.subject, /ordine/);
+assert.match(mIT.message, /Ritiro gratuito presso il laboratorio di La Garriga/);
+console.log("✓ commande italienne : retrait La Garriga, contact web-it, e-mail en italien");
+
 // 6. DRY_RUN : rien n'est écrit
 const h = faux();
 const d = await traiterSession("cs_test_1", { ...ENV, DRY_RUN: "true" }, h);
@@ -130,3 +155,5 @@ console.log("\n--- Aperçu de l'e-mail ---");
 const e = emailCommande(cmd, "SO260001");
 console.log("Objet :", e.subject);
 console.log(e.message);
+console.log("\n--- Anteprima e-mail (IT) ---");
+console.log(emailCommande(cIT, "SO260002").message);
