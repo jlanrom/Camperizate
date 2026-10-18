@@ -9,8 +9,8 @@
   "vars": {
     // Mode test : true = n'écrit rien dans Holded, n'envoie aucun e-mail, journalise seulement.
     "DRY_RUN": "false",
-    // Ne traiter que les paiements des liens de kitamenagement.fr (métadonnée « site » des Payment Links).
-    "SITE_METADATA": "kitamenagement.fr",
+    // Sites dont on traite les paiements (métadonnée « site » des Payment Links), séparés par des virgules.
+    "SITE_METADATA": "kitamenagement.fr,kitcampermodulare.it",
     // TVA par défaut (comme les factures actuelles). À valider avec le gestor (OSS pour la France ?).
     "TAX_KEY": "s_iva_21",
     "TAX_RATE": "21",

@@ -1,6 +1,6 @@
-# Redirigir camperizatetodoen1.com/fr/ a kitamenagement.fr
+# Redirigir camperizatetodoen1.com/fr/ y /it/ a kitamenagement.fr y kitcampermodulare.it
 
-**Activado el 16/10/2026** con la versión definitiva, colocada al principio del encabezado de Webnode (antes del Pixel de Facebook y de GTM).
+**/fr/ activado el 16/10/2026; /it/ añadido el 18/10/2026** (pegar de nuevo el script) con la versión definitiva, colocada al principio del encabezado de Webnode (antes del Pixel de Facebook y de GTM).
 
 ## Qué hay preparado
 

@@ -17,7 +17,8 @@ export async function traiterSession(sessionId, env, deps = {}) {
   const log = (m) => { journal.push(m); console.log(m); };
 
   const session = await stripe.session(sessionId);
-  if (env.SITE_METADATA && session.metadata?.site !== env.SITE_METADATA) {
+  const sites = (env.SITE_METADATA || "").split(",").map((x) => x.trim()).filter(Boolean);
+  if (sites.length && !sites.includes(session.metadata?.site)) {
     log(`ignoré : session ${sessionId} hors ${env.SITE_METADATA}`);
     return { ignore: true, journal };
   }
@@ -89,8 +90,9 @@ export async function traiterSession(sessionId, env, deps = {}) {
     if (env.SEND_INVOICE === "true" && commande.email) {
       await holded.envoyerFacture(fait.holded_facture, {
         emails: [commande.email],
-        subject: "Votre facture Camperizate",
-        message: "Bonjour, vous trouverez ci-joint la facture de votre commande. Merci pour votre confiance ! L'équipe Camperizate",
+        ...(commande.langue === "it"
+          ? { subject: "La tua fattura Camperizate", message: "Ciao, in allegato trovi la fattura del tuo ordine. Grazie per la fiducia! Il team Camperizate" }
+          : { subject: "Votre facture Camperizate", message: "Bonjour, vous trouverez ci-joint la facture de votre commande. Merci pour votre confiance ! L'équipe Camperizate" }),
       });
       log("facture envoyée");
     }

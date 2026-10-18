@@ -1,10 +1,9 @@
 # Textes sans traduction : 0. Les ajouter dans tools/sites/it_textes.py.
 
 
-# Traductions jamais utilisées (texte français modifié ou supprimé ?) : 3
+# Traductions jamais utilisées (texte français modifié ou supprimé ?) : 2
 
-"Acheter"
-"Acheter les occultants"
+"Commander par message"
 "Ludospace"
 
 # Remplacements SCRIPTS jamais utilisés : 0

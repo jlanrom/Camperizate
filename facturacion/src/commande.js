@@ -2,6 +2,14 @@
 
 const CGV = "https://kitamenagement.fr/conditions-generales-de-vente/";
 const SHOWROOM = "Local n° 112, 866 avenue du Maréchal Juin, 30900 Nîmes";
+const ATELIER = "Carrer de Vulcà 1B, 08530 La Garriga (Barcellona), Spagna";
+
+/** Réglages par site (métadonnée « site » des Payment Links). */
+export const SITES = {
+  "kitamenagement.fr": { langue: "fr", tag: "web-fr", cgv: CGV },
+  "kitcampermodulare.it": { langue: "it", tag: "web-it", cgv: "https://kitcampermodulare.it/condizioni-generali-di-vendita/" },
+};
+const RITIRO = { lagarriga: "La Garriga (atelier)", nimes: "Nîmes (showroom)" };
 const CONTACT = "WhatsApp +34 665 319 287 · info@camperizatetodoen1.com";
 
 const arrondi = (n, d = 2) => Math.round((n + Number.EPSILON) * 10 ** d) / 10 ** d;
@@ -42,12 +50,14 @@ export function lireCommande(session) {
     adresse: client.address || {},
     livraisonAdresse: livraisonInfo?.address || null,
     vehicule: champs.modele || "",
+    ritiro: champs.ritiro || "",
+    site: SITES[session.metadata?.site] ? session.metadata.site : "kitamenagement.fr",
     modeleSite: session.client_reference_id || "",
     lignes,
     totalTTC: session.amount_total / 100,
     livraison,
     estKit,
-    langue: "fr",
+    langue: (SITES[session.metadata?.site] || SITES["kitamenagement.fr"]).langue,
   };
 }
 
@@ -91,7 +101,7 @@ export function contactHolded(commande) {
     mobile: commande.telephone || null,
     type: "client",
     is_person: true,
-    tags: ["web-fr", "stripe"],
+    tags: [(SITES[commande.site] || SITES["kitamenagement.fr"]).tag, "stripe"],
     bill_address: {
       address: [a.line1, a.line2].filter(Boolean).join(", "),
       city: a.city || "",
@@ -106,12 +116,13 @@ export function documentHolded(commande, contactId, config, { type }) {
   const doc = {
     contact_id: contactId,
     date: dateISO(commande.date),
-    description: `Commande web kitamenagement.fr${commande.vehicule ? ` – ${commande.vehicule}` : ""}`,
+    description: `Commande web ${commande.site || "kitamenagement.fr"}${commande.vehicule ? ` – ${commande.vehicule}` : ""}`,
     notes: [
       `Stripe : ${commande.sessionId}`,
       commande.vehicule && `Véhicule : ${commande.vehicule}`,
       commande.modeleSite && `Modèle choisi sur le site : ${commande.modeleSite}`,
-      commande.livraison ? `Livraison : ${adresseTexte(commande.livraisonAdresse)}` : "Retrait au showroom de Nîmes",
+      commande.livraison ? `Livraison : ${adresseTexte(commande.livraisonAdresse)}`
+        : `Retrait : ${RITIRO[commande.ritiro] || "showroom de Nîmes"}`,
       commande.telephone && `Tél. : ${commande.telephone}`,
     ].filter(Boolean).join("\n"),
     items: lignesHolded(commande, config),
@@ -128,6 +139,7 @@ export function documentHolded(commande, contactId, config, { type }) {
 
 /** E-mail de confirmation de commande (texte), envoyé via Holded avec le bon de commande en PDF. */
 export function emailCommande(commande, numero) {
+  if (commande.langue === "it") return emailCommandeIT(commande, numero);
   const prenom = (commande.nom || "").split(" ")[0];
   const lignes = commande.lignes.map((l) => `• ${l.quantite > 1 ? `${l.quantite} × ` : ""}${l.nom} : ${euros(l.totalTTC)}`).join("\n");
   const reception = commande.livraison
@@ -173,5 +185,54 @@ export function emailCommande(commande, numero) {
   return {
     subject: `Votre commande Camperizate${numero ? ` n° ${numero}` : ""} est confirmée`,
     message: texte,
+  };
+}
+
+/** E-mail de confirmation en italien (site kitcampermodulare.it). */
+export function emailCommandeIT(commande, numero) {
+  const nome = (commande.nom || "").split(" ")[0];
+  const lignes = commande.lignes.map((l) => `• ${l.quantite > 1 ? `${l.quantite} × ` : ""}${l.nom}: ${euros(l.totalTTC)}`).join("\n");
+  const luogo = commande.ritiro === "nimes" ? `showroom di Nîmes: ${SHOWROOM}` : `laboratorio di La Garriga: ${ATELIER}`;
+  const consegna = commande.livraison
+    ? `Consegna del kit montato, su pallet, all'indirizzo: ${adresseTexte(commande.livraisonAdresse)}.`
+    : `Ritiro gratuito presso il ${luogo}.`;
+  const passi = commande.estKit
+    ? [
+        "1. Entro 48 ore lavorative ti contattiamo per controllare le misure del tuo veicolo.",
+        "2. Fabbricazione nel nostro laboratorio: circa 3 settimane (meno se il tuo modello è disponibile in magazzino).",
+        commande.livraison
+          ? "3. Consegna: il corriere ti chiama per fissare il giorno. Al ricevimento controlla la merce e annota eventuali riserve al corriere."
+          : "3. Ritiro: concordiamo insieme il giorno in cui passi a ritirare il kit.",
+      ]
+    : ["1. Prepariamo il tuo ordine e ti contattiamo per concordare il ritiro o la spedizione insieme al kit."];
+  const testo = [
+    `Ciao ${nome},`,
+    "",
+    `Grazie per il tuo ordine${numero ? ` n. ${numero}` : ""}! Il pagamento è confermato. In allegato trovi la conferma d'ordine.`,
+    "",
+    "Il tuo ordine",
+    lignes,
+    `Totale pagato: ${euros(commande.totalTTC)} IVA inclusa`,
+    commande.vehicule ? `Veicolo: ${commande.vehicule}` : "",
+    consegna,
+    "",
+    "E adesso?",
+    ...passi,
+    "",
+    "Da sapere",
+    commande.estKit || commande.lignes.some((l) => ["matelas", "occultants"].includes(l.cle))
+      ? "• Il kit è fabbricato su misura per il tuo veicolo: il diritto di recesso è escluso (art. 59, comma 1, lettera c, del Codice del Consumo)."
+      : "• Accessori standard: hai 14 giorni dal ricevimento per recedere.",
+    "• Tutti i nostri prodotti hanno la garanzia legale di conformità di 2 anni.",
+    `• Le nostre condizioni generali di vendita: ${SITES["kitcampermodulare.it"].cgv}`,
+    "",
+    `Una domanda? Scrivici: ${CONTACT}.`,
+    "",
+    "A presto, in viaggio!",
+    "Il team Camperizate",
+  ].filter((l, i, arr) => !(l === "" && arr[i - 1] === "")).join("\n");
+  return {
+    subject: `Il tuo ordine Camperizate${numero ? ` n. ${numero}` : ""} è confermato`,
+    message: testo,
   };
 }
