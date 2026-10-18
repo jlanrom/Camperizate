@@ -14,11 +14,11 @@ Se si cambia un testo francese in build.py, il build segnala la traduzione manca
 
 MOTIFS = {
     # Schede modello (titoli, meta, sezioni)
-    "Kit aménagement {} amovible | Camperizate": "Kit camper rimovibile {} | Camperizate",
-    "Kit aménagement {} | Camperizate": "Kit camper {} | Camperizate",
+    "Kit aménagement {} amovible | Camperizate": "Kit camperizzazione {} rimovibile | Camperizate",
+    "Kit aménagement {} | Camperizate": "Kit camperizzazione {} | Camperizate",
     "Kit camper amovible pour {} : lit, cuisine et rangements posés en quelques minutes, sans perçage ni VASP. Dès {} € TTC, showroom à Nîmes.":
-        "Kit camper rimovibile per {}: letto, cucina e vani contenitori montati in pochi minuti, senza forature né omologazione. Da {} € IVA inclusa, spedizione in Italia.",
-    "Kit d'aménagement amovible pour {}": "Kit camper rimovibile per {}",
+        "Kit camperizzazione rimovibile per {}: letto, cucina e vani contenitori montati in pochi minuti, senza forature né omologazione. Da {} € IVA inclusa, spedizione in Italia.",
+    "Kit d'aménagement amovible pour {}": "Kit camperizzazione rimovibile per {}",
     "Kit d'aménagement amovible {}": "Kit camper rimovibile {}",
     "Dimensions du kit {}": "Misure del kit {}",
     "Kit {} : en bref": "Kit {}: in breve",
@@ -168,7 +168,7 @@ TEXTES = {
     "Équerre rabattable (tiroir cuisine)": "Piano ribaltabile (cassetto cucina)",
 
     # --- Home -----------------------------------------------------------------------------------
-    "Kit camper amovible sans VASP pour ludospace et van | Camperizate": "Kit camper rimovibile senza omologazione per multispazio e van | Camperizate",
+    "Kit camper amovible sans VASP pour ludospace et van | Camperizate": "Kit camperizzazione furgone rimovibile, senza omologazione | Camperizate",
     "Kits camper amovibles pour Berlingo, Kangoo, Trafic, Transporter… Posés en 5 minutes sans perçage, sans homologation VASP. Dès 500 € TTC, livrés montés partout en France.":
         "Kit camper rimovibili per Berlingo, Kangoo, Trafic, Transporter… Si montano in 5 minuti senza forature e senza omologazione. Da 500 € IVA inclusa, consegnati montati in tutta Italia.",
     "Kit camper amovible : sans VASP, sans perçage, dès 500 €": "Kit camper rimovibile: senza omologazione, senza forature, da 500 €",
@@ -300,7 +300,7 @@ TEXTES = {
     "Ils voyagent avec nos kits": "Viaggiano con i nostri kit",
 
     # --- Negozio --------------------------------------------------------------------------------
-    "Boutique : kit camper amovible sans VASP | Camperizate": "Negozio: kit camper rimovibile senza omologazione | Camperizate",
+    "Boutique : kit camper amovible sans VASP | Camperizate": "Negozio: kit camperizzazione rimovibile per furgoni e auto | Camperizate",
     "Commandez votre kit d'aménagement amovible pour ludospace, van ou fourgon : choisissez votre véhicule, la finition et le matelas, et payez en ligne. Dès 500 € TTC.":
         "Ordina il tuo kit camper rimovibile per multispazio, van o furgone: scegli il veicolo, la finitura e il materasso e paga online. Da 500 € IVA inclusa.",
     "Kit d'aménagement camper amovible pour ludospace": "Kit camper rimovibile per multispazio",
@@ -531,10 +531,10 @@ TEXTES = {
         "No. Il kit non è avvitato né forato: è un carico rimovibile. Nessun collaudo in Motorizzazione, carta di circolazione invariata.",
 
     # --- Catalogo ---------------------------------------------------------------------------------
-    "Kit aménagement par modèle : ludospace, van, fourgon | Camperizate": "Kit camper per modello: multispazio, van, furgone | Camperizate",
+    "Kit aménagement par modèle : ludospace, van, fourgon | Camperizate": "Kit camperizzazione per modello: multispazio, van, furgone | Camperizate",
     "Trouvez le kit camper amovible de votre véhicule : Berlingo, Kangoo, Partner, Trafic, Transporter, Vito, Ducato… Sans perçage ni VASP, dès 500 € TTC.":
         "Trova il kit camper rimovibile per il tuo veicolo: Berlingo, Kangoo, Partner, Trafic, Transporter, Vito, Ducato… Senza forature né omologazione, da 500 € IVA inclusa.",
-    "Le kit d'aménagement de votre véhicule": "Il kit camper per il tuo veicolo",
+    "Le kit d'aménagement de votre véhicule": "Il kit di camperizzazione per il tuo veicolo",
     "Chaque kit est fabriqué pour un modèle précis. Choisissez le vôtre pour voir le kit, les prix et les mesures.":
         "Ogni kit è fabbricato per un modello preciso. Scegli il tuo per vedere il kit, i prezzi e le misure.",
     "Modèles compatibles": "Modelli compatibili",
@@ -635,8 +635,8 @@ TEXTES = {
         "8 cm di gommapiuma ad alta densità D30 (30 kg/m³), rigida e comoda per dormire più notti di fila.",
 
     # --- Guida ----------------------------------------------------------------------------------
-    "Kit meubles camper : le guide pour aménager son van | Camperizate": "Kit mobili camper: la guida per camperizzare il tuo van | Camperizate",
-    "Kit meubles camper : le guide pour aménager son van": "Kit mobili camper: la guida per camperizzare il tuo van",
+    "Kit meubles camper : le guide pour aménager son van | Camperizate": "Mobili per camper e kit camperizzazione: la guida | Camperizate",
+    "Kit meubles camper : le guide pour aménager son van": "Mobili per camper e kit camperizzazione: la guida per camperizzare il furgone",
     "Comment choisir et installer un kit meubles camper amovible : véhicule, finition, matelas, options, montage, commande. Sans VASP, dès 500 € TTC.":
         "Come scegliere e montare un kit mobili camper rimovibile: veicolo, finitura, materasso, optional, montaggio, ordine. Senza omologazione, da 500 € IVA inclusa.",
     "Guide du kit camper": "Guida al kit camper",

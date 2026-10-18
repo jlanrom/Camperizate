@@ -22,7 +22,17 @@ Revisión: **lunes, 15 minutos**. Apuntar los números en la tabla del final.
 ## 3. Punto de partida
 - **/fr/ en Webnode: unos 11.200 clics al año** (≈ 930 al mes, ≈ 215 a la semana). Páginas fuertes: portada, Dacia Jogger,
   catálogo, Kangoo, Partner, Dokker, Berlingo, Transporter, Rifter, NV200.
-- **/it/**: sacar el dato de Search Console (últimos 12 meses, URL que contienen /it/) y apuntarlo aquí.
+- **/it/ en Webnode (Search Console, 17/07–16/10/2026): 10.375 clics y 226.500 impresiones en 3 meses.** Casi el triple
+  que Francia. Bajada de temporada: unos 1.000 clics/semana en agosto, **unos 500/semana a primeros de octubre** (punto de
+  partida para comparar). 95 % desde Italia, 74 % desde el móvil.
+  - Páginas fuertes: guía `kitsmobilicamper` (2.284 clics), Ford Courier (819), Doblò (664), Transit Custom (664),
+    Tourneo Connect (455), Caddy, Jogger, Dokker, portada, Berlingo.
+  - Búsquedas que traen clientes: «kit camperizzazione furgone», «kit camperizzazione ford tourneo courier»,
+    «kit trasformazione furgone in camper», «mobili per camper», «dacia jogger camperizzata», «doblò camperizzato».
+    Por eso los títulos de la .it usan «kit camperizzazione» (cambiado el 18/10).
+  - Oportunidades (muchas impresiones, pocos clics): «camper dacia» (4.746 impr., 0,6 %), «camperizzare furgone»
+    (2.630, posición 12), «dacia dokker camperiz» (2.119, 0,8 %), «kit allestimento camper ducato» (2.009, 1,5 %),
+    «kit camperizzazione auto» (1.143, posición 12), página del colchón (4.500 impr., posición 25).
 - Ventas y contactos actuales de Francia e Italia: apuntarlos de las últimas 8 semanas para poder comparar.
 
 ## 4. Semáforo
