@@ -28,6 +28,7 @@ MAPS = "https://www.google.com/maps/search/?api=1&query=Lifes+Campers+M%C3%A1lag
 WEB3FORMS_KEY = "71767edc-8025-4398-8918-90c888817feb"
 PRICE = "24.900 €"
 TODAY = date.today().isoformat()
+LEGAL_UPDATED = "2026-10-09"  # cambia esta fecha cuando modifiques los textos legales
 
 esc = html.escape
 
@@ -687,7 +688,7 @@ LEGAL_HOLDER = f"""<table class="facts">
 
 def page_legal(path, title, h1, content):
     cr, cr_sc = crumbs([(h1, path)])
-    body = f'<section class="section"><div class="wrap narrow prose">{cr}<h1>{esc(h1)}</h1>{content}<p class="muted">Última actualización: {TODAY}.</p></div></section>'
+    body = f'<section class="section"><div class="wrap narrow prose">{cr}<h1>{esc(h1)}</h1>{content}<p class="muted">Última actualización: {fecha_es(LEGAL_UPDATED)}.</p></div></section>'
     return layout(path, title, f"{h1} de camperizacionmalaga.com, web de Lifes Campers (CROSSCAMPERS, S.L.).", body, [cr_sc])
 
 
@@ -745,6 +746,158 @@ def page_404():
     return layout("/404.html", "Página no encontrada | Lifes Campers", "La página que buscas no existe.", body)
 
 
+# --------------------------------------------------------------------------- blog
+# Cada artículo es un archivo src/blog/<slug>.md con una cabecera así:
+#   ---
+#   titulo: Cuánto cuesta camperizar una furgoneta
+#   descripcion: Frase de 140-160 caracteres para Google.
+#   fecha: 2026-10-23
+#   imagen: portada.jpg                  (archivo de src/blog/fotos/ o nombre de una foto de src/fotos/)
+#   imagen_alt: Texto que describe la foto
+#   ---
+#   Texto en Markdown. Fotos: ![texto alternativo](archivo.jpg)
+# Los archivos que empiezan por "_" (por ejemplo _borrador.md) no se publican.
+BLOG_DIR = os.path.join(ROOT, "blog")
+MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+
+
+def fecha_es(iso):
+    y, m, d = (int(x) for x in iso.split("-"))
+    return f"{d} de {MESES[m - 1]} de {y}"
+
+
+def blog_image(name):
+    """Devuelve el nombre base en /img/ de una foto del blog, generándola si hace falta."""
+    stem = name.rsplit(".", 1)[0]
+    if stem in ALT:  # foto de la web (src/fotos)
+        return stem
+    src = os.path.join(BLOG_DIR, "fotos", name)
+    if not os.path.exists(src):
+        raise SystemExit(f"Blog: no encuentro la foto {name} en src/blog/fotos/")
+    base = "blog-" + stem.lower().replace(" ", "-")
+    im = Image.open(src)
+    im.load()
+    if im.mode not in ("RGB", "RGBA"):
+        im = im.convert("RGB")
+    for w in (1200, 600):
+        out = os.path.join(OUT, "img", f"{base}-{w}.webp")
+        if not os.path.exists(out) or os.path.getmtime(out) < os.path.getmtime(src):
+            c = im.copy()
+            c.thumbnail((w, w), Image.LANCZOS)
+            c.save(out, "WEBP", quality=80, method=6)
+    return base
+
+
+def load_posts():
+    import re
+    import markdown
+    posts = []
+    if not os.path.isdir(BLOG_DIR):
+        return posts
+    for f in sorted(os.listdir(BLOG_DIR)):
+        if not f.endswith(".md") or f.startswith("_"):
+            continue
+        raw = open(os.path.join(BLOG_DIR, f), encoding="utf-8").read()
+        m = re.match(r"^---\s*\n(.*?)\n---\s*\n(.*)$", raw, re.S)
+        if not m:
+            raise SystemExit(f"Blog: a {f} le falta la cabecera entre líneas ---")
+        meta = {}
+        for line in m.group(1).splitlines():
+            if ":" in line:
+                k, v = line.split(":", 1)
+                meta[k.strip().lower()] = v.strip()
+        for k in ("titulo", "descripcion", "fecha", "imagen"):
+            if not meta.get(k):
+                raise SystemExit(f"Blog: a {f} le falta '{k}' en la cabecera")
+        if meta["fecha"] > TODAY:  # programado: se publica a partir de su fecha
+            continue
+        body_md = m.group(2)
+
+        def img_sub(mm):
+            base = blog_image(mm.group(2))
+            alt = esc(mm.group(1) or meta["titulo"])
+            return (f'<figure><a href="/img/{base}-1200.webp" data-lb="post"><img src="/img/{base}-1200.webp" '
+                    f'srcset="/img/{base}-600.webp 600w, /img/{base}-1200.webp 1200w" sizes="(max-width: 760px) 100vw, 720px" '
+                    f'alt="{alt}" loading="lazy" decoding="async"></a>'
+                    f'{f"<figcaption>{alt}</figcaption>" if mm.group(1) else ""}</figure>')
+        body_md = re.sub(r"!\[([^\]]*)\]\(([^)\s]+)\)", img_sub, body_md)
+        body = markdown.markdown(body_md, extensions=["extra", "sane_lists"])
+        # Un H1 dentro del texto rompería la jerarquía: el título ya es el H1.
+        body = re.sub(r"<(/?)h1>", r"<\1h2>", body)
+        words = len(re.sub(r"<[^>]+>", " ", body).split())
+        hero = blog_image(meta["imagen"])
+        posts.append({
+            "slug": f[:-3], "titulo": meta["titulo"], "descripcion": meta["descripcion"], "fecha": meta["fecha"],
+            "hero": hero, "hero_alt": meta.get("imagen_alt") or ALT.get(hero, meta["titulo"]),
+            "body": body, "minutos": max(1, round(words / 200)),
+        })
+    posts.sort(key=lambda p: p["fecha"], reverse=True)
+    return posts
+
+
+def post_img(base, alt, eager=False):
+    load = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
+    return (f'<img src="/img/{base}-1200.webp" srcset="/img/{base}-600.webp 600w, /img/{base}-1200.webp 1200w" '
+            f'sizes="(max-width: 760px) 100vw, 50vw" alt="{esc(alt)}" {load}>')
+
+
+def post_card(p):
+    return (f'<a class="post-card" href="/blog/{p["slug"]}/"><div class="post-img">{post_img(p["hero"], p["hero_alt"])}</div>'
+            f'<div class="post-body"><p class="label">{fecha_es(p["fecha"])} · {p["minutos"]} min</p>'
+            f'<h3>{esc(p["titulo"])}</h3><p>{esc(p["descripcion"])}</p></div></a>')
+
+
+def page_blog(posts):
+    cr, cr_sc = crumbs([("Blog", "/blog/")])
+    body = f"""
+<section class="section"><div class="wrap">
+  {cr}
+  <div class="section-head"><p class="kicker">Blog</p><h1>Blog de camperización</h1>
+  <p class="lead">Lo que aprendemos camperizando furgonetas en nuestro taller de Málaga: precios, materiales, distribuciones, homologación y consejos para elegir tu furgoneta.</p></div>
+  <div class="posts">{"".join(post_card(p) for p in posts)}</div>
+</div></section>
+{cta()}
+"""
+    sc = {"@type": "Blog", "name": "Blog de Lifes Campers", "url": SITE + "/blog/",
+          "blogPost": [{"@type": "BlogPosting", "headline": p["titulo"], "url": f'{SITE}/blog/{p["slug"]}/', "datePublished": p["fecha"]} for p in posts]}
+    return layout("/blog/", "Blog de camperización de furgonetas | Lifes Campers",
+                  "Artículos sobre camperización de furgonetas: precios, materiales, electricidad, homologación y cómo elegir furgoneta. Desde nuestro taller en Málaga.",
+                  body, [cr_sc, sc], active="/blog/")
+
+
+def page_post(p, posts):
+    path = f'/blog/{p["slug"]}/'
+    cr, cr_sc = crumbs([("Blog", "/blog/"), (p["titulo"], path)])
+    others = [o for o in posts if o is not p][:3]
+    more = (f'<section class="section alt"><div class="wrap"><p class="label">Sigue leyendo</p><h2>Más artículos</h2>'
+            f'<div class="posts">{"".join(post_card(o) for o in others)}</div></div></section>') if others else ""
+    sc = {"@type": "BlogPosting", "headline": p["titulo"], "description": p["descripcion"],
+          "datePublished": p["fecha"], "dateModified": p["fecha"], "inLanguage": "es-ES",
+          "image": f'{SITE}/img/{p["hero"]}-1200.webp', "mainEntityOfPage": SITE + path,
+          "author": {"@type": "Organization", "name": BRAND, "url": SITE + "/"},
+          "publisher": {"@id": SITE + "/#negocio"}}
+    body = f"""
+<article>
+<section class="section" style="padding-bottom:24px"><div class="wrap narrow">
+  {cr}
+  <p class="label">{fecha_es(p["fecha"])} · {p["minutos"]} min de lectura</p>
+  <h1>{esc(p["titulo"])}</h1>
+  <p class="lead">{esc(p["descripcion"])}</p>
+</div></section>
+<div class="wrap narrow"><div class="post-hero">{post_img(p["hero"], p["hero_alt"], eager=True)}</div></div>
+<section class="section" style="padding-top:40px"><div class="wrap narrow prose post-content">
+  {p["body"]}
+  <div class="actions"><a class="btn btn-wa" href="{wa(f'Hola, he leído «{p["titulo"]}» y me gustaría información.')}" target="_blank" rel="noopener">{WA_SVG}Pregúntanos por WhatsApp</a>
+  <a class="btn btn-line" href="/camperizacion-integral/">Ver la camperización integral</a></div>
+</div></section>
+</article>
+{more}
+{cta()}
+"""
+    return layout(path, f'{p["titulo"]} | Lifes Campers', p["descripcion"], body, [cr_sc, sc],
+                  active="/blog/", og_img=f'{SITE}/img/{p["hero"]}-1200.webp')
+
+
 # --------------------------------------------------------------------------- escritura
 def write(path, content):
     full = os.path.join(OUT, path.lstrip("/"))
@@ -756,6 +909,7 @@ def write(path, content):
 
 
 def main():
+    global NAV
     # Conserva las imágenes ya generadas (img/) para no recomprimirlas en cada build.
     if os.path.isdir(OUT):
         for name in os.listdir(OUT):
@@ -770,6 +924,10 @@ def main():
     for f in ("style.css", "main.js"):
         shutil.copy(os.path.join(ROOT, "assets", f), os.path.join(OUT, "assets", f))
 
+    posts = load_posts()
+    if posts:  # el enlace al blog solo aparece cuando hay algún artículo publicado
+        NAV = NAV[:-1] + [("/blog/", "Blog")] + NAV[-1:]
+
     pages = {
         "/": page_home(),
         "/camperizacion-integral/": page_integral(),
@@ -782,12 +940,18 @@ def main():
     }
     for v in FURGONETAS:
         pages[f'/furgonetas/{v["slug"]}/'] = page_van(v)
+    if posts:
+        pages["/blog/"] = page_blog(posts)
+        for p in posts:
+            pages[f'/blog/{p["slug"]}/'] = page_post(p, posts)
     for path, content in pages.items():
         write(path, content)
     write("/404.html", page_404())
 
-    prio = {"/": "1.0", "/camperizacion-integral/": "0.9", "/furgonetas/": "0.8", "/trabajos/": "0.8", "/contacto/": "0.7"}
-    urls = "".join(f"<url><loc>{SITE}{p}</loc><lastmod>{TODAY}</lastmod><priority>{prio.get(p, '0.6' if 'furgonetas' in p else '0.3')}</priority></url>"
+    prio = {"/": "1.0", "/camperizacion-integral/": "0.9", "/furgonetas/": "0.8", "/trabajos/": "0.8", "/contacto/": "0.7", "/blog/": "0.7"}
+    lastmod = {f'/blog/{p["slug"]}/': p["fecha"] for p in posts}
+    urls = "".join(f"<url><loc>{SITE}{p}</loc><lastmod>{lastmod.get(p, TODAY)}</lastmod>"
+                   f"<priority>{prio.get(p, '0.6' if ('furgonetas' in p or '/blog/' in p) else '0.3')}</priority></url>"
                    for p in pages)
     write("/sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n')
     write("/robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")
