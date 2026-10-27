@@ -707,6 +707,8 @@ TEXTES = {
     "Local n° 112, 866 avenue du Maréchal Juin, 30900 Nîmes.": "Locale n. 112, 866 avenue du Maréchal Juin, 30900 Nîmes, Francia.",
     "Sur rendez-vous : voir les kits, essayer un matelas, retirer votre commande.": "Su appuntamento: vedere i kit, provare un materasso, ritirare l'ordine.",
     "Ouvrir dans Google Maps": "Apri in Google Maps",
+    "Voir sur Google Maps": "Vedi su Google Maps",
+    "Voir sur Google Maps : avis, horaires, itinéraire": "Vedi su Google Maps: recensioni, orari, indicazioni",
     "Atelier de fabrication": "Laboratorio di fabbricazione",
     "Carrer de Vulcà 1B, 08530 La Garriga (Barcelone), Espagne.": "Carrer de Vulcà 1B, 08530 La Garriga (Barcellona), Spagna.",
     "Sur rendez-vous.": "Su appuntamento. Anche qui puoi ritirare il tuo ordine.",

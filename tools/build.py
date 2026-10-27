@@ -29,6 +29,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
 TALLY = "https://tally.so/r/OD6BOp"
+# Fiche Google du showroom de Nîmes (avis, horaires, itinéraire)
+MAPS_NIMES = "https://maps.app.goo.gl/vaHLqV1v4i8P8g4J7"
 
 # ---------------------------------------------------------------------------
 # 1. SITE : par défaut la France ; build_it() bascule ces valeurs pour l'Italie (tools/sites/it.py)
@@ -293,6 +295,7 @@ def footer(script=""):
       <div>
         <h3>Showroom en France</h3>
         <address>Local n° 112<br>866 avenue du Maréchal Juin<br>30900 Nîmes</address>
+        <a class="link" href="{MAPS_NIMES}" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>Voir sur Google Maps</a>
       </div>
       <div>
         <h3>Contact</h3>
@@ -769,6 +772,7 @@ def fiche(m):
   <div class="wrap">
     <div class="sec-head"><span class="kicker">Showroom</span><h2 id="h-showroom">Venez voir nos kits à Nîmes</h2></div>
     <address>Local n° 112, 866 avenue du Maréchal Juin<br>30900 Nîmes</address>
+    <p><a class="link" href="{MAPS_NIMES}" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>Voir sur Google Maps : avis, horaires, itinéraire</a></p>
     <a href="/contact/" class="btn btn-line" style="max-width:420px">Préparer ma visite</a>
   </div>
 </section>
@@ -1111,7 +1115,7 @@ def contact():
     <ul class="info">
       <li><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg><div><h3>Showroom de Nîmes</h3>
         <p>Local n° 112, 866 avenue du Maréchal Juin, 30900 Nîmes.<br>Sur rendez-vous : voir les kits, essayer un matelas, retirer votre commande.</p>
-        <p><a href="https://www.google.com/maps/search/?api=1&amp;query=866+avenue+du+Mar%C3%A9chal+Juin+30900+N%C3%AEmes" target="_blank" rel="noopener">Ouvrir dans Google Maps</a></p></div></li>
+        <p><a href="{MAPS_NIMES}" target="_blank" rel="noopener">Voir sur Google Maps : avis, horaires, itinéraire</a></p></div></li>
       <li><svg class="ico" aria-hidden="true"><use href="#i-factory"/></svg><div><h3>Atelier de fabrication</h3>
         <p>Carrer de Vulcà 1B, 08530 La Garriga (Barcelone), Espagne.<br>Sur rendez-vous.</p>
         <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Carrer+de+Vulc%C3%A0+1B+08530+La+Garriga" target="_blank" rel="noopener">Ouvrir dans Google Maps</a></p></div></li>
@@ -1125,7 +1129,8 @@ def contact():
     ld = {"@context": "https://schema.org", "@type": "LocalBusiness", "@id": f"{SITE}/#atelier", "name": "Camperizate",
           "url": f"{SITE}/contact/", "telephone": "+34665319287", "email": "info@camperizatetodoen1.com",
           "address": {"@type": "PostalAddress", "streetAddress": "866 Avenue du Maréchal Juin, Local n° 112",
-                      "postalCode": "30900", "addressLocality": "Nîmes", "addressCountry": "FR"}}
+                      "postalCode": "30900", "addressLocality": "Nîmes", "addressCountry": "FR"},
+          "hasMap": MAPS_NIMES}
     return page_simple("/contact/", "Contact et showroom à Nîmes | Camperizate",
                        "Venez voir nos kits camper au showroom de Nîmes, 866 avenue du Maréchal Juin, sur rendez-vous, "
                        "ou écrivez-nous : réponse rapide par WhatsApp.",
