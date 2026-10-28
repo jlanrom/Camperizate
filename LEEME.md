@@ -25,9 +25,11 @@ Web estática de Lifes Campers, publicada en Cloudflare Workers. Cada cambio que
 
 ## Blog
 - Los artículos se escriben en Notion, en la base de datos **Artículos** de la página «Blog · Lifes Campers (camperizacionmalaga.com)».
-- Al marcar un artículo como **Listo para publicar**, se le pide a Claude «publica los artículos del blog».
-- En la web, cada artículo es un archivo `src/blog/<slug>.md` (ver `src/blog/_plantilla.md`) y sus fotos van en `src/blog/fotos/`.
-- El enlace «Blog» del menú aparece solo cuando hay algún artículo publicado. Un artículo con fecha futura no sale hasta esa fecha (y una nueva publicación).
+- Al marcar un artículo como **Listo para publicar**, se le pide a Claude «publica los artículos del blog» (instrucciones completas en `CLAUDE.md`).
+- En la web, cada artículo es un archivo `src/blog/<slug>.md` (ver `src/blog/_plantilla.md`) y sus fotos van en `src/blog/fotos/`. Se publica en `https://camperizacionmalaga.com/<slug>/` y aparece en el listado `/blog/`.
+- **Artículos programados**: si la fecha es futura, el artículo no sale hasta ese día. Cada mañana, el workflow `.github/workflows/publicar-programados.yml` regenera la web y, si toca publicar algo, hace commit y Cloudflare lo publica. También se puede lanzar a mano desde GitHub → Actions → «Publicar artículos programados» → Run workflow.
+- El build comprueba que los enlaces internos de los artículos existen y genera los datos de preguntas frecuentes para Google.
+- El enlace «Blog» del menú aparece solo cuando hay algún artículo publicado.
 - Para generar la web hace falta Python con `pillow` y `markdown` (`pip install pillow markdown`).
 
 ## Pendiente / ideas

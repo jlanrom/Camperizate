@@ -142,6 +142,8 @@ def build_images():
             c.thumbnail((w, w), Image.LANCZOS)
             c.save(out, "WEBP", quality=78, method=6)
     # logo y favicons
+    if os.path.exists(os.path.join(dst, "og-lifes-campers.jpg")):
+        return
     logo = Image.open(os.path.join(ROOT, "assets", "logo-src.webp")).convert("RGBA")
     for s in (88, 180, 32):
         c = logo.copy()
@@ -756,7 +758,11 @@ def page_404():
 #   imagen_alt: Texto que describe la foto
 #   ---
 #   Texto en Markdown. Fotos: ![texto alternativo](archivo.jpg)
+# El artículo se publica en https://camperizacionmalaga.com/<slug>/ (slug = nombre del archivo).
 # Los archivos que empiezan por "_" (por ejemplo _borrador.md) no se publican.
+# Con fecha futura, el artículo queda programado: se publica en el primer build de ese día
+# (lo hace cada mañana .github/workflows/publicar-programados.yml). Mientras tanto, los enlaces
+# que apunten a él desde otros artículos se muestran como texto normal.
 BLOG_DIR = os.path.join(ROOT, "blog")
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
 
@@ -781,7 +787,7 @@ def blog_image(name):
         im = im.convert("RGB")
     for w in (1200, 600):
         out = os.path.join(OUT, "img", f"{base}-{w}.webp")
-        if not os.path.exists(out) or os.path.getmtime(out) < os.path.getmtime(src):
+        if not os.path.exists(out):  # para cambiar una foto ya publicada, súbela con otro nombre
             c = im.copy()
             c.thumbnail((w, w), Image.LANCZOS)
             c.save(out, "WEBP", quality=80, method=6)
@@ -791,9 +797,9 @@ def blog_image(name):
 def load_posts():
     import re
     import markdown
-    posts = []
+    posts, scheduled = [], []
     if not os.path.isdir(BLOG_DIR):
-        return posts
+        return posts, scheduled
     for f in sorted(os.listdir(BLOG_DIR)):
         if not f.endswith(".md") or f.startswith("_"):
             continue
@@ -810,6 +816,7 @@ def load_posts():
             if not meta.get(k):
                 raise SystemExit(f"Blog: a {f} le falta '{k}' en la cabecera")
         if meta["fecha"] > TODAY:  # programado: se publica a partir de su fecha
+            scheduled.append({"slug": f[:-3], "fecha": meta["fecha"]})
             continue
         body_md = m.group(2)
 
@@ -829,10 +836,51 @@ def load_posts():
         posts.append({
             "slug": f[:-3], "titulo": meta["titulo"], "descripcion": meta["descripcion"], "fecha": meta["fecha"],
             "hero": hero, "hero_alt": meta.get("imagen_alt") or ALT.get(hero, meta["titulo"]),
-            "body": body, "minutos": max(1, round(words / 200)),
+            "body": body, "minutos": max(1, round(words / 200)), "faq": extract_faq(body),
         })
     posts.sort(key=lambda p: p["fecha"], reverse=True)
-    return posts
+    return posts, scheduled
+
+
+def extract_faq(body):
+    """Preguntas (H3) y respuestas de la sección «Preguntas frecuentes», para el schema FAQPage."""
+    import re
+    m = re.search(r"<h2[^>]*>\s*Preguntas frecuentes\s*</h2>(.*?)(?=<h2|<hr|$)", body, re.S | re.I)
+    if not m:
+        return []
+    faq = []
+    for q, a in re.findall(r"<h3[^>]*>(.*?)</h3>(.*?)(?=<h3|$)", m.group(1), re.S):
+        q = html.unescape(re.sub(r"<[^>]+>", "", q)).strip()
+        a = re.sub(r"</(p|li|h\d)>", " ", a)
+        a = html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", a))).strip()
+        if q and a:
+            faq.append((q, a))
+    return faq
+
+
+def fix_post_links(p, known, scheduled):
+    """Enlaces internos: relativos si existen, texto plano si apuntan a un artículo programado
+    y se devuelven como rotos si la página no existe (para no publicar enlaces rotos)."""
+    import re
+    broken = []
+
+    def sub(m):
+        attrs_before, href, attrs_after, text = m.group(1), m.group(2), m.group(3), m.group(4)
+        path = re.sub(r"^https?://(www\.)?camperizacionmalaga\.com", "", href)
+        if not path.startswith("/"):
+            return m.group(0)  # enlace externo, mailto, tel…
+        clean = path.split("#")[0].split("?")[0] or "/"
+        if not clean.endswith("/") and "." not in clean.rsplit("/", 1)[-1]:
+            clean += "/"
+        if clean in known:
+            return f'<a{attrs_before}href="{path}"{attrs_after}>{text}</a>'
+        if clean in scheduled:
+            return text
+        broken.append(href)
+        return m.group(0)
+
+    p["body"] = re.sub(r'<a([^>]*?)href="([^"]+)"([^>]*)>(.*?)</a>', sub, p["body"], flags=re.S)
+    return broken
 
 
 def post_img(base, alt, eager=False):
@@ -842,7 +890,7 @@ def post_img(base, alt, eager=False):
 
 
 def post_card(p):
-    return (f'<a class="post-card" href="/blog/{p["slug"]}/"><div class="post-img">{post_img(p["hero"], p["hero_alt"])}</div>'
+    return (f'<a class="post-card" href="/{p["slug"]}/"><div class="post-img">{post_img(p["hero"], p["hero_alt"])}</div>'
             f'<div class="post-body"><p class="label">{fecha_es(p["fecha"])} · {p["minutos"]} min</p>'
             f'<h3>{esc(p["titulo"])}</h3><p>{esc(p["descripcion"])}</p></div></a>')
 
@@ -859,14 +907,14 @@ def page_blog(posts):
 {cta()}
 """
     sc = {"@type": "Blog", "name": "Blog de Lifes Campers", "url": SITE + "/blog/",
-          "blogPost": [{"@type": "BlogPosting", "headline": p["titulo"], "url": f'{SITE}/blog/{p["slug"]}/', "datePublished": p["fecha"]} for p in posts]}
+          "blogPost": [{"@type": "BlogPosting", "headline": p["titulo"], "url": f'{SITE}/{p["slug"]}/', "datePublished": p["fecha"]} for p in posts]}
     return layout("/blog/", "Blog de camperización de furgonetas | Lifes Campers",
                   "Artículos sobre camperización de furgonetas: precios, materiales, electricidad, homologación y cómo elegir furgoneta. Desde nuestro taller en Málaga.",
                   body, [cr_sc, sc], active="/blog/")
 
 
 def page_post(p, posts):
-    path = f'/blog/{p["slug"]}/'
+    path = f'/{p["slug"]}/'
     cr, cr_sc = crumbs([("Blog", "/blog/"), (p["titulo"], path)])
     others = [o for o in posts if o is not p][:3]
     more = (f'<section class="section alt"><div class="wrap"><p class="label">Sigue leyendo</p><h2>Más artículos</h2>'
@@ -876,6 +924,10 @@ def page_post(p, posts):
           "image": f'{SITE}/img/{p["hero"]}-1200.webp', "mainEntityOfPage": SITE + path,
           "author": {"@type": "Organization", "name": BRAND, "url": SITE + "/"},
           "publisher": {"@id": SITE + "/#negocio"}}
+    schema = [cr_sc, sc]
+    if p["faq"]:
+        schema.append({"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in p["faq"]]})
     body = f"""
 <article>
 <section class="section" style="padding-bottom:24px"><div class="wrap narrow">
@@ -894,7 +946,7 @@ def page_post(p, posts):
 {more}
 {cta()}
 """
-    return layout(path, f'{p["titulo"]} | Lifes Campers', p["descripcion"], body, [cr_sc, sc],
+    return layout(path, f'{p["titulo"]} | Lifes Campers', p["descripcion"], body, schema,
                   active="/blog/", og_img=f'{SITE}/img/{p["hero"]}-1200.webp')
 
 
@@ -913,7 +965,7 @@ def main():
     # Conserva las imágenes ya generadas (img/) para no recomprimirlas en cada build.
     if os.path.isdir(OUT):
         for name in os.listdir(OUT):
-            if name == "img":
+            if name in ("img", "favicon.png", "apple-touch-icon.png"):
                 continue
             p = os.path.join(OUT, name)
             shutil.rmtree(p) if os.path.isdir(p) else os.remove(p)
@@ -924,7 +976,7 @@ def main():
     for f in ("style.css", "main.js"):
         shutil.copy(os.path.join(ROOT, "assets", f), os.path.join(OUT, "assets", f))
 
-    posts = load_posts()
+    posts, scheduled = load_posts()
     if posts:  # el enlace al blog solo aparece cuando hay algún artículo publicado
         NAV = NAV[:-1] + [("/blog/", "Blog")] + NAV[-1:]
 
@@ -941,17 +993,30 @@ def main():
     for v in FURGONETAS:
         pages[f'/furgonetas/{v["slug"]}/'] = page_van(v)
     if posts:
+        known = set(pages) | {"/blog/"} | {f'/{p["slug"]}/' for p in posts}
+        clash = [p["slug"] for p in posts if f'/{p["slug"]}/' in pages]
+        if clash:
+            raise SystemExit(f"Blog: estos slugs coinciden con páginas de la web: {clash}")
+        broken = {}
+        for p in posts:
+            b = fix_post_links(p, known, {f'/{x["slug"]}/' for x in scheduled})
+            if b:
+                broken[p["slug"]] = b
+        if broken:
+            raise SystemExit(f"Blog: enlaces internos a páginas que no existen: {broken}")
         pages["/blog/"] = page_blog(posts)
         for p in posts:
-            pages[f'/blog/{p["slug"]}/'] = page_post(p, posts)
+            pages[f'/{p["slug"]}/'] = page_post(p, posts)
     for path, content in pages.items():
         write(path, content)
     write("/404.html", page_404())
 
     prio = {"/": "1.0", "/camperizacion-integral/": "0.9", "/furgonetas/": "0.8", "/trabajos/": "0.8", "/contacto/": "0.7", "/blog/": "0.7"}
-    lastmod = {f'/blog/{p["slug"]}/': p["fecha"] for p in posts}
-    urls = "".join(f"<url><loc>{SITE}{p}</loc><lastmod>{lastmod.get(p, TODAY)}</lastmod>"
-                   f"<priority>{prio.get(p, '0.6' if ('furgonetas' in p or '/blog/' in p) else '0.3')}</priority></url>"
+    # Solo los artículos llevan fecha: así el sitemap no cambia cada día y el build programado
+    # solo genera un commit cuando de verdad se publica algo.
+    lastmod = {f'/{p["slug"]}/': p["fecha"] for p in posts}
+    urls = "".join(f"<url><loc>{SITE}{p}</loc>{f'<lastmod>{lastmod[p]}</lastmod>' if p in lastmod else ''}"
+                   f"<priority>{prio.get(p, '0.6' if ('furgonetas' in p or p in lastmod) else '0.3')}</priority></url>"
                    for p in pages)
     write("/sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n')
     write("/robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")
@@ -968,6 +1033,8 @@ def main():
     ]) + "\n")
     write("/_headers", "/img/*\n  Cache-Control: public, max-age=2592000\n/fonts/*\n  Cache-Control: public, max-age=31536000, immutable\n")
     print(f"{len(pages)} páginas generadas en {OUT}")
+    if scheduled:
+        print("Artículos programados: " + ", ".join(f'{x["slug"]} ({x["fecha"]})' for x in sorted(scheduled, key=lambda x: x["fecha"])))
 
 
 if __name__ == "__main__":

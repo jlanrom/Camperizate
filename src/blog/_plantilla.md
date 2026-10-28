@@ -10,6 +10,7 @@ Primer párrafo: responde directamente a la pregunta del título en 2-3 frases.
 ## Primer apartado
 
 Texto normal. **Negrita** para lo importante. [Enlace a la camperización integral](/camperizacion-integral/).
+Los enlaces a otros artículos van a su slug: [reparación camper](/reparacion-camper-andalucia/).
 
 ![Descripción de la foto](foto-de-src-blog-fotos.jpg)
 
