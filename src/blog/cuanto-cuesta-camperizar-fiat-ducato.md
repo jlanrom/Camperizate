@@ -1,7 +1,7 @@
 ---
 titulo: ¿Cuánto cuesta camperizar una Fiat Ducato?
 descripcion: Cuánto cuesta camperizar una Fiat Ducato: precio en taller y hacerla tú mismo, qué versión elegir, qué partidas encarecen y el coste total con la furgoneta.
-fecha: 2026-11-17
+fecha: 2026-11-03
 imagen: interior-camper-cocina-madera-dinette
 ---
 Camperizar una Fiat Ducato cuesta muy distinto según quién la haga. En Lifes Campers una camperización integral cuesta 24.900 euros en la configuración básica (26.000 en la L4H2) y hasta 26.300 euros con un equipamiento más avanzado, con la homologación incluida. Por tu cuenta, los materiales pueden ir de unos 1.500 a más de 14.000 euros según el equipamiento, más la homologación. Y si todavía no tienes la furgoneta, hay que sumar lo que cueste la Ducato.

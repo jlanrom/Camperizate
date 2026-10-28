@@ -768,7 +768,7 @@ def page_404():
 # El artículo se publica en https://camperizacionmalaga.com/<slug>/ (slug = nombre del archivo).
 # Los archivos que empiezan por "_" (por ejemplo _borrador.md) no se publican.
 # Con fecha futura, el artículo queda programado: se publica en el primer build de ese día
-# (lo hace cada mañana .github/workflows/publicar-programados.yml). Mientras tanto, los enlaces
+# (lo hace cada mañana la tarea publicar-programados-lifes.yml de la rama kitamenagement). Mientras tanto, los enlaces
 # que apunten a él desde otros artículos se muestran como texto normal.
 BLOG_DIR = os.path.join(ROOT, "blog")
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
