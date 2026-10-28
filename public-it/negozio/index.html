@@ -365,6 +365,8 @@ section{padding:52px 0}
 .model-links{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:8px}
 .model-links a{display:flex;align-items:center;min-height:48px;padding:10px 14px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;font-weight:600}
 .model-links a:hover{border-color:var(--brown);color:var(--orange)}
+.model-links .v-prix{flex-basis:100%;font-weight:400;font-size:13px;color:var(--brown-70)}
+.model-links a:has(.v-prix){flex-wrap:wrap;column-gap:12px}
 .cat-block+.cat-block{margin-top:36px}
 .steps-merci{margin:20px 0 0;padding-left:1.3em;display:grid;gap:10px;max-width:640px}
 .cat-block h2{margin-bottom:4px}
@@ -849,6 +851,7 @@ section{padding:52px 0}
   if(q.get('modele')){for(var i=0;i<sel.options.length;i++){if(sel.options[i].value===q.get('modele')){sel.selectedIndex=i;}}}
   else if(q.get('cat')){for(var j=0;j<sel.options.length;j++){if(sel.options[j].dataset.cat===q.get('cat')){sel.selectedIndex=j;break;}}}
   if(q.get('finition')){var r=f.querySelector('input[name=fin][value="'+q.get('finition')+'"]');if(r)r.checked=true;}
+  if(q.get('matelas')){var mt=f.querySelector('input[name=mat][value="'+q.get('matelas')+'"]');if(mt)mt.checked=true;}
   f.addEventListener('change',render);render();
 })();
 </script>

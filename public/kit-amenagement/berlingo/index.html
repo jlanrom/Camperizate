@@ -365,6 +365,8 @@ section{padding:52px 0}
 .model-links{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:8px}
 .model-links a{display:flex;align-items:center;min-height:48px;padding:10px 14px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;font-weight:600}
 .model-links a:hover{border-color:var(--brown);color:var(--orange)}
+.model-links .v-prix{flex-basis:100%;font-weight:400;font-size:13px;color:var(--brown-70)}
+.model-links a:has(.v-prix){flex-wrap:wrap;column-gap:12px}
 .cat-block+.cat-block{margin-top:36px}
 .steps-merci{margin:20px 0 0;padding-left:1.3em;display:grid;gap:10px;max-width:640px}
 .cat-block h2{margin-bottom:4px}
@@ -390,22 +392,343 @@ section{padding:52px 0}
  "@context": "https://schema.org",
  "@graph": [
   {
-   "@type": "Product",
+   "@type": "ProductGroup",
+   "@id": "https://kitamenagement.fr/kit-amenagement/berlingo/#kit",
    "name": "Kit d'aménagement amovible Citroën Berlingo",
    "description": "Kit camper amovible pour Citroën Berlingo : lit, cuisine et rangements posés en quelques minutes, sans perçage ni VASP. Dès 500 € TTC, showroom à Nîmes.",
-   "image": "https://kitamenagement.fr/img/kit-carrossier-lit.webp",
+   "image": [
+    "https://kitamenagement.fr/img/kit-carrossier-lit.webp"
+   ],
+   "url": "https://kitamenagement.fr/kit-amenagement/berlingo/",
    "brand": {
     "@type": "Brand",
     "name": "Camperizate"
    },
-   "offers": {
-    "@type": "AggregateOffer",
-    "priceCurrency": "EUR",
-    "lowPrice": "500",
-    "highPrice": "950",
-    "offerCount": "6",
-    "availability": "https://schema.org/InStock"
-   },
+   "productGroupID": "berlingo",
+   "variesBy": [
+    "https://schema.org/material",
+    "https://schema.org/size"
+   ],
+   "hasVariant": [
+    {
+     "@type": "Product",
+     "sku": "berlingo-pin-sans",
+     "mpn": "berlingo-pin-sans",
+     "name": "Kit d'aménagement amovible Citroën Berlingo (M), Phénolique pin",
+     "material": "Phénolique pin",
+     "size": "Citroën Berlingo (M)",
+     "image": "https://kitamenagement.fr/img/kit-carrossier-lit.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitamenagement.fr/kit-amenagement/berlingo/?finition=pin&matelas=sans",
+      "price": "500.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "200",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "FR"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "FR",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    },
+    {
+     "@type": "Product",
+     "sku": "berlingo-carrossier-sans",
+     "mpn": "berlingo-carrossier-sans",
+     "name": "Kit d'aménagement amovible Citroën Berlingo (M), Phénolique carrossier",
+     "material": "Phénolique carrossier",
+     "size": "Citroën Berlingo (M)",
+     "image": "https://kitamenagement.fr/img/kit-carrossier-lit.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitamenagement.fr/kit-amenagement/berlingo/?finition=carrossier&matelas=sans",
+      "price": "550.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "200",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "FR"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "FR",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    },
+    {
+     "@type": "Product",
+     "sku": "berlingo-hpl-sans",
+     "mpn": "berlingo-hpl-sans",
+     "name": "Kit d'aménagement amovible Citroën Berlingo (M), HPL de peuplier",
+     "material": "HPL de peuplier",
+     "size": "Citroën Berlingo (M)",
+     "image": "https://kitamenagement.fr/img/kit-carrossier-lit.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitamenagement.fr/kit-amenagement/berlingo/?finition=hpl&matelas=sans",
+      "price": "800.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "200",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "FR"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "FR",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    },
+    {
+     "@type": "Product",
+     "sku": "berlingo-xl-pin-sans",
+     "mpn": "berlingo-xl-pin-sans",
+     "name": "Kit d'aménagement amovible Citroën Berlingo XL, Phénolique pin",
+     "material": "Phénolique pin",
+     "size": "Citroën Berlingo XL",
+     "image": "https://kitamenagement.fr/img/kit-carrossier-lit.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitamenagement.fr/boutique/?modele=berlingo-xl&finition=pin&matelas=sans#commande",
+      "price": "700.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "250",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "FR"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "FR",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    },
+    {
+     "@type": "Product",
+     "sku": "berlingo-xl-carrossier-sans",
+     "mpn": "berlingo-xl-carrossier-sans",
+     "name": "Kit d'aménagement amovible Citroën Berlingo XL, Phénolique carrossier",
+     "material": "Phénolique carrossier",
+     "size": "Citroën Berlingo XL",
+     "image": "https://kitamenagement.fr/img/kit-carrossier-lit.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitamenagement.fr/boutique/?modele=berlingo-xl&finition=carrossier&matelas=sans#commande",
+      "price": "750.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "250",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "FR"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "FR",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    },
+    {
+     "@type": "Product",
+     "sku": "berlingo-xl-hpl-sans",
+     "mpn": "berlingo-xl-hpl-sans",
+     "name": "Kit d'aménagement amovible Citroën Berlingo XL, HPL de peuplier",
+     "material": "HPL de peuplier",
+     "size": "Citroën Berlingo XL",
+     "image": "https://kitamenagement.fr/img/kit-carrossier-lit.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitamenagement.fr/boutique/?modele=berlingo-xl&finition=hpl&matelas=sans#commande",
+      "price": "1000.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "250",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "FR"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "FR",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    }
+   ],
    "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.5",
@@ -633,7 +956,7 @@ section{padding:52px 0}
     <div class="versions">
       <h3>Versions</h3>
       <p>Berlingo M : kit ludospace. Berlingo XL : meuble 30 cm plus profond et lit jusqu&#x27;à 220 cm, au prix van compact.</p>
-      <ul class="model-links"><li><a href="/boutique/?modele=berlingo#commande"><span>Citroën Berlingo (M)</span><b>dès 500 €</b></a></li><li><a href="/boutique/?modele=berlingo-xl#commande"><span>Citroën Berlingo XL</span><b>dès 700 €</b></a></li></ul>
+      <ul class="model-links"><li><a href="/boutique/?modele=berlingo#commande"><span>Citroën Berlingo (M)</span><b>dès 500 €</b><small class="v-prix"><span>Phénolique pin</span> 500&nbsp;€ · <span>Phénolique carrossier</span> 550&nbsp;€ · <span>HPL de peuplier</span> 800&nbsp;€</small></a></li><li><a href="/boutique/?modele=berlingo-xl#commande"><span>Citroën Berlingo XL</span><b>dès 700 €</b><small class="v-prix"><span>Phénolique pin</span> 700&nbsp;€ · <span>Phénolique carrossier</span> 750&nbsp;€ · <span>HPL de peuplier</span> 1000&nbsp;€</small></a></li></ul>
     </div>
     <p class="help">Options (tiroirs, égouttoir, version 2+1…) et accessoires (occultants, frigo, batterie…) : <a href="/accessoires/">voir en détail</a>.</p>
     <a href="/boutique/?modele=berlingo#commande" class="btn btn-primary" style="margin-top:20px;max-width:420px">Commander ce kit <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>

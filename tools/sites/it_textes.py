@@ -19,6 +19,7 @@ MOTIFS = {
     "Kit camper amovible pour {} : lit, cuisine et rangements posés en quelques minutes, sans perçage ni VASP. Dès {} € TTC, showroom à Nîmes.":
         "Kit camper rimovibile per {}: letto, cucina e vani contenitori montati in pochi minuti, senza forature né omologazione. Da {} € IVA inclusa, spedizione in Italia.",
     "Kit d'aménagement amovible pour {}": "Kit camper rimovibile per {}",
+    "Kit d'aménagement amovible {}, {}": "Kit camper rimovibile {}, {}",
     "Kit d'aménagement amovible {}": "Kit camper rimovibile {}",
     "Dimensions du kit {}": "Misure del kit {}",
     "Kit {} : en bref": "Kit {}: in breve",
@@ -114,6 +115,8 @@ TEXTES = {
     "Contreplaqué phénolique antidérapant, noir. Le plus vendu.": "Multistrato fenolico antiscivolo, nero. Il più venduto.",
     "Peuplier phénolique avec HPL, blanc ou anthracite. Notre finition premium.": "Pioppo fenolico con HPL, bianco o antracite. La nostra finitura premium.",
     "Ludospace": "Multispazio",
+    "Van compact": "Van compatto",  # catégories du flux produits et de llms.txt
+    "Grand fourgon": "Furgone grande",
     "ludospace": "multispazio",
     "van compact": "van compatto",
     "grand fourgon": "furgone grande",

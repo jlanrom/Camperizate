@@ -365,6 +365,8 @@ section{padding:52px 0}
 .model-links{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:8px}
 .model-links a{display:flex;align-items:center;min-height:48px;padding:10px 14px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;font-weight:600}
 .model-links a:hover{border-color:var(--brown);color:var(--orange)}
+.model-links .v-prix{flex-basis:100%;font-weight:400;font-size:13px;color:var(--brown-70)}
+.model-links a:has(.v-prix){flex-wrap:wrap;column-gap:12px}
 .cat-block+.cat-block{margin-top:36px}
 .steps-merci{margin:20px 0 0;padding-left:1.3em;display:grid;gap:10px;max-width:640px}
 .cat-block h2{margin-bottom:4px}
@@ -390,22 +392,180 @@ section{padding:52px 0}
  "@context": "https://schema.org",
  "@graph": [
   {
-   "@type": "Product",
+   "@type": "ProductGroup",
+   "@id": "https://kitamenagement.fr/kit-amenagement/mercedes-sprinter/#kit",
    "name": "Kit d'aménagement amovible Mercedes Sprinter",
    "description": "Kit camper amovible pour Mercedes Sprinter : lit, cuisine et rangements posés en quelques minutes, sans perçage ni VASP. Dès 800 € TTC, showroom à Nîmes.",
-   "image": "https://kitamenagement.fr/img/hero-van-amenage-800.webp",
+   "image": [
+    "https://kitamenagement.fr/img/hero-van-amenage-800.webp"
+   ],
+   "url": "https://kitamenagement.fr/kit-amenagement/mercedes-sprinter/",
    "brand": {
     "@type": "Brand",
     "name": "Camperizate"
    },
-   "offers": {
-    "@type": "AggregateOffer",
-    "priceCurrency": "EUR",
-    "lowPrice": "800",
-    "highPrice": "1250",
-    "offerCount": "6",
-    "availability": "https://schema.org/InStock"
-   },
+   "productGroupID": "mercedes-sprinter",
+   "variesBy": [
+    "https://schema.org/material"
+   ],
+   "hasVariant": [
+    {
+     "@type": "Product",
+     "sku": "mercedes-sprinter-pin-sans",
+     "mpn": "mercedes-sprinter-pin-sans",
+     "name": "Kit d'aménagement amovible Mercedes Sprinter, Phénolique pin",
+     "material": "Phénolique pin",
+     "image": "https://kitamenagement.fr/img/hero-van-amenage-800.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitamenagement.fr/kit-amenagement/mercedes-sprinter/?finition=pin&matelas=sans",
+      "price": "800.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "250",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "FR"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "FR",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    },
+    {
+     "@type": "Product",
+     "sku": "mercedes-sprinter-carrossier-sans",
+     "mpn": "mercedes-sprinter-carrossier-sans",
+     "name": "Kit d'aménagement amovible Mercedes Sprinter, Phénolique carrossier",
+     "material": "Phénolique carrossier",
+     "image": "https://kitamenagement.fr/img/hero-van-amenage-800.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitamenagement.fr/kit-amenagement/mercedes-sprinter/?finition=carrossier&matelas=sans",
+      "price": "850.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "250",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "FR"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "FR",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    },
+    {
+     "@type": "Product",
+     "sku": "mercedes-sprinter-hpl-sans",
+     "mpn": "mercedes-sprinter-hpl-sans",
+     "name": "Kit d'aménagement amovible Mercedes Sprinter, HPL de peuplier",
+     "material": "HPL de peuplier",
+     "image": "https://kitamenagement.fr/img/hero-van-amenage-800.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitamenagement.fr/kit-amenagement/mercedes-sprinter/?finition=hpl&matelas=sans",
+      "price": "1100.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "250",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "FR"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "FR",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    }
+   ],
    "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.5",

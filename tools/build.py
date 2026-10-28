@@ -204,6 +204,8 @@ EXTRA_CSS = """
 .model-links{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:8px}
 .model-links a{display:flex;align-items:center;min-height:48px;padding:10px 14px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;font-weight:600}
 .model-links a:hover{border-color:var(--brown);color:var(--orange)}
+.model-links .v-prix{flex-basis:100%;font-weight:400;font-size:13px;color:var(--brown-70)}
+.model-links a:has(.v-prix){flex-wrap:wrap;column-gap:12px}
 .cat-block+.cat-block{margin-top:36px}
 .steps-merci{margin:20px 0 0;padding-left:1.3em;display:grid;gap:10px;max-width:640px}
 .cat-block h2{margin-bottom:4px}
@@ -321,6 +323,51 @@ def footer(script=""):
 def prix(cat, fin, avec):
     base = dict((f[0], f[3]) for f in FINITIONS)[fin][cat]
     return base + (MATELAS if avec else 0)
+
+
+# ---------------------------------------------------------------------------
+# Données produits pour Google (Merchant Center, AI Mode, Gemini), Bing/Copilot, Perplexity et ChatGPT :
+# une offre par véhicule (variante), finition et matelas. Utilisées par les fiches (JSON-LD) et le flux.
+# ---------------------------------------------------------------------------
+DELAI_FABRICATION = (5, 15)  # jours ouvrés avant expédition (fabrication ~3 semaines, plus vite si en stock)
+DELAI_TRANSPORT = (2, 5)     # jours ouvrés de transport
+
+
+def tr(texte):
+    """Texte dans la langue du site actif (catalogue écrit en français, traduit par tools/sites/<pays>_textes.py)."""
+    return getattr(CFG, "TEXTES", {}).get(texte, texte) if CFG is not FR else texte
+
+
+def offres_modele(m):
+    """Toutes les offres d'une fiche : (id, variante, libellé, catégorie, finition, avec matelas, prix, lien)."""
+    url = f"{SITE}/kit-amenagement/{m['slug']}/"
+    for valeur, lib, vcat in m["variantes"]:
+        for cle, *_ in FINITIONS:
+            for avec in (False, True):
+                mat = "avec" if avec else "sans"
+                if vcat == m["categorie"]:  # prix affichés en clair dans le tableau de la fiche
+                    lien = f"{url}?finition={cle}&matelas={mat}"
+                else:  # autre gabarit (Berlingo XL…) : la boutique calcule le prix de cette version
+                    lien = f"{SITE}/boutique/?modele={valeur}&finition={cle}&matelas={mat}#commande"
+                yield f"{valeur}-{cle}-{mat}", valeur, lib, vcat, cle, avec, prix(vcat, cle, avec), lien
+
+
+def livraison_ld(vcat):
+    pays = CFG.CODE.upper()
+    return {"@type": "OfferShippingDetails",
+            "shippingRate": {"@type": "MonetaryAmount", "value": str(CATEGORIES[vcat]["livraison"]), "currency": "EUR"},
+            "shippingDestination": {"@type": "DefinedRegion", "addressCountry": pays},
+            "deliveryTime": {"@type": "ShippingDeliveryTime",
+                             "handlingTime": {"@type": "QuantitativeValue", "minValue": DELAI_FABRICATION[0],
+                                              "maxValue": DELAI_FABRICATION[1], "unitCode": "DAY"},
+                             "transitTime": {"@type": "QuantitativeValue", "minValue": DELAI_TRANSPORT[0],
+                                             "maxValue": DELAI_TRANSPORT[1], "unitCode": "DAY"}}}
+
+
+def retours_ld():
+    """Kits fabriqués sur mesure : pas de rétractation (CGV, art. L221-28 3°)."""
+    return {"@type": "MerchantReturnPolicy", "applicableCountry": CFG.CODE.upper(),
+            "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"}
 
 
 
@@ -461,6 +508,7 @@ def boutique():
   if(q.get('modele')){for(var i=0;i<sel.options.length;i++){if(sel.options[i].value===q.get('modele')){sel.selectedIndex=i;}}}
   else if(q.get('cat')){for(var j=0;j<sel.options.length;j++){if(sel.options[j].dataset.cat===q.get('cat')){sel.selectedIndex=j;break;}}}
   if(q.get('finition')){var r=f.querySelector('input[name=fin][value="'+q.get('finition')+'"]');if(r)r.checked=true;}
+  if(q.get('matelas')){var mt=f.querySelector('input[name=mat][value="'+q.get('matelas')+'"]');if(mt)mt.checked=true;}
   f.addEventListener('change',render);render();
 })();
 </script>""" % json.dumps(data, ensure_ascii=False)
@@ -625,12 +673,22 @@ def fiche(m):
               if img.startswith("/img/modeles/") else "")
     faq = m["faq"] + FAQ_COMMUNE
     commande = f"/boutique/?modele={m['slug']}#commande"
-    bas, haut = prix(cat, "pin", False), prix(cat, "hpl", True)
+    bas = prix(cat, "pin", False)
+    noms_fin = {f[0]: f[1] for f in FINITIONS}
+    variantes_ld = [
+        {"@type": "Product", "sku": oid, "mpn": oid, "name": f"Kit d'aménagement amovible {lib}, {noms_fin[cle]}",
+         "material": tr(noms_fin[cle]), **({"size": lib} if len(m["variantes"]) > 1 else {}), "image": SITE + img,
+         "offers": {"@type": "Offer", "url": lien, "price": f"{p}.00", "priceCurrency": "EUR",
+                    "availability": "https://schema.org/InStock", "itemCondition": "https://schema.org/NewCondition",
+                    "seller": {"@type": "Organization", "name": "Camperizate"},
+                    "shippingDetails": livraison_ld(vcat), "hasMerchantReturnPolicy": retours_ld()}}
+        for oid, valeur, lib, vcat, cle, avec, p, lien in offres_modele(m) if not avec]
     ld = {"@context": "https://schema.org", "@graph": [
-        {"@type": "Product", "name": f"Kit d'aménagement amovible {m['nom']}", "description": desc, "image": SITE + img,
-         "brand": {"@type": "Brand", "name": "Camperizate"},
-         "offers": {"@type": "AggregateOffer", "priceCurrency": "EUR", "lowPrice": str(bas), "highPrice": str(haut),
-                    "offerCount": str(len(FINITIONS) * 2), "availability": "https://schema.org/InStock"}, **donnees_avis()},
+        {"@type": "ProductGroup", "@id": url + "#kit", "name": f"Kit d'aménagement amovible {m['nom']}",
+         "description": desc, "image": [SITE + img] + [f"{SITE}/img/modeles/{m['slug']}/{ph['fichier']}" for ph in m["galerie"][:5]],
+         "url": url, "brand": {"@type": "Brand", "name": "Camperizate"}, "productGroupID": m["slug"],
+         "variesBy": ["https://schema.org/material"] + (["https://schema.org/size"] if len(m["variantes"]) > 1 else []),
+         "hasVariant": variantes_ld, **donnees_avis()},
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Accueil", "item": SITE + "/"},
             {"@type": "ListItem", "position": 2, "name": "Kits par modèle", "item": SITE + "/kit-amenagement/"},
@@ -648,7 +706,9 @@ def fiche(m):
     if len(m["variantes"]) > 1 or m["versions"]:
         lignes_v = "".join(
             f'<li><a href="/boutique/?modele={v}#commande"><span>{e(lib)}</span>'
-            f'<b>dès {prix(vc, "pin", False)} €</b></a></li>' for v, lib, vc in m["variantes"]) if len(m["variantes"]) > 1 else ""
+            f'<b>dès {prix(vc, "pin", False)} €</b><small class="v-prix">'
+            + " · ".join(f'<span>{e(n)}</span> {prix(vc, k, False)}&nbsp;€' for k, n, *_ in FINITIONS)
+            + '</small></a></li>' for v, lib, vc in m["variantes"]) if len(m["variantes"]) > 1 else ""
         versions = f"""
     <div class="versions">
       <h3>Versions</h3>
@@ -1269,6 +1329,140 @@ def script_webnode(table, prefixes, prueba=False):
 """
 
 
+FLUX_TXT = {
+    "fr": dict(
+        titre="Kit aménagement camper amovible {lib} – {fin}, {mat}",
+        avec="avec matelas", sans="sans matelas",
+        desc=("Kit camper amovible sur mesure pour {lib} : lit, tiroir cuisine extractible et rangements, posés dans le coffre "
+              "sans perçage et sans homologation VASP (carte grise inchangée). Finition {fin} : {fin_desc} {mat_desc} "
+              "Fabriqué dans notre atelier en 3 semaines environ, livré monté sur palette."),
+        mat_avec="Livré avec matelas sur mesure de 8 cm, housse lavable.", mat_sans="Livré sans matelas.",
+        type="Aménagement camper > Kit amovible > {cat}",
+        canal="Kits camper amovibles Camperizate (France)"),
+    "it": dict(
+        titre="Kit camper rimovibile {lib} – {fin}, {mat}",
+        avec="con materasso", sans="senza materasso",
+        desc=("Kit camper rimovibile su misura per {lib}: letto, cassetto cucina estraibile e vani contenitori, appoggiati nel "
+              "bagagliaio senza forature e senza omologazione (libretto invariato). Finitura {fin}: {fin_desc} {mat_desc} "
+              "Prodotto nel nostro laboratorio in circa 3 settimane, consegnato montato su pallet."),
+        mat_avec="Con materasso su misura da 8 cm, fodera lavabile.", mat_sans="Senza materasso.",
+        type="Camperizzazione > Kit rimovibile > {cat}",
+        canal="Kit camper rimovibili Camperizate (Italia)"),
+}
+
+
+def flux_produits():
+    """Flux produits au format Google Shopping (RSS 2.0). Accepté par Google Merchant Center (Search, Shopping,
+    AI Mode, Gemini), Microsoft Merchant Center (Bing, Copilot) et Perplexity. Une ligne par véhicule, finition et matelas."""
+    t = FLUX_TXT[CFG.CODE]
+    fins = {f[0]: f for f in FINITIONS}
+    x = lambda v: html.escape(str(v), quote=False)  # noqa: E731
+    items = []
+    for m in FICHES:
+        img = SITE + m["image"][0]
+        autres = [f"{SITE}/img/modeles/{m['slug']}/{ph['fichier']}" for ph in m["galerie"][:10]]
+        for oid, valeur, lib, vcat, cle, avec, p, lien in offres_modele(m):
+            _, nom_fin, desc_fin, *_ = fins[cle]
+            mat = t["avec"] if avec else t["sans"]
+            lib = tr(lib)
+            champs = [
+                ("g:id", oid), ("g:item_group_id", f"{valeur}-{'avec' if avec else 'sans'}-matelas"),
+                ("g:title", t["titre"].format(lib=lib, fin=tr(nom_fin), mat=mat)),
+                ("g:description", t["desc"].format(lib=lib, fin=tr(nom_fin), fin_desc=tr(desc_fin),
+                                                   mat_desc=t["mat_avec"] if avec else t["mat_sans"])),
+                ("g:link", lien), ("g:image_link", img),
+                *[("g:additional_image_link", a) for a in autres],
+                ("g:availability", "in_stock"), ("g:price", f"{p}.00 EUR"),
+                ("g:brand", "Camperizate"), ("g:mpn", oid), ("g:identifier_exists", "no"), ("g:condition", "new"),
+                ("g:material", tr(nom_fin)), ("g:product_type", t["type"].format(cat=tr(CATEGORIES[vcat]["nom"]))),
+                ("g:custom_label_0", vcat), ("g:custom_label_1", cle),
+                ("g:min_handling_time", DELAI_FABRICATION[0]), ("g:max_handling_time", DELAI_FABRICATION[1]),
+            ]
+            lignes = "".join(f"\n      <{k}>{x(v)}</{k}>" for k, v in champs)
+            envoi = (f"\n      <g:shipping><g:country>{CFG.CODE.upper()}</g:country>"
+                     f"<g:price>{CATEGORIES[vcat]['livraison']}.00 EUR</g:price>"
+                     f"<g:min_transit_time>{DELAI_TRANSPORT[0]}</g:min_transit_time>"
+                     f"<g:max_transit_time>{DELAI_TRANSPORT[1]}</g:max_transit_time></g:shipping>")
+            items.append(f"    <item>{lignes}{envoi}\n    </item>")
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">\n'
+            f"  <channel>\n    <title>{x(t['canal'])}</title>\n    <link>{SITE}/</link>\n"
+            f"    <description>{x(t['canal'])}</description>\n" + "\n".join(items) + "\n  </channel>\n</rss>\n")
+
+
+LLMS_TXT = {
+    "fr": """# Camperizate – kits camper amovibles (France)
+
+> Camperizate fabrique des kits d'aménagement camper amovibles pour ludospaces, monospaces, vans et fourgons : lit, tiroir cuisine et rangements posés dans le coffre en quelques minutes, sans perçage et sans homologation VASP (le kit est un chargement amovible, la carte grise ne change pas). Fabrication dans notre atelier en Espagne en 3 semaines environ, livraison du kit monté en France ou retrait au showroom de Nîmes. Paiement en ligne sur {site}/boutique/.
+
+## Prix (TTC, hors livraison)
+
+{prix}
+- Matelas sur mesure 8 cm : + {matelas} €
+- Livraison en France : {livraison}
+- Retrait gratuit au showroom de Nîmes (866 avenue du Maréchal Juin, 30900 Nîmes), sur rendez-vous
+
+## Kits par véhicule
+
+{modeles}
+
+## Pages utiles
+
+- [Boutique : choisir le véhicule, la finition et payer]({site}/boutique/)
+- [Tous les modèles]({site}/kit-amenagement/)
+- [Options et accessoires]({site}/accessoires/)
+- [Guide : choisir et installer un kit camper]({site}/guide-kit-meubles-camper/)
+- [Contact et showroom de Nîmes]({site}/contact/)
+- [Conditions générales de vente]({site}/conditions-generales-de-vente/)
+- [Flux produits (format Google Shopping)]({site}/feeds/produits.xml)
+
+## Contact
+
+Formulaire (réponse par WhatsApp) : https://tally.so/r/OD6BOp · Téléphone et WhatsApp : +34 665 319 287 · E-mail : info@camperizatetodoen1.com
+""",
+    "it": """# Camperizate – kit camper rimovibili (Italia)
+
+> Camperizate produce kit camper rimovibili per multispazio, monovolume, van e furgoni: letto, cassetto cucina e vani contenitori appoggiati nel bagagliaio in pochi minuti, senza forature e senza omologazione (il kit è un carico rimovibile, il libretto non cambia). Produzione nel nostro laboratorio in Spagna in circa 3 settimane, consegna del kit montato in Italia. Pagamento online su {site}/negozio/.
+
+## Prezzi (IVA inclusa, spedizione esclusa)
+
+{prix}
+- Materasso su misura 8 cm: + {matelas} €
+- Spedizione in Italia: {livraison}
+
+## Kit per veicolo
+
+{modeles}
+
+## Pagine utili
+
+- [Negozio: scegli veicolo, finitura e paga]({site}/negozio/)
+- [Tutti i modelli]({site}/kit-camper/)
+- [Opzioni e accessori]({site}/accessori/)
+- [Guida: scegliere e montare un kit camper]({site}/guida-kit-mobili-camper/)
+- [Contatti]({site}/contatti/)
+- [Condizioni generali di vendita]({site}/condizioni-generali-di-vendita/)
+- [Feed prodotti (formato Google Shopping)]({site}/feeds/produits.xml)
+
+## Contatti
+
+Modulo (risposta su WhatsApp): https://tally.so/r/OD6BOp · Telefono e WhatsApp: +34 665 319 287 · E-mail: info@camperizatetodoen1.com
+""",
+}
+
+
+def llms_txt():
+    """Résumé du catalogue pour les assistants IA (https://llmstxt.org/)."""
+    dans, sep = ("dès", " : ") if CFG is FR else ("da", ": ")
+    prix_l = "\n".join(
+        f"- {tr(c['pluriel'])}{sep}" + ", ".join(f"{tr(f[1])} {f[3][cat]} €" for f in FINITIONS)
+        for cat, c in CATEGORIES.items())
+    liv = ", ".join(f"{tr(c['nom'])} {c['livraison']} €" for c in CATEGORIES.values())
+    base = "/kit-amenagement/"
+    mods = "\n".join(f"- [{tr(m['nom'])}]({SITE}{base}{m['slug']}/){sep}{tr(CATEGORIES[m['categorie']]['nom'])}, "
+                      f"{dans} {prix(m['categorie'], 'pin', False)} €" for m in FICHES)
+    return LLMS_TXT[CFG.CODE].format(site=SITE, prix=prix_l, matelas=MATELAS, livraison=liv, modeles=mods)
+
+
 def sitemap():
     today = date.today().isoformat()
     urls = ["/", "/kit-amenagement/", "/boutique/", "/accessoires/", "/guide-kit-meubles-camper/",
@@ -1299,6 +1493,8 @@ def pages():
         "guide-kit-meubles-camper/index.html": guide(),
         "contact/index.html": contact(),
         "sitemap.xml": sitemap(),
+        "feeds/produits.xml": flux_produits(),
+        "llms.txt": llms_txt(),
     })
     return p
 
@@ -1311,8 +1507,18 @@ def activer(cfg):
         CATEGORIES[cat]["livraison"] = prix_liv
 
 
+def robots_txt(site):
+    """Tout est ouvert ; les moteurs et assistants IA sont nommés pour qu'aucun réglage ne les bloque par défaut."""
+    robots = ["OAI-SearchBot", "ChatGPT-User", "GPTBot", "PerplexityBot", "Perplexity-User", "Claude-SearchBot",
+              "Claude-User", "ClaudeBot", "Google-Extended", "Applebot-Extended", "Bingbot", "Googlebot"]
+    noms = "\n".join(f"User-agent: {r}" for r in robots)
+    return (f"User-agent: *\nAllow: /\n\n# Moteurs de recherche et assistants IA\n{noms}\nAllow: /\n\n"
+            f"Sitemap: {site}/sitemap.xml\n")
+
+
 def build_fr():
     activer(FR)
+    (PUBLIC / "robots.txt").write_text(robots_txt(FR.SITE), encoding="utf-8")
     for chemin, contenu in pages().items():
         ecrire(chemin, contenu)
     maj_landing()
@@ -1334,12 +1540,12 @@ def build_it():
     contenus = pages()
     contenus["index.html"] = landing_avis((PUBLIC / "index.html").read_text(encoding="utf-8"))
     for chemin, contenu in contenus.items():
-        ecrire(loc.chemin_fichier(chemin), loc.page(contenu, xml=chemin.endswith(".xml")), sortie)
+        ecrire(loc.chemin_fichier(chemin), loc.page(contenu, xml=chemin.endswith((".xml", ".txt"))), sortie)
     # Fichiers communs copiés tels quels
     for dossier in ("img", "fonts"):
         shutil.copytree(PUBLIC / dossier, sortie / dossier)
     shutil.copy(PUBLIC / "_headers", sortie / "_headers")
-    (sortie / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {IT.SITE}/sitemap.xml\n", encoding="utf-8")
+    (sortie / "robots.txt").write_text(robots_txt(IT.SITE), encoding="utf-8")
     # Pages légales écrites à la main en italien
     for f in (ROOT / "tools" / "sites" / "it_pages").rglob("*.html"):
         rel = f.relative_to(ROOT / "tools" / "sites" / "it_pages")

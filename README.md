@@ -28,6 +28,11 @@ Option B — Cloudflare Pages : créer un projet relié au repo, *production bra
 - `/kit-amenagement/<modèle>/` — fiches modèle (générées, une par modèle de `MODELES`)
 - `/merci/` — retour après paiement, noindex (générée)
 - `/conditions-generales-de-vente/` — CGV
+- `/feeds/produits.xml` — flux produits format Google Shopping (264 offres : véhicule × finition × matelas), généré
+- `/llms.txt` — résumé du catalogue pour les assistants IA, généré
+- `/robots.txt` — généré (moteurs et assistants IA autorisés)
+
+Visibilité Google Shopping, Gemini, Bing/Copilot, Perplexity et ChatGPT : voir `docs/VISIBILITE.md`.
 - `/mentions-legales/` — mentions légales (Camperizate Todo en 1, S.L.U.)
 - `/politique-de-confidentialite/` — politique de confidentialité / cookies (aucun cookie déposé)
 

@@ -1,4 +1,19 @@
 User-agent: *
 Allow: /
 
+# Moteurs de recherche et assistants IA
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: GPTBot
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: ClaudeBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Bingbot
+User-agent: Googlebot
+Allow: /
+
 Sitemap: https://kitamenagement.fr/sitemap.xml
