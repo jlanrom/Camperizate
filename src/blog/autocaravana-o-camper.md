@@ -1,7 +1,7 @@
 ---
 titulo: Autocaravana o camper: cuándo compensa cada una
 descripcion: ¿Autocaravana o furgoneta camperizada? Comparamos precio, calidad y uso real para que decidas bien antes de invertir 40.000–60.000 €.
-fecha: 2026-11-03
+fecha: 2026-10-28
 imagen: furgoneta-camper-playa
 ---
 Con un presupuesto de 40.000 a 60.000 euros, hoy suele salir más barato comprar una furgoneta de segunda mano y camperizarla a medida que comprar una autocaravana nueva. La autocaravana sigue siendo mejor opción cuando viajáis tres o más personas, cuando el baño completo es imprescindible o cuando vas a pasar temporadas largas dentro.

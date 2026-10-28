@@ -19,7 +19,7 @@ Cuando el usuario pida publicar el blog:
 6. El build hace solo estas comprobaciones:
    - Genera el schema FAQPage a partir de la sección «Preguntas frecuentes» (H2 con preguntas en H3).
    - Para un error si un enlace interno apunta a una página que no existe.
-   - Con fecha futura, el artículo queda programado: lo publica `.github/workflows/publicar-programados.yml` la mañana de su fecha. Hasta entonces, los enlaces que apunten a él se muestran como texto normal.
+   - Con fecha futura, el artículo queda programado: lo publica la tarea diaria de GitHub Actions «Publicar artículos programados (Lifes Campers)» la mañana de su fecha. Esa tarea está en la rama principal del repo (`kitamenagement`), en `.github/workflows/publicar-programados-lifes.yml`, porque GitHub solo ejecuta tareas programadas desde ahí; trabaja sobre la rama de Lifes Campers. Hasta entonces, los enlaces que apunten a él se muestran como texto normal.
 7. Serie «Reparación de campers»: al publicar o programar una guía, enlázala desde su H3 en `src/blog/reparacion-camper-andalucia.md` (por ejemplo `### [Claraboyas y ventanas](/reparar-claraboya-ventana-camper/)`).
 8. Ejecuta `python3 src/build.py`, revisa la página en el navegador (escritorio y móvil) y abre un PR hacia la rama principal.
 9. Tras el merge, pon el Estado en «Publicado» y rellena «URL en la web». Para los programados, indica en la respuesta la fecha en que saldrán.
