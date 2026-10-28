@@ -365,6 +365,8 @@ section{padding:52px 0}
 .model-links{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:8px}
 .model-links a{display:flex;align-items:center;min-height:48px;padding:10px 14px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;font-weight:600}
 .model-links a:hover{border-color:var(--brown);color:var(--orange)}
+.model-links .v-prix{flex-basis:100%;font-weight:400;font-size:13px;color:var(--brown-70)}
+.model-links a:has(.v-prix){flex-wrap:wrap;column-gap:12px}
 .cat-block+.cat-block{margin-top:36px}
 .steps-merci{margin:20px 0 0;padding-left:1.3em;display:grid;gap:10px;max-width:640px}
 .cat-block h2{margin-bottom:4px}
@@ -390,22 +392,180 @@ section{padding:52px 0}
  "@context": "https://schema.org",
  "@graph": [
   {
-   "@type": "Product",
+   "@type": "ProductGroup",
+   "@id": "https://kitcampermodulare.it/kit-camper/jumpy/#kit",
    "name": "Kit camper rimovibile Citroën Jumpy",
    "description": "Kit camper rimovibile per Citroën Jumpy: letto, cucina e vani contenitori montati in pochi minuti, senza forature né omologazione. Da 700 € IVA inclusa, spedizione in Italia.",
-   "image": "https://kitcampermodulare.it/img/kit-hpl-anthracite.webp",
+   "image": [
+    "https://kitcampermodulare.it/img/kit-hpl-anthracite.webp"
+   ],
+   "url": "https://kitcampermodulare.it/kit-camper/jumpy/",
    "brand": {
     "@type": "Brand",
     "name": "Camperizate"
    },
-   "offers": {
-    "@type": "AggregateOffer",
-    "priceCurrency": "EUR",
-    "lowPrice": "700",
-    "highPrice": "1150",
-    "offerCount": "6",
-    "availability": "https://schema.org/InStock"
-   },
+   "productGroupID": "jumpy",
+   "variesBy": [
+    "https://schema.org/material"
+   ],
+   "hasVariant": [
+    {
+     "@type": "Product",
+     "sku": "jumpy-pin-sans",
+     "mpn": "jumpy-pin-sans",
+     "name": "Kit camper rimovibile Citroën Jumpy, Fenolico pino",
+     "material": "Fenolico pino",
+     "image": "https://kitcampermodulare.it/img/kit-hpl-anthracite.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitcampermodulare.it/kit-camper/jumpy/?finition=pin&matelas=sans",
+      "price": "700.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "300",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "IT"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "IT",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    },
+    {
+     "@type": "Product",
+     "sku": "jumpy-carrossier-sans",
+     "mpn": "jumpy-carrossier-sans",
+     "name": "Kit camper rimovibile Citroën Jumpy, Fenolico antiscivolo",
+     "material": "Fenolico antiscivolo",
+     "image": "https://kitcampermodulare.it/img/kit-hpl-anthracite.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitcampermodulare.it/kit-camper/jumpy/?finition=carrossier&matelas=sans",
+      "price": "750.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "300",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "IT"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "IT",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    },
+    {
+     "@type": "Product",
+     "sku": "jumpy-hpl-sans",
+     "mpn": "jumpy-hpl-sans",
+     "name": "Kit camper rimovibile Citroën Jumpy, HPL di pioppo",
+     "material": "HPL di pioppo",
+     "image": "https://kitcampermodulare.it/img/kit-hpl-anthracite.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitcampermodulare.it/kit-camper/jumpy/?finition=hpl&matelas=sans",
+      "price": "1000.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "300",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "IT"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "IT",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    }
+   ],
    "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.5",

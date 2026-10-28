@@ -365,6 +365,8 @@ section{padding:52px 0}
 .model-links{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:8px}
 .model-links a{display:flex;align-items:center;min-height:48px;padding:10px 14px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;font-weight:600}
 .model-links a:hover{border-color:var(--brown);color:var(--orange)}
+.model-links .v-prix{flex-basis:100%;font-weight:400;font-size:13px;color:var(--brown-70)}
+.model-links a:has(.v-prix){flex-wrap:wrap;column-gap:12px}
 .cat-block+.cat-block{margin-top:36px}
 .steps-merci{margin:20px 0 0;padding-left:1.3em;display:grid;gap:10px;max-width:640px}
 .cat-block h2{margin-bottom:4px}
@@ -390,22 +392,343 @@ section{padding:52px 0}
  "@context": "https://schema.org",
  "@graph": [
   {
-   "@type": "Product",
+   "@type": "ProductGroup",
+   "@id": "https://kitcampermodulare.it/kit-camper/caddy/#kit",
    "name": "Kit camper rimovibile Volkswagen Caddy",
    "description": "Kit camper rimovibile per Volkswagen Caddy: letto, cucina e vani contenitori montati in pochi minuti, senza forature né omologazione. Da 500 € IVA inclusa, spedizione in Italia.",
-   "image": "https://kitcampermodulare.it/img/kit-carrossier-lit.webp",
+   "image": [
+    "https://kitcampermodulare.it/img/kit-carrossier-lit.webp"
+   ],
+   "url": "https://kitcampermodulare.it/kit-camper/caddy/",
    "brand": {
     "@type": "Brand",
     "name": "Camperizate"
    },
-   "offers": {
-    "@type": "AggregateOffer",
-    "priceCurrency": "EUR",
-    "lowPrice": "500",
-    "highPrice": "950",
-    "offerCount": "6",
-    "availability": "https://schema.org/InStock"
-   },
+   "productGroupID": "caddy",
+   "variesBy": [
+    "https://schema.org/material",
+    "https://schema.org/size"
+   ],
+   "hasVariant": [
+    {
+     "@type": "Product",
+     "sku": "caddy-pin-sans",
+     "mpn": "caddy-pin-sans",
+     "name": "Kit camper rimovibile Volkswagen Caddy, Fenolico pino",
+     "material": "Fenolico pino",
+     "size": "Volkswagen Caddy",
+     "image": "https://kitcampermodulare.it/img/kit-carrossier-lit.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitcampermodulare.it/kit-camper/caddy/?finition=pin&matelas=sans",
+      "price": "500.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "250",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "IT"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "IT",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    },
+    {
+     "@type": "Product",
+     "sku": "caddy-carrossier-sans",
+     "mpn": "caddy-carrossier-sans",
+     "name": "Kit camper rimovibile Volkswagen Caddy, Fenolico antiscivolo",
+     "material": "Fenolico antiscivolo",
+     "size": "Volkswagen Caddy",
+     "image": "https://kitcampermodulare.it/img/kit-carrossier-lit.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitcampermodulare.it/kit-camper/caddy/?finition=carrossier&matelas=sans",
+      "price": "550.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "250",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "IT"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "IT",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    },
+    {
+     "@type": "Product",
+     "sku": "caddy-hpl-sans",
+     "mpn": "caddy-hpl-sans",
+     "name": "Kit camper rimovibile Volkswagen Caddy, HPL di pioppo",
+     "material": "HPL di pioppo",
+     "size": "Volkswagen Caddy",
+     "image": "https://kitcampermodulare.it/img/kit-carrossier-lit.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitcampermodulare.it/kit-camper/caddy/?finition=hpl&matelas=sans",
+      "price": "800.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "250",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "IT"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "IT",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    },
+    {
+     "@type": "Product",
+     "sku": "caddy-maxi-pin-sans",
+     "mpn": "caddy-maxi-pin-sans",
+     "name": "Kit camper rimovibile Volkswagen Caddy Maxi, Fenolico pino",
+     "material": "Fenolico pino",
+     "size": "Volkswagen Caddy Maxi",
+     "image": "https://kitcampermodulare.it/img/kit-carrossier-lit.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitcampermodulare.it/negozio/?modele=caddy-maxi&finition=pin&matelas=sans#commande",
+      "price": "700.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "300",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "IT"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "IT",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    },
+    {
+     "@type": "Product",
+     "sku": "caddy-maxi-carrossier-sans",
+     "mpn": "caddy-maxi-carrossier-sans",
+     "name": "Kit camper rimovibile Volkswagen Caddy Maxi, Fenolico antiscivolo",
+     "material": "Fenolico antiscivolo",
+     "size": "Volkswagen Caddy Maxi",
+     "image": "https://kitcampermodulare.it/img/kit-carrossier-lit.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitcampermodulare.it/negozio/?modele=caddy-maxi&finition=carrossier&matelas=sans#commande",
+      "price": "750.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "300",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "IT"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "IT",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    },
+    {
+     "@type": "Product",
+     "sku": "caddy-maxi-hpl-sans",
+     "mpn": "caddy-maxi-hpl-sans",
+     "name": "Kit camper rimovibile Volkswagen Caddy Maxi, HPL di pioppo",
+     "material": "HPL di pioppo",
+     "size": "Volkswagen Caddy Maxi",
+     "image": "https://kitcampermodulare.it/img/kit-carrossier-lit.webp",
+     "offers": {
+      "@type": "Offer",
+      "url": "https://kitcampermodulare.it/negozio/?modele=caddy-maxi&finition=hpl&matelas=sans#commande",
+      "price": "1000.00",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+       "@type": "Organization",
+       "name": "Camperizate"
+      },
+      "shippingDetails": {
+       "@type": "OfferShippingDetails",
+       "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "300",
+        "currency": "EUR"
+       },
+       "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "IT"
+       },
+       "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 5,
+         "maxValue": 15,
+         "unitCode": "DAY"
+        },
+        "transitTime": {
+         "@type": "QuantitativeValue",
+         "minValue": 2,
+         "maxValue": 5,
+         "unitCode": "DAY"
+        }
+       }
+      },
+      "hasMerchantReturnPolicy": {
+       "@type": "MerchantReturnPolicy",
+       "applicableCountry": "IT",
+       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+      }
+     }
+    }
+   ],
    "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.5",
@@ -634,7 +957,7 @@ section{padding:52px 0}
     <div class="versions">
       <h3>Versioni</h3>
       <p>Caddy: kit multispazio. Caddy Maxi: kit più lungo, al prezzo del van compatto.</p>
-      <ul class="model-links"><li><a href="/negozio/?modele=caddy#commande"><span>Volkswagen Caddy</span><b>da 500 €</b></a></li><li><a href="/negozio/?modele=caddy-maxi#commande"><span>Volkswagen Caddy Maxi</span><b>da 700 €</b></a></li></ul>
+      <ul class="model-links"><li><a href="/negozio/?modele=caddy#commande"><span>Volkswagen Caddy</span><b>da 500 €</b><small class="v-prix"><span>Fenolico pino</span> 500&nbsp;€ · <span>Fenolico antiscivolo</span> 550&nbsp;€ · <span>HPL di pioppo</span> 800&nbsp;€</small></a></li><li><a href="/negozio/?modele=caddy-maxi#commande"><span>Volkswagen Caddy Maxi</span><b>da 700 €</b><small class="v-prix"><span>Fenolico pino</span> 700&nbsp;€ · <span>Fenolico antiscivolo</span> 750&nbsp;€ · <span>HPL di pioppo</span> 1000&nbsp;€</small></a></li></ul>
     </div>
     <p class="help">Optional (cassetti, scolapiatti, versione 2+1…) e accessori (oscuranti, frigo, batteria…): <a href="/accessori/">vedi nel dettaglio</a>.</p>
     <a href="/negozio/?modele=caddy#commande" class="btn btn-primary" style="margin-top:20px;max-width:420px">Ordina questo kit <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>

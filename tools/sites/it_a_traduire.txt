@@ -1,12 +1,14 @@
 # Textes sans traduction : 0. Les ajouter dans tools/sites/it_textes.py.
 
 
-# Traductions jamais utilisées (texte français modifié ou supprimé ?) : 4
+# Traductions jamais utilisées (texte français modifié ou supprimé ?) : 6
 
 "866 Avenue Maréchal Juin"
 "Atelier en France"
 "Commander par message"
+"Grand fourgon"
 "Ludospace"
+"Van compact"
 
 # Remplacements SCRIPTS jamais utilisés : 0
 
