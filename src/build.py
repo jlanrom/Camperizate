@@ -15,7 +15,8 @@ from PIL import Image
 from content_furgonetas import FURGONETAS
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(os.path.dirname(ROOT), "web")
+# FECHA_BUILD y SALIDA permiten previsualizar cómo quedará la web otro día sin tocar web/.
+OUT = os.environ.get("SALIDA") or os.path.join(os.path.dirname(ROOT), "web")
 SITE = "https://camperizacionmalaga.com"
 BRAND = "Lifes Campers"
 TEL1, TEL2 = "637 37 22 96", "637 31 32 52"
@@ -27,7 +28,8 @@ FACEBOOK = "https://www.facebook.com/p/Lifes-Campers-M%C3%A1laga-100063913059162
 MAPS = "https://www.google.com/maps/search/?api=1&query=Lifes+Campers+M%C3%A1laga"
 WEB3FORMS_KEY = "71767edc-8025-4398-8918-90c888817feb"
 PRICE = "24.900 €"
-TODAY = date.today().isoformat()
+PRICE_NOTE = "Configuración básica en L2H2 y L3H2 · L4H2 desde 26.000 € · configuración avanzada hasta 26.300 €"
+TODAY = os.environ.get("FECHA_BUILD") or date.today().isoformat()
 LEGAL_UPDATED = "2026-10-09"  # cambia esta fecha cuando modifiques los textos legales
 
 esc = html.escape
@@ -407,9 +409,10 @@ def page_home():
 <section class="section alt"><div class="wrap">
   <div class="price">
     <div>
-      <p class="label">Equipamiento completo</p>
+      <p class="label">Camperización integral · desde</p>
       <p class="amount">{PRICE}</p>
       <p class="note">Homologación y garantía incluidas · Entrega en 3 meses</p>
+      <p class="muted" style="font-size:.95rem">{PRICE_NOTE}</p>
       <p>Camperización integral sobre tu furgoneta tipo Ducato, Boxer, Jumper, Sprinter, Crafter o Transit. ¿Aún no la tienes? Te ayudamos a encontrarla.</p>
       <div class="actions"><a class="btn btn-dark" href="/camperizacion-integral/">Ver todo lo que incluye</a></div>
     </div>
@@ -447,7 +450,7 @@ def page_home():
 {cta()}
 """
     return layout("/", "Camperización de furgonetas en Málaga | Lifes Campers",
-                  "Camperización integral de furgonetas grandes en Málaga: Ducato, Boxer, Jumper, Sprinter, Crafter… Equipamiento completo por 24.900 € con homologación y garantía.",
+                  "Camperización integral de furgonetas grandes en Málaga: Ducato, Boxer, Jumper, Sprinter, Crafter… Camperización integral desde 24.900 € con homologación y garantía.",
                   body)
 
 
@@ -455,7 +458,8 @@ def page_integral():
     specs = "".join(f'<div class="spec"><div><span class="n">{i + 1:02d}</span><h3>{esc(t)}</h3></div>'
                     f'<ul>{"".join(f"<li>{esc(x)}</li>" for x in items)}</ul></div>' for i, (t, items) in enumerate(SPECS))
     faqs = [
-        ("¿El precio incluye la furgoneta?", "No. Los 24.900 € son la camperización integral completa sobre tu furgoneta. Si todavía no la tienes, te ayudamos a encontrar la base adecuada."),
+        ("¿El precio incluye la furgoneta?", "No. El precio (desde 24.900 €) es el de la camperización integral completa sobre tu furgoneta. Si todavía no la tienes, te ayudamos a encontrar la base adecuada."),
+        ("¿Por qué varía el precio?", "La configuración básica cuesta 24.900 € en L2H2 y L3H2, y 26.000 € en L4H2. Con un equipamiento más avanzado llega hasta 26.300 €. La homologación está incluida siempre."),
         ("¿En qué furgonetas trabajáis?", "Nos centramos en furgonetas grandes desde L2H2: Fiat Ducato, Peugeot Boxer, Citroën Jumper, Opel Movano, Renault Master, Volkswagen Crafter, Mercedes Sprinter, Ford Transit e Iveco Daily."),
         ("¿Cuánto se tarda?", "Unos 3 meses desde la reserva hasta la entrega de tu camper, lista y homologada."),
         ("¿Está incluida la homologación?", "Sí. Preparamos y gestionamos el proyecto de homologación completo, incluidas las plazas traseras homologadas para viajar en regla."),
@@ -467,6 +471,7 @@ def page_integral():
     service = {"@type": "Service", "name": "Camperización integral de furgoneta", "serviceType": "Camperización de furgonetas",
                "provider": {"@id": SITE + "/#negocio"}, "areaServed": "España",
                "offers": {"@type": "Offer", "price": "24900", "priceCurrency": "EUR",
+                          "priceSpecification": {"@type": "PriceSpecification", "minPrice": 24900, "maxPrice": 26300, "priceCurrency": "EUR"},
                           "description": "Equipamiento completo, homologación y garantía incluidas. Precio de la camperización, sin la furgoneta."}}
     body = f"""
 <section class="hero"><div class="wrap">
@@ -488,8 +493,9 @@ def page_integral():
 <section class="section"><div class="wrap">
   <div class="price">
     <div>
-      <p class="label">La inversión</p>
+      <p class="label">La inversión · desde</p>
       <p class="amount">{PRICE}</p>
+      <p class="muted" style="font-size:.95rem">{PRICE_NOTE}</p>
       <p>Camperización integral con todo el equipamiento de esta página, sobre tu furgoneta o te ayudamos a encontrarla.</p>
       <p class="note">3 meses de plazo, de la reserva a la entrega de tu camper.</p>
     </div>
@@ -512,7 +518,7 @@ def page_integral():
 {cta()}
 """
     return layout("/camperizacion-integral/", "Camperización integral de furgonetas: qué incluye y precio | Lifes Campers",
-                  "Camperización integral por 24.900 €: aislamiento Kaiflex, mobiliario HPL marino, 200 Ah de litio, solar 400 W, agua, cocina, baño, calefacción y homologación. Taller en Málaga.",
+                  "Camperización integral desde 24.900 €: aislamiento Kaiflex, mobiliario HPL marino, 200 Ah de litio, solar 400 W, agua, cocina, baño, calefacción y homologación. Taller en Málaga.",
                   body, [cr_sc, faq_sc, service], active="/camperizacion-integral/")
 
 
@@ -578,9 +584,10 @@ def page_van(v):
 <section class="section"><div class="wrap">
   <div class="price">
     <div>
-      <p class="label">Camperización integral sobre {esc(v["name"])}</p>
+      <p class="label">Camperización integral sobre {esc(v["name"])} · desde</p>
       <p class="amount">{PRICE}</p>
       <p class="note">Homologación y garantía incluidas · Entrega en 3 meses</p>
+      <p class="muted" style="font-size:.95rem">{PRICE_NOTE}</p>
       <p>Aislamiento, mobiliario en HPL marino, 200 Ah de litio con solar de 400 W, agua con 200 l, cocina, baño, calefacción y homologación. Precio de la camperización, sin la furgoneta.</p>
       <div class="actions"><a class="btn btn-dark" href="/camperizacion-integral/">Ver el equipamiento completo</a></div>
     </div>
@@ -831,6 +838,8 @@ def load_posts():
         body = markdown.markdown(body_md, extensions=["extra", "sane_lists"])
         # Un H1 dentro del texto rompería la jerarquía: el título ya es el H1.
         body = re.sub(r"<(/?)h1>", r"<\1h2>", body)
+        # Las tablas anchas se desplazan dentro de su caja en el móvil en vez de ensanchar la página.
+        body = body.replace("<table>", '<div class="table-scroll"><table>').replace("</table>", "</table></div>")
         words = len(re.sub(r"<[^>]+>", " ", body).split())
         hero = blog_image(meta["imagen"])
         posts.append({

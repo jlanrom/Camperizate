@@ -12,7 +12,7 @@ FURGONETAS = [
         "model": "Ducato",
         "card": "La base camper más usada de Europa. Ancha, tracción delantera y suelo bajo.",
         "title": "Camperizar una Fiat Ducato en Málaga | Camperización integral · Lifes Campers",
-        "desc": "Camperización integral de Fiat Ducato L2H2, L3H2 y L4H2 en Málaga: cama transversal, cocina, baño, solar y homologación. 24.900 € con garantía.",
+        "desc": "Camperización integral de Fiat Ducato L2H2, L3H2 y L4H2 en Málaga: cama transversal, cocina, baño, solar y homologación. Desde 24.900 € con garantía.",
         "intro": "La Fiat Ducato es la furgoneta más elegida para hacer campers en Europa, y no es casualidad: es ancha, tiene tracción delantera y un suelo bajo y plano. Una base perfecta para una camperización integral.",
         "hero": "interior-camper-cocina-madera-dinette",
         "photos": ["cama-camper-transversal", "cocina-camper-madera-tapa-abierta", "salon-camper-mesa-asientos-azules", "camper-salon-cama-claraboyas"],
@@ -41,7 +41,7 @@ FURGONETAS = [
         "faq": [
             ("¿Cuál es la mejor Ducato para camperizar?", "Para dos personas, la L2H2 es la más equilibrada entre espacio interior y facilidad de conducción y aparcamiento. Si quieres un baño más grande o garaje trasero, mira la L3H2."),
             ("¿Cabe una cama de matrimonio transversal en una Ducato?", "Sí. Es una de sus grandes ventajas: su anchura interior permite colocar la cama de lado a lado y ganar espacio para el resto de la camper."),
-            ("¿Cuánto cuesta camperizar una Fiat Ducato?", "Nuestra camperización integral con equipamiento completo cuesta 24.900 €, con homologación y garantía incluidas. El precio es sin la furgoneta."),
+            ("¿Cuánto cuesta camperizar una Fiat Ducato?", "Nuestra camperización integral con equipamiento completo cuesta desde 24.900 €, con homologación y garantía incluidas. En L4H2 parte de 26.000 €. El precio es sin la furgoneta."),
         ],
     },
     {
@@ -51,7 +51,7 @@ FURGONETAS = [
         "model": "Boxer",
         "card": "Misma carrocería que la Ducato. Hemos camperizado varias: mira el resultado.",
         "title": "Camperizar una Peugeot Boxer en Málaga | Lifes Campers",
-        "desc": "Camperización integral de Peugeot Boxer L2H2, L3H2 y L4H2 en Málaga. Cama transversal, cocina, baño, energía solar y homologación. 24.900 € con garantía.",
+        "desc": "Camperización integral de Peugeot Boxer L2H2, L3H2 y L4H2 en Málaga. Cama transversal, cocina, baño, energía solar y homologación. Desde 24.900 € con garantía.",
         "intro": "La Peugeot Boxer comparte carrocería con la Fiat Ducato y la Citroën Jumper, así que tiene sus mismas virtudes: anchura para una cama transversal, suelo bajo y mucho volumen útil. En las fotos tienes una Boxer de 2023 que camperizamos en nuestro taller.",
         "hero": "camper-cama-matrimonio-boxer",
         "photos": ["peugeot-boxer-camper-frontal", "cocina-camper-boxer-azulejo", "camper-boxer-sofa-mesa", "camper-boxer-claraboya-tv"],
@@ -78,7 +78,7 @@ FURGONETAS = [
         "faq": [
             ("¿Es igual camperizar una Boxer que una Ducato?", "Sí. La carrocería y las medidas interiores son las mismas, así que la camperización y el precio también lo son."),
             ("¿Qué Boxer recomendáis comprar para camperizar?", "Una L2H2 o L3H2 con motor de 140 CV o más si vas a viajar cargado o por montaña. Escríbenos antes de comprar y te ayudamos a revisarla."),
-            ("¿Cuánto cuesta camperizar una Peugeot Boxer?", "La camperización integral con todo el equipamiento cuesta 24.900 €, homologación y garantía incluidas (sin la furgoneta)."),
+            ("¿Cuánto cuesta camperizar una Peugeot Boxer?", "La camperización integral con todo el equipamiento cuesta desde 24.900 €, homologación y garantía incluidas (sin la furgoneta)."),
         ],
     },
     {
@@ -88,7 +88,7 @@ FURGONETAS = [
         "model": "Jumper",
         "card": "Gemela de la Ducato y la Boxer. Muy buena opción de segunda mano.",
         "title": "Camperizar una Citroën Jumper en Málaga | Lifes Campers",
-        "desc": "Camperización integral de Citroën Jumper L2H2, L3H2 y L4H2 en Málaga. Consejos para comprar una Jumper de segunda mano para camper. 24.900 € con homologación.",
+        "desc": "Camperización integral de Citroën Jumper L2H2, L3H2 y L4H2 en Málaga. Consejos para comprar una Jumper de segunda mano para camper. Desde 24.900 € con homologación.",
         "intro": "La Citroën Jumper es la tercera gemela de la familia Ducato y Boxer. Misma anchura, mismas versiones y mismo potencial camper, y a menudo se encuentra a muy buen precio de segunda mano.",
         "hero": "interior-camper-cama-cocina-azulejo-verde",
         "photos": ["cocina-camper-azulejo-escamas", "cocina-camper-horno-vistas-mar", "dinette-camper-madera-macrame", "ducha-camper-azulejo-blanco"],
@@ -117,7 +117,7 @@ FURGONETAS = [
         "faq": [
             ("¿Merece la pena camperizar una Jumper usada?", "Sí, si está sana de chapa y mecánica. Una Jumper L2H2 o L3H2 de segunda mano es una de las bases con mejor relación calidad-precio."),
             ("¿Podéis revisar la furgoneta antes de que la compre?", "Envíanos el anuncio o tráela al taller y te decimos lo que vemos: versión, estado y si encaja con la camper que quieres."),
-            ("¿Cuánto cuesta camperizar una Citroën Jumper?", "24.900 € la camperización integral con equipamiento completo, homologación y garantía incluidas."),
+            ("¿Cuánto cuesta camperizar una Citroën Jumper?", "Desde 24.900 € la camperización integral con equipamiento completo, homologación y garantía incluidas."),
         ],
     },
     {
@@ -127,7 +127,7 @@ FURGONETAS = [
         "model": "Movano",
         "card": "Ojo al año: desde 2021 es gemela de la Ducato; antes, de la Renault Master.",
         "title": "Camperizar una Opel Movano en Málaga | Lifes Campers",
-        "desc": "Camperización integral de Opel Movano en Málaga. Diferencias entre la Movano anterior a 2021 (base Master) y la actual (base Ducato). 24.900 € con homologación y garantía.",
+        "desc": "Camperización integral de Opel Movano en Málaga. Diferencias entre la Movano anterior a 2021 (base Master) y la actual (base Ducato). Desde 24.900 € con homologación y garantía.",
         "intro": "La Opel Movano es un caso especial: según el año, por dentro es una furgoneta distinta. Saber cuál tienes es clave para diseñar bien la camper.",
         "hero": "camper-puerta-lateral-dinette",
         "photos": ["interior-camper-madera-clara", "salon-camper-sofa-claraboya", "cocina-camper-fogon-gas", "cocina-camper-fregadero-nevera"],
@@ -152,7 +152,7 @@ FURGONETAS = [
         "faq": [
             ("¿Cómo sé qué Movano tengo?", "Si es de 2021 en adelante, normalmente es la versión con base Ducato. Envíanos una foto o el año de matriculación y lo comprobamos."),
             ("¿Cabe una cama transversal en una Movano?", "En la Movano actual sí, como en la Ducato. En la anterior (base Master) depende de tu altura; lo vemos juntos al diseñar."),
-            ("¿Cuánto cuesta camperizar una Opel Movano?", "24.900 € la camperización integral, con homologación y garantía incluidas (sin la furgoneta)."),
+            ("¿Cuánto cuesta camperizar una Opel Movano?", "Desde 24.900 € la camperización integral, con homologación y garantía incluidas (sin la furgoneta)."),
         ],
     },
     {
@@ -162,7 +162,7 @@ FURGONETAS = [
         "model": "Master",
         "card": "Robusta y muy extendida. Con tracción delantera o trasera según versión.",
         "title": "Camperizar una Renault Master en Málaga | Lifes Campers",
-        "desc": "Camperización integral de Renault Master L2H2 y L3H2 en Málaga: distribución, tracción delantera o trasera, cama y homologación. 24.900 € con garantía.",
+        "desc": "Camperización integral de Renault Master L2H2 y L3H2 en Málaga: distribución, tracción delantera o trasera, cama y homologación. Desde 24.900 € con garantía.",
         "intro": "La Renault Master es una de las furgonetas grandes más vendidas en España, así que es fácil encontrarla de segunda mano y a buen precio. Es robusta, cómoda de conducir y una base camper muy capaz.",
         "hero": "camper-cama-elevable-dinette",
         "photos": ["camper-cama-trasera-garaje", "camper-literas-dinette", "cocina-camper-horno-madera", "cocina-camper-grifo-industrial"],
@@ -188,7 +188,7 @@ FURGONETAS = [
         "faq": [
             ("¿Es mejor la Master de tracción delantera o trasera para camper?", "Para la mayoría de campers recomendamos la de tracción delantera: suelo más bajo y más altura interior útil. La trasera interesa si vas a llevar mucho peso."),
             ("¿Se puede dormir cuatro en una Master camperizada?", "Sí, con una cama elevable sobre la dinette y plazas traseras homologadas."),
-            ("¿Cuánto cuesta camperizar una Renault Master?", "24.900 € la camperización integral con equipamiento completo, homologación y garantía (sin la furgoneta)."),
+            ("¿Cuánto cuesta camperizar una Renault Master?", "Desde 24.900 € la camperización integral con equipamiento completo, homologación y garantía (sin la furgoneta)."),
         ],
     },
     {
@@ -198,7 +198,7 @@ FURGONETAS = [
         "model": "Crafter",
         "card": "Acabados de turismo, cambio automático y opción 4MOTION.",
         "title": "Camperizar una Volkswagen Crafter en Málaga | Lifes Campers",
-        "desc": "Camperización integral de Volkswagen Crafter (y MAN TGE) en Málaga: tracción delantera, trasera o 4MOTION, distribución y homologación. 24.900 € con garantía.",
+        "desc": "Camperización integral de Volkswagen Crafter (y MAN TGE) en Málaga: tracción delantera, trasera o 4MOTION, distribución y homologación. Desde 24.900 € con garantía.",
         "intro": "La Volkswagen Crafter es la opción para quien busca una conducción más cercana a la de un turismo: buen confort de marcha, ayudas a la conducción y cambio automático disponible. Una base excelente para una camper premium.",
         "hero": "interior-camper-gris-claraboya",
         "photos": ["cocina-camper-tapa-madera", "cocina-camper-fogon-dos-fuegos", "desayuno-camper-mar", "encimera-madera-camper-taza"],
@@ -225,7 +225,7 @@ FURGONETAS = [
         "faq": [
             ("¿Qué Crafter es mejor para camper?", "Una Crafter de batalla media y techo alto es el equivalente a una L2H2 y la más equilibrada. La 4MOTION, si vas a salir del asfalto."),
             ("¿Camperizáis también la MAN TGE?", "Sí. Es la misma furgoneta que la Crafter, así que la camperización es idéntica."),
-            ("¿Cuánto cuesta camperizar una Volkswagen Crafter?", "24.900 € la camperización integral con equipamiento completo, homologación y garantía (sin la furgoneta). Extras como techo elevable o ruedas off-road se presupuestan aparte."),
+            ("¿Cuánto cuesta camperizar una Volkswagen Crafter?", "Desde 24.900 € la camperización integral con equipamiento completo, homologación y garantía (sin la furgoneta). Extras como techo elevable o ruedas off-road se presupuestan aparte."),
         ],
     },
     {
@@ -235,7 +235,7 @@ FURGONETAS = [
         "model": "Sprinter",
         "card": "La referencia premium: calidad, valor de reventa y tracción trasera o 4x4.",
         "title": "Camperizar una Mercedes Sprinter en Málaga | Lifes Campers",
-        "desc": "Camperización integral de Mercedes Sprinter en Málaga: tracción trasera, delantera o 4x4, distribución, peso y homologación. 24.900 € con garantía.",
+        "desc": "Camperización integral de Mercedes Sprinter en Málaga: tracción trasera, delantera o 4x4, distribución, peso y homologación. Desde 24.900 € con garantía.",
         "intro": "La Mercedes Sprinter es la furgoneta premium por excelencia: calidad de construcción, fiabilidad y un valor de reventa muy alto. Si buscas una camper para muchos años y kilómetros, es una apuesta segura.",
         "hero": "interior-camper-madera-oscura",
         "photos": ["cocina-camper-horno-encimera-nogal", "camper-salon-cama-claraboyas", "salon-camper-mesa-asientos-azules", "cama-camper-transversal"],
@@ -262,7 +262,7 @@ FURGONETAS = [
         "faq": [
             ("¿Cabe una cama transversal en una Sprinter?", "Para personas de estatura media, sí. Si mides más, te recomendaremos una cama longitudinal para que descanses bien."),
             ("¿Tracción trasera o delantera para una Sprinter camper?", "La trasera es la más habitual y la mejor si llevas mucho peso o remolque. La delantera deja el suelo algo más bajo. La 4x4, para uso fuera de asfalto."),
-            ("¿Cuánto cuesta camperizar una Mercedes Sprinter?", "24.900 € la camperización integral con equipamiento completo, homologación y garantía (sin la furgoneta)."),
+            ("¿Cuánto cuesta camperizar una Mercedes Sprinter?", "Desde 24.900 € la camperización integral con equipamiento completo, homologación y garantía (sin la furgoneta)."),
         ],
     },
     {
@@ -272,7 +272,7 @@ FURGONETAS = [
         "model": "Transit",
         "card": "Fácil de encontrar, con tracción delantera, trasera o total.",
         "title": "Camperizar una Ford Transit en Málaga | Lifes Campers",
-        "desc": "Camperización integral de Ford Transit L2H2, L3H2 y L3H3 en Málaga: tracción delantera, trasera o AWD, distribución y homologación. 24.900 € con garantía.",
+        "desc": "Camperización integral de Ford Transit L2H2, L3H2 y L3H3 en Málaga: tracción delantera, trasera o AWD, distribución y homologación. Desde 24.900 € con garantía.",
         "intro": "La Ford Transit grande es una base camper muy versátil: se encuentra con facilidad, tiene buen comportamiento en carretera y se ofrece con tracción delantera, trasera o total.",
         "hero": "dinette-camper-tapizado-claro",
         "photos": ["cocina-camper-encimera-placa", "bano-camper-ducha-wc", "cocina-camper-azulejo-armarios", "encimera-barnizada-camper"],
@@ -296,7 +296,7 @@ FURGONETAS = [
         "faq": [
             ("¿Qué Transit es mejor para camperizar?", "La L2H2 o L3H2 de tracción delantera es la más práctica para dos personas. Si sois altos, la H3 da un plus de altura interior."),
             ("¿Se puede poner baño completo en una Transit?", "Sí. En una L2H2 o superior cabe un baño con ducha y WC."),
-            ("¿Cuánto cuesta camperizar una Ford Transit?", "24.900 € la camperización integral con equipamiento completo, homologación y garantía (sin la furgoneta)."),
+            ("¿Cuánto cuesta camperizar una Ford Transit?", "Desde 24.900 € la camperización integral con equipamiento completo, homologación y garantía (sin la furgoneta)."),
         ],
     },
     {
@@ -332,7 +332,7 @@ FURGONETAS = [
         "faq": [
             ("¿Puedo conducir una Iveco Daily camper con el carné B?", "Sí, si la versión tiene una masa máxima autorizada de 3.500 kg. Las versiones más pesadas requieren el carné C1."),
             ("¿Es buena la Daily para viajar mucho?", "Sí. Su chasis y su tracción trasera la hacen muy resistente para muchos kilómetros con carga. Es menos ágil en ciudad que una Ducato."),
-            ("¿Cuánto cuesta camperizar una Iveco Daily?", "Nuestra camperización integral con equipamiento completo cuesta 24.900 €, con homologación y garantía. En versiones muy largas te hacemos un presupuesto a medida."),
+            ("¿Cuánto cuesta camperizar una Iveco Daily?", "Nuestra camperización integral con equipamiento completo cuesta desde 24.900 €, con homologación y garantía. En versiones muy largas te hacemos un presupuesto a medida."),
         ],
     },
 ]
