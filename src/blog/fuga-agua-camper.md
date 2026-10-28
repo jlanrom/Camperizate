@@ -1,7 +1,7 @@
 ---
 titulo: Fugas de agua en la camper: bomba, ducha y baño
 descripcion: La bomba arranca sola, hay charcos bajo los muebles o huele el desagüe: cómo encontrar y reparar las fugas de agua, ducha y baño de una camper.
-fecha: 2027-01-12
+fecha: 2026-11-17
 imagen: cocina-camper-fregadero-nevera
 ---
 Si la bomba de agua de tu camper se pone en marcha sola sin abrir ningún grifo, tienes una fuga: el circuito pierde presión por algún punto y la bomba arranca para recuperarla. Las fugas suelen estar en la bomba, en las tuberías y sus conexiones, o en la ducha y el baño, y lo mejor es localizarlas pronto, porque casi siempre están escondidas dentro de un mueble.

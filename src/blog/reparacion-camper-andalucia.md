@@ -1,7 +1,7 @@
 ---
 titulo: Reparación camper en Andalucía: qué se estropea y cuándo llevarla al taller
 descripcion: Goteras en claraboyas, batería que no carga, fugas de agua, muebles que crujen: las averías más comunes de una camper y cómo repararlas en Andalucía.
-fecha: 2026-11-10
+fecha: 2026-10-29
 imagen: taller-lifes-campers-malaga
 ---
 Casi todo lo que se estropea en una camper tiene arreglo: claraboyas y ventanas que gotean, baterías que no cargan, fugas de agua, muebles que se sueltan o paneles hinchados por la humedad. Lo que decide cuánto cuesta arreglarlo es el tiempo que pasa desde que aparece el problema. Por eso hay una regla que conviene recordar: si entra o se escapa agua, no esperes.

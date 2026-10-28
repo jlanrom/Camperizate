@@ -1,7 +1,7 @@
 ---
 titulo: Humedad y muebles dañados en la camper: carpintería y panelado
 descripcion: Paneles hinchados, moho, muebles que crujen o puertas que no cierran: cómo reparar la carpintería y el panelado de una camper y cortar la humedad.
-fecha: 2027-01-19
+fecha: 2026-11-19
 imagen: interior-camper-madera-clara
 ---
 La humedad en una camper depende, sobre todo, de cómo se aisló la furgoneta y de cómo se sellaron todas las aperturas que se le hicieron: ventanas, claraboyas, pasos de cables o tornillos al techo. Cuando algo de eso falla, el agua o la condensación terminan en el panelado y en los muebles. Se puede reparar, siempre que antes se corte el origen.

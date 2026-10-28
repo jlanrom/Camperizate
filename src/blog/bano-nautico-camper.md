@@ -1,7 +1,7 @@
 ---
 titulo: Baño náutico camper: cuándo merece la pena y cuándo no
 descripcion: Baño náutico, seco o químico para tu camper: cómo funciona cada uno, qué espacio necesitan y cuándo el náutico no compensa. Caso real de taller.
-fecha: 2026-12-15
+fecha: 2026-11-12
 imagen: bano-camper-ducha-wc
 ---
 Un baño náutico en una camper merece la pena en furgonetas grandes, donde cabe su depósito bajo el chasis, y para quien acepta vaciarlo a menudo. En una furgoneta pequeña, y sobre todo si es híbrida, casi nunca compensa, porque la batería del sistema híbrido ocupa precisamente ese hueco.

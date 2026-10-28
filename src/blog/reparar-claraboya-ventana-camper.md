@@ -1,7 +1,7 @@
 ---
 titulo: Claraboya o ventana de camper que gotea: causas y reparación
 descripcion: ¿Gotea la claraboya o la ventana de tu camper? Por qué pasa, cómo detectarlo a tiempo y cómo se repara para que no vuelva a entrar agua.
-fecha: 2026-11-24
+fecha: 2026-11-05
 imagen: camper-boxer-claraboya-tv
 imagen_alt: Claraboya con luz LED en el techo de madera de una camper
 ---
