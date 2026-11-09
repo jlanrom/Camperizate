@@ -20,7 +20,7 @@ Que entre agua por una claraboya o una ventana es de lo más habitual. Suele pas
 
 Las pistas son manchas en el techo, olor a humedad o gotas junto al marco después de llover o de lavar la furgoneta.
 
-### Sistema eléctrico
+### [Sistema eléctrico](/bateria-camper-no-carga/)
 
 Una batería auxiliar que no aguanta la noche no siempre está gastada. Muchas veces falla la carga desde el alternador, hay una conexión floja o un cable se queda corto para la corriente que lleva y se calienta. Con 12 V no conviene improvisar, porque un cable que se calienta puede llegar a quemarse.
 
