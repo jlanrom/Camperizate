@@ -35,9 +35,9 @@ LEGAL_UPDATED = "2026-10-09"  # cambia esta fecha cuando modifiques los textos l
 esc = html.escape
 
 
-def wa(text="Hola, me gustaría información sobre una camperización."):
+def wa(text=None):
     from urllib.parse import quote
-    return f"https://wa.me/{WA_NUM}?text={quote(text)}"
+    return f"https://wa.me/{WA_NUM}?text={quote(text or UI[LANG]['wa_msg'])}"
 
 
 # --------------------------------------------------------------------------- fotos
@@ -165,8 +165,12 @@ def build_images():
     og.save(os.path.join(dst, "og-lifes-campers.jpg"), quality=82)
 
 
+def alt(slug):
+    return ALTS.get(LANG, ALT).get(slug) or ALT[slug]
+
+
 def pic(slug, cls="", sizes="(max-width: 760px) 100vw, 50vw", eager=False):
-    a = esc(ALT[slug])
+    a = esc(alt(slug))
     load = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
     c = f' class="{cls}"' if cls else ""
     return (f'<img src="/img/{slug}-1200.webp" srcset="/img/{slug}-600.webp 600w, /img/{slug}-1200.webp 1200w" '
@@ -174,7 +178,7 @@ def pic(slug, cls="", sizes="(max-width: 760px) 100vw, 50vw", eager=False):
 
 
 def thumb_link(slug, group, cls=""):
-    a = esc(ALT[slug])
+    a = esc(alt(slug))
     c = f' class="{cls}"' if cls else ""
     return (f'<a href="/img/{slug}-1200.webp" data-lb="{group}"{c}><img src="/img/{slug}-600.webp" width="600" height="600" '
             f'alt="{a}" loading="lazy" decoding="async"></a>')
@@ -185,6 +189,29 @@ WA_SVG = ('<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path
 
 NAV = [("/camperizacion-integral/", "Camperización integral"), ("/furgonetas/", "Furgonetas"),
        ("/trabajos/", "Trabajos"), ("/contacto/", "Contacto")]
+
+# Idioma de las páginas que se están generando ("es" o "en"). Lo cambia main() antes de generar cada idioma.
+LANG = "es"
+ALTS = {"es": ALT}          # textos alternativos de las fotos por idioma (el inglés lo añade content_en.py)
+ALTERNATES = {}             # ruta -> {idioma: ruta equivalente}, para hreflang y el selector de idioma
+UI = {
+    "es": {
+        "html_lang": "es", "in_language": "es-ES", "og_locale": "es_ES", "home": "/",
+        "skip": "Saltar al contenido", "menu": "Abrir menú", "home_aria": "inicio", "nav_aria": "Principal",
+        "wa_msg": "Hola, me gustaría información sobre una camperización.",
+        "wa_aria": "Escríbenos por WhatsApp",
+        "foot_tag": "Camperizaciones integrales a medida en Málaga. Furgonetas grandes, materiales que duran, homologación y garantía.",
+        "foot_contact": "Contacto", "foot_vans": "Furgonetas", "foot_follow": "Síguenos", "foot_legal": "Legal",
+        "legal": [("/aviso-legal/", "Aviso legal"), ("/politica-de-privacidad/", "Privacidad"), ("/politica-de-cookies/", "Cookies")],
+        "foot_right": "Camperización de furgonetas en Málaga",
+        "crumbs_home": "Inicio", "crumbs_aria": "Migas de pan",
+        "cta_title": "¿Damos el siguiente paso?",
+        "cta_text": "Cuéntanos qué furgoneta tienes (o cuál buscas) y cómo viajas. Te respondemos por WhatsApp y diseñamos tu camper contigo.",
+        "cta_btn": "Escríbenos por WhatsApp",
+        "switch_label": "English", "switch_short": "EN",
+        "van_prefix": "/furgonetas/",
+    },
+}
 
 BUSINESS = {
     "@type": "AutomotiveBusiness",
@@ -205,25 +232,39 @@ BUSINESS = {
 
 
 def layout(path, title, desc, body, schema=None, active=None, og_img=None):
+    u = UI[LANG]
     url = SITE + path
+    nav_items = NAV if LANG == "es" else u["nav"]
     nav = "".join(
-        f'<a href="{h}"{" aria-current=page" if active == h else ""}>{esc(t)}</a>' for h, t in NAV)
-    graph = [BUSINESS, {"@type": "WebPage", "@id": url, "url": url, "name": title, "description": desc,
-                        "inLanguage": "es-ES", "isPartOf": {"@type": "WebSite", "url": SITE + "/", "name": BRAND},
+        f'<a href="{h}"{" aria-current=page" if active == h else ""}>{esc(t)}</a>' for h, t in nav_items)
+    # Enlaces a la misma página en el otro idioma (hreflang) y selector de idioma.
+    alts = ALTERNATES.get(path, {})
+    hreflang = ""
+    if alts:
+        hreflang = "".join(f'<link rel="alternate" hreflang="{lg}" href="{SITE}{pth}">\n' for lg, pth in sorted(alts.items()))
+        hreflang += f'<link rel="alternate" hreflang="x-default" href="{SITE}{alts.get("es", path)}">\n'
+    other = "en" if LANG == "es" else "es"
+    switch_href = alts.get(other) or UI[other]["home"]
+    switch = (f'<a class="lang" href="{switch_href}" hreflang="{other}" lang="{other}" '
+              f'title="{esc(u["switch_label"])}">{u["switch_short"]}</a>')
+    vans_list = FURGONETAS if LANG == "es" else u["vans"]
+    biz = dict(BUSINESS, description=u.get("biz_desc", BUSINESS["description"]))
+    graph = [biz, {"@type": "WebPage", "@id": url, "url": url, "name": title, "description": desc,
+                        "inLanguage": u["in_language"], "isPartOf": {"@type": "WebSite", "url": SITE + "/", "name": BRAND},
                         "about": {"@id": SITE + "/#negocio"}}]
     graph += schema or []
     ld = json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False)
     og = og_img or SITE + "/img/og-lifes-campers.jpg"
     return f"""<!doctype html>
-<html lang="es">
+<html lang="{u["html_lang"]}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{url}">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="es_ES">
+{hreflang}<meta property="og:type" content="website">
+<meta property="og:locale" content="{u["og_locale"]}">
 <meta property="og:site_name" content="{BRAND}">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}">
@@ -239,12 +280,12 @@ def layout(path, title, desc, body, schema=None, active=None, og_img=None):
 <script type="application/ld+json">{ld}</script>
 </head>
 <body>
-<a class="skip" href="#main">Saltar al contenido</a>
+<a class="skip" href="#main">{esc(u["skip"])}</a>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="/" aria-label="{BRAND}, inicio"><img src="/img/logo-lifes-campers.png" width="44" height="44" alt=""><span>Lifes Campers</span></a>
-    <button class="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
-    <nav class="nav" id="nav" aria-label="Principal">{nav}<a class="btn btn-wa" href="{wa()}" target="_blank" rel="noopener">{WA_SVG}WhatsApp</a></nav>
+    <a class="brand" href="{u["home"]}" aria-label="{BRAND}, {u["home_aria"]}"><img src="/img/logo-lifes-campers.png" width="44" height="44" alt=""><span>Lifes Campers</span></a>
+    <button class="menu-btn" aria-label="{esc(u["menu"])}" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    <nav class="nav" id="nav" aria-label="{u["nav_aria"]}">{nav}{switch}<a class="btn btn-wa" href="{wa()}" target="_blank" rel="noopener">{WA_SVG}WhatsApp</a></nav>
   </div>
 </header>
 <main id="main">
@@ -255,10 +296,10 @@ def layout(path, title, desc, body, schema=None, active=None, og_img=None):
     <div class="foot-grid">
       <div>
         <p style="font-family:var(--serif);font-size:1.5rem;color:#fff;margin:0 0 8px">Lifes Campers</p>
-        <p>Camperizaciones integrales a medida en Málaga. Furgonetas grandes, materiales que duran, homologación y garantía.</p>
+        <p>{esc(u["foot_tag"])}</p>
       </div>
       <div>
-        <h4>Contacto</h4>
+        <h4>{u["foot_contact"]}</h4>
         <ul>
           <li><a href="tel:+34637372296">{TEL1}</a></li>
           <li><a href="tel:+34637313252">{TEL2}</a></li>
@@ -267,27 +308,23 @@ def layout(path, title, desc, body, schema=None, active=None, og_img=None):
         </ul>
       </div>
       <div>
-        <h4>Furgonetas</h4>
-        <ul>{"".join(f'<li><a href="/furgonetas/{v["slug"]}/">{esc(v["name"])}</a></li>' for v in FURGONETAS)}</ul>
+        <h4>{u["foot_vans"]}</h4>
+        <ul>{"".join(f'<li><a href="{u["van_prefix"]}{v["slug"]}/">{esc(v["name"])}</a></li>' for v in vans_list)}</ul>
       </div>
       <div>
-        <h4>Síguenos</h4>
+        <h4>{u["foot_follow"]}</h4>
         <ul>
           <li><a href="{INSTAGRAM}" target="_blank" rel="noopener">Instagram</a></li>
           <li><a href="{FACEBOOK}" target="_blank" rel="noopener">Facebook</a></li>
         </ul>
-        <h4 style="margin-top:24px">Legal</h4>
-        <ul>
-          <li><a href="/aviso-legal/">Aviso legal</a></li>
-          <li><a href="/politica-de-privacidad/">Privacidad</a></li>
-          <li><a href="/politica-de-cookies/">Cookies</a></li>
-        </ul>
+        <h4 style="margin-top:24px">{u["foot_legal"]}</h4>
+        <ul>{"".join(f'<li><a href="{h}">{esc(t)}</a></li>' for h, t in u["legal"])}</ul>
       </div>
     </div>
-    <div class="foot-bottom"><span>© {date.today().year} Lifes Campers · CROSSCAMPERS, S.L.</span><span>Camperización de furgonetas en Málaga</span></div>
+    <div class="foot-bottom"><span>© {date.today().year} Lifes Campers · CROSSCAMPERS, S.L.</span><span>{esc(u["foot_right"])}</span></div>
   </div>
 </footer>
-<a class="wa-float" href="{wa()}" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">{WA_SVG}</a>
+<a class="wa-float" href="{wa()}" target="_blank" rel="noopener" aria-label="{esc(u["wa_aria"])}">{WA_SVG}</a>
 <script src="/assets/main.js" defer></script>
 </body>
 </html>
@@ -296,11 +333,11 @@ def layout(path, title, desc, body, schema=None, active=None, og_img=None):
 
 def crumbs(items):
     """items: [(nombre, ruta)] sin incluir Inicio. Devuelve (html, schema)."""
-    full = [("Inicio", "/")] + items
+    full = [(UI[LANG]["crumbs_home"], UI[LANG]["home"])] + items
     h = " / ".join(f'<a href="{p}">{esc(n)}</a>' if i < len(full) - 1 else esc(n) for i, (n, p) in enumerate(full))
     sc = {"@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": i + 1, "name": n, "item": SITE + p} for i, (n, p) in enumerate(full)]}
-    return f'<nav class="crumbs" aria-label="Migas de pan">{h}</nav>', sc
+    return f'<nav class="crumbs" aria-label="{UI[LANG]["crumbs_aria"]}">{h}</nav>', sc
 
 
 def faq_block(faqs):
@@ -310,11 +347,11 @@ def faq_block(faqs):
     return f'<div class="faq">{h}</div>', sc
 
 
-def cta(title="¿Damos el siguiente paso?",
-        text="Cuéntanos qué furgoneta tienes (o cuál buscas) y cómo viajas. Te respondemos por WhatsApp y diseñamos tu camper contigo."):
+def cta(title=None, text=None):
+    u = UI[LANG]
     return f"""<section class="section"><div class="wrap"><div class="cta">
-<div><h2>{esc(title)}</h2><p>{esc(text)}</p></div>
-<a class="btn btn-wa" href="{wa()}" target="_blank" rel="noopener">{WA_SVG}Escríbenos por WhatsApp</a>
+<div><h2>{esc(title or u["cta_title"])}</h2><p>{esc(text or u["cta_text"])}</p></div>
+<a class="btn btn-wa" href="{wa()}" target="_blank" rel="noopener">{WA_SVG}{u["cta_btn"]}</a>
 </div></div></section>"""
 
 
@@ -970,7 +1007,10 @@ def write(path, content):
 
 
 def main():
-    global NAV
+    global NAV, LANG
+    import sys
+    import content_en
+    content_en.register(sys.modules[__name__])  # textos de la versión inglesa, ALT en inglés y equivalencias de rutas
     # Conserva las imágenes ya generadas (img/) para no recomprimirlas en cada build.
     if os.path.isdir(OUT):
         for name in os.listdir(OUT):
@@ -1016,16 +1056,25 @@ def main():
         pages["/blog/"] = page_blog(posts)
         for p in posts:
             pages[f'/{p["slug"]}/'] = page_post(p, posts)
+    # Versión en inglés (/en/): mismas fotos y precios, textos propios.
+    LANG = "en"
+    pages_en = content_en.pages(sys.modules[__name__])
+    LANG = "es"
+    clash = set(pages) & set(pages_en)
+    if clash:
+        raise SystemExit(f"Inglés: rutas repetidas {clash}")
+    pages.update(pages_en)
     for path, content in pages.items():
         write(path, content)
     write("/404.html", page_404())
 
-    prio = {"/": "1.0", "/camperizacion-integral/": "0.9", "/furgonetas/": "0.8", "/trabajos/": "0.8", "/contacto/": "0.7", "/blog/": "0.7"}
+    prio = {"/": "1.0", "/camperizacion-integral/": "0.9", "/furgonetas/": "0.8", "/trabajos/": "0.8", "/contacto/": "0.7", "/blog/": "0.7",
+            "/en/": "0.9", "/en/full-campervan-conversion/": "0.8", "/en/vans/": "0.7", "/en/our-work/": "0.7", "/en/contact/": "0.6"}
     # Solo los artículos llevan fecha: así el sitemap no cambia cada día y el build programado
     # solo genera un commit cuando de verdad se publica algo.
     lastmod = {f'/{p["slug"]}/': p["fecha"] for p in posts}
     urls = "".join(f"<url><loc>{SITE}{p}</loc>{f'<lastmod>{lastmod[p]}</lastmod>' if p in lastmod else ''}"
-                   f"<priority>{prio.get(p, '0.6' if ('furgonetas' in p or p in lastmod) else '0.3')}</priority></url>"
+                   f"<priority>{prio.get(p, '0.6' if ('furgonetas' in p or '/en/vans/' in p or p in lastmod) else '0.3')}</priority></url>"
                    for p in pages)
     write("/sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n')
     write("/robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")

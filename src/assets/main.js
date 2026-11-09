@@ -1,3 +1,5 @@
+var EN = (document.documentElement.lang || "").indexOf("en") === 0;
+
 // Menú móvil
 (function () {
   var btn = document.querySelector(".menu-btn");
@@ -17,9 +19,9 @@
   dlg.className = "lb";
   dlg.innerHTML =
     '<div class="lb-inner"><img alt=""></div>' +
-    '<button class="x" aria-label="Cerrar">×</button>' +
-    '<button class="prev" aria-label="Anterior">‹</button>' +
-    '<button class="next" aria-label="Siguiente">›</button><p></p>';
+    '<button class="x" aria-label="' + (EN ? "Close" : "Cerrar") + '">×</button>' +
+    '<button class="prev" aria-label="' + (EN ? "Previous" : "Anterior") + '">‹</button>' +
+    '<button class="next" aria-label="' + (EN ? "Next" : "Siguiente") + '">›</button><p></p>';
   document.body.appendChild(dlg);
   var img = dlg.querySelector("img"), cap = dlg.querySelector("p");
   var group = [], i = 0;
@@ -69,7 +71,7 @@
     var btn = form.querySelector("button[type=submit]");
     var data = Object.fromEntries(new FormData(form));
     btn.disabled = true;
-    msg.textContent = "Enviando…";
+    msg.textContent = EN ? "Sending…" : "Enviando…";
     fetch("https://api.web3forms.com/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -79,10 +81,10 @@
       .then(function (r) {
         if (!r.success) throw new Error(r.message);
         form.reset();
-        msg.textContent = "¡Gracias! Hemos recibido tu mensaje y te responderemos muy pronto.";
+        msg.textContent = EN ? "Thank you! We have received your message and will reply very soon." : "¡Gracias! Hemos recibido tu mensaje y te responderemos muy pronto.";
       })
       .catch(function () {
-        msg.textContent = "No se ha podido enviar. Escríbenos por WhatsApp y te atendemos enseguida.";
+        msg.textContent = EN ? "The message could not be sent. Please message us on WhatsApp and we\'ll get back to you straight away." : "No se ha podido enviar. Escríbenos por WhatsApp y te atendemos enseguida.";
       })
       .finally(function () { btn.disabled = false; });
   });

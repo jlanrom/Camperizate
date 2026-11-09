@@ -18,6 +18,12 @@ Web estática de Lifes Campers, publicada en Cloudflare Workers. Cada cambio que
 - `/contacto/`: WhatsApp, teléfonos, taller y formulario.
 - Aviso legal, privacidad y cookies.
 
+## Versión en inglés (/en/)
+- Todas las páginas principales tienen versión en inglés en `/en/`: inicio, camperización integral (`/en/full-campervan-conversion/`), furgonetas (`/en/vans/` y una página por modelo), trabajos (`/en/our-work/`), contacto y textos legales.
+- Los textos en inglés están en `src/content_en.py`; los del resto de la web, en `build.py` y `content_furgonetas.py`. Si cambias un texto o un precio en español, cámbialo también en inglés.
+- Cada página enlaza a su equivalente en el otro idioma (botón ES/EN del menú y etiquetas hreflang para Google).
+- El blog solo está en español.
+
 ## Cómo hacer cambios habituales
 - **Añadir fotos**: copia la foto (en .webp o .jpg convertida a .webp) en `src/fotos/` con un nombre descriptivo, por ejemplo `cocina-camper-ducato-encimera-roble.webp`. Añade su texto alternativo en `ALT` y colócala en un proyecto de `PROJECTS` (ambos en `build.py`).
 - **Añadir una furgoneta**: copia un bloque de `content_furgonetas.py` y adáptalo.
