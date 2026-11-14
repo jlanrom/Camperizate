@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "configurador-lifes",
+  "main": "src/index.js",
+  "compatibility_date": "2025-09-01",
+  "assets": { "directory": "./public", "binding": "ASSETS" },
+  "vars": {
+    // Base de Notion «Configuraciones de clientes · Málaga»
+    "NOTION_DATABASE_ID": "418fba6682c58161b0c2e294e79fdbea"
+  }
+  // Secreto (no va aquí): NOTION_TOKEN → Settings → Variables and Secrets
+}

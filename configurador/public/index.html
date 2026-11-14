@@ -1,0 +1,867 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Configurador Lifes Campers</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: plano de taller fijo a la izquierda (o arriba en móvil) + pasos del formulario a la derecha */
+:root{
+  --bg:#F2F4F1; --surface:#FFFFFF; --sunk:#E7ECE8; --ink:#1A2421; --muted:#5B6964; --line:#D3DBD6;
+  --accent:#1E6A56; --accent-soft:#DDEDE6; --on-accent:#FFFFFF;
+  --warn:#9A4E0C; --warn-bg:#FBEADB; --ok:#256B45;
+  --draw:#24302C; --draw-soft:#8C9893; --glass:#3B4A52;
+  --f-display:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111715; --surface:#19211E; --sunk:#202A26; --ink:#E4EAE7; --muted:#9AA8A2; --line:#2F3B37;
+  --accent:#5CC0A0; --accent-soft:#1F3A31; --on-accent:#0D1A15;
+  --warn:#F0A766; --warn-bg:#3A2716; --ok:#6FCF97;
+  --draw:#CBD5D0; --draw-soft:#6E7C76; --glass:#26343B; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111715; --surface:#19211E; --sunk:#202A26; --ink:#E4EAE7; --muted:#9AA8A2; --line:#2F3B37;
+  --accent:#5CC0A0; --accent-soft:#1F3A31; --on-accent:#0D1A15;
+  --warn:#F0A766; --warn-bg:#3A2716; --ok:#6FCF97;
+  --draw:#CBD5D0; --draw-soft:#6E7C76; --glass:#26343B; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;margin:0}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+.wrap{max-width:1280px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+header.top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+header.top h1{font-size:clamp(22px,3vw,30px);font-weight:800}
+header.top p{margin:0;color:var(--muted);font-size:14px}
+.beta{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);border-radius:99px;padding:2px 8px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}}
+/* preview */
+.preview{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;min-width:0}
+@media (max-width:900px){.preview{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;border-radius:0 0 var(--r) var(--r);margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:10px max(16px,env(safe-area-inset-left,0px));box-shadow:0 6px 18px -12px rgba(0,0,0,.35)}
+  .preview svg{max-height:30vh}}
+.tabs{display:flex;gap:4px;background:var(--sunk);border-radius:8px;padding:3px;margin-bottom:10px;width:max-content;max-width:100%}
+.tabs button{all:unset;cursor:pointer;font-size:13px;font-weight:600;padding:6px 12px;border-radius:6px;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.tabs button:focus-visible{outline:2px solid var(--accent)}
+.preview svg{width:100%;height:auto;display:block}
+.dims{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-top:8px}
+.dims b{color:var(--ink);font-weight:500}
+.sidebtn{display:flex;gap:6px;margin-top:6px}
+.sidebtn button{all:unset;cursor:pointer;font-size:12px;border:1px solid var(--line);border-radius:99px;padding:3px 10px;color:var(--muted)}
+.sidebtn button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:600}
+.alerts{display:grid;gap:6px;margin-top:10px}
+.alert{background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:8px 10px;font-size:13px}
+.fit{color:var(--ok);font-size:13px;margin-top:8px}
+@media (max-width:900px){.alerts,.fit{font-size:12px}}
+/* stepper */
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;padding:0;list-style:none}
+.steps button{all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--muted);padding:6px 10px;border-radius:99px;border:1px solid var(--line);background:var(--surface)}
+.steps button .n{font-family:var(--f-mono);font-size:11px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:var(--sunk)}
+.steps button[aria-current="step"]{border-color:var(--accent);color:var(--ink)}
+.steps button[aria-current="step"] .n{background:var(--accent);color:var(--on-accent)}
+.steps button.done .n{background:var(--accent-soft);color:var(--accent)}
+.steps button:focus-visible{outline:2px solid var(--accent)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;min-width:0}
+.panel h2{font-size:22px;margin-bottom:4px}
+.panel .lead{color:var(--muted);margin:0 0 18px}
+fieldset{border:0;margin:0 0 20px;padding:0;min-width:0}
+legend{font-weight:600;margin-bottom:8px;font-size:15px;padding:0}
+.hint{color:var(--muted);font-size:13px;margin:-4px 0 8px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.opts.small{grid-template-columns:repeat(auto-fill,minmax(64px,1fr))}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt label{display:flex;flex-direction:column;gap:2px;height:100%;cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--surface);transition:border-color .15s}
+.opt label b{font-weight:600;font-size:14px}
+.opt label span{color:var(--muted);font-size:12.5px;line-height:1.35}
+.opts.small .opt label{align-items:center;text-align:center;padding:8px 4px;font-family:var(--f-mono);font-weight:500}
+.opt input:checked + label{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--accent-soft)}
+.opt input:focus-visible + label{outline:2px solid var(--accent);outline-offset:2px}
+.opt input:disabled + label{opacity:.45;cursor:not-allowed}
+.sw{display:flex;align-items:center;gap:10px}
+.opt label .sw{color:var(--ink);font-size:14px}
+.sw i{flex:none;width:30px;height:30px;border-radius:6px;border:1px solid rgba(0,0,0,.15);background-size:cover}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.f label{font-size:13px;font-weight:600}
+input[type=text],input[type=email],input[type=tel],input[type=number],select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%}
+textarea{min-height:80px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.check{display:flex;gap:10px;align-items:flex-start;padding:8px 0;cursor:pointer}
+.check input{margin-top:3px;accent-color:var(--accent);width:16px;height:16px;flex:none}
+.check span small{display:block;color:var(--muted);font-size:12.5px}
+.checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0 16px}
+.std{background:var(--sunk);border-radius:8px;padding:12px 14px;margin-bottom:18px}
+.std h3{font-size:15px;margin-bottom:6px}
+.std ul{margin:0;padding-left:18px;columns:2;column-gap:24px;font-size:13.5px}
+@media (max-width:520px){.std ul{columns:1}}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:8px;flex-wrap:wrap}
+.btn{all:unset;cursor:pointer;font-weight:600;font-size:15px;padding:11px 18px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn[disabled]{opacity:.5;cursor:wait}
+.summary{font-size:13.5px;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:18px}
+.summary div{display:grid;grid-template-columns:130px minmax(0,1fr);gap:10px;padding:8px 12px;border-top:1px solid var(--line)}
+.summary div:first-child{border-top:0}
+.summary dt{color:var(--muted);font-weight:600}
+.summary dd{margin:0}
+@media (max-width:520px){.summary div{grid-template-columns:minmax(0,1fr);gap:0}}
+.err{color:var(--warn);font-size:13px;min-height:1em}
+.done-box{border:1px solid var(--accent);background:var(--accent-soft);border-radius:var(--r);padding:16px}
+.done-box h3{font-size:18px;margin-bottom:6px}
+.ref{font-family:var(--f-mono);font-size:15px}
+pre.copy{white-space:pre-wrap;font-family:var(--f-mono);font-size:12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;max-height:240px;overflow:auto}
+svg text{font-family:var(--f-body)}
+svg .lbl{font-size:10px;font-weight:600;fill:#1F2523}
+svg .lbl.on-dark{fill:#F5F3EE}
+svg .dim{font-family:var(--f-mono);font-size:11px;fill:var(--muted)}
+svg .stroke{stroke:var(--draw);fill:none}
+svg .soft{stroke:var(--draw-soft);fill:none}
+svg .body{fill:var(--surface);stroke:var(--draw)}
+@media (prefers-reduced-motion:no-preference){svg .anim{transition:all .25s ease}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Diseña tu camper</h1>
+      <p>Elige furgoneta, distribución y acabados. El dibujo cambia con cada elección.</p>
+    </div>
+    <span class="beta">Beta · Lifes Campers Málaga</span>
+  </header>
+
+  <div class="grid">
+    <section class="preview" aria-label="Vista de tu furgoneta">
+      <div class="tabs" role="tablist">
+        <button role="tab" id="tab-ext" aria-selected="true" data-view="ext">Exterior</button>
+        <button role="tab" id="tab-plan" aria-selected="false" data-view="plan">Planta</button>
+        <button role="tab" id="tab-int" aria-selected="false" data-view="int">Interior</button>
+      </div>
+      <div id="view"></div>
+      <div class="sidebtn" id="sidebtns" hidden>
+        <button id="side-a" aria-pressed="true" data-side="A">Lado puerta corredera</button>
+        <button id="side-b" aria-pressed="false" data-side="B">Lado conductor</button>
+      </div>
+      <div class="dims" id="dims"></div>
+      <div class="alerts" id="alerts"></div>
+    </section>
+
+    <section>
+      <ol class="steps" id="steps"></ol>
+      <form class="panel" id="form" novalidate>
+
+        <!-- 1 FURGONETA -->
+        <div data-step="0">
+          <h2>Tu furgoneta</h2>
+          <p class="lead">Si ya la tienes, dinos cuál es. Si aún no, elige la que te gustaría y te ayudamos.</p>
+          <fieldset>
+            <legend>¿Ya tienes la furgoneta?</legend>
+            <div class="opts">
+              <div class="opt"><input type="radio" name="tiene" id="tiene-si" value="si" checked><label for="tiene-si"><b>Sí, ya la tengo</b><span>La traes al taller</span></label></div>
+              <div class="opt"><input type="radio" name="tiene" id="tiene-no" value="no"><label for="tiene-no"><b>Todavía no</b><span>Te aconsejamos cuál comprar</span></label></div>
+            </div>
+          </fieldset>
+          <div class="row">
+            <div class="f"><label for="marca">Marca y modelo</label>
+              <select id="marca" name="marca">
+                <option>Fiat Ducato</option><option>Citroën Jumper</option><option>Peugeot Boxer</option>
+                <option>Renault Master</option><option>Opel Movano</option><option>Ford Transit</option>
+                <option>Mercedes Sprinter</option><option>Volkswagen Crafter</option><option>MAN TGE</option>
+                <option>Iveco Daily</option><option>Otra</option><option>No lo sé, aconsejadme</option>
+              </select></div>
+            <div class="f" id="f-anio"><label for="anio">Año</label><input type="number" id="anio" name="anio" min="1995" max="2027" placeholder="2021"></div>
+            <div class="f"><label for="colorfurgo">Color exterior</label>
+              <select id="colorfurgo" name="colorfurgo">
+                <option value="#F4F4F2">Blanco</option><option value="#B8BCBF">Gris plata</option><option value="#6B7075">Gris oscuro</option>
+                <option value="#24272A">Negro</option><option value="#2F4F6F">Azul</option><option value="#B9AE97">Beige</option><option value="#4F5E46">Verde</option>
+              </select></div>
+          </div>
+          <div class="f" id="f-buscar" hidden style="margin-top:12px">
+            <label class="check"><input type="checkbox" id="buscar" name="buscar"><span>Quiero que me la busquéis vosotros<small>Servicio de búsqueda de furgoneta por encargo</small></span></label>
+          </div>
+          <fieldset style="margin-top:18px">
+            <legend>Longitud</legend>
+            <p class="hint">Medidas de referencia de Fiat Ducato. En otras marcas buscamos la equivalente.</p>
+            <div class="opts small" id="opts-largo"></div>
+          </fieldset>
+          <fieldset>
+            <legend>Altura</legend>
+            <div class="opts small" id="opts-alto"></div>
+          </fieldset>
+          <label class="check"><input type="checkbox" id="aconsejar" name="aconsejar"><span>No tengo claro el tamaño, aconsejadme<small>Lo vemos juntos según la distribución que elijas</small></span></label>
+        </div>
+
+        <!-- 2 DISTRIBUCION -->
+        <div data-step="1" hidden>
+          <h2>Distribución</h2>
+          <p class="lead">Dónde va cada cosa. Si algo no cabe en tu tamaño de furgo, te avisamos en el dibujo.</p>
+          <fieldset><legend>Plazas para viajar</legend>
+            <div class="opts">
+              <div class="opt"><input type="radio" name="plazas" id="plazas-2" value="2" checked><label for="plazas-2"><b>2 plazas</b><span>Conductor y acompañante</span></label></div>
+              <div class="opt"><input type="radio" name="plazas" id="plazas-4" value="4"><label for="plazas-4"><b>4 plazas</b><span>Banqueta trasera homologada con cinturones</span></label></div>
+            </div>
+            <label class="check"><input type="checkbox" id="giratorios" name="giratorios" checked><span>Asientos delanteros giratorios<small>Se convierten en salón al parar</small></span></label>
+          </fieldset>
+          <fieldset><legend>Cama: posición</legend>
+            <div class="opts">
+              <div class="opt"><input type="radio" name="camaPos" id="cama-trans" value="transversal" checked><label for="cama-trans"><b>Atrás, de lado a lado</b><span>Transversal. La más habitual, deja más sitio</span></label></div>
+              <div class="opt"><input type="radio" name="camaPos" id="cama-long" value="longitudinal"><label for="cama-long"><b>Atrás, a lo largo</b><span>Longitudinal. Para personas altas, pide L3 o L4</span></label></div>
+              <div class="opt"><input type="radio" name="camaPos" id="cama-din" value="dinette"><label for="cama-din"><b>Salón que se hace cama</b><span>Dinette delante. Libera la parte trasera</span></label></div>
+            </div>
+          </fieldset>
+          <fieldset><legend>Cama: tipo</legend>
+            <div class="opts">
+              <div class="opt"><input type="radio" name="camaTipo" id="ct-fija" value="fija" checked><label for="ct-fija"><b>Fija</b><span>Garaje debajo para bicis y maletas</span></label></div>
+              <div class="opt"><input type="radio" name="camaTipo" id="ct-desm" value="desmontable"><label for="ct-desm"><b>Desmontable</b><span>Se quita y queda espacio de carga</span></label></div>
+              <div class="opt"><input type="radio" name="camaTipo" id="ct-elec" value="electrica"><label for="ct-elec"><b>Elevable eléctrica</b><span>Sube al techo de día. Mejor con H2 o H3</span></label></div>
+            </div>
+          </fieldset>
+          <fieldset><legend>Baño y ducha</legend>
+            <div class="opts">
+              <div class="opt"><input type="radio" name="bano" id="bano-no" value="no"><label for="bano-no"><b>Sin baño</b><span>Más espacio libre</span></label></div>
+              <div class="opt"><input type="radio" name="bano" id="bano-wc" value="wc" checked><label for="bano-wc"><b>WC en un mueble</b><span>Inodoro portátil escondido</span></label></div>
+              <div class="opt"><input type="radio" name="bano" id="bano-full" value="completo"><label for="bano-full"><b>Baño con ducha</b><span>Cabina cerrada con WC y plato de ducha</span></label></div>
+            </div>
+            <label class="check"><input type="checkbox" id="duchaExt" name="duchaExt"><span>Ducha exterior en la puerta trasera</span></label>
+          </fieldset>
+          <fieldset id="fs-banopos"><legend>¿Dónde va el baño?</legend>
+            <div class="opts">
+              <div class="opt"><input type="radio" name="banoPos" id="bp-frente" value="frente" checked><label for="bp-frente"><b>Enfrente de la cocina</b><span>Lado del conductor</span></label></div>
+              <div class="opt"><input type="radio" name="banoPos" id="bp-puerta" value="puerta"><label for="bp-puerta"><b>Junto a la puerta</b><span>Al entrar, en el lado de la corredera</span></label></div>
+              <div class="opt"><input type="radio" name="banoPos" id="bp-tras" value="trasera"><label for="bp-tras"><b>Al fondo</b><span>Solo si la cama no va atrás</span></label></div>
+            </div>
+          </fieldset>
+          <fieldset><legend>Cocina</legend>
+            <div class="opts">
+              <div class="opt"><input type="radio" name="cocinaLado" id="cl-a" value="A" checked><label for="cl-a"><b>Lado de la puerta</b><span>Cocinas mirando afuera</span></label></div>
+              <div class="opt"><input type="radio" name="cocinaLado" id="cl-b" value="B"><label for="cl-b"><b>Lado del conductor</b><span>Entrada más despejada</span></label></div>
+            </div>
+            <div class="checks" style="margin-top:6px">
+              <label class="check"><input type="checkbox" id="fregadero" name="fregadero" checked><span>Fregadero con grifo</span></label>
+              <label class="check"><input type="checkbox" id="horno" name="horno"><span>Horno o microondas</span></label>
+            </div>
+            <div class="row" style="margin-top:4px">
+              <div class="f"><label for="fuegos">Fuegos</label>
+                <select id="fuegos" name="fuegos"><option value="gas2">Gas, 2 fuegos</option><option value="gas1">Gas, 1 fuego</option><option value="induccion">Inducción (pide más batería)</option><option value="ninguno">Sin fuegos</option></select></div>
+              <div class="f"><label for="agua">Depósito de agua limpia</label>
+                <select id="agua" name="agua"><option value="70">70 litros</option><option value="100">100 litros</option><option value="120">120 litros</option></select></div>
+            </div>
+          </fieldset>
+          <fieldset><legend>Nevera</legend>
+            <div class="opts">
+              <div class="opt"><input type="radio" name="nevera" id="nv-s" value="pequena" checked><label for="nv-s"><b>Pequeña · 40–50 L</b><span>Bajo la encimera</span></label></div>
+              <div class="opt"><input type="radio" name="nevera" id="nv-m" value="mediana"><label for="nv-m"><b>Mediana · 70–90 L</b><span>Columna junto a la cocina</span></label></div>
+              <div class="opt"><input type="radio" name="nevera" id="nv-l" value="grande"><label for="nv-l"><b>Grande · 130 L o más</b><span>Columna alta con congelador</span></label></div>
+            </div>
+          </fieldset>
+          <fieldset><legend>Armarios</legend>
+            <div class="opts">
+              <div class="opt"><input type="radio" name="altillos" id="al-no" value="no"><label for="al-no"><b>Sin altillos</b><span>Más sensación de espacio</span></label></div>
+              <div class="opt"><input type="radio" name="altillos" id="al-coc" value="cocina"><label for="al-coc"><b>Altillos sobre la cocina</b></label></div>
+              <div class="opt"><input type="radio" name="altillos" id="al-per" value="perimetral" checked><label for="al-per"><b>Altillos en todo el contorno</b><span>Máximo almacenaje</span></label></div>
+            </div>
+            <label class="check"><input type="checkbox" id="armario" name="armario" checked><span>Armario ropero de columna</span></label>
+          </fieldset>
+          <div class="f"><label for="prioridades">¿Algo más? Prioridades, ideas, cosas que no quieres</label>
+            <textarea id="prioridades" name="prioridades" placeholder="Ej.: viajamos con perro y dos bicis, quiero mucha luz natural, mi pareja mide 1,90 m…"></textarea></div>
+        </div>
+
+        <!-- 3 ACABADOS -->
+        <div data-step="2" hidden>
+          <h2>Acabados y colores</h2>
+          <p class="lead">Empieza por un estilo y cambia lo que quieras. Las muestras reales las ves en el taller.</p>
+          <fieldset><legend>Estilo de partida</legend><div class="opts" id="opts-estilo"></div></fieldset>
+          <fieldset><legend>Suelo</legend><div class="opts" id="opts-suelo"></div></fieldset>
+          <fieldset><legend>Paredes</legend><div class="opts" id="opts-paredes"></div></fieldset>
+          <fieldset><legend>Techo</legend><div class="opts" id="opts-techo"></div></fieldset>
+          <fieldset><legend>Muebles: estructura y laterales</legend><div class="opts" id="opts-cuerpo"></div></fieldset>
+          <fieldset><legend>Muebles: puertas y frentes</legend><div class="opts" id="opts-puertas"></div></fieldset>
+          <fieldset><legend>Encimera</legend><div class="opts" id="opts-encimera"></div></fieldset>
+          <div class="f"><label for="notasAcabados">Comentarios sobre acabados</label>
+            <textarea id="notasAcabados" name="notasAcabados" placeholder="Ej.: me gustaría ver la muestra del verde antes de decidir"></textarea></div>
+        </div>
+
+        <!-- 4 ELECTRICO -->
+        <div data-step="3" hidden>
+          <h2>Sistema eléctrico</h2>
+          <p class="lead">Todas nuestras campers llevan el pack estándar. Añade lo que necesites según cómo viajes.</p>
+          <div class="std">
+            <h3>Pack estándar incluido</h3>
+            <ul id="std-list"></ul>
+          </div>
+          <fieldset><legend>Extras</legend><div class="checks" id="extras"></div></fieldset>
+          <div class="f"><label for="usoElec">¿Cómo vas a usar la camper?</label>
+            <select id="usoElec" name="usoElec"><option>Fines de semana y vacaciones</option><option>Viajes largos de varias semanas</option><option>Vivir o teletrabajar en ella</option><option>Invierno y nieve</option></select></div>
+        </div>
+
+        <!-- 5 DATOS -->
+        <div data-step="4" hidden>
+          <h2>Resumen y datos de facturación</h2>
+          <p class="lead">Revisa tu configuración. Con estos datos preparamos el presupuesto y la factura.</p>
+          <dl class="summary" id="summary"></dl>
+          <fieldset><legend>Facturar a</legend>
+            <div class="opts">
+              <div class="opt"><input type="radio" name="tipoCliente" id="tc-p" value="Particular" checked><label for="tc-p"><b>Particular</b></label></div>
+              <div class="opt"><input type="radio" name="tipoCliente" id="tc-e" value="Empresa"><label for="tc-e"><b>Empresa o autónomo</b></label></div>
+            </div>
+          </fieldset>
+          <div class="row">
+            <div class="f"><label for="nombre" id="lbl-nombre">Nombre y apellidos</label><input type="text" id="nombre" name="nombre" autocomplete="name" required></div>
+            <div class="f"><label for="nif" id="lbl-nif">DNI / NIE</label><input type="text" id="nif" name="nif" required></div>
+          </div>
+          <div class="row" style="margin-top:12px">
+            <div class="f"><label for="email">Email</label><input type="email" id="email" name="email" autocomplete="email" required></div>
+            <div class="f"><label for="telefono">Teléfono</label><input type="tel" id="telefono" name="telefono" autocomplete="tel" required></div>
+          </div>
+          <div class="f" style="margin-top:12px"><label for="direccion">Dirección</label><input type="text" id="direccion" name="direccion" autocomplete="street-address" required></div>
+          <div class="row" style="margin-top:12px">
+            <div class="f"><label for="cp">Código postal</label><input type="text" id="cp" name="cp" autocomplete="postal-code" inputmode="numeric" required></div>
+            <div class="f"><label for="poblacion">Población</label><input type="text" id="poblacion" name="poblacion" autocomplete="address-level2" required></div>
+            <div class="f"><label for="provincia">Provincia</label><input type="text" id="provincia" name="provincia" autocomplete="address-level1" value="Málaga"></div>
+          </div>
+          <label class="check" style="margin-top:14px"><input type="checkbox" id="acepto" name="acepto" required><span>Entiendo cómo funciona la ficha<small>Revisamos juntos esta configuración y, al confirmarla, queda cerrada para comprar el material. Si después quieres cambiar algo, te decimos antes cuánto cuesta y cuántos días retrasa la entrega.</small></span></label>
+          <label class="check"><input type="checkbox" id="privacidad" name="privacidad" required><span>Acepto que Lifes Campers use mis datos para preparar el presupuesto y la factura</span></label>
+          <p class="err" id="err" role="alert"></p>
+          <div id="result"></div>
+        </div>
+
+        <div class="nav">
+          <button type="button" class="btn" id="prev">Atrás</button>
+          <button type="button" class="btn primary" id="next">Siguiente</button>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CATÁLOGO (beta). Editad aquí nombres, colores y opciones.
+   ============================================================ */
+var MEDIDAS = { // Fiat Ducato de referencia, mm
+  largo: { L1:{carga:2670, ext:4963, batalla:3000}, L2:{carga:3120, ext:5413, batalla:3450}, L3:{carga:3705, ext:5998, batalla:4035}, L4:{carga:4070, ext:6363, batalla:4035} },
+  alto:  { H1:{int:1662, ext:2254}, H2:{int:1932, ext:2524}, H3:{int:2172, ext:2764} },
+  ancho: 1870
+};
+var MATERIALES = {
+  suelo: [
+    {id:"roble-claro", n:"Vinilo roble claro", c:"#D9BE92", veta:1},
+    {id:"roble-natural", n:"Vinilo roble natural", c:"#B98A57", veta:1},
+    {id:"nogal", n:"Vinilo nogal", c:"#7A5338", veta:1},
+    {id:"gris-hormigon", n:"Vinilo gris hormigón", c:"#9C9E9A"},
+    {id:"negro-antides", n:"Antideslizante negro", c:"#323335"}
+  ],
+  paredes: [
+    {id:"moqueta-gris", n:"Moqueta gris claro", c:"#BDC0C1"},
+    {id:"moqueta-antracita", n:"Moqueta antracita", c:"#4B4F53"},
+    {id:"abedul", n:"Contrachapado de abedul", c:"#E4D0A9", veta:1},
+    {id:"lacado-blanco", n:"Tablero lacado blanco", c:"#F1F0EA"},
+    {id:"friso-pino", n:"Friso de pino", c:"#DBB57C", veta:2}
+  ],
+  techo: [
+    {id:"friso-pino", n:"Friso de pino", c:"#DBB57C", veta:2},
+    {id:"friso-blanco", n:"Friso lacado blanco", c:"#EEECE4", veta:2},
+    {id:"moqueta-gris", n:"Moqueta gris claro", c:"#BDC0C1"},
+    {id:"abedul", n:"Contrachapado de abedul", c:"#E4D0A9", veta:1}
+  ],
+  cuerpo: [
+    {id:"abedul", n:"Abedul natural", c:"#E4D0A9", veta:1},
+    {id:"roble-claro", n:"Roble claro", c:"#CFAE7E", veta:1},
+    {id:"nogal", n:"Nogal", c:"#76513B", veta:1},
+    {id:"blanco-mate", n:"Blanco mate", c:"#F2F1EC"},
+    {id:"antracita", n:"Gris antracita", c:"#44484C"}
+  ],
+  puertas: [
+    {id:"abedul", n:"Abedul natural", c:"#E4D0A9", veta:1},
+    {id:"roble-claro", n:"Roble claro", c:"#CFAE7E", veta:1},
+    {id:"nogal", n:"Nogal", c:"#76513B", veta:1},
+    {id:"blanco-mate", n:"Blanco mate", c:"#F2F1EC"},
+    {id:"antracita", n:"Gris antracita", c:"#44484C"},
+    {id:"verde-salvia", n:"Verde salvia", c:"#9DB095"},
+    {id:"azul-petroleo", n:"Azul petróleo", c:"#2F5D6B"},
+    {id:"arena", n:"Arena", c:"#D8C6A6"},
+    {id:"negro-mate", n:"Negro mate", c:"#27282B"}
+  ],
+  encimera: [
+    {id:"roble-macizo", n:"Roble macizo", c:"#B98B5A", veta:1},
+    {id:"blanca", n:"Compacto blanco", c:"#F4F3EF"},
+    {id:"negra", n:"Compacto negro", c:"#232427"},
+    {id:"hormigon", n:"Efecto hormigón", c:"#8F928E"}
+  ]
+};
+var ESTILOS = [
+  {id:"nordico", n:"Nórdico", d:"Abedul y blanco, luminoso", v:{suelo:"roble-claro", paredes:"lacado-blanco", techo:"friso-blanco", cuerpo:"abedul", puertas:"blanco-mate", encimera:"roble-macizo"}},
+  {id:"bosque", n:"Bosque", d:"Abedul con puertas verde salvia", v:{suelo:"roble-natural", paredes:"moqueta-gris", techo:"friso-pino", cuerpo:"abedul", puertas:"verde-salvia", encimera:"roble-macizo"}},
+  {id:"urbano", n:"Urbano", d:"Antracita y roble", v:{suelo:"gris-hormigon", paredes:"moqueta-antracita", techo:"moqueta-gris", cuerpo:"antracita", puertas:"roble-claro", encimera:"negra"}},
+  {id:"mediterraneo", n:"Mediterráneo", d:"Blanco y azul petróleo", v:{suelo:"roble-claro", paredes:"lacado-blanco", techo:"friso-pino", cuerpo:"blanco-mate", puertas:"azul-petroleo", encimera:"blanca"}},
+  {id:"calido", n:"Cálido", d:"Nogal y arena", v:{suelo:"roble-natural", paredes:"abedul", techo:"abedul", cuerpo:"nogal", puertas:"arena", encimera:"roble-macizo"}}
+];
+var PACK_ESTANDAR = [ // beta: confirmar con el electricista
+  "Batería de litio LiFePO4 200 Ah", "Placa solar 200 W con regulador MPPT", "Cargador batería-batería 30 A",
+  "Inversor 1.000 W de onda pura", "Panel de control y protecciones", "Iluminación LED regulable",
+  "2 tomas USB-C/USB-A y 1 enchufe 230 V", "Toma exterior de 230 V para camping"
+];
+var EXTRAS = [
+  {id:"bat100", n:"100 Ah más de batería", d:"Para inducción o vivir en ella"},
+  {id:"solar200", n:"Segunda placa solar 200 W"},
+  {id:"inv2000", n:"Inversor de 2.000 W", d:"Secador, cafetera, inducción"},
+  {id:"cargador230", n:"Cargador de 230 V", d:"Carga rápida en camping"},
+  {id:"calefaccion", n:"Calefacción diésel 2 kW"},
+  {id:"aguacaliente", n:"Agua caliente", d:"Calentador para ducha y fregadero"},
+  {id:"monitor", n:"Monitor de batería con app"},
+  {id:"enchufes", n:"Enchufes de 230 V adicionales"},
+  {id:"ambiente", n:"Luz ambiente y tira LED"},
+  {id:"claraboya", n:"Claraboya con extractor"},
+  {id:"ventanas", n:"Ventanas laterales abatibles"},
+  {id:"tv", n:"Preinstalación de TV y antena"}
+];
+
+/* ============================================================
+   ESTADO
+   ============================================================ */
+var S = {view:"ext", side:"A", step:0, estilo:"nordico"};
+var STEP_NAMES = ["Furgoneta","Distribución","Acabados","Electricidad","Tus datos"];
+var STEP_VIEW = ["ext","plan","int","plan",null];
+var form = document.getElementById("form");
+function $(id){return document.getElementById(id)}
+function val(name){var el=form.elements[name]; if(!el) return null; if(el.type==="checkbox") return el.checked; return el.value;}
+function mat(cat,id){return MATERIALES[cat].find(function(m){return m.id===id})||MATERIALES[cat][0]}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+/* ---------- construir opciones ---------- */
+function radioCards(container, name, items, checkedId, render){
+  $(container).innerHTML = items.map(function(it){
+    var id = name+"-"+it.id;
+    return '<div class="opt"><input type="radio" name="'+name+'" id="'+id+'" value="'+it.id+'"'+(it.id===checkedId?" checked":"")+'><label for="'+id+'">'+render(it)+'</label></div>';
+  }).join("");
+}
+function swatchCss(m){
+  if(!m.veta) return m.c;
+  return "repeating-linear-gradient("+(m.veta===2?"0deg":"95deg")+", rgba(0,0,0,.07) 0 1px, transparent 1px "+(m.veta===2?"6px":"4px")+"), "+m.c;
+}
+radioCards("opts-largo","largo",Object.keys(MEDIDAS.largo).map(function(k){return {id:k}}),"L3",function(it){return it.id});
+radioCards("opts-alto","alto",Object.keys(MEDIDAS.alto).map(function(k){return {id:k}}),"H2",function(it){return it.id});
+radioCards("opts-estilo","estilo",ESTILOS.concat([{id:"propio",n:"A mi gusto",d:"Lo elijo todo yo"}]),"nordico",function(it){return "<b>"+it.n+"</b><span>"+it.d+"</span>"});
+["suelo","paredes","techo","cuerpo","puertas","encimera"].forEach(function(cat){
+  radioCards("opts-"+cat, cat, MATERIALES[cat], ESTILOS[0].v[cat], function(m){return '<span class="sw"><i style="background:'+swatchCss(m)+'"></i><b>'+esc(m.n)+'</b></span>'});
+});
+$("std-list").innerHTML = PACK_ESTANDAR.map(function(t){return "<li>"+esc(t)+"</li>"}).join("");
+$("extras").innerHTML = EXTRAS.map(function(e){return '<label class="check"><input type="checkbox" name="ex-'+e.id+'" id="ex-'+e.id+'"><span>'+esc(e.n)+(e.d?"<small>"+esc(e.d)+"</small>":"")+'</span></label>'}).join("");
+
+/* ============================================================
+   DISTRIBUCIÓN: coloca muebles y comprueba si cabe
+   ============================================================ */
+var PUERTA = 1150; // hueco de la puerta corredera desde el frontal de la zona de carga
+function layoutFor(L){
+  var Lc = MEDIDAS.largo[L].carga, W = MEDIDAS.ancho;
+  var items = [], warn = [];
+  var plazas = val("plazas"), camaPos = val("camaPos"), bano = val("bano"), banoPos = val("banoPos");
+  var cocinaLado = val("cocinaLado"), nevera = val("nevera"), armario = val("armario");
+  var otro = cocinaLado==="A" ? "B" : "A";
+  var frontB = 0, rear = 0;
+  if(camaPos==="dinette"){
+    items.push({k:"dinette", side:"B", x:0, len:1300, d:W-650, h:450});
+    frontB = 1300;
+  } else if(plazas==="4"){
+    items.push({k:"banco", side:"B", x:0, len:700, d:1300, h:450});
+    frontB = 700;
+  }
+  if(camaPos==="transversal"){ rear = 1400; items.push({k:"cama", side:"full", x:Lc-1400, len:1400, d:W}); }
+  if(camaPos==="longitudinal"){ rear = 1950; items.push({k:"cama", side:"full", x:Lc-1950, len:1950, d:W}); }
+  var cur = {A:PUERTA, B:frontB};
+  var end = {A:Lc-rear, B:Lc-rear};
+  function put(side,k,len,d,h){ items.push({k:k, side:side, x:cur[side], len:len, d:d, h:h}); cur[side]+=len; }
+  // baño al fondo
+  if(bano==="completo" && banoPos==="trasera"){
+    if(rear>0){ warn.push("El baño al fondo no es compatible con la cama atrás. Lo colocamos enfrente de la cocina."); banoPos="frente"; }
+    else { items.push({k:"bano", side:otro, x:Lc-850, len:850, d:850, h:9999}); end[otro]=Lc-850; }
+  }
+  if(bano==="completo" && banoPos==="puerta"){ put("A","bano",850,850,9999); }
+  // cocina + nevera
+  var lenCocina = 1000 + (val("fregadero")?150:0) + (val("fuegos")==="ninguno"?-150:0) + (val("horno")?0:0);
+  put(cocinaLado,"cocina",lenCocina,500,900);
+  if(nevera==="mediana") put(cocinaLado,"nevera",550,550,1250);
+  if(nevera==="grande") put(cocinaLado,"nevera",600,600,9999);
+  // baño enfrente
+  if(bano==="completo" && banoPos==="frente") put(otro,"bano",850,850,9999);
+  if(bano==="wc") put(otro,"wc",500,500,900);
+  // armario donde quepa mejor
+  if(armario){
+    var libreA = end.A-cur.A, libreB = end.B-cur.B;
+    put(libreA>=libreB?"A":"B","armario",550,550,9999);
+  }
+  var over = {A: cur.A-end.A, B: cur.B-end.B};
+  return {Lc:Lc, W:W, items:items, warn:warn, over:over, cur:cur, end:end, fits: over.A<=0 && over.B<=0};
+}
+function recommendL(){
+  var ks = Object.keys(MEDIDAS.largo);
+  for(var i=0;i<ks.length;i++){ if(layoutFor(ks[i]).fits) return ks[i]; }
+  return null;
+}
+
+/* ============================================================
+   DIBUJO
+   ============================================================ */
+var NS = "http://www.w3.org/2000/svg";
+function grainDefs(){
+  var all = [];
+  Object.keys(MATERIALES).forEach(function(cat){ MATERIALES[cat].forEach(function(m){ if(m.veta && all.indexOf(m.id)<0){ all.push(m.id);} }); });
+  var out = "<defs>";
+  Object.keys(MATERIALES).forEach(function(cat){ MATERIALES[cat].forEach(function(m){
+    var pid = "g-"+cat+"-"+m.id;
+    if(m.veta===2){
+      out += '<pattern id="'+pid+'" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="'+m.c+'"/><path d="M0 7.5H8" stroke="rgba(0,0,0,.16)" stroke-width="1"/></pattern>';
+    } else if(m.veta){
+      out += '<pattern id="'+pid+'" width="40" height="6" patternUnits="userSpaceOnUse"><rect width="40" height="6" fill="'+m.c+'"/><path d="M0 2C10 1 20 3 40 2M0 5C14 4 26 6 40 5" stroke="rgba(0,0,0,.09)" stroke-width=".8" fill="none"/></pattern>';
+    }
+  });});
+  return out + "</defs>";
+}
+var DEFS = grainDefs();
+function fillOf(cat){ var m = mat(cat, val(cat)); return m.veta ? "url(#g-"+cat+"-"+m.id+")" : m.c; }
+function isDark(hex){ var h=hex.replace("#",""); var r=parseInt(h.substr(0,2),16),g=parseInt(h.substr(2,2),16),b=parseInt(h.substr(4,2),16); return (r*299+g*587+b*114)/1000 < 120; }
+function curL(){ return val("largo")||"L3"; }
+function curH(){ return val("alto")||"H2"; }
+var NOMBRES = {cocina:"Cocina", nevera:"Nevera", bano:"Baño", wc:"WC", armario:"Armario", banco:"Banco 2 plazas", dinette:"Salón-cama", cama:"Cama"};
+
+function drawExterior(){
+  var L=curL(), H=curH(), me=MEDIDAS.largo[L], mh=MEDIDAS.alto[H], s=0.1;
+  var g=290, x0=26, len=me.ext*s, top=g-mh.ext*s, color=val("colorfurgo");
+  var wa=x0+93, wb=x0+(930+me.batalla)*s;
+  var p = "M"+(x0+4)+" "+(g-34)+" L"+x0+" "+(g-62)+" Q"+x0+" "+(g-98)+" "+(x0+16)+" "+(g-104)+" L"+(x0+58)+" "+(g-118)
+        + " L"+(x0+102)+" "+(g-196)+" Q"+(x0+112)+" "+(g-206)+" "+(x0+128)+" "+(Math.min(g-206,top+4))+" L"+(x0+138)+" "+top
+        + " L"+(x0+len-10)+" "+top+" Q"+(x0+len)+" "+top+" "+(x0+len)+" "+(top+10)+" L"+(x0+len)+" "+(g-34)+" Z";
+  var win = "M"+(x0+66)+" "+(g-124)+" L"+(x0+100)+" "+(g-186)+" L"+(x0+150)+" "+(g-186)+" L"+(x0+150)+" "+(g-124)+" Z";
+  var doorX = x0+158, doorW = 112;
+  var dk = isDark(color);
+  var svg = '<svg viewBox="0 0 700 330" role="img" aria-label="Furgoneta '+L+H+' vista lateral">'
+    + '<line x1="0" y1="'+g+'" x2="700" y2="'+g+'" class="soft" stroke-width="1"/>'
+    + '<path d="'+p+'" fill="'+color+'" stroke="'+(dk?"#9AA3A8":"#3A4441")+'" stroke-width="1.5" class="anim"/>'
+    + '<path d="'+win+'" fill="var(--glass)"/>'
+    + '<rect x="'+doorX+'" y="'+(top+18)+'" width="'+doorW+'" height="'+(g-52-top-18)+'" fill="none" stroke="'+(dk?"#9AA3A8":"#3A4441")+'" stroke-opacity=".55" stroke-dasharray="4 3"/>'
+    + (val("ex-ventanas")? '<rect x="'+(doorX+14)+'" y="'+(top+28)+'" width="'+(doorW-28)+'" height="42" rx="6" fill="var(--glass)"/>'+'<rect x="'+(x0+len-150)+'" y="'+(top+28)+'" width="90" height="42" rx="6" fill="var(--glass)"/>' : '')
+    + (val("ex-claraboya")? '<rect x="'+(x0+len*0.55)+'" y="'+(top-7)+'" width="44" height="7" rx="2" fill="var(--glass)"/>' : '')
+    + (val("ex-solar200")||true ? '<rect x="'+(x0+len*0.25)+'" y="'+(top-4)+'" width="'+(val("ex-solar200")?140:70)+'" height="4" fill="#1D2B3A"/>' : '')
+    + '<rect x="'+(x0+len-4)+'" y="'+(g-70)+'" width="6" height="22" fill="#B23A2E"/>'
+    + '<rect x="'+(x0-1)+'" y="'+(g-60)+'" width="6" height="12" fill="#F2E7B5" stroke="#3A4441" stroke-width=".5"/>';
+  [wa,wb].forEach(function(cx){ svg += '<circle cx="'+cx+'" cy="'+(g-35)+'" r="35" fill="#1E2224"/><circle cx="'+cx+'" cy="'+(g-35)+'" r="16" fill="#9EA5A9"/>'; });
+  // cotas
+  var dy = g+22;
+  svg += '<path d="M'+x0+' '+dy+'H'+(x0+len)+'M'+x0+' '+(dy-5)+'v10M'+(x0+len)+' '+(dy-5)+'v10" class="stroke" stroke-width="1"/>'
+      + '<text x="'+(x0+len/2)+'" y="'+(dy+14)+'" text-anchor="middle" class="dim">'+L+' · '+me.ext.toLocaleString("es-ES")+' mm</text>';
+  var hx = x0+len+22;
+  svg += '<path d="M'+hx+' '+top+'V'+g+'M'+(hx-5)+' '+top+'h10M'+(hx-5)+' '+g+'h10" class="stroke" stroke-width="1"/>'
+      + '<text x="'+(hx+8)+'" y="'+((top+g)/2)+'" class="dim" dominant-baseline="middle">'+H+'</text>'
+      + '<text x="'+(hx+8)+'" y="'+((top+g)/2+15)+'" class="dim" dominant-baseline="middle">'+mh.ext.toLocaleString("es-ES")+'</text>';
+  svg += '<text x="'+x0+'" y="20" class="dim">'+esc(val("marca"))+'</text></svg>';
+  return svg;
+}
+
+function drawPlan(){
+  var L=curL(), lay=layoutFor(L), s=0.1, X0=170, Y0=44, W=lay.W*s, Lc=lay.Lc*s;
+  var floor=fillOf("suelo"), wall=mat("paredes",val("paredes")).c, body=fillOf("cuerpo"), door=fillOf("puertas"), top=fillOf("encimera");
+  var doorC = mat("puertas",val("puertas")).c;
+  var svg = '<svg viewBox="0 0 640 290" role="img" aria-label="Planta de la camper">'+DEFS;
+  // carrocería
+  svg += '<path d="M'+(X0+Lc+8)+' '+(Y0-9)+'H70 Q24 '+(Y0-9)+' 22 '+(Y0+W/2)+' Q24 '+(Y0+W+9)+' 70 '+(Y0+W+9)+'H'+(X0+Lc+8)+'Z" class="body" stroke-width="1.5"/>';
+  // asientos cabina
+  var giro = val("giratorios");
+  [[Y0+14],[Y0+W-14-56]].forEach(function(a,i){
+    var sx=100, sy=a[0];
+    svg += '<rect x="'+sx+'" y="'+sy+'" width="52" height="56" rx="8" fill="var(--sunk)" stroke="var(--draw-soft)"/><rect x="'+(sx+44)+'" y="'+(sy+4)+'" width="10" height="48" rx="4" fill="var(--draw-soft)"/>';
+    if(giro) svg += '<path d="M'+(sx+26)+' '+(sy+(i?-6:62))+' a30 30 0 0 0 30 '+(i?"-12":"12")+'" class="soft" stroke-dasharray="3 3"/>';
+  });
+  svg += '<path d="M60 '+(Y0+20)+' Q50 '+(Y0+W/2)+' 60 '+(Y0+W-20)+'" class="soft" stroke-width="3"/>';
+  // zona de carga
+  svg += '<rect x="'+X0+'" y="'+Y0+'" width="'+Lc+'" height="'+W+'" fill="'+floor+'" class="anim"/>';
+  svg += '<rect x="'+(X0+2)+'" y="'+(Y0+2)+'" width="'+(Lc-4)+'" height="'+(W-4)+'" fill="none" stroke="'+wall+'" stroke-width="5"/>';
+  svg += '<rect x="'+X0+'" y="'+Y0+'" width="'+Lc+'" height="'+W+'" fill="none" class="stroke" stroke-width="1.5"/>';
+  // puerta corredera (lado A = arriba)
+  svg += '<rect x="'+(X0+6)+'" y="'+(Y0-4)+'" width="'+(PUERTA*s-14)+'" height="8" fill="var(--surface)"/>'
+      + '<path d="M'+(X0+6)+' '+(Y0-11)+'H'+(X0+PUERTA*s-8)+'" class="soft" stroke-dasharray="4 3"/>'
+      + '<text x="'+(X0+PUERTA*s/2)+'" y="'+(Y0-15)+'" text-anchor="middle" class="dim">puerta corredera</text>';
+  // puertas traseras
+  svg += '<path d="M'+(X0+Lc+3)+' '+(Y0+4)+'V'+(Y0+W/2-2)+'M'+(X0+Lc+3)+' '+(Y0+W/2+2)+'V'+(Y0+W-4)+'" class="stroke" stroke-width="3"/>';
+  // altillos (discontinuo)
+  var alt = val("altillos");
+  // muebles
+  lay.items.forEach(function(it){
+    var x = X0+it.x*s, w = it.len*s, d = it.d*s, y, label = NOMBRES[it.k];
+    if(it.side==="full"){ y=Y0; d=W; }
+    else if(it.side==="A"){ y=Y0; } else { y=Y0+W-d; }
+    var overflow = it.side!=="full" && it.k!=="banco" && it.k!=="dinette" && (it.x+it.len > lay.end[it.side]+1);
+    if(it.k==="cama"){
+      var t = val("camaTipo");
+      svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+d+'" fill="'+body+'" stroke="var(--draw)" stroke-width="1"/>'
+          + '<rect x="'+(x+4)+'" y="'+(y+4)+'" width="'+(w-8)+'" height="'+(d-8)+'" rx="6" fill="#EDE6DA" stroke="#B9AE9C"/>';
+      if(val("camaPos")==="transversal"){ svg += '<rect x="'+(x+w-30)+'" y="'+(y+14)+'" width="20" height="'+(d/2-22)+'" rx="5" fill="#FBF8F2" stroke="#B9AE9C"/><rect x="'+(x+w-30)+'" y="'+(y+d/2+8)+'" width="20" height="'+(d/2-22)+'" rx="5" fill="#FBF8F2" stroke="#B9AE9C"/>'; }
+      else { svg += '<rect x="'+(x+w-34)+'" y="'+(y+14)+'" width="24" height="'+(d-28)+'" rx="5" fill="#FBF8F2" stroke="#B9AE9C"/>'; }
+      svg += '<text x="'+(x+w/2-8)+'" y="'+(y+d/2)+'" text-anchor="middle" dominant-baseline="middle" class="lbl">Cama '+(t==="electrica"?"eléctrica ↕":t)+'</text>';
+      return;
+    }
+    if(it.k==="dinette"){
+      svg += '<rect x="'+x+'" y="'+y+'" width="45" height="'+d+'" fill="'+body+'" stroke="var(--draw)"/><rect x="'+(x+w-45)+'" y="'+y+'" width="45" height="'+d+'" fill="'+body+'" stroke="var(--draw)"/>'
+          + '<rect x="'+(x+52)+'" y="'+(y+d*0.3)+'" width="'+(w-104)+'" height="'+(d*0.5)+'" rx="4" fill="'+top+'" stroke="var(--draw)"/>'
+          + '<text x="'+(x+w/2)+'" y="'+(y+d*0.55)+'" text-anchor="middle" dominant-baseline="middle" class="lbl'+(isDark(mat("encimera",val("encimera")).c)?" on-dark":"")+'">Salón-cama</text>';
+      return;
+    }
+    svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+d+'" fill="'+body+'" stroke="'+(overflow?"#C2410C":"var(--draw)")+'" stroke-width="'+(overflow?2:1)+'"/>';
+    var fy = it.side==="A" ? y+d-5 : y;
+    if(it.k==="cocina"){
+      svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+d+'" fill="'+top+'" stroke="var(--draw)"/>';
+      if(val("fregadero")) svg += '<rect x="'+(x+8)+'" y="'+(y+d/2-11)+'" width="26" height="22" rx="4" fill="#C9CED1" stroke="#7E868A"/>';
+      var f = val("fuegos"); var nf = f==="gas2"||f==="induccion" ? 2 : f==="gas1" ? 1 : 0;
+      for(var i=0;i<nf;i++) svg += '<circle cx="'+(x+w-16-i*22)+'" cy="'+(y+d/2)+'" r="8" fill="none" stroke="'+(f==="induccion"?"#555":"#333")+'" stroke-width="2"/>';
+    }
+    if(it.k==="bano"){ svg += '<rect x="'+(x+5)+'" y="'+(y+5)+'" width="'+(w-10)+'" height="'+(d-10)+'" fill="#E9EEF0" stroke="#9AA5AA"/><circle cx="'+(x+w/2)+'" cy="'+(y+d/2)+'" r="3" fill="#7E8A90"/>'; }
+    if(it.k==="banco"){ svg += '<rect x="'+(x+w-12)+'" y="'+y+'" width="12" height="'+d+'" fill="var(--draw-soft)"/>'; }
+    if(it.k!=="cocina" && it.k!=="banco" && it.k!=="bano") svg += '<rect x="'+x+'" y="'+fy+'" width="'+w+'" height="5" fill="'+door+'"/>';
+    if(it.k==="bano") svg += '<rect x="'+x+'" y="'+fy+'" width="'+w+'" height="5" fill="'+door+'"/>';
+    var lblDark = it.k==="cocina" ? isDark(mat("encimera",val("encimera")).c) : (it.k==="bano"?false:isDark(mat("cuerpo",val("cuerpo")).c));
+    if(it.k!=="cocina" || true) svg += '<text x="'+(x+w/2)+'" y="'+(y+(it.k==="cocina"? (it.side==="A"? d+12 : -6) : d/2))+'" text-anchor="middle" dominant-baseline="middle" class="lbl'+(it.k!=="cocina"&&lblDark?" on-dark":"")+'"'+(it.k==="cocina"?' style="fill:var(--ink)"':'')+'>'+label+'</text>';
+  });
+  if(alt!=="no"){
+    lay.items.forEach(function(it){
+      if(it.side==="full" || it.k==="banco" || it.k==="dinette") return;
+      if(alt==="cocina" && it.k!=="cocina") return;
+      var x=X0+it.x*s, w=it.len*s, y = it.side==="A" ? Y0+1 : Y0+W-36;
+      svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="35" fill="none" stroke="var(--draw)" stroke-dasharray="2 3" stroke-opacity=".6"/>';
+    });
+  }
+  var by = Y0+W+28;
+  svg += '<path d="M'+X0+' '+by+'H'+(X0+Lc)+'M'+X0+' '+(by-5)+'v10M'+(X0+Lc)+' '+(by-5)+'v10" class="stroke" stroke-width="1"/>'
+      + '<text x="'+(X0+Lc/2)+'" y="'+(by+14)+'" text-anchor="middle" class="dim">zona camper '+L+' · '+lay.Lc.toLocaleString("es-ES")+' × '+lay.W.toLocaleString("es-ES")+' mm</text>';
+  svg += '<text x="22" y="'+(Y0+W/2)+'" class="dim" transform="rotate(-90 14 '+(Y0+W/2)+')" text-anchor="middle">frontal</text></svg>';
+  return svg;
+}
+
+function drawInterior(){
+  var L=curL(), H=curH(), lay=layoutFor(L), s=0.1, side=S.side;
+  var Hi = MEDIDAS.alto[H].int, X0=70, Lc=lay.Lc*s, floorY=236, ceilY=floorY-Hi*s;
+  var wall=fillOf("paredes"), ceil=fillOf("techo"), floor=fillOf("suelo"), body=fillOf("cuerpo"), door=fillOf("puertas"), top=fillOf("encimera");
+  var svg = '<svg viewBox="0 0 640 262" role="img" aria-label="Vista interior">'+DEFS;
+  // pared, techo, suelo en perspectiva simple
+  svg += '<rect x="'+X0+'" y="'+ceilY+'" width="'+Lc+'" height="'+(floorY-ceilY)+'" fill="'+wall+'" class="anim"/>';
+  svg += '<path d="M'+(X0-18)+' '+(ceilY-14)+'H'+(X0+Lc+18)+'L'+(X0+Lc)+' '+ceilY+'H'+X0+'Z" fill="'+ceil+'" stroke="var(--draw)" stroke-width=".8"/>';
+  svg += '<path d="M'+X0+' '+floorY+'H'+(X0+Lc)+'L'+(X0+Lc+18)+' '+(floorY+14)+'H'+(X0-18)+'Z" fill="'+floor+'" stroke="var(--draw)" stroke-width=".8"/>';
+  // cabina
+  svg += '<path d="M'+(X0-6)+' '+floorY+'V'+(floorY-70)+'Q'+(X0-6)+' '+(floorY-150)+' '+(X0-46)+' '+(floorY-150)+'L'+(X0-58)+' '+floorY+'Z" fill="var(--sunk)" stroke="var(--draw-soft)"/>';
+  if(side==="A"){
+    var dw = PUERTA*s;
+    svg += '<rect x="'+(X0+4)+'" y="'+(ceilY+14)+'" width="'+(dw-10)+'" height="'+(floorY-ceilY-14)+'" fill="var(--bg)" stroke="var(--draw-soft)" stroke-dasharray="4 3"/>'
+        + '<text x="'+(X0+dw/2)+'" y="'+(ceilY+34)+'" text-anchor="middle" class="dim">puerta</text>';
+  }
+  function panelBox(x,y,w,h){ // estructura con color de cuerpo y frentes con color de puertas
+    var o = '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+body+'" stroke="var(--draw)" stroke-width="1"/>';
+    var n = Math.max(1, Math.round(w/45)), gap=3, iw=(w-gap*(n+1))/n;
+    for(var i=0;i<n;i++){ var dx=x+gap+i*(iw+gap); o += '<rect x="'+dx+'" y="'+(y+gap)+'" width="'+iw+'" height="'+(h-gap*2)+'" fill="'+door+'" stroke="rgba(0,0,0,.18)" stroke-width=".6"/><rect x="'+(dx+iw/2-5)+'" y="'+(y+gap+4)+'" width="10" height="2" rx="1" fill="rgba(0,0,0,.35)"/>'; }
+    return o;
+  }
+  var alt = val("altillos");
+  lay.items.forEach(function(it){
+    if(it.side!==side && it.side!=="full") return;
+    var x=X0+it.x*s, w=it.len*s;
+    var hTop = function(h){ return h>=9999 ? ceilY+4 : floorY-h*s; };
+    if(it.k==="cama"){
+      var t=val("camaTipo"), ph = t==="electrica" ? 1150 : 900;
+      if(t==="electrica" && Hi<1800) ph = 1000;
+      var py = floorY-ph*s;
+      svg += '<rect x="'+x+'" y="'+py+'" width="'+w+'" height="'+(floorY-py)+'" fill="'+body+'" stroke="var(--draw)"/>';
+      if(t==="fija") svg += '<rect x="'+(x+6)+'" y="'+(py+10)+'" width="'+(w-12)+'" height="'+(floorY-py-14)+'" fill="rgba(0,0,0,.18)"/><text x="'+(x+w/2)+'" y="'+(py+(floorY-py)/2+4)+'" text-anchor="middle" class="lbl on-dark">garaje</text>';
+      if(t==="desmontable") svg += '<rect x="'+(x+6)+'" y="'+(py+8)+'" width="'+(w-12)+'" height="'+(floorY-py-12)+'" fill="var(--bg)" opacity=".6"/>';
+      if(t==="electrica") svg += '<path d="M'+(x+w/2)+' '+(py-6)+'v-22m-5 5 5-5 5 5M'+(x+w/2)+' '+(py+30)+'v22m-5-5 5 5 5-5" stroke="var(--accent)" stroke-width="2" fill="none"/>';
+      svg += '<rect x="'+(x+2)+'" y="'+(py-12)+'" width="'+(w-4)+'" height="12" rx="4" fill="#EDE6DA" stroke="#B9AE9C"/>';
+      return;
+    }
+    if(it.k==="banco"){ svg += '<rect x="'+x+'" y="'+(floorY-45)+'" width="'+w+'" height="45" fill="'+body+'" stroke="var(--draw)"/><rect x="'+(x+w-12)+'" y="'+(floorY-110)+'" width="12" height="110" rx="3" fill="var(--draw-soft)"/><text x="'+(x+w/2)+'" y="'+(floorY-55)+'" text-anchor="middle" class="dim">banco</text>'; return; }
+    if(it.k==="dinette"){ svg += '<rect x="'+x+'" y="'+(floorY-45)+'" width="45" height="45" fill="'+body+'" stroke="var(--draw)"/><rect x="'+(x+w-45)+'" y="'+(floorY-45)+'" width="45" height="45" fill="'+body+'" stroke="var(--draw)"/><rect x="'+(x+50)+'" y="'+(floorY-72)+'" width="'+(w-100)+'" height="5" fill="'+top+'"/><rect x="'+(x+w/2-2)+'" y="'+(floorY-67)+'" width="4" height="67" fill="var(--draw-soft)"/>'; return; }
+    var y = hTop(it.h);
+    if(it.k==="cocina"){
+      svg += panelBox(x, floorY-86, w, 86) + '<rect x="'+(x-2)+'" y="'+(floorY-90)+'" width="'+(w+4)+'" height="5" fill="'+top+'" stroke="var(--draw)" stroke-width=".6"/>';
+      if(val("fregadero")) svg += '<path d="M'+(x+16)+' '+(floorY-90)+'v-14h8" stroke="#8B9397" stroke-width="2" fill="none"/>';
+    } else if(it.k==="bano"){
+      svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+(floorY-y)+'" fill="'+body+'" stroke="var(--draw)"/><rect x="'+(x+4)+'" y="'+(y+4)+'" width="'+(w-8)+'" height="'+(floorY-y-8)+'" fill="'+door+'" stroke="rgba(0,0,0,.2)"/><text x="'+(x+w/2)+'" y="'+(y+24)+'" text-anchor="middle" class="lbl'+(isDark(mat("puertas",val("puertas")).c)?" on-dark":"")+'">baño</text>';
+    } else {
+      svg += panelBox(x, y, w, floorY-y);
+      var nm = it.k==="nevera"?"nevera":it.k==="wc"?"WC":"armario";
+      svg += '<text x="'+(x+w/2)+'" y="'+(y-4)+'" text-anchor="middle" class="dim">'+nm+'</text>';
+    }
+    if((alt==="perimetral" && it.h<9999) || (alt==="cocina" && it.k==="cocina")) svg += panelBox(x, ceilY+2, w, 34);
+  });
+  if(val("ex-ventanas") && side==="B") svg += '<rect x="'+(X0+Lc*0.35)+'" y="'+(ceilY+46)+'" width="80" height="38" rx="6" fill="var(--glass)" opacity=".8"/>';
+  svg += '<text x="'+X0+'" y="16" class="dim">'+(side==="A"?"pared del lado de la puerta":"pared del lado del conductor")+' · alto interior '+Hi.toLocaleString("es-ES")+' mm</text></svg>';
+  return svg;
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function renderPreview(){
+  var html = S.view==="ext" ? drawExterior() : S.view==="plan" ? drawPlan() : drawInterior();
+  $("view").innerHTML = html;
+  document.querySelectorAll(".tabs button").forEach(function(b){ b.setAttribute("aria-selected", b.dataset.view===S.view ? "true":"false"); });
+  $("sidebtns").hidden = S.view!=="int";
+  var L=curL(), H=curH(), lay=layoutFor(L);
+  $("dims").innerHTML = '<span>Furgo <b>'+L+H+'</b></span><span>Carga <b>'+lay.Lc.toLocaleString("es-ES")+'</b> mm</span><span>Alto interior <b>'+MEDIDAS.alto[H].int.toLocaleString("es-ES")+'</b> mm</span>';
+  var al = lay.warn.slice();
+  if(!lay.fits){
+    var rec = recommendL();
+    var falta = Math.max(lay.over.A, lay.over.B);
+    al.push("Con esta distribución faltan unos "+Math.round(falta/10)+" cm en una "+L+". "+(rec? "Te recomendamos una "+rec+", o quitar algún mueble." : "Quita algún mueble o elige cama de salón."));
+  }
+  if(val("camaTipo")==="electrica" && H==="H1") al.push("La cama eléctrica necesita altura: con H1 casi no gana espacio. Mejor H2 o H3.");
+  if(val("camaPos")==="longitudinal" && (L==="L1"||L==="L2")) al.push("La cama a lo largo ocupa casi 2 m: en "+L+" deja muy poco sitio para cocina y baño.");
+  if(val("fuegos")==="induccion" && !val("ex-bat100")) al.push("La inducción gasta mucho: te recomendamos añadir 100 Ah de batería en el paso de electricidad.");
+  $("alerts").innerHTML = al.map(function(t){return '<div class="alert">'+esc(t)+'</div>'}).join("");
+  var fit = $("fitmsg"); if(fit) fit.remove();
+  if(lay.fits && S.view==="plan"){ $("alerts").insertAdjacentHTML("afterend",'<div class="fit" id="fitmsg">Todo cabe en tu '+L+H+'.</div>'); }
+}
+function renderSteps(){
+  $("steps").innerHTML = STEP_NAMES.map(function(n,i){
+    return '<li><button type="button" data-go="'+i+'" class="'+(i<S.step?"done":"")+'"'+(i===S.step?' aria-current="step"':'')+'><span class="n">'+(i+1)+'</span>'+n+'</button></li>';
+  }).join("");
+  document.querySelectorAll("[data-step]").forEach(function(d){ d.hidden = +d.dataset.step!==S.step; });
+  $("prev").style.visibility = S.step===0 ? "hidden" : "visible";
+  $("next").textContent = S.step===4 ? "Enviar mi configuración" : "Siguiente";
+  if(S.step===4) renderSummary();
+}
+function renderVisibility(){
+  var tiene = val("tiene")==="si";
+  $("f-anio").hidden = !tiene; $("f-buscar").hidden = tiene;
+  $("fs-banopos").hidden = val("bano")!=="completo";
+  $("bp-tras").disabled = val("camaPos")!=="dinette";
+  if($("bp-tras").disabled && $("bp-tras").checked) $("bp-frente").checked = true;
+  var emp = val("tipoCliente")==="Empresa";
+  $("lbl-nombre").textContent = emp ? "Razón social" : "Nombre y apellidos";
+  $("lbl-nif").textContent = emp ? "CIF / NIF" : "DNI / NIE";
+}
+
+/* ---------- textos para resumen y envío ---------- */
+function txtFurgo(){
+  var t = val("tiene")==="si" ? "Tiene: " : "Quiere: ";
+  return t + val("marca") + " " + curL()+curH() + (val("anio")?" ("+val("anio")+")":"") + " · color "+form.elements.colorfurgo.selectedOptions[0].text.toLowerCase()
+    + (val("aconsejar")?" · pide consejo sobre tamaño":"") + (val("tiene")==="no" && val("buscar")?" · quiere que se la busquemos":"");
+}
+function txtDistribucion(){
+  var camaPos = {transversal:"atrás transversal", longitudinal:"atrás longitudinal", dinette:"salón que se hace cama"}[val("camaPos")];
+  var camaTipo = {fija:"fija con garaje", desmontable:"desmontable", electrica:"elevable eléctrica"}[val("camaTipo")];
+  var bano = {no:"sin baño", wc:"WC portátil en mueble", completo:"baño con ducha ("+{frente:"enfrente de la cocina",puerta:"junto a la puerta",trasera:"al fondo"}[val("banoPos")]+")"}[val("bano")];
+  var fuegos = form.elements.fuegos.selectedOptions[0].text;
+  var nev = {pequena:"pequeña 40–50 L", mediana:"mediana 70–90 L", grande:"grande 130 L+"}[val("nevera")];
+  var alt = {no:"sin altillos", cocina:"altillos sobre la cocina", perimetral:"altillos en todo el contorno"}[val("altillos")];
+  return [
+    val("plazas")+" plazas"+(val("giratorios")?", asientos giratorios":""),
+    "Cama "+camaPos+", "+camaTipo,
+    "Baño: "+bano+(val("duchaExt")?" + ducha exterior":""),
+    "Cocina lado "+(val("cocinaLado")==="A"?"puerta":"conductor")+": "+fuegos.toLowerCase()+(val("fregadero")?", fregadero":"")+(val("horno")?", horno/microondas":""),
+    "Nevera "+nev+" · agua limpia "+val("agua")+" L",
+    alt+(val("armario")?" + armario ropero":"")
+  ];
+}
+function txtAcabados(){
+  var e = ESTILOS.find(function(x){return x.id===val("estilo")});
+  return [
+    "Estilo: "+(e?e.n:"a su gusto"),
+    "Suelo: "+mat("suelo",val("suelo")).n,
+    "Paredes: "+mat("paredes",val("paredes")).n,
+    "Techo: "+mat("techo",val("techo")).n,
+    "Muebles estructura: "+mat("cuerpo",val("cuerpo")).n,
+    "Muebles puertas: "+mat("puertas",val("puertas")).n,
+    "Encimera: "+mat("encimera",val("encimera")).n
+  ].concat(val("notasAcabados")?["Notas: "+val("notasAcabados")]:[]);
+}
+function txtElectrico(){
+  var ex = EXTRAS.filter(function(e){return val("ex-"+e.id)}).map(function(e){return e.n});
+  return ["Pack estándar"].concat(ex.length? ["Extras: "+ex.join(", ")] : ["Sin extras"]).concat(["Uso: "+val("usoElec")]);
+}
+function txtAvisos(){ return Array.prototype.map.call($("alerts").querySelectorAll(".alert"), function(a){return a.textContent}); }
+function renderSummary(){
+  var rows = [["Furgoneta", txtFurgo()], ["Distribución", txtDistribucion().join("<br>")], ["Prioridades", esc(val("prioridades")||"—")], ["Acabados", txtAcabados().map(esc).join("<br>")], ["Electricidad", txtElectrico().map(esc).join("<br>")]];
+  var av = txtAvisos(); if(av.length) rows.push(["Avisos", av.map(esc).join("<br>")]);
+  $("summary").innerHTML = rows.map(function(r){return "<div><dt>"+r[0]+"</dt><dd>"+r[1]+"</dd></div>"}).join("");
+}
+
+/* ============================================================
+   ENVÍO
+   ============================================================ */
+function refCode(){ var d=new Date(); var p=function(n){return String(n).padStart(2,"0")}; return "LC-"+String(d.getFullYear()).slice(2)+p(d.getMonth()+1)+p(d.getDate())+"-"+Math.random().toString(36).slice(2,6).toUpperCase(); }
+function payload(ref){
+  return {
+    referencia: ref, recibida: new Date().toISOString(),
+    cliente: {tipo: val("tipoCliente"), nombre: val("nombre").trim(), nif: val("nif").trim(), email: val("email").trim(), telefono: val("telefono").trim(),
+      direccion: val("direccion").trim()+", "+val("cp").trim()+" "+val("poblacion").trim()+(val("provincia")?" ("+val("provincia").trim()+")":"")},
+    furgoneta: {tiene: val("tiene")==="si", texto: txtFurgo(), longitud: val("aconsejar")?"Aconsejadme":curL(), altura: val("aconsejar")?"Aconsejadme":curH()},
+    plazas: val("plazas"),
+    distribucion: txtDistribucion(), prioridades: val("prioridades")||"",
+    acabados: txtAcabados(), electrico: txtElectrico(), avisos: txtAvisos()
+  };
+}
+function textoPlano(p){
+  return "Configuración "+p.referencia+"\n\nCLIENTE\n"+p.cliente.nombre+" · "+p.cliente.nif+"\n"+p.cliente.direccion+"\n"+p.cliente.email+" · "+p.cliente.telefono
+    +"\n\nFURGONETA\n"+p.furgoneta.texto+"\n\nDISTRIBUCIÓN\n- "+p.distribucion.join("\n- ")+(p.prioridades?"\nPrioridades: "+p.prioridades:"")
+    +"\n\nACABADOS\n- "+p.acabados.join("\n- ")+"\n\nELECTRICIDAD\n- "+p.electrico.join("\n- ")+(p.avisos.length?"\n\nAVISOS\n- "+p.avisos.join("\n- "):"");
+}
+function validar(){
+  var req = ["nombre","nif","email","telefono","direccion","cp","poblacion"];
+  for(var i=0;i<req.length;i++){ if(!String(val(req[i])||"").trim()){ form.elements[req[i]].focus(); return "Falta rellenar: "+document.querySelector('label[for="'+req[i]+'"]').textContent+"."; } }
+  if(!/^\S+@\S+\.\S+$/.test(val("email").trim())){ form.elements.email.focus(); return "Revisa el email, parece incompleto."; }
+  if(!val("acepto")) return "Marca la casilla de cómo funciona la ficha para continuar.";
+  if(!val("privacidad")) return "Necesitamos tu permiso para usar tus datos en el presupuesto.";
+  return "";
+}
+function enviar(){
+  var e = validar(); $("err").textContent = e; if(e) return;
+  var ref = refCode(), p = payload(ref), btn = $("next");
+  btn.disabled = true; btn.textContent = "Enviando…";
+  var ctrl = new AbortController(); var tm = setTimeout(function(){ctrl.abort()}, 15000);
+  fetch("/api/configuracion", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(p), signal: ctrl.signal})
+    .then(function(r){ clearTimeout(tm); if(!r.ok) throw new Error("http "+r.status); return r.json(); })
+    .then(function(){
+      $("result").innerHTML = '<div class="done-box"><h3>Recibido. Gracias, '+esc(p.cliente.nombre.split(" ")[0])+'</h3><p>Tu referencia es <span class="ref">'+ref+'</span>. Te escribimos en 48 horas laborables para revisar juntos la ficha y cerrar el presupuesto.</p></div>';
+      btn.hidden = true; $("prev").hidden = true;
+    })
+    .catch(function(){
+      clearTimeout(tm);
+      var t = textoPlano(p);
+      $("result").innerHTML = '<div class="done-box"><h3>No hemos podido enviarlo</h3><p>Esta versión de prueba aún no está conectada. Copia el resumen y mándanoslo por WhatsApp o email.</p><pre class="copy" id="copytxt">'+esc(t)+'</pre><button type="button" class="btn" id="copybtn">Copiar resumen</button></div>';
+      $("copybtn").onclick = function(){
+        var b=this; navigator.clipboard.writeText(t).then(function(){b.textContent="Copiado"}).catch(function(){ var r=document.createRange(); r.selectNodeContents($("copytxt")); var sel=getSelection(); sel.removeAllRanges(); sel.addRange(r); b.textContent="Selecciona y copia"; });
+      };
+      btn.disabled = false; btn.textContent = "Enviar mi configuración";
+    });
+}
+
+/* ============================================================
+   EVENTOS
+   ============================================================ */
+function go(i){ S.step=Math.max(0,Math.min(4,i)); if(STEP_VIEW[S.step]) S.view=STEP_VIEW[S.step]; renderSteps(); renderPreview(); $("form").scrollIntoView({block:"start", behavior:"smooth"}); }
+$("next").onclick = function(){ if(S.step<4) go(S.step+1); else enviar(); };
+$("prev").onclick = function(){ go(S.step-1); };
+$("steps").addEventListener("click", function(e){ var b=e.target.closest("[data-go]"); if(b) go(+b.dataset.go); });
+document.querySelectorAll(".tabs button").forEach(function(b){ b.onclick=function(){ S.view=b.dataset.view; renderPreview(); }; });
+document.querySelectorAll("#sidebtns button").forEach(function(b){ b.onclick=function(){ S.side=b.dataset.side; document.querySelectorAll("#sidebtns button").forEach(function(x){x.setAttribute("aria-pressed", x===b?"true":"false")}); renderPreview(); }; });
+form.addEventListener("change", function(e){
+  var n = e.target.name;
+  if(n==="estilo"){ var st = ESTILOS.find(function(x){return x.id===e.target.value}); if(st) Object.keys(st.v).forEach(function(k){ var r=$(k+"-"+st.v[k]); if(r) r.checked=true; }); }
+  if(["suelo","paredes","techo","cuerpo","puertas","encimera"].indexOf(n)>=0){ $("estilo-propio").checked = true; }
+  if(n==="cocinaLado" && S.view==="int") S.side = e.target.value;
+  if(n==="marca" && e.target.value.indexOf("aconsejadme")>=0) $("aconsejar").checked = true;
+  if(["largo","alto","colorfurgo","marca"].indexOf(n)>=0 && S.step===0) S.view="ext";
+  if(["suelo","paredes","techo","cuerpo","puertas","encimera","estilo"].indexOf(n)>=0) S.view="int";
+  renderVisibility(); renderPreview(); if(S.step===4) renderSummary();
+});
+form.addEventListener("submit", function(e){ e.preventDefault(); });
+renderVisibility(); renderSteps(); renderPreview();
+</script>
+
+</body>
+</html>
