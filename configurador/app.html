@@ -76,6 +76,10 @@ legend{font-weight:600;margin-bottom:8px;font-size:15px;padding:0}
 .opt label b{font-weight:600;font-size:14px}
 .opt label span{color:var(--muted);font-size:12.5px;line-height:1.35}
 .opts.small .opt label{align-items:center;text-align:center;padding:8px 4px;font-family:var(--f-mono);font-weight:500}
+.opts.photo{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+.opt label .ph{display:block;aspect-ratio:4/3;margin:-10px -12px 8px;border-radius:7px 7px 0 0;overflow:hidden;background:repeating-linear-gradient(135deg,var(--sunk) 0 8px,var(--bg) 8px 16px)}
+.opt label .ph img{width:100%;height:100%;object-fit:cover;display:block;max-width:none}
+.opts.med .opt label span{font-family:var(--f-body);font-size:11.5px}
 .opt input:checked + label{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--accent-soft)}
 .opt input:focus-visible + label{outline:2px solid var(--accent);outline-offset:2px}
 .opt input:disabled + label{opacity:.45;cursor:not-allowed}
@@ -166,31 +170,20 @@ svg .body{fill:var(--surface);stroke:var(--draw)}
             </div>
           </fieldset>
           <div class="row">
-            <div class="f"><label for="marca">Marca y modelo</label>
-              <select id="marca" name="marca">
-                <option>Fiat Ducato</option><option>Citroën Jumper</option><option>Peugeot Boxer</option>
-                <option>Renault Master</option><option>Opel Movano</option><option>Ford Transit</option>
-                <option>Mercedes Sprinter</option><option>Volkswagen Crafter</option><option>MAN TGE</option>
-                <option>Iveco Daily</option><option>Otra</option><option>No lo sé, aconsejadme</option>
-              </select></div>
+            <div class="f"><label for="marca">Marca y modelo</label><select id="marca" name="marca"></select></div>
             <div class="f" id="f-anio"><label for="anio">Año</label><input type="number" id="anio" name="anio" min="1995" max="2027" placeholder="2021"></div>
-            <div class="f"><label for="colorfurgo">Color exterior</label>
-              <select id="colorfurgo" name="colorfurgo">
-                <option value="#F4F4F2">Blanco</option><option value="#B8BCBF">Gris plata</option><option value="#6B7075">Gris oscuro</option>
-                <option value="#24272A">Negro</option><option value="#2F4F6F">Azul</option><option value="#B9AE97">Beige</option><option value="#4F5E46">Verde</option>
-              </select></div>
           </div>
           <div class="f" id="f-buscar" hidden style="margin-top:12px">
             <label class="check"><input type="checkbox" id="buscar" name="buscar"><span>Quiero que me la busquéis vosotros<small>Servicio de búsqueda de furgoneta por encargo</small></span></label>
           </div>
           <fieldset style="margin-top:18px">
             <legend>Longitud</legend>
-            <p class="hint">Medidas de referencia de Fiat Ducato. En otras marcas buscamos la equivalente.</p>
-            <div class="opts small" id="opts-largo"></div>
+            <p class="hint" id="hint-medidas"></p>
+            <div class="opts small med" id="opts-largo"></div>
           </fieldset>
           <fieldset>
             <legend>Altura</legend>
-            <div class="opts small" id="opts-alto"></div>
+            <div class="opts small med" id="opts-alto"></div>
           </fieldset>
           <label class="check"><input type="checkbox" id="aconsejar" name="aconsejar"><span>No tengo claro el tamaño, aconsejadme<small>Lo vemos juntos según la distribución que elijas</small></span></label>
         </div>
@@ -198,31 +191,31 @@ svg .body{fill:var(--surface);stroke:var(--draw)}
         <!-- 2 DISTRIBUCION -->
         <div data-step="1" hidden>
           <h2>Distribución</h2>
-          <p class="lead">Dónde va cada cosa. Si algo no cabe en tu tamaño de furgo, te avisamos en el dibujo.</p>
+          <p class="lead">Dónde va cada cosa. Si algo no cabe en tu furgo, te avisamos en el dibujo.</p>
           <fieldset><legend>Plazas para viajar</legend>
             <div class="opts">
               <div class="opt"><input type="radio" name="plazas" id="plazas-2" value="2" checked><label for="plazas-2"><b>2 plazas</b><span>Conductor y acompañante</span></label></div>
-              <div class="opt"><input type="radio" name="plazas" id="plazas-4" value="4"><label for="plazas-4"><b>4 plazas</b><span>Banco trasero homologado con cinturones</span></label></div>
+              <div class="opt"><input type="radio" name="plazas" id="plazas-4" value="4"><label for="plazas-4"><b>4 plazas</b><span>Banco homologado con cinturones</span></label></div>
             </div>
           </fieldset>
-          <fieldset><legend>Cama</legend>
+          <fieldset><legend>¿Cuántas camas?</legend>
             <div class="opts">
-              <div class="opt"><input type="radio" name="cama" id="cama-fija" value="fija" checked><label for="cama-fija"><b>Fija trasera con garaje</b><span>Siempre montada, de lado a lado y en alto, con garaje debajo</span></label></div>
-              <div class="opt"><input type="radio" name="cama" id="cama-elev" value="elevable"><label for="cama-elev"><b>Elevable eléctrica</b><span>Sube al techo con un botón y baja sobre la dinette por la noche</span></label></div>
-              <div class="opt"><input type="radio" name="cama" id="cama-doble" value="doble"><label for="cama-doble"><b>Dos camas</b><span>Elevable arriba y abajo los sofás que se hacen cama. 4 para dormir</span></label></div>
-              <div class="opt"><input type="radio" name="cama" id="cama-u" value="sofasU"><label for="cama-u"><b>Sofás en U convertibles</b><span>Salón de día, cama de matrimonio grande de noche</span></label></div>
-            </div>
-            <label class="check" id="lbl-bandeja"><input type="checkbox" id="bandeja" name="bandeja"><span>Garaje con bandeja extraíble<small>Sale por las puertas traseras</small></span></label>
-          </fieldset>
-          <fieldset id="fs-comedor"><legend>Comedor delantero</legend>
-            <div class="opts">
-              <div class="opt"><input type="radio" name="comedor" id="com-gir" value="giratorios" checked><label for="com-gir"><b>Asientos giratorios y mesa</b><span>Los delanteros giran y comparten mesa con el banco</span></label></div>
-              <div class="opt"><input type="radio" name="comedor" id="com-aba" value="abatible"><label for="com-aba"><b>Banco con mesa abatible</b><span>La mesa se pliega contra la pared</span></label></div>
-              <div class="opt"><input type="radio" name="comedor" id="com-l" value="L"><label for="com-l"><b>Dinette en L</b><span>Sofá en esquina con mesa regulable</span></label></div>
-              <div class="opt"><input type="radio" name="comedor" id="com-no" value="no"><label for="com-no"><b>Sin comedor delante</b><span>Más espacio de paso</span></label></div>
+              <div class="opt"><input type="radio" name="numCamas" id="nc-1" value="1" checked><label for="nc-1"><b>Una cama</b><span>Para 2 personas</span></label></div>
+              <div class="opt"><input type="radio" name="numCamas" id="nc-2" value="2"><label for="nc-2"><b>Dos camas</b><span>Para 4 personas</span></label></div>
             </div>
           </fieldset>
-          <p class="hint" id="hint-dinette" hidden>Con cama elevable o sofás en U, el comedor es la dinette trasera de sofás enfrentados con mesa central.</p>
+          <fieldset><legend>Tipo de cama</legend><div class="opts photo" id="opts-cama"></div></fieldset>
+          <fieldset id="fs-salon"><legend>¿Cómo es el salón que se hace cama?</legend><div class="opts photo" id="opts-salon"></div></fieldset>
+          <fieldset id="fs-garaje"><legend>Garaje bajo la cama</legend>
+            <div class="checks">
+              <label class="check"><input type="checkbox" id="rampa" name="rampa"><span>Rampa para meter bici o moto</span></label>
+              <label class="check"><input type="checkbox" id="cajon" name="cajon"><span>Cajón o bandeja extraíble<small>Sale por las puertas traseras</small></span></label>
+            </div>
+          </fieldset>
+          <fieldset><legend>Comedor delantero</legend>
+            <div class="opts photo" id="opts-comedor"></div>
+            <label class="check" id="lbl-abatible"><input type="checkbox" id="mesaAbatible" name="mesaAbatible"><span>Mesa abatible contra la pared<small>Se pliega y deja el paso libre</small></span></label>
+          </fieldset>
           <fieldset><legend>Baño y ducha</legend>
             <div class="opts">
               <div class="opt"><input type="radio" name="bano" id="bano-no" value="no"><label for="bano-no"><b>Sin baño</b><span>Más espacio libre</span></label></div>
@@ -239,20 +232,18 @@ svg .body{fill:var(--surface);stroke:var(--draw)}
           </fieldset>
           <fieldset><legend>Cocina</legend>
             <div class="opts">
-              <div class="opt"><input type="radio" name="cocinaLado" id="cl-a" value="A" checked><label for="cl-a"><b>Lado de la puerta</b><span>Cocinas mirando afuera</span></label></div>
+              <div class="opt"><input type="radio" name="cocinaLado" id="cl-a" value="A" checked><label for="cl-a"><b>Lado de la puerta</b><span>Empieza a media puerta corredera</span></label></div>
               <div class="opt"><input type="radio" name="cocinaLado" id="cl-b" value="B"><label for="cl-b"><b>Lado del conductor</b><span>Entrada más despejada</span></label></div>
             </div>
-            <div class="row" style="margin-top:10px">
-              <div class="f"><label for="fuegos">Fuegos</label>
-                <select id="fuegos" name="fuegos"><option value="gas2">Gas, 2 fuegos</option><option value="gas3">Gas, 3 fuegos</option><option value="gashorno">Gas con horno integrado</option><option value="electrica">Placa eléctrica de cristal (pide más batería)</option><option value="ninguno">Sin fuegos</option></select></div>
-              <div class="f"><label for="agua">Depósito de agua limpia</label>
-                <select id="agua" name="agua"><option value="70">70 litros</option><option value="100">100 litros</option><option value="120">120 litros</option></select></div>
-            </div>
+          </fieldset>
+          <fieldset><legend>Fuegos</legend><div class="opts photo" id="opts-fuegos"></div>
             <div class="checks" style="margin-top:6px">
               <label class="check"><input type="checkbox" id="fregadero" name="fregadero" checked><span>Fregadero con grifo</span></label>
               <label class="check"><input type="checkbox" id="tapaFregadero" name="tapaFregadero"><span>Fregadero oculto bajo tapa<small>Más encimera libre</small></span></label>
               <label class="check"><input type="checkbox" id="extension" name="extension"><span>Extensión de encimera abatible</span></label>
             </div>
+            <div class="row" style="margin-top:6px"><div class="f"><label for="agua">Depósito de agua limpia</label>
+              <select id="agua" name="agua"><option value="70">70 litros</option><option value="100">100 litros</option><option value="120">120 litros</option></select></div></div>
           </fieldset>
           <fieldset><legend>Nevera de compresor</legend>
             <div class="opts">
@@ -277,33 +268,29 @@ svg .body{fill:var(--surface);stroke:var(--draw)}
         <div data-step="2" hidden>
           <h2>Acabados y colores</h2>
           <p class="lead">Empieza por un estilo y cambia lo que quieras. Las muestras reales las ves y tocas en el taller.</p>
-          <fieldset><legend>Estilo de partida</legend><div class="opts" id="opts-estilo"></div></fieldset>
+          <fieldset><legend>Estilo de partida</legend><div class="opts photo" id="opts-estilo"></div></fieldset>
           <fieldset><legend>Paredes</legend><div class="opts" id="opts-paredes"></div></fieldset>
           <fieldset><legend>Techo</legend><div class="opts" id="opts-techo"></div></fieldset>
           <fieldset><legend>Suelo</legend><div class="opts" id="opts-suelo"></div></fieldset>
           <fieldset><legend>Muebles: estructura y laterales</legend><p class="hint">Tablero HPL de 15 mm</p><div class="opts" id="opts-cuerpo"></div></fieldset>
           <fieldset><legend>Muebles: puertas y frentes</legend><div class="opts" id="opts-puertas"></div></fieldset>
-          <fieldset><legend>Encimera</legend><div class="opts" id="opts-encimera"></div></fieldset>
-          <fieldset><legend>Detalles de cocina</legend>
-            <div class="row">
-              <div class="f"><label for="salpicadero">Frontal y azulejo</label><select id="salpicadero" name="salpicadero"></select></div>
-              <div class="f"><label for="tiradores">Tiradores</label><select id="tiradores" name="tiradores"></select></div>
-              <div class="f"><label for="griferia">Grifería</label><select id="griferia" name="griferia"></select></div>
-            </div>
-          </fieldset>
-          <fieldset id="fs-bano-acab"><legend>Baño</legend>
-            <div class="row">
-              <div class="f"><label for="banoRevest">Revestimiento</label><select id="banoRevest" name="banoRevest"></select></div>
-              <div class="f"><label for="banoPuerta">Puerta</label><select id="banoPuerta" name="banoPuerta"></select></div>
-            </div>
-            <label class="check"><input type="checkbox" id="tarima" name="tarima"><span>Tarima de madera en el plato de ducha</span></label>
-          </fieldset>
+          <fieldset><legend>Encimera</legend><div class="opts photo" id="opts-encimera"></div></fieldset>
+          <fieldset><legend>Frontal de la cocina</legend><div class="opts photo" id="opts-salpicadero"></div></fieldset>
+          <div class="row" style="margin-bottom:20px">
+            <div class="f"><label for="tiradores">Tiradores</label><select id="tiradores" name="tiradores"></select></div>
+            <div class="f"><label for="griferia">Grifería</label><select id="griferia" name="griferia"></select></div>
+          </div>
+          <div id="fs-bano-acab">
+            <fieldset><legend>Baño: revestimiento</legend><div class="opts photo" id="opts-banoRevest"></div></fieldset>
+            <fieldset><legend>Baño: puerta</legend><div class="opts photo" id="opts-banoPuerta"></div>
+              <label class="check"><input type="checkbox" id="tarima" name="tarima"><span>Tarima de madera en el plato de ducha</span></label></fieldset>
+          </div>
           <fieldset><legend>Tapicería de sofás, colchón y cojines</legend><div class="opts small tap" id="opts-tapiceria"></div></fieldset>
           <div class="f"><label for="notasAcabados">Comentarios sobre acabados</label>
             <textarea id="notasAcabados" name="notasAcabados" placeholder="Ej.: me gustaría ver la muestra del turquesa antes de decidir"></textarea></div>
         </div>
 
-        <!-- 4 ELECTRICO -->
+        <!-- 4 EXTRAS -->
         <div data-step="3" hidden>
           <h2>Electricidad y extras</h2>
           <p class="lead">Todas nuestras campers llevan el pack estándar. Añade lo que necesites según cómo viajes.</p>
@@ -312,12 +299,11 @@ svg .body{fill:var(--surface);stroke:var(--draw)}
             <ul id="std-list"></ul>
           </div>
           <fieldset><legend>Electricidad y confort</legend><div class="checks" id="extras-elec"></div></fieldset>
-          <fieldset><legend>Iluminación</legend><div class="checks" id="extras-luz"></div></fieldset>
-          <fieldset><legend>Personalización y exterior</legend><div class="checks" id="extras-pers"></div></fieldset>
+          <fieldset><legend>Iluminación</legend><div class="opts photo" id="extras-luz"></div></fieldset>
+          <fieldset><legend>Personalización y exterior</legend><div class="opts photo" id="extras-pers"></div></fieldset>
           <div class="f"><label for="usoElec">¿Cómo vas a usar la camper?</label>
             <select id="usoElec" name="usoElec"><option>Fines de semana y vacaciones</option><option>Viajes largos de varias semanas</option><option>Vivir o teletrabajar en ella</option><option>Invierno y nieve</option></select></div>
         </div>
-
         <!-- 5 DATOS -->
         <div data-step="4" hidden>
           <h2>Resumen y datos de facturación</h2>
@@ -360,16 +346,30 @@ svg .body{fill:var(--surface);stroke:var(--draw)}
 
 <script>
 /* ============================================================
-   CATÁLOGO (beta). Editad aquí nombres, códigos, colores y opciones.
-   c = color de muestra en el dibujo (aproximado a la foto del proveedor)
-   veta: 1 madera · 2 friso · 3 textura · 4 lamas sobre fondo oscuro · 5 mármol
-   c2 = segundo color en tableros bicolor (arriba c, abajo c2)
+   CATÁLOGO (beta). Editad aquí nombres, códigos, colores, fotos y opciones.
+   img = foto en img/op/<img>.webp
+   c = color de muestra en el dibujo · veta: 1 madera, 2 friso, 3 textura, 4 lamas, 5 mármol · c2 = bicolor
    ============================================================ */
-var MEDIDAS = { // Fiat Ducato de referencia, mm
-  largo: { L1:{carga:2670, ext:4963, batalla:3000}, L2:{carga:3120, ext:5413, batalla:3450}, L3:{carga:3705, ext:5998, batalla:4035}, L4:{carga:4070, ext:6363, batalla:4035} },
-  alto:  { H1:{int:1662, ext:2254}, H2:{int:1932, ext:2524}, H3:{int:2172, ext:2764} },
-  ancho: 1870
+// Medidas aproximadas en mm (zona de carga, exterior y batalla). Revisar con ficha técnica de cada modelo.
+var MODELOS = {
+  ducato: {ancho:1870, largo:{L1:{carga:2670,ext:4963,batalla:3000}, L2:{carga:3120,ext:5413,batalla:3450}, L3:{carga:3705,ext:5998,batalla:4035}, L4:{carga:4070,ext:6363,batalla:4035}},
+           alto:{H1:{int:1662,ext:2254}, H2:{int:1932,ext:2524}, H3:{int:2172,ext:2764}}},
+  master: {ancho:1765, largo:{L1:{carga:2583,ext:5048,batalla:3182}, L2:{carga:3083,ext:5548,batalla:3682}, L3:{carga:3733,ext:6198,batalla:4332}, L4:{carga:4383,ext:6848,batalla:4332}},
+           alto:{H1:{int:1700,ext:2307}, H2:{int:1894,ext:2488}, H3:{int:2144,ext:2749}}},
+  transit:{ancho:1784, largo:{L2:{carga:3044,ext:5531,batalla:3300}, L3:{carga:3494,ext:5981,batalla:3750}, L4:{carga:4217,ext:6704,batalla:3750}},
+           alto:{H2:{int:1786,ext:2550}, H3:{int:2025,ext:2780}}},
+  sprinter:{ancho:1780, largo:{L1:{carga:2607,ext:5267,batalla:3259}, L2:{carga:3272,ext:5932,batalla:3665}, L3:{carga:4300,ext:6967,batalla:4325}, L4:{carga:4707,ext:7367,batalla:4325}},
+           alto:{H1:{int:1650,ext:2360}, H2:{int:1940,ext:2650}, H3:{int:2140,ext:2850}}},
+  crafter:{ancho:1832, largo:{L3:{carga:3450,ext:5986,batalla:3640}, L4:{carga:4300,ext:6836,batalla:4490}, L5:{carga:4855,ext:7391,batalla:4490}},
+           alto:{H2:{int:1726,ext:2355}, H3:{int:1961,ext:2590}, H4:{int:2196,ext:2798}}},
+  daily:  {ancho:1800, largo:{L2:{carga:3130,ext:5600,batalla:3520}, L3:{carga:3540,ext:6010,batalla:4100}, L4:{carga:4680,ext:7150,batalla:4100}},
+           alto:{H2:{int:1900,ext:2600}, H3:{int:2100,ext:2800}}}
 };
+var MARCAS = [
+  ["Fiat Ducato","ducato"],["Citroën Jumper","ducato"],["Peugeot Boxer","ducato"],["Opel Movano (desde 2021)","ducato"],
+  ["Renault Master","master"],["Nissan Interstar","master"],["Ford Transit","transit"],["Mercedes Sprinter","sprinter"],
+  ["Volkswagen Crafter","crafter"],["MAN TGE","crafter"],["Iveco Daily","daily"],["Otra","ducato"],["No lo sé, aconsejadme","ducato"]
+];
 var PANELES = [
   {id:"friso-madera", n:"Friso color madera", c:"#D9B47E", veta:2},
   {id:"friso-barnizado", n:"Friso barnizado oscuro", c:"#8E6440", veta:2},
@@ -392,7 +392,7 @@ var MATERIALES = {
     {id:"lamas-oscuro", n:"Lamas de madera sobre fondo oscuro", c:"#A97B4E", veta:4}
   ].concat(PANELES),
   suelo: [
-    {id:"zaragoza", n:"Suelo Zaragoza", c:"#B8956E", veta:1},
+    {id:"zaragoza", n:"Parquet Zaragoza", cod:"laminado 8 mm resistente al agua", c:"#A98B6B", veta:1},
     {id:"roble-claro", n:"Vinilo roble claro", c:"#D7BD93", veta:1},
     {id:"roble-oscuro", n:"Vinilo roble oscuro", c:"#6F4F37", veta:1},
     {id:"gris-piedra", n:"Vinilo gris piedra", c:"#A29D94"},
@@ -409,11 +409,11 @@ var MATERIALES = {
     {id:"negro-mate", n:"Negro mate soft", cod:"TNNM04", c:"#121518"}
   ],
   encimera: [
-    {id:"bambu", n:"Bambú", c:"#D5B47C", veta:2},
-    {id:"madera-clara", n:"Madera clara maciza", c:"#D8B98C", veta:1},
-    {id:"madera-oscura", n:"Madera oscura barnizada", c:"#6E4A31", veta:1},
-    {id:"marmol-blanco", n:"Efecto mármol blanco", c:"#EEEDEA", veta:5},
-    {id:"borde-natural", n:"Madera de borde natural", c:"#B98C5D", veta:1}
+    {id:"bambu", n:"Bambú", c:"#D5B47C", veta:2, img:"fregadero-tapa-bambu-grifo-negro"},
+    {id:"madera-clara", n:"Madera clara maciza", c:"#D8B98C", veta:1, img:"cocina-fuegos-gas-azulejo-beige"},
+    {id:"madera-oscura", n:"Madera oscura barnizada", c:"#6E4A31", veta:1, img:"cocina-encimera-madera-oscura"},
+    {id:"marmol-blanco", n:"Efecto mármol blanco", c:"#EEEDEA", veta:5, img:"cocina-encimera-marmol-blanco"},
+    {id:"borde-natural", n:"Madera de borde natural", c:"#B98C5D", veta:1, img:"cocina-encimera-madera-rustica-grifo-rosa"}
   ]
 };
 MATERIALES.puertas = MATERIALES.cuerpo.concat([
@@ -421,24 +421,64 @@ MATERIALES.puertas = MATERIALES.cuerpo.concat([
   {id:"roble", n:"Roble", c:"#C29E6E", veta:1}
 ]);
 var ESTILOS = [
-  {id:"nordico", n:"Nórdico", d:"Blanco mate con puertas Cándara y techo de bambú", v:{paredes:"friso-blanco", techo:"bambu", suelo:"zaragoza", cuerpo:"blanco-mate", puertas:"candara", encimera:"madera-clara"}},
-  {id:"oscuro", n:"Madera oscura y friso blanco", d:"Techo oscuro, paredes de friso blanco y suelo a juego", v:{paredes:"friso-blanco", techo:"friso-barnizado", suelo:"roble-oscuro", cuerpo:"atavia", puertas:"blanco-mate", encimera:"madera-oscura"}},
-  {id:"pino", n:"Pino natural", d:"Friso de pino en techo y paredes", v:{paredes:"friso-madera", techo:"friso-madera", suelo:"zaragoza", cuerpo:"blanco-mate", puertas:"vivan", encimera:"bambu"}},
-  {id:"salvia", n:"Salvia", d:"Frentes verde salvia con madera clara", v:{paredes:"blanco-textura", techo:"bambu", suelo:"zaragoza", cuerpo:"blanco-mate", puertas:"verde-salvia", encimera:"madera-clara"}},
-  {id:"urbano", n:"Urbano", d:"Antracita, Atavía y paredes bicolor", v:{paredes:"hpl-blanco-cemento", techo:"lamas-oscuro", suelo:"gris-piedra", cuerpo:"antracita", puertas:"atavia", encimera:"madera-oscura"}},
-  {id:"negro", n:"Negro y madera", d:"Negro mate con puertas Cándara", v:{paredes:"beige-textil", techo:"lamas-oscuro", suelo:"roble-claro", cuerpo:"negro-mate", puertas:"candara", encimera:"borde-natural"}}
+  {id:"nordico", n:"Nórdico", d:"Blanco mate, puertas Cándara y techo de bambú", img:"crafter-sofas-en-u-crema", v:{paredes:"friso-blanco", techo:"bambu", suelo:"zaragoza", cuerpo:"blanco-mate", puertas:"candara", encimera:"madera-clara"}},
+  {id:"oscuro", n:"Madera oscura y friso blanco", d:"Techo oscuro, friso blanco y suelo a juego", img:"techo-madera-oscura-friso-blanco", v:{paredes:"friso-blanco", techo:"friso-barnizado", suelo:"roble-oscuro", cuerpo:"atavia", puertas:"blanco-mate", encimera:"madera-oscura"}},
+  {id:"pino", n:"Pino natural", d:"Friso de pino en techo y paredes", img:"techo-lamas-paredes-pino", v:{paredes:"friso-madera", techo:"friso-madera", suelo:"zaragoza", cuerpo:"blanco-mate", puertas:"vivan", encimera:"bambu"}},
+  {id:"salvia", n:"Salvia", d:"Frentes verde salvia con madera clara", img:"cocina-escamas-salvia-fregadero", v:{paredes:"blanco-textura", techo:"bambu", suelo:"zaragoza", cuerpo:"blanco-mate", puertas:"verde-salvia", encimera:"bambu"}},
+  {id:"urbano", n:"Urbano", d:"Gris, antracita y techo de lamas", img:"cama-fija-trasera-garaje-gris", v:{paredes:"beige-textil", techo:"lamas-oscuro", suelo:"gris-piedra", cuerpo:"antracita", puertas:"gris-cemento", encimera:"madera-oscura"}},
+  {id:"negro", n:"Negro y madera", d:"Muebles negros con encimera de bambú", img:"cocina-muebles-negros-bambu", v:{paredes:"blanco-polar", techo:"lamas-oscuro", suelo:"zaragoza", cuerpo:"negro-mate", puertas:"negro-mate", encimera:"bambu"}}
+];
+var CAMAS = [
+  {id:"fijaSalon", g:1, n:"Fija convertible en salón", d:"De día salón, de noche cama de matrimonio", img:"sofas-en-u-cama-azul-petroleo"},
+  {id:"fijaAlta", g:1, n:"Fija alta con garaje", d:"Garaje debajo para bicis o motos", img:"cama-fija-trasera-garaje-gris"},
+  {id:"elevable", g:1, n:"Elevable eléctrica", d:"Sube al techo con un botón y baja sobre la dinette", img:"cama-elevable-electrica-dinette-mostaza"},
+  {id:"dosFijas", g:2, n:"Dos camas fijas", d:"Una encima de otra, con garaje debajo", img:"camper-dos-camas-garaje-azul"},
+  {id:"dosDesm", g:2, n:"Dos camas desmontables", d:"Se quitan y queda espacio de carga", img:"camper-dos-camas-tapizado-fucsia"},
+  {id:"dosElec", g:2, n:"Dos camas, una eléctrica", d:"Elevable arriba y abajo los sofás que se hacen cama", img:"camper-dos-camas-elevable-blanca"}
+];
+var SALONES = [
+  {id:"U", n:"Sofás en U", d:"Cama de matrimonio grande", img:"crafter-sofas-en-u-crema"},
+  {id:"bancos", n:"Dos bancos laterales", d:"Enfrentados con mesa central", img:"dinette-sofas-enfrentados-gris-perla"}
+];
+var COMEDORES = [
+  {id:"girBanco", p:"4", n:"Giratorios, mesa y banco", d:"Los delanteros giran hacia atrás y comparten mesa con el banco", img:"asientos-giratorios-mesa-bambu"},
+  {id:"gir", p:"2", n:"Asientos giratorios y mesa", d:"Los delanteros giran hacia atrás, mesa delante", img:"mesa-ilustrada-asientos-giratorios"},
+  {id:"L", n:"Dinette en L", d:"Sofá en esquina con mesa regulable", img:"dinette-tapizado-cuero-cognac"},
+  {id:"no", n:"Sin comedor delante", d:"Más espacio de paso"}
+];
+var FUEGOS = [
+  {id:"gas2", n:"Gas, 2 fuegos", img:"cocina-crafter-gas-nevera"},
+  {id:"gas3", n:"Gas, 3 fuegos", img:"cocina-tres-fuegos-gas"},
+  {id:"gashorno", n:"Gas con horno integrado", img:"cocina-horno-fuegos-tapa-madera"},
+  {id:"electrica", n:"Placa eléctrica de cristal", d:"Pide más batería", img:"cocina-placa-escamas-verde"},
+  {id:"ninguno", n:"Sin fuegos"}
+];
+var SALPICADERO = [
+  {id:"ninguno", n:"Sin azulejo", d:"El mismo panel de la pared"},
+  {id:"escamas-verde", n:"Escamas verde oscuro", c:"#2F5A47", img:"cocina-placa-escamas-verde"},
+  {id:"escamas-salvia", n:"Escamas verde salvia", c:"#9DB095", img:"cocina-escamas-salvia-fregadero"},
+  {id:"hidraulico", n:"Hidráulico de colores", c:"#7C9DB3", img:"cocina-azulejo-hidraulico-color"},
+  {id:"metro-blanco", n:"Metro blanco", c:"#F4F4F1", img:"cocina-crafter-gas-nevera"},
+  {id:"metro-verde", n:"Metro verde", c:"#5E8A6E", img:"cocina-azulejo-verde-grifo-dorado"},
+  {id:"marmol-verde", n:"Mármol verde alargado", c:"#4F6E5C", img:"cocina-marmol-verde-encimera-bambu"},
+  {id:"marmol-beige", n:"Mármol beige alargado", c:"#D8CBB2", img:"cocina-fuegos-gas-azulejo-beige"}
+];
+var BANO_REVEST = [
+  {id:"metro", n:"Azulejo metro blanco", d:"Con grifería negra", img:"bano-azulejo-metro-tarima"},
+  {id:"marmol", n:"Efecto mármol blanco", d:"Paredes con vetas oscuras", img:"bano-panel-marmol-blanco"},
+  {id:"espiga", n:"Azulejo verde en espiga", img:"bano-arco-azulejo-verde"}
+];
+var BANO_PUERTA = [
+  {id:"lisa", n:"Lisa"},
+  {id:"ventanas", n:"Con ventanas translúcidas", img:"bano-puerta-cristal-vetas"},
+  {id:"espejo", n:"Espejo redondo y listones", img:"bano-puerta-espejo-redondo"},
+  {id:"arco", n:"En arco", img:"bano-arco-azulejo-verde"}
 ];
 var TAPICERIA = [
   ["Gris perla","#C9C8C3"],["Arena","#D6C3A0"],["Crema","#EEE3CC"],["Mostaza","#C9A13B"],["Naranja","#D9772F"],["Terracota","#B85C3E"],["Coñac","#94562E"],
   ["Turquesa","#3FA3A0"],["Azul petróleo","#2D5E69"],["Azul marino","#26375A"],["Azul noche","#1C2333"],["Verde oliva","#6E7442"],["Fucsia","#C2337A"],["Blanco roto","#F2EEE5"]
 ];
-var OPCIONES = {
-  salpicadero: ["Sin azulejo (mismo panel)","Escamas verde oscuro","Escamas verde salvia","Hidráulico de colores","Metro blanco","Metro verde","Mármol verde alargado","Mármol beige alargado"],
-  tiradores: ["Negros","De cuero","Uñero (sin tirador)"],
-  griferia: ["Negra","Dorada","De color"],
-  banoRevest: ["Azulejo metro blanco con grifería negra","Efecto mármol blanco con vetas oscuras","Azulejo verde en espiga"],
-  banoPuerta: ["Lisa","Con ventanas translúcidas","Con espejo redondo y listones de madera","En arco"]
-};
+var OPCIONES = { tiradores: ["Negros","De cuero","Uñero (sin tirador)"], griferia: ["Negra","Dorada","De color"] };
 var PACK_ESTANDAR = [ // beta: confirmar con el electricista
   "Batería de litio LiFePO4 200 Ah", "Placa solar 200 W con regulador MPPT", "Cargador batería-batería 30 A",
   "Inversor 1.000 W de onda pura", "Panel de control táctil con interruptores y USB", "Iluminación LED",
@@ -454,19 +494,18 @@ var EXTRAS = [
   {g:"elec", id:"aguacaliente", n:"Agua caliente", d:"Calentador para ducha y fregadero"},
   {g:"elec", id:"claraboya", n:"Claraboya con extractor"},
   {g:"elec", id:"ventanas", n:"Ventanas laterales abatibles"},
-  {g:"luz", id:"ledArmarios", n:"Tiras LED bajo los armarios"},
-  {g:"luz", id:"focos", n:"Focos empotrados en el techo"},
-  {g:"luz", id:"flexos", n:"Flexos de lectura en la cama"},
-  {g:"luz", id:"ledTecho", n:"Tira LED integrada en el techo de lamas"},
-  {g:"pers", id:"tv", n:"Televisión en brazo extensible"},
-  {g:"pers", id:"nombre", n:"Nombre de la camper rotulado"},
-  {g:"pers", id:"mesaIlustrada", n:"Mesa ilustrada"},
-  {g:"pers", id:"escalon", n:"Escalón de acceso"},
-  {g:"pers", id:"ruedas", n:"Ruedas todoterreno y llantas negras"}
+  {g:"luz", id:"ledArmarios", n:"Tiras LED bajo los armarios", img:"techo-lamas-madera-tapizado-turquesa"},
+  {g:"luz", id:"focos", n:"Focos empotrados en el techo", img:"techo-friso-pino-claraboya"},
+  {g:"luz", id:"flexos", n:"Flexos de lectura en la cama", img:"techo-pino-flexos-lectura"},
+  {g:"pers", id:"tv", n:"Televisión en brazo extensible", img:"dinette-tv-friso-blanco"},
+  {g:"pers", id:"nombre", n:"Nombre de la camper rotulado", img:"rotulo-personalizado-camper"},
+  {g:"pers", id:"mesaIlustrada", n:"Mesa ilustrada", img:"mesa-ilustrada-asientos-giratorios"},
+  {g:"pers", id:"escalon", n:"Escalón de acceso", img:"camper-boxer-escalon-toldo"},
+  {g:"pers", id:"ruedas", n:"Ruedas todoterreno y llantas negras", img:"camper-ducato-gris-ruedas-todoterreno"}
 ];
 
 /* ============================================================
-   ESTADO
+   ESTADO Y UTILIDADES
    ============================================================ */
 var S = {view:"ext", side:"A", step:0};
 var STEP_NAMES = ["Furgoneta","Distribución","Acabados","Extras","Tus datos"];
@@ -476,15 +515,13 @@ function $(id){return document.getElementById(id)}
 function val(name){var el=form.elements[name]; if(!el) return null; if(el.type==="checkbox") return el.checked; return el.value;}
 function mat(cat,id){return MATERIALES[cat].find(function(m){return m.id===id})||MATERIALES[cat][0]}
 function matName(cat,id){var m=mat(cat,id); return m.n+(m.cod?" ("+m.cod+")":"");}
+function find(list,id){return list.find(function(x){return x.id===id})||list[0]}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function modelo(){ var m = MARCAS.find(function(x){return x[0]===val("marca")}); return MODELOS[m?m[1]:"ducato"]; }
+function curL(){ var M=modelo(), v=val("largo"); return M.largo[v] ? v : Object.keys(M.largo)[1]||Object.keys(M.largo)[0]; }
+function curH(){ var M=modelo(), v=val("alto"); return M.alto[v] ? v : Object.keys(M.alto)[1]||Object.keys(M.alto)[0]; }
 
-/* ---------- construir opciones ---------- */
-function radioCards(container, name, items, checkedId, render){
-  $(container).innerHTML = items.map(function(it){
-    var id = name+"-"+it.id;
-    return '<div class="opt"><input type="radio" name="'+name+'" id="'+id+'" value="'+it.id+'"'+(it.id===checkedId?" checked":"")+'><label for="'+id+'">'+render(it)+'</label></div>';
-  }).join("");
-}
+/* ---------- tarjetas ---------- */
 function swatchCss(m){
   if(m.c2) return "linear-gradient("+m.c+" 50%, "+m.c2+" 50%)";
   if(m.veta===3) return "radial-gradient(rgba(0,0,0,.13) 1px, transparent 1.3px) 0 0/5px 5px, "+m.c;
@@ -493,54 +530,85 @@ function swatchCss(m){
   if(!m.veta) return m.c;
   return "repeating-linear-gradient("+(m.veta===2?"0deg":"95deg")+", rgba(0,0,0,.08) 0 1px, transparent 1px "+(m.veta===2?"6px":"4px")+"), "+m.c;
 }
-radioCards("opts-largo","largo",Object.keys(MEDIDAS.largo).map(function(k){return {id:k}}),"L3",function(it){return it.id});
-radioCards("opts-alto","alto",Object.keys(MEDIDAS.alto).map(function(k){return {id:k}}),"H2",function(it){return it.id});
-radioCards("opts-estilo","estilo",ESTILOS.concat([{id:"propio",n:"A mi gusto",d:"Lo elijo todo yo"}]),"nordico",function(it){return "<b>"+esc(it.n)+"</b><span>"+esc(it.d)+"</span>"});
-["suelo","paredes","techo","cuerpo","puertas","encimera"].forEach(function(cat){
-  radioCards("opts-"+cat, cat, MATERIALES[cat], ESTILOS[0].v[cat], function(m){return '<span class="sw"><i style="background:'+swatchCss(m)+'"></i><span><b>'+esc(m.n)+'</b>'+(m.cod?'<small>'+m.cod+'</small>':'')+'</span></span>'});
-});
-radioCards("opts-tapiceria","tapiceria",TAPICERIA.map(function(t){return {id:t[0],c:t[1]}}),"Gris perla",function(t){return '<i class="dot" style="background:'+t.c+'"></i>'+esc(t.id)});
+function photo(it){ return '<span class="ph">'+(it.img?'<img src="img/op/'+it.img+'.webp" alt="" loading="lazy">':'')+'</span>'; }
+function cardsHTML(type, name, items, checkedId, opts){
+  opts = opts||{};
+  return items.map(function(it){
+    var id = (type==="checkbox" ? name+it.id : name+"-"+it.id), nm = type==="checkbox" ? name+it.id : name;
+    var body = opts.photo ? photo(it) : "";
+    if(opts.swatch) body += '<span class="sw"><i style="background:'+swatchCss(it)+'"></i><span><b>'+esc(it.n)+'</b>'+(it.cod?'<small>'+esc(it.cod)+'</small>':'')+'</span></span>';
+    else body += '<b>'+esc(it.n)+'</b>'+(it.d?'<span>'+esc(it.d)+'</span>':'');
+    return '<div class="opt" data-id="'+it.id+'"><input type="'+type+'" name="'+nm+'" id="'+id+'" value="'+it.id+'"'+(it.id===checkedId?" checked":"")+'><label for="'+id+'">'+body+'</label></div>';
+  }).join("");
+}
+function radios(container, name, items, checkedId, opts){ $(container).innerHTML = cardsHTML("radio", name, items, checkedId, opts); }
+function anyImg(items){ return items.some(function(i){return i.img}); }
+
+$("marca").innerHTML = MARCAS.map(function(m){return "<option>"+esc(m[0])+"</option>"}).join("");
+function renderMedidas(){
+  var M = modelo(), L = val("largo")||"L3", H = val("alto")||"H2";
+  var ls = Object.keys(M.largo), hs = Object.keys(M.alto);
+  if(!M.largo[L]) L = ls[Math.min(2, ls.length-1)]; if(!M.alto[H]) H = hs[Math.min(1, hs.length-1)];
+  radios("opts-largo","largo", ls.map(function(k){return {id:k, n:k, d:(M.largo[k].carga/1000).toLocaleString("es-ES",{maximumFractionDigits:1})+" m de carga"}}), L);
+  radios("opts-alto","alto", hs.map(function(k){return {id:k, n:k, d:(M.alto[k].int/1000).toLocaleString("es-ES",{maximumFractionDigits:2})+" m de alto"}}), H);
+  var nombre = val("marca"); var ref = /Otra|No lo sé/.test(nombre);
+  $("hint-medidas").textContent = ref ? "Medidas de referencia de Fiat Ducato." : "Medidas aproximadas de "+nombre+". Las confirmamos con tu ficha técnica.";
+}
+renderMedidas();
+radios("opts-cama","cama", CAMAS, "fijaAlta", {photo:true});
+radios("opts-salon","salon", SALONES, "U", {photo:true});
+radios("opts-comedor","comedor", COMEDORES, "gir", {photo:true});
+radios("opts-fuegos","fuegos", FUEGOS, "gas2", {photo:true});
+radios("opts-estilo","estilo", ESTILOS.concat([{id:"propio",n:"A mi gusto",d:"Lo elijo todo yo"}]), "nordico", {photo:true});
+["suelo","paredes","techo","cuerpo","puertas"].forEach(function(cat){ radios("opts-"+cat, cat, MATERIALES[cat], ESTILOS[0].v[cat], {swatch:true}); });
+radios("opts-encimera","encimera", MATERIALES.encimera, ESTILOS[0].v.encimera, {photo:true, swatch:true});
+radios("opts-salpicadero","salpicadero", SALPICADERO, "metro-blanco", {photo:true});
+radios("opts-banoRevest","banoRevest", BANO_REVEST, "metro", {photo:true});
+radios("opts-banoPuerta","banoPuerta", BANO_PUERTA, "lisa", {photo:true});
+radios("opts-tapiceria","tapiceria", TAPICERIA.map(function(t){return {id:t[0], c:t[1]}}), "Gris perla");
+document.querySelectorAll("#opts-tapiceria label").forEach(function(l,i){ l.innerHTML = '<i class="dot" style="background:'+TAPICERIA[i][1]+'"></i>'+esc(TAPICERIA[i][0]); });
 Object.keys(OPCIONES).forEach(function(k){ $(k).innerHTML = OPCIONES[k].map(function(o){return "<option>"+esc(o)+"</option>"}).join(""); });
 $("std-list").innerHTML = PACK_ESTANDAR.map(function(t){return "<li>"+esc(t)+"</li>"}).join("");
-["elec","luz","pers"].forEach(function(g){
-  $("extras-"+g).innerHTML = EXTRAS.filter(function(e){return e.g===g}).map(function(e){return '<label class="check"><input type="checkbox" name="ex-'+e.id+'" id="ex-'+e.id+'"><span>'+esc(e.n)+(e.d?"<small>"+esc(e.d)+"</small>":"")+'</span></label>'}).join("");
-});
+$("extras-elec").innerHTML = EXTRAS.filter(function(e){return e.g==="elec"}).map(function(e){return '<label class="check"><input type="checkbox" name="ex-'+e.id+'" id="ex-'+e.id+'"><span>'+esc(e.n)+(e.d?"<small>"+esc(e.d)+"</small>":"")+'</span></label>'}).join("");
+["luz","pers"].forEach(function(g){ $("extras-"+g).innerHTML = cardsHTML("checkbox","ex-", EXTRAS.filter(function(e){return e.g===g}), null, {photo:true}); });
 
 /* ============================================================
-   DISTRIBUCIÓN: coloca muebles y comprueba si cabe
+   DISTRIBUCIÓN: coloca muebles y comprueba si cabe (mm)
    ============================================================ */
-var PUERTA = 1150; // hueco de la puerta corredera desde el frontal de la zona de carga
-var FONDO_TRASERO = {fija:1400, elevable:1500, doble:1500, sofasU:1500};
+var PUERTA = 1150;            // hueco de la puerta corredera
+var INICIO_A = PUERTA/2;      // cocina o muebles del lado puerta pueden empezar a media puerta
+function fondoTrasero(cama){ return {fijaSalon: val("salon")==="bancos"?1900:1500, fijaAlta:1400, elevable:1500, dosFijas:1400, dosDesm:1400, dosElec:1500}[cama]; }
 function layoutFor(L){
-  var Lc = MEDIDAS.largo[L].carga, W = MEDIDAS.ancho;
+  var M = modelo(), Lc = M.largo[L].carga, W = M.ancho;
   var items = [], warn = [];
-  var plazas = val("plazas"), cama = val("cama"), comedor = cama==="fija" ? val("comedor") : "trasero";
+  var cama = val("cama"), comedor = val("comedor"), plazas = val("plazas");
   var bano = val("bano"), banoPos = val("banoPos"), cocinaLado = val("cocinaLado"), nevera = val("nevera");
   var otro = cocinaLado==="A" ? "B" : "A";
-  var rear = FONDO_TRASERO[cama];
+  var rear = fondoTrasero(cama);
   items.push({k:"cama", sub:cama, side:"full", x:Lc-rear, len:rear, d:W});
-  var frontB = 0;
+  var frontB = 0, banco = 1050;
   if(comedor==="L"){ items.push({k:"dinetteL", side:"B", x:0, len:1200, d:900}); frontB = 1200; }
-  else {
-    if(plazas==="4" || comedor==="abatible"){ items.push({k:"banco", side:"B", x:0, len:700, d:1250}); frontB = 700; }
-    if(comedor==="abatible"){ items.push({k:"mesaAb", side:"B", x:700, len:600, d:350}); frontB = 1300; }
-  }
-  var cur = {A:PUERTA, B:frontB}, end = {A:Lc-rear, B:Lc-rear};
+  else if(comedor==="girBanco" || comedor==="gir"){
+    items.push({k:"mesa", side:"B", x:80, len:550, d:650});
+    frontB = 650;
+    if(comedor==="girBanco"){ items.push({k:"banco", side:"B", x:700, len:600, d:banco}); frontB = 1300; }
+  } else if(plazas==="4"){ items.push({k:"banco", side:"B", x:0, len:600, d:banco}); frontB = 600; }
+  var cur = {A:INICIO_A, B:frontB}, end = {A:Lc-rear, B:Lc-rear};
   function put(side,k,len,d,h){ items.push({k:k, side:side, x:cur[side], len:len, d:d, h:h}); cur[side]+=len; }
-  if(bano==="completo" && banoPos==="puerta") put("A","bano",850,850,9999);
+  if(bano==="completo" && banoPos==="puerta"){ cur.A = Math.max(cur.A, PUERTA); put("A","bano",850,850,9999); }
   var f = val("fuegos");
   var lenCocina = 1000 + (val("fregadero")?150:0) + (f==="ninguno"?-150:0) + (f==="gas3"?100:0);
   put(cocinaLado,"cocina",lenCocina,500,900);
   if(nevera==="mediana") put(cocinaLado,"nevera",550,550,1250);
   if(nevera==="grande") put(cocinaLado,"nevera",600,600,9999);
-  if(bano==="completo" && banoPos==="frente") put(otro,"bano",850,850,9999);
+  if(bano==="completo" && banoPos==="frente"){ if(otro==="A") cur.A=Math.max(cur.A,PUERTA); put(otro,"bano",850,850,9999); }
   if(bano==="wc") put(otro,"wc",500,500,900);
-  if(val("armario")){ var la = end.A-cur.A, lb = end.B-cur.B; put(la>=lb?"A":"B","armario",550,550,9999); }
+  if(val("armario")){ var la = end.A-Math.max(cur.A,PUERTA), lb = end.B-cur.B; var sd = la>=lb?"A":"B"; if(sd==="A") cur.A=Math.max(cur.A,PUERTA); put(sd,"armario",550,550,9999); }
   var over = {A: cur.A-end.A, B: cur.B-end.B};
-  return {Lc:Lc, W:W, items:items, warn:warn, over:over, cur:cur, end:end, comedor:comedor, fits: over.A<=0 && over.B<=0};
+  return {Lc:Lc, W:W, items:items, warn:warn, over:over, cur:cur, end:end, fits: over.A<=0 && over.B<=0};
 }
 function recommendL(){
-  var ks = Object.keys(MEDIDAS.largo);
+  var ks = Object.keys(modelo().largo);
   for(var i=0;i<ks.length;i++){ if(layoutFor(ks[i]).fits) return ks[i]; }
   return null;
 }
@@ -565,23 +633,20 @@ var DEFS = grainDefs();
 function fillOf(cat){ var m = mat(cat, val(cat)); return (m.veta||m.c2) ? "url(#g-"+cat+"-"+m.id+")" : m.c; }
 function tapiz(){ var t = TAPICERIA.find(function(x){return x[0]===val("tapiceria")}); return t ? t[1] : "#C9C8C3"; }
 function isDark(hex){ var h=hex.replace("#",""); var r=parseInt(h.substr(0,2),16),g=parseInt(h.substr(2,2),16),b=parseInt(h.substr(4,2),16); return (r*299+g*587+b*114)/1000 < 120; }
-function curL(){ return val("largo")||"L3"; }
-function curH(){ return val("alto")||"H2"; }
-var NOMBRES = {cocina:"Cocina", nevera:"Nevera", bano:"Baño", wc:"WC", armario:"Armario", banco:"Banco", dinetteL:"Dinette en L", mesaAb:"mesa abatible"};
-var NOMBRE_CAMA = {fija:"Cama fija", elevable:"Cama elevable arriba", doble:"2 camas: elevable arriba", sofasU:"Sofás en U · cama"};
+var NOMBRES = {cocina:"Cocina", nevera:"Nevera", bano:"Baño", wc:"WC", armario:"Armario"};
+var NOMBRE_CAMA = {fijaSalon:"Salón que se hace cama", fijaAlta:"Cama alta + garaje", elevable:"Cama elevable arriba", dosFijas:"Dos camas fijas", dosDesm:"Dos camas desmontables", dosElec:"Elevable arriba + cama abajo"};
 
 function drawExterior(){
-  var L=curL(), H=curH(), me=MEDIDAS.largo[L], mh=MEDIDAS.alto[H], s=0.1;
-  var g=290, x0=26, len=me.ext*s, top=g-mh.ext*s, color=val("colorfurgo");
+  var M=modelo(), L=curL(), H=curH(), me=M.largo[L], mh=M.alto[H], s=0.1;
+  var g=290, x0=26, len=me.ext*s, top=g-mh.ext*s, color="#F4F4F2", VW=Math.max(700, x0+len+80);
   var wa=x0+93, wb=x0+(930+me.batalla)*s;
   var p = "M"+(x0+4)+" "+(g-34)+" L"+x0+" "+(g-62)+" Q"+x0+" "+(g-98)+" "+(x0+16)+" "+(g-104)+" L"+(x0+58)+" "+(g-118)
         + " L"+(x0+102)+" "+(g-196)+" Q"+(x0+112)+" "+(g-206)+" "+(x0+128)+" "+(Math.min(g-206,top+4))+" L"+(x0+138)+" "+top
         + " L"+(x0+len-10)+" "+top+" Q"+(x0+len)+" "+top+" "+(x0+len)+" "+(top+10)+" L"+(x0+len)+" "+(g-34)+" Z";
   var win = "M"+(x0+66)+" "+(g-124)+" L"+(x0+100)+" "+(g-186)+" L"+(x0+150)+" "+(g-186)+" L"+(x0+150)+" "+(g-124)+" Z";
-  var doorX = x0+158, doorW = 112, dk = isDark(color), edge = dk?"#9AA3A8":"#3A4441";
-  var rodado = val("ex-ruedas");
-  var svg = '<svg viewBox="0 0 700 330" role="img" aria-label="Furgoneta '+L+H+' vista lateral">'
-    + '<line x1="0" y1="'+g+'" x2="700" y2="'+g+'" class="soft" stroke-width="1"/>'
+  var doorX = x0+158, doorW = 112, edge = "#3A4441", rodado = val("ex-ruedas");
+  var svg = '<svg viewBox="0 0 '+VW+' 330" role="img" aria-label="Furgoneta '+L+H+' vista lateral">'
+    + '<line x1="0" y1="'+g+'" x2="'+VW+'" y2="'+g+'" class="soft" stroke-width="1"/>'
     + '<path d="'+p+'" fill="'+color+'" stroke="'+edge+'" stroke-width="1.5" class="anim"/>'
     + '<path d="'+win+'" fill="var(--glass)"/>'
     + '<rect x="'+doorX+'" y="'+(top+18)+'" width="'+doorW+'" height="'+(g-52-top-18)+'" fill="none" stroke="'+edge+'" stroke-opacity=".55" stroke-dasharray="4 3"/>'
@@ -589,7 +654,7 @@ function drawExterior(){
     + (val("ex-claraboya")? '<rect x="'+(x0+len*0.55)+'" y="'+(top-7)+'" width="44" height="7" rx="2" fill="var(--glass)"/>' : '')
     + '<rect x="'+(x0+len*0.25)+'" y="'+(top-4)+'" width="'+(val("ex-solar200")?140:70)+'" height="4" fill="#1D2B3A"/>'
     + (val("ex-escalon")? '<rect x="'+(doorX+20)+'" y="'+(g-40)+'" width="70" height="5" rx="2" fill="#2B2F31"/>' : '')
-    + (val("ex-nombre")? '<text x="'+(x0+len*0.62)+'" y="'+(g-90)+'" text-anchor="middle" style="font:italic 700 15px var(--f-display);fill:'+(dk?"#F2F2F0":"#2B3431")+'">'+esc(((val("nombre")||"").split(" ")[0]||"Mi camper"))+'</text>' : '')
+    + (val("ex-nombre")? '<text x="'+(x0+len*0.62)+'" y="'+(g-90)+'" text-anchor="middle" style="font:italic 700 15px var(--f-display);fill:#2B3431">'+esc(((val("nombre")||"").split(" ")[0]||"Mi camper"))+'</text>' : '')
     + '<rect x="'+(x0+len-4)+'" y="'+(g-70)+'" width="6" height="22" fill="#B23A2E"/>'
     + '<rect x="'+(x0-1)+'" y="'+(g-60)+'" width="6" height="12" fill="#F2E7B5" stroke="#3A4441" stroke-width=".5"/>';
   [wa,wb].forEach(function(cx){ svg += '<circle cx="'+cx+'" cy="'+(g-35)+'" r="'+(rodado?37:35)+'" fill="#1E2224"/>'+(rodado?'<circle cx="'+cx+'" cy="'+(g-35)+'" r="31" fill="none" stroke="#3A3F42" stroke-width="3" stroke-dasharray="3 3"/>':'')+'<circle cx="'+cx+'" cy="'+(g-35)+'" r="16" fill="'+(rodado?"#141618":"#9EA5A9")+'"/>'; });
@@ -605,15 +670,16 @@ function drawExterior(){
 }
 
 function drawPlan(){
-  var L=curL(), lay=layoutFor(L), s=0.1, X0=170, Y0=44, W=lay.W*s, Lc=lay.Lc*s;
+  var L=curL(), lay=layoutFor(L), s=0.1, X0=170, Y0=44, W=lay.W*s, Lc=lay.Lc*s, VW=Math.max(640, X0+Lc+30);
   var floor=fillOf("suelo"), wall=mat("paredes",val("paredes")).c, body=fillOf("cuerpo"), door=fillOf("puertas"), top=fillOf("encimera"), tap=tapiz();
-  var svg = '<svg viewBox="0 0 640 290" role="img" aria-label="Planta de la camper">'+DEFS;
+  var svg = '<svg viewBox="0 0 '+VW+' 290" role="img" aria-label="Planta de la camper">'+DEFS;
   svg += '<path d="M'+(X0+Lc+8)+' '+(Y0-9)+'H70 Q24 '+(Y0-9)+' 22 '+(Y0+W/2)+' Q24 '+(Y0+W+9)+' 70 '+(Y0+W+9)+'H'+(X0+Lc+8)+'Z" class="body" stroke-width="1.5"/>';
-  var giro = lay.comedor==="giratorios";
-  [Y0+14, Y0+W-14-56].forEach(function(sy,i){
-    var sx=100;
-    svg += '<rect x="'+sx+'" y="'+sy+'" width="52" height="56" rx="8" fill="var(--sunk)" stroke="var(--draw-soft)"/><rect x="'+(sx+44)+'" y="'+(sy+4)+'" width="10" height="48" rx="4" fill="var(--draw-soft)"/>';
-    if(giro) svg += '<path d="M'+(sx+26)+' '+(sy+(i?-6:62))+' a30 30 0 0 0 30 '+(i?"-12":"12")+'" class="soft" stroke-dasharray="3 3"/>';
+  var giro = /gir/.test(val("comedor"));
+  // asientos delanteros: si giran, se dibujan mirando hacia atrás
+  [Y0+14, Y0+W-14-56].forEach(function(sy){
+    var sx=104;
+    if(giro) svg += '<rect x="'+sx+'" y="'+sy+'" width="52" height="56" rx="8" fill="var(--sunk)" stroke="var(--draw-soft)"/><rect x="'+(sx-2)+'" y="'+(sy+4)+'" width="10" height="48" rx="4" fill="var(--draw-soft)"/><path d="M'+(sx+60)+' '+(sy+28)+'h10m-4-4 4 4-4 4" class="soft"/>';
+    else svg += '<rect x="'+sx+'" y="'+sy+'" width="52" height="56" rx="8" fill="var(--sunk)" stroke="var(--draw-soft)"/><rect x="'+(sx+44)+'" y="'+(sy+4)+'" width="10" height="48" rx="4" fill="var(--draw-soft)"/>';
   });
   svg += '<path d="M60 '+(Y0+20)+' Q50 '+(Y0+W/2)+' 60 '+(Y0+W-20)+'" class="soft" stroke-width="3"/>';
   svg += '<rect x="'+X0+'" y="'+Y0+'" width="'+Lc+'" height="'+W+'" fill="'+floor+'" class="anim"/>';
@@ -623,45 +689,35 @@ function drawPlan(){
       + '<path d="M'+(X0+6)+' '+(Y0-11)+'H'+(X0+PUERTA*s-8)+'" class="soft" stroke-dasharray="4 3"/>'
       + '<text x="'+(X0+PUERTA*s/2)+'" y="'+(Y0-15)+'" text-anchor="middle" class="dim">puerta corredera</text>';
   svg += '<path d="M'+(X0+Lc+3)+' '+(Y0+4)+'V'+(Y0+W/2-2)+'M'+(X0+Lc+3)+' '+(Y0+W/2+2)+'V'+(Y0+W-4)+'" class="stroke" stroke-width="3"/>';
-  if(giro) svg += '<rect x="'+(X0+14)+'" y="'+(Y0+W/2-18)+'" width="34" height="36" rx="5" fill="'+top+'" stroke="var(--draw)"/>';
   function sofa(x,y,w,h){ return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4" fill="'+tap+'" stroke="var(--draw)" stroke-width=".8"/>'; }
+  function mesa(x,y,w,h,abat){ return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4" fill="'+top+'" stroke="var(--draw)"'+(abat?' stroke-dasharray="3 2"':'')+'/>'; }
+  function txt(x,y,t,cls){ return '<text x="'+x+'" y="'+y+'" text-anchor="middle" dominant-baseline="middle" class="lbl" style="fill:var(--ink)">'+t+'</text>'; }
+  function colchon(x,y,w,h){ return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="6" fill="'+tap+'" opacity=".6" stroke="var(--draw-soft)"/><rect x="'+(x+w-26)+'" y="'+(y+10)+'" width="18" height="'+(h/2-16)+'" rx="5" fill="#FBF8F2" stroke="#B9AE9C"/><rect x="'+(x+w-26)+'" y="'+(y+h/2+6)+'" width="18" height="'+(h/2-16)+'" rx="5" fill="#FBF8F2" stroke="#B9AE9C"/>'; }
   var alt = val("altillos");
   lay.items.forEach(function(it){
-    var x = X0+it.x*s, w = it.len*s, d = it.d*s, y, label = NOMBRES[it.k];
+    var x = X0+it.x*s, w = it.len*s, d = it.d*s, y;
     if(it.side==="full"){ y=Y0; d=W; } else if(it.side==="A"){ y=Y0; } else { y=Y0+W-d; }
     if(it.k==="cama"){
-      if(it.sub==="fija"){
-        svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+d+'" fill="'+body+'" stroke="var(--draw)"/>'
-            + '<rect x="'+(x+4)+'" y="'+(y+4)+'" width="'+(w-8)+'" height="'+(d-8)+'" rx="6" fill="'+tap+'" opacity=".55" stroke="var(--draw-soft)"/>'
-            + '<rect x="'+(x+w-30)+'" y="'+(y+14)+'" width="20" height="'+(d/2-22)+'" rx="5" fill="#FBF8F2" stroke="#B9AE9C"/><rect x="'+(x+w-30)+'" y="'+(y+d/2+8)+'" width="20" height="'+(d/2-22)+'" rx="5" fill="#FBF8F2" stroke="#B9AE9C"/>';
-        if(val("bandeja")) svg += '<path d="M'+(x+w+4)+' '+(y+d/2)+'h22m-6-5 6 5-6 5" stroke="var(--accent)" stroke-width="2" fill="none"/>';
-      } else if(it.sub==="sofasU"){
-        svg += sofa(x+w-48,y+2,46,d-4) + sofa(x,y+2,w-48,44) + sofa(x,y+d-46,w-48,44)
-            + '<rect x="'+(x+w*0.25)+'" y="'+(y+d/2-22)+'" width="'+(w*0.4)+'" height="44" rx="5" fill="'+top+'" stroke="var(--draw)"/>';
-      } else {
-        svg += sofa(x+2,y+2,44,d-4) + sofa(x+w-46,y+2,44,d-4)
-            + '<rect x="'+(x+w/2-22)+'" y="'+(y+d/2-32)+'" width="44" height="64" rx="5" fill="'+top+'" stroke="var(--draw)"/>'
+      var sub = it.sub;
+      if(sub==="fijaSalon" && val("salon")==="bancos"){
+        svg += sofa(x,y+2,w-4,58) + sofa(x,y+d-60,w-4,58) + mesa(x+w*0.3,y+d/2-25,w*0.4,50);
+      } else if(sub==="fijaSalon"){
+        svg += sofa(x+w-50,y+2,48,d-4) + sofa(x,y+2,w-50,46) + sofa(x,y+d-48,w-50,46) + mesa(x+w*0.2,y+d/2-22,w*0.45,44);
+      } else if(sub==="elevable" || sub==="dosElec"){
+        svg += sofa(x+2,y+2,44,d-4) + sofa(x+w-46,y+2,44,d-4) + mesa(x+w/2-22,y+d/2-32,44,64)
             + '<rect x="'+(x+3)+'" y="'+(y+3)+'" width="'+(w-6)+'" height="'+(d-6)+'" rx="6" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 4"/>';
+      } else {
+        svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+d+'" fill="'+body+'" stroke="var(--draw)"'+(sub==="dosDesm"?' stroke-dasharray="5 3"':'')+'/>' + colchon(x+4,y+4,w-8,d-8);
+        if(sub!=="fijaAlta") svg += '<rect x="'+(x+8)+'" y="'+(y+8)+'" width="'+(w-16)+'" height="'+(d-16)+'" rx="6" fill="none" stroke="var(--draw)" stroke-dasharray="2 3"/>';
+        if(val("cajon")&&sub==="fijaAlta") svg += '<path d="M'+(x+w+4)+' '+(y+d/2)+'h22m-6-5 6 5-6 5" stroke="var(--accent)" stroke-width="2" fill="none"/>';
+        if(val("rampa")&&sub==="fijaAlta") svg += '<path d="M'+(x+w+4)+' '+(y+d*0.25)+'h26v'+(d*0.2)+'h-26" fill="none" stroke="var(--accent)" stroke-width="1.5"/>';
       }
-      svg += '<text x="'+(x+w/2)+'" y="'+(it.sub==="fija"? y+d/2 : y+d+14)+'" text-anchor="middle" dominant-baseline="middle" class="lbl" style="fill:var(--ink)">'+NOMBRE_CAMA[it.sub]+'</text>';
+      svg += txt(x+w/2, (sub==="fijaAlta"||sub==="dosFijas"||sub==="dosDesm") ? y+d/2 : y+d+14, NOMBRE_CAMA[sub]);
       return;
     }
-    if(it.k==="dinetteL"){
-      svg += sofa(x,y+d-45,w,45) + sofa(x,y,45,d-45)
-          + '<rect x="'+(x+55)+'" y="'+(y+d-110)+'" width="'+(w-80)+'" height="55" rx="5" fill="'+top+'" stroke="var(--draw)"/>'
-          + '<text x="'+(x+w/2)+'" y="'+(y-6)+'" text-anchor="middle" class="lbl" style="fill:var(--ink)">Dinette en L</text>';
-      return;
-    }
-    if(it.k==="mesaAb"){
-      svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+d+'" fill="none" stroke="var(--draw)" stroke-dasharray="3 3"/><rect x="'+x+'" y="'+(y+d-4)+'" width="'+w+'" height="4" fill="'+top+'"/>'
-          + '<text x="'+(x+w/2)+'" y="'+(y+d/2)+'" text-anchor="middle" dominant-baseline="middle" class="lbl" style="fill:var(--ink)">mesa abatible</text>';
-      return;
-    }
-    if(it.k==="banco"){
-      svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+d+'" fill="'+body+'" stroke="var(--draw)"/>' + sofa(x+3,y+3,w-18,d-6) + '<rect x="'+(x+w-12)+'" y="'+y+'" width="12" height="'+d+'" fill="'+tap+'" stroke="var(--draw)" stroke-width=".8"/>'
-          + '<text x="'+(x+w/2-6)+'" y="'+(y+d/2)+'" text-anchor="middle" dominant-baseline="middle" class="lbl'+(isDark(tap)?" on-dark":"")+'">Banco</text>';
-      return;
-    }
+    if(it.k==="dinetteL"){ svg += sofa(x,y+d-45,w,45) + sofa(x,y,45,d-45) + mesa(x+55,y+d-115,w-80,58) + txt(x+w/2,y-6,"Dinette en L"); return; }
+    if(it.k==="mesa"){ var ab = val("mesaAbatible"); svg += mesa(x, ab? y+d-28 : y, w, ab? 28 : d, ab) + txt(x+w/2, ab? y+d-40 : y+d/2, ab?"mesa abatible":"Mesa"); return; }
+    if(it.k==="banco"){ svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+d+'" fill="'+body+'" stroke="var(--draw)"/>' + sofa(x+3,y+3,w-17,d-6) + '<rect x="'+(x+w-12)+'" y="'+y+'" width="12" height="'+d+'" fill="'+tap+'" stroke="var(--draw)" stroke-width=".8"/>' + '<text x="'+(x+w/2-6)+'" y="'+(y+d/2)+'" text-anchor="middle" dominant-baseline="middle" class="lbl'+(isDark(tap)?" on-dark":"")+'">Banco</text>'; return; }
     var overflow = it.x+it.len > lay.end[it.side]+1;
     svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+d+'" fill="'+body+'" stroke="'+(overflow?"#C2410C":"var(--draw)")+'" stroke-width="'+(overflow?2:1)+'"/>';
     var fy = it.side==="A" ? y+d-5 : y;
@@ -672,17 +728,17 @@ function drawPlan(){
       for(var i=0;i<nf;i++) svg += '<circle cx="'+(x+w-14-i*20)+'" cy="'+(y+d/2)+'" r="7" fill="none" stroke="#333" stroke-width="2"/>';
       svg += '<rect x="'+x+'" y="'+fy+'" width="'+w+'" height="5" fill="'+door+'"/>';
       if(val("extension")) svg += '<rect x="'+(x+w)+'" y="'+y+'" width="30" height="'+d+'" fill="none" stroke="var(--draw)" stroke-dasharray="2 2"/>';
-      svg += '<text x="'+(x+w/2)+'" y="'+(it.side==="A"? y+d+12 : y-6)+'" text-anchor="middle" dominant-baseline="middle" class="lbl" style="fill:var(--ink)">Cocina</text>';
+      svg += txt(x+w/2, it.side==="A"? y+d+12 : y-6, "Cocina");
       return;
     }
     if(it.k==="bano") svg += '<rect x="'+(x+5)+'" y="'+(y+5)+'" width="'+(w-10)+'" height="'+(d-10)+'" fill="#E9EEF0" stroke="#9AA5AA"/><circle cx="'+(x+w/2)+'" cy="'+(y+d/2)+'" r="3" fill="#7E8A90"/>';
     svg += '<rect x="'+x+'" y="'+fy+'" width="'+w+'" height="5" fill="'+door+'"/>';
     var dark = it.k!=="bano" && isDark(mat("cuerpo",val("cuerpo")).c);
-    svg += '<text x="'+(x+w/2)+'" y="'+(y+d/2)+'" text-anchor="middle" dominant-baseline="middle" class="lbl'+(dark?" on-dark":"")+'">'+label+'</text>';
+    svg += '<text x="'+(x+w/2)+'" y="'+(y+d/2)+'" text-anchor="middle" dominant-baseline="middle" class="lbl'+(dark?" on-dark":"")+'">'+NOMBRES[it.k]+'</text>';
   });
   if(alt!=="no"){
     lay.items.forEach(function(it){
-      if(["cocina","nevera","armario","bano","wc"].indexOf(it.k)<0 || (alt==="cocina" && it.k!=="cocina") || it.h>=9999) return;
+      if(["cocina","nevera","wc"].indexOf(it.k)<0 || (alt==="cocina" && it.k!=="cocina") || it.h>=9999) return;
       var x=X0+it.x*s, w=it.len*s, y = it.side==="A" ? Y0+1 : Y0+W-36;
       svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="35" fill="none" stroke="var(--draw)" stroke-dasharray="2 3" stroke-opacity=".6"/>';
     });
@@ -695,10 +751,10 @@ function drawPlan(){
 }
 
 function drawInterior(){
-  var L=curL(), H=curH(), lay=layoutFor(L), s=0.1, side=S.side;
-  var Hi = MEDIDAS.alto[H].int, X0=70, Lc=lay.Lc*s, floorY=236, ceilY=floorY-Hi*s;
+  var M=modelo(), L=curL(), H=curH(), lay=layoutFor(L), s=0.1, side=S.side;
+  var Hi = M.alto[H].int, X0=70, Lc=lay.Lc*s, floorY=236, ceilY=floorY-Hi*s, VW=Math.max(640, X0+Lc+40);
   var wall=fillOf("paredes"), ceil=fillOf("techo"), floor=fillOf("suelo"), body=fillOf("cuerpo"), door=fillOf("puertas"), top=fillOf("encimera"), tap=tapiz();
-  var svg = '<svg viewBox="0 0 640 262" role="img" aria-label="Vista interior">'+DEFS;
+  var svg = '<svg viewBox="0 0 '+VW+' 262" role="img" aria-label="Vista interior">'+DEFS;
   svg += '<rect x="'+X0+'" y="'+ceilY+'" width="'+Lc+'" height="'+(floorY-ceilY)+'" fill="'+wall+'" class="anim"/>';
   svg += '<path d="M'+(X0-18)+' '+(ceilY-14)+'H'+(X0+Lc+18)+'L'+(X0+Lc)+' '+ceilY+'H'+X0+'Z" fill="'+ceil+'" stroke="var(--draw)" stroke-width=".8"/>';
   if(val("ex-focos")) for(var fx=X0+40; fx<X0+Lc-20; fx+=70) svg += '<circle cx="'+fx+'" cy="'+(ceilY-6)+'" r="3" fill="#FFE9A8" stroke="#B59A4A" stroke-width=".6"/>';
@@ -707,7 +763,7 @@ function drawInterior(){
   if(side==="A"){
     var dw = PUERTA*s;
     svg += '<rect x="'+(X0+4)+'" y="'+(ceilY+14)+'" width="'+(dw-10)+'" height="'+(floorY-ceilY-14)+'" fill="var(--bg)" stroke="var(--draw-soft)" stroke-dasharray="4 3"/>'
-        + '<text x="'+(X0+dw/2)+'" y="'+(ceilY+34)+'" text-anchor="middle" class="dim">puerta</text>';
+        + '<text x="'+(X0+dw/4)+'" y="'+(ceilY+34)+'" text-anchor="middle" class="dim">puerta</text>';
   }
   function panelBox(x,y,w,h){
     var o = '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+body+'" stroke="var(--draw)" stroke-width="1"/>';
@@ -722,39 +778,49 @@ function drawInterior(){
     return o;
   }
   function seat(x,w,hb){ return '<rect x="'+x+'" y="'+(floorY-45)+'" width="'+w+'" height="45" fill="'+body+'" stroke="var(--draw)"/><rect x="'+x+'" y="'+(floorY-52)+'" width="'+w+'" height="9" rx="3" fill="'+tap+'" stroke="var(--draw)" stroke-width=".6"/>'+(hb?'<rect x="'+(hb>0?x+w-9:x)+'" y="'+(floorY-100)+'" width="9" height="50" rx="3" fill="'+tap+'" stroke="var(--draw)" stroke-width=".6"/>':''); }
+  function plataforma(x,w,alto,dashed,label){
+    var py = floorY-alto*s;
+    return '<rect x="'+x+'" y="'+py+'" width="'+w+'" height="10" fill="'+body+'" stroke="var(--draw)"'+(dashed?' stroke-dasharray="4 3"':'')+'/><rect x="'+(x+2)+'" y="'+(py-12)+'" width="'+(w-4)+'" height="12" rx="4" fill="'+tap+'" stroke="var(--draw)" stroke-width=".6"/>'+(label?'<text x="'+(x+w/2)+'" y="'+(py-18)+'" text-anchor="middle" class="dim">'+label+'</text>':'');
+  }
   var alt = val("altillos");
   lay.items.forEach(function(it){
     if(it.side!==side && it.side!=="full") return;
     var x=X0+it.x*s, w=it.len*s;
     if(it.k==="cama"){
-      if(it.sub==="fija"){
-        var py = floorY-90;
-        svg += '<rect x="'+x+'" y="'+py+'" width="'+w+'" height="90" fill="'+body+'" stroke="var(--draw)"/><rect x="'+(x+6)+'" y="'+(py+10)+'" width="'+(w-12)+'" height="76" fill="rgba(0,0,0,.2)"/>'
-            + (val("bandeja")?'<rect x="'+(x+6)+'" y="'+(floorY-14)+'" width="'+(w+14)+'" height="6" fill="'+body+'" stroke="var(--draw)" stroke-width=".6"/>':'')
-            + '<text x="'+(x+w/2)+'" y="'+(py+48)+'" text-anchor="middle" class="lbl on-dark">garaje</text>'
+      var sub=it.sub;
+      if(sub==="fijaAlta"){
+        var ph = 1000, py = floorY-ph*s;
+        svg += '<rect x="'+x+'" y="'+py+'" width="'+w+'" height="'+(floorY-py)+'" fill="'+body+'" stroke="var(--draw)"/><rect x="'+(x+6)+'" y="'+(py+10)+'" width="'+(w-12)+'" height="'+(floorY-py-12)+'" fill="rgba(0,0,0,.22)"/>'
+            + '<text x="'+(x+w/2)+'" y="'+(py+(floorY-py)/2)+'" text-anchor="middle" class="lbl on-dark">garaje bicis / motos</text>'
+            + (val("cajon")?'<rect x="'+(x+6)+'" y="'+(floorY-14)+'" width="'+(w+14)+'" height="6" fill="'+body+'" stroke="var(--draw)" stroke-width=".6"/>':'')
+            + (val("rampa")?'<path d="M'+(x+w)+' '+(floorY-2)+'L'+(x+w+30)+' '+(floorY+12)+'" stroke="var(--accent)" stroke-width="3"/>':'')
             + '<rect x="'+(x+2)+'" y="'+(py-12)+'" width="'+(w-4)+'" height="12" rx="4" fill="'+tap+'" stroke="var(--draw)" stroke-width=".6"/>';
-        if(val("ex-flexos")) svg += '<path d="M'+(x+w-8)+' '+(py-60)+'q-14 0-16 14" stroke="#222" stroke-width="2" fill="none"/><circle cx="'+(x+w-24)+'" cy="'+(py-44)+'" r="3" fill="#FFE9A8"/>';
-      } else if(it.sub==="sofasU"){
-        svg += seat(x+2,w-4,0) + '<rect x="'+(x+w-11)+'" y="'+(floorY-100)+'" width="9" height="50" rx="3" fill="'+tap+'"/>' + '<rect x="'+(x+w*0.25)+'" y="'+(floorY-72)+'" width="'+(w*0.4)+'" height="5" fill="'+top+'"/>';
+        if(val("ex-flexos")) svg += '<path d="M'+(x+w-8)+' '+(py-50)+'q-14 0-16 14" stroke="#222" stroke-width="2" fill="none"/><circle cx="'+(x+w-24)+'" cy="'+(py-34)+'" r="3" fill="#FFE9A8"/>';
+      } else if(sub==="dosFijas" || sub==="dosDesm"){
+        var dsh = sub==="dosDesm";
+        svg += '<rect x="'+x+'" y="'+(floorY-55)+'" width="'+w+'" height="55" fill="'+body+'" stroke="var(--draw)"/><rect x="'+(x+6)+'" y="'+(floorY-49)+'" width="'+(w-12)+'" height="45" fill="rgba(0,0,0,.2)"/>'
+            + plataforma(x, w, 650, dsh, "") + plataforma(x, w, Math.min(1450, Hi-450), dsh, dsh?"desmontables":"");
+      } else if(sub==="fijaSalon"){
+        if(val("salon")==="bancos" && side==="A") svg += seat(x+2,w-4,0);
+        else if(val("salon")==="bancos") svg += seat(x+2,w-4,0);
+        else svg += seat(x+2,w-4,0) + '<rect x="'+(x+w-11)+'" y="'+(floorY-100)+'" width="9" height="50" rx="3" fill="'+tap+'"/>';
+        svg += '<rect x="'+(x+w*0.3)+'" y="'+(floorY-72)+'" width="'+(w*0.4)+'" height="5" fill="'+top+'"/><text x="'+(x+w/2)+'" y="'+(floorY-90)+'" text-anchor="middle" class="dim">de noche, cama</text>';
       } else {
         svg += seat(x+2,44,-1) + seat(x+w-46,44,1) + '<rect x="'+(x+50)+'" y="'+(floorY-72)+'" width="'+(w-100)+'" height="5" fill="'+top+'"/><rect x="'+(x+w/2-2)+'" y="'+(floorY-67)+'" width="4" height="67" fill="var(--draw-soft)"/>';
         var by = ceilY+6;
         svg += '<rect x="'+(x+2)+'" y="'+by+'" width="'+(w-4)+'" height="10" fill="'+body+'" stroke="var(--draw)"/><rect x="'+(x+4)+'" y="'+(by+10)+'" width="'+(w-8)+'" height="10" rx="4" fill="'+tap+'" stroke="var(--draw)" stroke-width=".6"/>'
-            + '<path d="M'+(x+w/2)+' '+(by+28)+'v26m-5-5 5 5 5-5M'+(x+w/2)+' '+(by+54)+'" stroke="var(--accent)" stroke-width="2" fill="none"/>'
+            + '<path d="M'+(x+w/2)+' '+(by+28)+'v26m-5-5 5 5 5-5" stroke="var(--accent)" stroke-width="2" fill="none"/>'
             + '<text x="'+(x+w/2)+'" y="'+(by+70)+'" text-anchor="middle" class="dim">baja de noche</text>';
       }
       return;
     }
     if(it.k==="banco"){ svg += seat(x,w,1) + '<text x="'+(x+w/2)+'" y="'+(floorY-110)+'" text-anchor="middle" class="dim">banco</text>'; return; }
+    if(it.k==="mesa"){ svg += val("mesaAbatible") ? '<rect x="'+(x+10)+'" y="'+(floorY-130)+'" width="'+(w-20)+'" height="55" fill="'+top+'" stroke="var(--draw)"/><text x="'+(x+w/2)+'" y="'+(floorY-136)+'" text-anchor="middle" class="dim">mesa abatible</text>' : '<rect x="'+x+'" y="'+(floorY-72)+'" width="'+w+'" height="5" fill="'+top+'"/><rect x="'+(x+w/2-2)+'" y="'+(floorY-67)+'" width="4" height="67" fill="var(--draw-soft)"/>'; return; }
     if(it.k==="dinetteL"){ svg += seat(x,w,0) + '<rect x="'+(x+50)+'" y="'+(floorY-72)+'" width="'+(w-70)+'" height="5" fill="'+top+'"/>'; return; }
-    if(it.k==="mesaAb"){ svg += '<rect x="'+(x+10)+'" y="'+(floorY-130)+'" width="'+(w-20)+'" height="60" fill="'+top+'" stroke="var(--draw)"/><text x="'+(x+w/2)+'" y="'+(floorY-136)+'" text-anchor="middle" class="dim">mesa plegada</text>'; return; }
     var y = it.h>=9999 ? ceilY+4 : floorY-it.h*s;
     if(it.k==="cocina"){
-      var sp = val("salpicadero");
-      if(sp.indexOf("Sin")!==0){
-        var spc = /verde oscuro/.test(sp)?"#2F5A47":/salvia|verde/.test(sp)?"#9DB095":/Hidr/.test(sp)?"#C98F5A":/beige/.test(sp)?"#D8CBB2":"#F4F4F1";
-        svg += '<rect x="'+x+'" y="'+(floorY-150)+'" width="'+w+'" height="60" fill="'+spc+'"/><path d="M'+x+' '+(floorY-130)+'H'+(x+w)+'M'+x+' '+(floorY-110)+'H'+(x+w)+'" stroke="rgba(0,0,0,.15)"/>';
-      }
+      var sp = find(SALPICADERO, val("salpicadero"));
+      if(sp.c) svg += '<rect x="'+x+'" y="'+(floorY-150)+'" width="'+w+'" height="60" fill="'+sp.c+'"/><path d="M'+x+' '+(floorY-130)+'H'+(x+w)+'M'+x+' '+(floorY-110)+'H'+(x+w)+'" stroke="rgba(0,0,0,.15)"/>';
       svg += panelBox(x, floorY-86, w, 86) + '<rect x="'+(x-2)+'" y="'+(floorY-90)+'" width="'+(w+4)+'" height="5" fill="'+top+'" stroke="var(--draw)" stroke-width=".6"/>';
       var gc = {"Negra":"#1C1C1C","Dorada":"#C9A24A","De color":"#2D7D8A"}[val("griferia")]||"#555";
       if(val("fregadero") && !val("tapaFregadero")) svg += '<path d="M'+(x+16)+' '+(floorY-90)+'v-14h8" stroke="'+gc+'" stroke-width="2.4" fill="none"/>';
@@ -762,9 +828,9 @@ function drawInterior(){
     } else if(it.k==="bano"){
       var bp = val("banoPuerta");
       svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+(floorY-y)+'" fill="'+body+'" stroke="var(--draw)"/>'
-          + (bp==="En arco" ? '<path d="M'+(x+5)+' '+(floorY-4)+'V'+(y+40)+'a'+(w/2-5)+' '+(w/2-5)+' 0 0 1 '+(w-10)+' 0V'+(floorY-4)+'Z" fill="'+door+'" stroke="rgba(0,0,0,.2)"/>' : '<rect x="'+(x+4)+'" y="'+(y+4)+'" width="'+(w-8)+'" height="'+(floorY-y-8)+'" fill="'+door+'" stroke="rgba(0,0,0,.2)"/>');
-      if(/ventanas/.test(bp)) svg += '<rect x="'+(x+14)+'" y="'+(y+24)+'" width="'+(w-28)+'" height="40" fill="rgba(255,255,255,.55)" stroke="rgba(0,0,0,.2)"/>';
-      if(/espejo/.test(bp)) svg += '<circle cx="'+(x+w/2)+'" cy="'+(y+50)+'" r="16" fill="#D9E3E8" stroke="#8A979D"/>' + [0,1,2,3].map(function(i){return '<rect x="'+(x+12+i*((w-24)/4))+'" y="'+(y+80)+'" width="'+((w-24)/4-3)+'" height="'+(floorY-y-90)+'" fill="rgba(0,0,0,.08)"/>'}).join("");
+          + (bp==="arco" ? '<path d="M'+(x+5)+' '+(floorY-4)+'V'+(y+40)+'a'+(w/2-5)+' '+(w/2-5)+' 0 0 1 '+(w-10)+' 0V'+(floorY-4)+'Z" fill="'+door+'" stroke="rgba(0,0,0,.2)"/>' : '<rect x="'+(x+4)+'" y="'+(y+4)+'" width="'+(w-8)+'" height="'+(floorY-y-8)+'" fill="'+door+'" stroke="rgba(0,0,0,.2)"/>');
+      if(bp==="ventanas") svg += '<rect x="'+(x+14)+'" y="'+(y+24)+'" width="'+(w-28)+'" height="40" fill="rgba(255,255,255,.55)" stroke="rgba(0,0,0,.2)"/>';
+      if(bp==="espejo") svg += '<circle cx="'+(x+w/2)+'" cy="'+(y+50)+'" r="16" fill="#D9E3E8" stroke="#8A979D"/>' + [0,1,2,3].map(function(i){return '<rect x="'+(x+12+i*((w-24)/4))+'" y="'+(y+80)+'" width="'+((w-24)/4-3)+'" height="'+(floorY-y-90)+'" fill="rgba(0,0,0,.08)"/>'}).join("");
       svg += '<text x="'+(x+w/2)+'" y="'+(y-4)+'" text-anchor="middle" class="dim">baño</text>';
     } else {
       svg += panelBox(x, y, w, floorY-y);
@@ -785,16 +851,16 @@ function renderPreview(){
   $("view").innerHTML = S.view==="ext" ? drawExterior() : S.view==="plan" ? drawPlan() : drawInterior();
   document.querySelectorAll(".tabs button").forEach(function(b){ b.setAttribute("aria-selected", b.dataset.view===S.view ? "true":"false"); });
   $("sidebtns").hidden = S.view!=="int";
-  var L=curL(), H=curH(), lay=layoutFor(L);
-  $("dims").innerHTML = '<span>Furgo <b>'+L+H+'</b></span><span>Carga <b>'+lay.Lc.toLocaleString("es-ES")+'</b> mm</span><span>Alto interior <b>'+MEDIDAS.alto[H].int.toLocaleString("es-ES")+'</b> mm</span>';
+  var M=modelo(), L=curL(), H=curH(), lay=layoutFor(L);
+  $("dims").innerHTML = '<span>Furgo <b>'+L+H+'</b></span><span>Carga <b>'+lay.Lc.toLocaleString("es-ES")+'</b> mm</span><span>Ancho <b>'+lay.W.toLocaleString("es-ES")+'</b> mm</span><span>Alto interior <b>'+M.alto[H].int.toLocaleString("es-ES")+'</b> mm</span>';
   var al = lay.warn.slice();
   if(!lay.fits){
     var rec = recommendL(), falta = Math.max(lay.over.A, lay.over.B);
     al.push("Con esta distribución faltan unos "+Math.round(falta/10)+" cm en una "+L+". "+(rec && rec!==L ? "Te recomendamos una "+rec+", o quitar algún mueble." : "Quita algún mueble o cambia el comedor."));
   }
   var cama = val("cama");
-  if((cama==="elevable"||cama==="doble") && H==="H1") al.push("La cama elevable necesita altura: con H1 no queda sitio para sentarse debajo. Elige H2 o H3.");
-  if(cama==="doble" && val("plazas")==="2") al.push("Con dos camas duermen 4, pero solo viajan 2. Si vais a ser 4, elige 4 plazas.");
+  if((cama==="elevable"||cama==="dosElec") && M.alto[H].int<1800) al.push("La cama elevable necesita altura: con "+H+" no queda sitio para sentarse debajo. Elige una furgo más alta.");
+  if((cama==="dosFijas"||cama==="dosDesm") && M.alto[H].int<1850) al.push("Dos camas una encima de otra piden furgo alta: con "+H+" queda poco espacio entre ellas.");
   if(val("fuegos")==="electrica" && !(val("ex-bat100") && val("ex-inv2000"))) al.push("La placa eléctrica gasta mucho: en el paso de extras añade 100 Ah de batería y el inversor de 2.000 W.");
   $("alerts").innerHTML = al.map(function(t){return '<div class="alert">'+esc(t)+'</div>'}).join("");
   var fit = $("fitmsg"); if(fit) fit.remove();
@@ -809,13 +875,23 @@ function renderSteps(){
   $("next").textContent = S.step===4 ? "Enviar mi configuración" : "Siguiente";
   if(S.step===4) renderSummary();
 }
+function showOnly(container, ok){ // oculta las tarjetas que no aplican y marca la primera visible si hace falta
+  var cards = $(container).querySelectorAll(".opt"), first=null, checkedVisible=false;
+  cards.forEach(function(c){ var on = ok(c.dataset.id); c.hidden = !on; if(on && !first) first=c; if(on && c.querySelector("input").checked) checkedVisible=true; });
+  if(!checkedVisible && first) first.querySelector("input").checked = true;
+}
 function renderVisibility(){
   var tiene = val("tiene")==="si";
   $("f-anio").hidden = !tiene; $("f-buscar").hidden = tiene;
+  var nc = +val("numCamas");
+  showOnly("opts-cama", function(id){ return find(CAMAS,id).g===nc; });
+  var p = val("plazas");
+  showOnly("opts-comedor", function(id){ var c=find(COMEDORES,id); return !c.p || c.p===p; });
+  $("fs-salon").hidden = val("cama")!=="fijaSalon";
+  $("fs-garaje").hidden = val("cama")!=="fijaAlta";
+  $("lbl-abatible").hidden = !/gir/.test(val("comedor"));
   $("fs-banopos").hidden = val("bano")!=="completo";
   $("fs-bano-acab").hidden = val("bano")!=="completo";
-  var fija = val("cama")==="fija";
-  $("fs-comedor").hidden = !fija; $("hint-dinette").hidden = fija; $("lbl-bandeja").hidden = !fija;
   var emp = val("tipoCliente")==="Empresa";
   $("lbl-nombre").textContent = emp ? "Razón social" : "Nombre y apellidos";
   $("lbl-nif").textContent = emp ? "CIF / NIF" : "DNI / NIE";
@@ -825,19 +901,21 @@ function renderVisibility(){
 function opt(name){ var el=form.elements[name]; return el.selectedOptions ? el.selectedOptions[0].text : el.value; }
 function txtFurgo(){
   var t = val("tiene")==="si" ? "Tiene: " : "Quiere: ";
-  return t + val("marca") + " " + curL()+curH() + (val("anio")?" ("+val("anio")+")":"") + " · color "+opt("colorfurgo").toLowerCase()
+  return t + val("marca") + " " + curL()+curH() + (val("anio")?" ("+val("anio")+")":"")
     + (val("aconsejar")?" · pide consejo sobre tamaño":"") + (val("tiene")==="no" && val("buscar")?" · quiere que se la busquemos":"");
 }
 function txtDistribucion(){
-  var cama = {fija:"Cama fija trasera con garaje"+(val("bandeja")?" y bandeja extraíble":""), elevable:"Cama elevable eléctrica sobre dinette trasera", doble:"Dos camas: elevable + sofás convertibles (4 para dormir)", sofasU:"Sofás en U convertibles en cama"}[val("cama")];
-  var com = val("cama")!=="fija" ? "Comedor: dinette trasera" : "Comedor: "+{giratorios:"asientos giratorios y mesa delantera", abatible:"banco con mesa abatible", L:"dinette en L", no:"sin comedor delantero"}[val("comedor")];
+  var c = find(CAMAS, val("cama")), cama = c.n;
+  if(c.id==="fijaSalon") cama += ": "+find(SALONES,val("salon")).n.toLowerCase();
+  if(c.id==="fijaAlta"){ var g=[]; if(val("rampa")) g.push("rampa"); if(val("cajon")) g.push("cajón extraíble"); if(g.length) cama += " ("+g.join(" y ")+")"; }
+  var com = find(COMEDORES, val("comedor")).n + (/gir/.test(val("comedor")) && val("mesaAbatible") ? ", mesa abatible" : "");
   var bano = {no:"sin baño", wc:"WC portátil en mueble", completo:"baño cerrado con WC de cassette y ducha ("+{frente:"enfrente de la cocina",puerta:"junto a la puerta"}[val("banoPos")]+")"}[val("bano")];
   var nev = {pequena:"pequeña 40–50 L", mediana:"mediana 70–90 L", grande:"grande 130 L+"}[val("nevera")];
   var alt = {no:"sin altillos", cocina:"altillos sobre la cocina", perimetral:"altillos en todo el contorno"}[val("altillos")];
   return [
-    val("plazas")+" plazas para viajar", cama, com,
+    val("plazas")+" plazas para viajar", "Camas: "+cama, "Comedor: "+com,
     "Baño: "+bano+(val("duchaExt")?" + ducha exterior":""),
-    "Cocina lado "+(val("cocinaLado")==="A"?"puerta":"conductor")+": "+opt("fuegos").toLowerCase()+(val("fregadero")?", fregadero"+(val("tapaFregadero")?" oculto bajo tapa":""):"")+(val("extension")?", extensión abatible":""),
+    "Cocina lado "+(val("cocinaLado")==="A"?"puerta":"conductor")+": "+find(FUEGOS,val("fuegos")).n.toLowerCase()+(val("fregadero")?", fregadero"+(val("tapaFregadero")?" oculto bajo tapa":""):"")+(val("extension")?", extensión abatible":""),
     "Nevera de compresor "+nev+" · agua limpia "+val("agua")+" L",
     alt+(val("armario")?" + armario ropero":"")
   ];
@@ -852,9 +930,9 @@ function txtAcabados(){
     "Muebles estructura: "+matName("cuerpo",val("cuerpo")),
     "Muebles puertas: "+matName("puertas",val("puertas")),
     "Encimera: "+matName("encimera",val("encimera")),
-    "Cocina: frontal "+val("salpicadero").toLowerCase()+", tiradores "+val("tiradores").toLowerCase()+", grifería "+val("griferia").toLowerCase()
+    "Cocina: frontal "+find(SALPICADERO,val("salpicadero")).n.toLowerCase()+", tiradores "+val("tiradores").toLowerCase()+", grifería "+val("griferia").toLowerCase()
   ];
-  if(val("bano")==="completo") out.push("Baño: "+val("banoRevest").toLowerCase()+", puerta "+val("banoPuerta").toLowerCase()+(val("tarima")?", tarima en el plato":""));
+  if(val("bano")==="completo") out.push("Baño: "+find(BANO_REVEST,val("banoRevest")).n.toLowerCase()+", puerta "+find(BANO_PUERTA,val("banoPuerta")).n.toLowerCase()+(val("tarima")?", tarima en el plato":""));
   out.push("Tapicería: "+val("tapiceria"));
   if(val("notasAcabados")) out.push("Notas: "+val("notasAcabados"));
   return out;
@@ -930,15 +1008,14 @@ document.querySelectorAll(".tabs button").forEach(function(b){ b.onclick=functio
 document.querySelectorAll("#sidebtns button").forEach(function(b){ b.onclick=function(){ S.side=b.dataset.side; document.querySelectorAll("#sidebtns button").forEach(function(x){x.setAttribute("aria-pressed", x===b?"true":"false")}); renderPreview(); }; });
 form.addEventListener("change", function(e){
   var n = e.target.name;
+  if(n==="marca"){ renderMedidas(); if(e.target.value.indexOf("aconsejadme")>=0) $("aconsejar").checked = true; }
   if(n==="estilo"){ var st = ESTILOS.find(function(x){return x.id===e.target.value}); if(st) Object.keys(st.v).forEach(function(k){ var r=$(k+"-"+st.v[k]); if(r) r.checked=true; }); }
   if(["suelo","paredes","techo","cuerpo","puertas","encimera"].indexOf(n)>=0){ $("estilo-propio").checked = true; }
   if(n==="cocinaLado" && S.view==="int") S.side = e.target.value;
-  if(n==="marca" && e.target.value.indexOf("aconsejadme")>=0) $("aconsejar").checked = true;
-  if(["largo","alto","colorfurgo","marca"].indexOf(n)>=0 && S.step===0) S.view="ext";
-  if(["suelo","paredes","techo","cuerpo","puertas","encimera","estilo"].indexOf(n)>=0) S.view="int";
-  if(["tapiceria","salpicadero","tiradores","griferia","banoRevest","banoPuerta"].indexOf(n)>=0) S.view="int";
+  if(["largo","alto","marca"].indexOf(n)>=0 && S.step===0) S.view="ext";
+  if(["suelo","paredes","techo","cuerpo","puertas","encimera","estilo","tapiceria","salpicadero","tiradores","griferia","banoRevest","banoPuerta"].indexOf(n)>=0) S.view="int";
   if(["ex-ruedas","ex-escalon","ex-nombre","ex-claraboya","ex-solar200"].indexOf(n)>=0) S.view="ext";
-  if(["cama","comedor","plazas","bano","banoPos","cocinaLado","nevera","altillos","armario"].indexOf(n)>=0) S.view="plan";
+  if(["cama","numCamas","salon","comedor","mesaAbatible","plazas","bano","banoPos","cocinaLado","nevera","altillos","armario","rampa","cajon","fuegos"].indexOf(n)>=0) S.view="plan";
   renderVisibility(); renderPreview(); if(S.step===4) renderSummary();
 });
 form.addEventListener("submit", function(e){ e.preventDefault(); });

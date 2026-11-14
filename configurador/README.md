@@ -14,7 +14,8 @@ Al enviar, se crea una ficha en Notion → **Configuraciones de clientes · Mál
 
 ## Archivos
 
-- `app.html`: la página entera (HTML, CSS y JS). **El catálogo está arriba del `<script>`**: `MEDIDAS`, `MATERIALES`, `ESTILOS`, `PACK_ESTANDAR`, `EXTRAS`. Para cambiar maderas, colores u opciones, editad ahí.
+- `app.html`: la página entera (HTML, CSS y JS). **El catálogo está arriba del `<script>`**: `MODELOS` (medidas por marca), `MATERIALES`, `ESTILOS`, `CAMAS`, `COMEDORES`, `FUEGOS`, `SALPICADERO`, `BANO_*`, `PACK_ESTANDAR`, `EXTRAS`. Para cambiar maderas, colores, fotos u opciones, editad ahí.
+- `public/img/op/`: fotos de las opciones, sacadas de camperizacionmalaga.com/opciones-y-acabados (320 px).
 - `python3 build.py`: genera `public/index.html` a partir de `app.html`. Ejecutadlo tras cada cambio.
 - `src/index.js`: Worker de Cloudflare que sirve la web y guarda la configuración en Notion.
 
@@ -30,8 +31,9 @@ Mientras no esté conectado, el último paso muestra el resumen para copiarlo y 
 
 ## Pendiente para la versión 1
 
-- Fotos de las muestras dentro del configurador (ahora son colores aproximados).
-- Confirmar: color del suelo Zaragoza y otros suelos, HPL arena, proveedor de los frentes verde salvia y roble.
+- Fotos de las muestras de paneles y HPL (ahora son colores aproximados).
+- Confirmar medidas de Master, Transit, Sprinter, Crafter y Daily (ahora aproximadas).
+- Confirmar: otros suelos además del Zaragoza, HPL arena, proveedor de los frentes verde salvia y roble.
 - Pack eléctrico estándar y extras confirmados, con precio.
 - Medidas reales de los módulos (cocina, baño, cama…) del taller para que el aviso de «no cabe» sea exacto.
 - Lista de compra automática desde la ficha congelada.
