@@ -268,25 +268,25 @@ svg .body{fill:var(--surface);stroke:var(--draw)}
         <div data-step="2" hidden>
           <h2>Acabados y colores</h2>
           <p class="lead">Empieza por un estilo y cambia lo que quieras. Las muestras reales las ves y tocas en el taller.</p>
-          <fieldset><legend>Estilo de partida</legend><div class="opts photo" id="opts-estilo"></div></fieldset>
-          <fieldset><legend>Paredes</legend><div class="opts" id="opts-paredes"></div></fieldset>
-          <fieldset><legend>Techo</legend><div class="opts" id="opts-techo"></div></fieldset>
-          <fieldset><legend>Suelo</legend><div class="opts" id="opts-suelo"></div></fieldset>
-          <fieldset><legend>Muebles: estructura y laterales</legend><p class="hint">Tablero HPL de 15 mm</p><div class="opts" id="opts-cuerpo"></div></fieldset>
-          <fieldset><legend>Muebles: puertas y frentes</legend><div class="opts" id="opts-puertas"></div></fieldset>
-          <fieldset><legend>Encimera</legend><div class="opts photo" id="opts-encimera"></div></fieldset>
-          <fieldset><legend>Frontal de la cocina</legend><div class="opts photo" id="opts-salpicadero"></div></fieldset>
-          <div class="row" style="margin-bottom:20px">
+          <fieldset data-sub="estilo"><legend>Estilo de partida</legend><div class="opts photo" id="opts-estilo"></div></fieldset>
+          <fieldset data-sub="paredes"><legend>Paredes</legend><p class="hint">Panelado. Los HPL son tableros de 5 mm</p><div class="opts" id="opts-paredes"></div></fieldset>
+          <fieldset data-sub="techo"><legend>Techo</legend><div class="opts" id="opts-techo"></div></fieldset>
+          <fieldset data-sub="suelo"><legend>Suelo</legend><div class="opts" id="opts-suelo"></div></fieldset>
+          <fieldset data-sub="cuerpo"><legend>Muebles: estructura y laterales</legend><p class="hint">Tablero HPL de 15 mm</p><div class="opts" id="opts-cuerpo"></div></fieldset>
+          <fieldset data-sub="puertas"><legend>Muebles: puertas y frentes</legend><div class="opts" id="opts-puertas"></div></fieldset>
+          <fieldset data-sub="encimera"><legend>Encimera</legend><div class="opts photo" id="opts-encimera"></div></fieldset>
+          <fieldset data-sub="salpicadero"><legend>Frontal de la cocina</legend><div class="opts photo" id="opts-salpicadero"></div></fieldset>
+          <div data-sub="griferia" class="row" style="margin-bottom:20px">
             <div class="f"><label for="tiradores">Tiradores</label><select id="tiradores" name="tiradores"></select></div>
             <div class="f"><label for="griferia">Grifería</label><select id="griferia" name="griferia"></select></div>
           </div>
-          <div id="fs-bano-acab">
+          <div data-sub="bano" id="fs-bano-acab">
             <fieldset><legend>Baño: revestimiento</legend><div class="opts photo" id="opts-banoRevest"></div></fieldset>
             <fieldset><legend>Baño: puerta</legend><div class="opts photo" id="opts-banoPuerta"></div>
               <label class="check"><input type="checkbox" id="tarima" name="tarima"><span>Tarima de madera en el plato de ducha</span></label></fieldset>
           </div>
-          <fieldset><legend>Tapicería de sofás, colchón y cojines</legend><div class="opts small tap" id="opts-tapiceria"></div></fieldset>
-          <div class="f"><label for="notasAcabados">Comentarios sobre acabados</label>
+          <fieldset data-sub="tapiceria"><legend>Tapicería de sofás, colchón y cojines</legend><div class="opts small tap" id="opts-tapiceria"></div></fieldset>
+          <div data-sub="notas" class="f"><label for="notasAcabados">Comentarios sobre acabados</label>
             <textarea id="notasAcabados" name="notasAcabados" placeholder="Ej.: me gustaría ver la muestra del turquesa antes de decidir"></textarea></div>
         </div>
 
@@ -375,7 +375,7 @@ var PANELES = [
   {id:"friso-barnizado", n:"Friso barnizado oscuro", c:"#8E6440", veta:2},
   {id:"friso-blanco", n:"Friso blanco", c:"#EEECE5", veta:2},
   {id:"hpl-blanco", n:"HPL blanco mate soft", cod:"TNBM05", c:"#ECECEB"},
-  {id:"hpl-blanco-cemento", n:"HPL blanco y cemento mate soft", cod:"TNBC05", c:"#AEB2B8", c2:"#ECECEB"},
+  {id:"hpl-cemento", n:"HPL cemento mate soft", cod:"TNBC05", c:"#AEB2B8"},
   {id:"hpl-negro", n:"HPL negro mate", c:"#15181B"},
   {id:"hpl-arena", n:"HPL arena", c:"#D2C2A3"},
   {id:"blanco-polar", n:"Blanco polar", c:"#FBFBFA"},
@@ -388,8 +388,7 @@ var PANELES = [
 var MATERIALES = {
   paredes: PANELES,
   techo: [
-    {id:"bambu", n:"Techo de bambú", c:"#D6B67C", veta:2},
-    {id:"lamas-oscuro", n:"Lamas de madera sobre fondo oscuro", c:"#A97B4E", veta:4}
+    {id:"bambu", n:"Techo de bambú", c:"#C9A06A", veta:4}
   ].concat(PANELES),
   suelo: [
     {id:"zaragoza", n:"Parquet Zaragoza", cod:"laminado 8 mm resistente al agua", c:"#A98B6B", veta:1},
@@ -425,8 +424,8 @@ var ESTILOS = [
   {id:"oscuro", n:"Madera oscura y friso blanco", d:"Techo oscuro, friso blanco y suelo a juego", img:"techo-madera-oscura-friso-blanco", v:{paredes:"friso-blanco", techo:"friso-barnizado", suelo:"roble-oscuro", cuerpo:"atavia", puertas:"blanco-mate", encimera:"madera-oscura"}},
   {id:"pino", n:"Pino natural", d:"Friso de pino en techo y paredes", img:"techo-lamas-paredes-pino", v:{paredes:"friso-madera", techo:"friso-madera", suelo:"zaragoza", cuerpo:"blanco-mate", puertas:"vivan", encimera:"bambu"}},
   {id:"salvia", n:"Salvia", d:"Frentes verde salvia con madera clara", img:"cocina-escamas-salvia-fregadero", v:{paredes:"blanco-textura", techo:"bambu", suelo:"zaragoza", cuerpo:"blanco-mate", puertas:"verde-salvia", encimera:"bambu"}},
-  {id:"urbano", n:"Urbano", d:"Gris, antracita y techo de lamas", img:"cama-fija-trasera-garaje-gris", v:{paredes:"beige-textil", techo:"lamas-oscuro", suelo:"gris-piedra", cuerpo:"antracita", puertas:"gris-cemento", encimera:"madera-oscura"}},
-  {id:"negro", n:"Negro y madera", d:"Muebles negros con encimera de bambú", img:"cocina-muebles-negros-bambu", v:{paredes:"blanco-polar", techo:"lamas-oscuro", suelo:"zaragoza", cuerpo:"negro-mate", puertas:"negro-mate", encimera:"bambu"}}
+  {id:"urbano", n:"Urbano", d:"Gris, antracita y techo de bambú", img:"cama-fija-trasera-garaje-gris", v:{paredes:"beige-textil", techo:"bambu", suelo:"gris-piedra", cuerpo:"antracita", puertas:"gris-cemento", encimera:"madera-oscura"}},
+  {id:"negro", n:"Negro y madera", d:"Muebles negros con encimera de bambú", img:"cocina-muebles-negros-bambu", v:{paredes:"blanco-polar", techo:"bambu", suelo:"zaragoza", cuerpo:"negro-mate", puertas:"negro-mate", encimera:"bambu"}}
 ];
 var CAMAS = [
   {id:"fijaSalon", g:1, n:"Fija convertible en salón", d:"De día salón, de noche cama de matrimonio", img:"sofas-en-u-cama-azul-petroleo"},
@@ -508,8 +507,18 @@ var EXTRAS = [
    ESTADO Y UTILIDADES
    ============================================================ */
 var S = {view:"ext", side:"A", step:0};
-var STEP_NAMES = ["Furgoneta","Distribución","Acabados","Extras","Tus datos"];
-var STEP_VIEW = ["ext","plan","int","int",null];
+var SIMPLE = !!window.MODO_SIMPLE; // versión corta: solo furgo, paredes, suelo, techo, muebles y datos
+var STEPS = SIMPLE ? [
+  {n:"Furgoneta", w:0, view:"ext"},
+  {n:"Paredes", w:2, subs:["paredes"], view:"int", h:"Paredes", lead:"Elige el panelado de las paredes. Las muestras reales las ves y tocas en el taller."},
+  {n:"Suelo", w:2, subs:["suelo"], view:"int", h:"Suelo", lead:"Elige el suelo de tu camper."},
+  {n:"Techo", w:2, subs:["techo"], view:"int", h:"Techo", lead:"Elige el techo. Puede ser de bambú o del mismo panelado que las paredes."},
+  {n:"Muebles", w:2, subs:["cuerpo","puertas"], view:"int", h:"Muebles", lead:"Puedes combinar un color para la estructura y otro para las puertas."},
+  {n:"Tus datos", w:4}
+] : [
+  {n:"Furgoneta", w:0, view:"ext"}, {n:"Distribución", w:1, view:"plan"}, {n:"Acabados", w:2, view:"int"}, {n:"Extras", w:3, view:"int"}, {n:"Tus datos", w:4}
+];
+var LAST = STEPS.length-1;
 var form = document.getElementById("form");
 function $(id){return document.getElementById(id)}
 function val(name){var el=form.elements[name]; if(!el) return null; if(el.type==="checkbox") return el.checked; return el.value;}
@@ -840,7 +849,7 @@ function drawInterior(){
   });
   if(val("ex-tv") && side==="B") svg += '<rect x="'+(X0+Lc*0.45)+'" y="'+(ceilY+50)+'" width="60" height="36" rx="2" fill="#15181B"/><path d="M'+(X0+Lc*0.45+30)+' '+(ceilY+50)+'v-10" stroke="#555" stroke-width="3"/>';
   if(val("ex-ventanas") && side==="B") svg += '<rect x="'+(X0+Lc*0.2)+'" y="'+(ceilY+46)+'" width="80" height="38" rx="6" fill="var(--glass)" opacity=".8"/>';
-  svg += '<text x="'+X0+'" y="16" class="dim">'+(side==="A"?"pared del lado de la puerta":"pared del lado del conductor")+' · alto interior '+Hi.toLocaleString("es-ES")+' mm</text></svg>';
+  svg += '<text x="'+X0+'" y="16" class="dim">'+(side==="A"?"pared del lado de la puerta":"pared del lado del conductor")+(SIMPLE?' · distribución de ejemplo':'')+' · alto interior '+Hi.toLocaleString("es-ES")+' mm</text></svg>';
   return svg;
 }
 
@@ -854,6 +863,7 @@ function renderPreview(){
   var M=modelo(), L=curL(), H=curH(), lay=layoutFor(L);
   $("dims").innerHTML = '<span>Furgo <b>'+L+H+'</b></span><span>Carga <b>'+lay.Lc.toLocaleString("es-ES")+'</b> mm</span><span>Ancho <b>'+lay.W.toLocaleString("es-ES")+'</b> mm</span><span>Alto interior <b>'+M.alto[H].int.toLocaleString("es-ES")+'</b> mm</span>';
   var al = lay.warn.slice();
+  if(SIMPLE){ $("alerts").innerHTML = ""; return; }
   if(!lay.fits){
     var rec = recommendL(), falta = Math.max(lay.over.A, lay.over.B);
     al.push("Con esta distribución faltan unos "+Math.round(falta/10)+" cm en una "+L+". "+(rec && rec!==L ? "Te recomendamos una "+rec+", o quitar algún mueble." : "Quita algún mueble o cambia el comedor."));
@@ -867,13 +877,19 @@ function renderPreview(){
   if(lay.fits && S.view==="plan") $("alerts").insertAdjacentHTML("afterend",'<div class="fit" id="fitmsg">Todo cabe en tu '+L+H+'.</div>');
 }
 function renderSteps(){
-  $("steps").innerHTML = STEP_NAMES.map(function(n,i){
+  var st = STEPS[S.step];
+  $("steps").innerHTML = STEPS.map(function(x){return x.n}).map(function(n,i){
     return '<li><button type="button" data-go="'+i+'" class="'+(i<S.step?"done":"")+'"'+(i===S.step?' aria-current="step"':'')+'><span class="n">'+(i+1)+'</span>'+n+'</button></li>';
   }).join("");
-  document.querySelectorAll("[data-step]").forEach(function(d){ d.hidden = +d.dataset.step!==S.step; });
+  document.querySelectorAll("[data-step]").forEach(function(d){ d.hidden = +d.dataset.step!==st.w; });
+  var wrap = document.querySelector('[data-step="'+st.w+'"]');
+  wrap.querySelectorAll("[data-sub]").forEach(function(s){ s.hidden = st.subs ? st.subs.indexOf(s.dataset.sub)<0 : false; });
+  if(st.h){ wrap.querySelector("h2").textContent = st.h; wrap.querySelector(".lead").textContent = st.lead||""; }
+  if(st.subs) wrap.querySelectorAll("[data-sub] > legend").forEach(function(l){ l.hidden = st.subs.length===1; });
+  if(!st.subs && st.w===2) renderVisibility();
   $("prev").style.visibility = S.step===0 ? "hidden" : "visible";
-  $("next").textContent = S.step===4 ? "Enviar mi configuración" : "Siguiente";
-  if(S.step===4) renderSummary();
+  $("next").textContent = S.step===LAST ? "Enviar mi configuración" : "Siguiente";
+  if(S.step===LAST) renderSummary();
 }
 function showOnly(container, ok){ // oculta las tarjetas que no aplican y marca la primera visible si hace falta
   var cards = $(container).querySelectorAll(".opt"), first=null, checkedVisible=false;
@@ -891,7 +907,7 @@ function renderVisibility(){
   $("fs-garaje").hidden = val("cama")!=="fijaAlta";
   $("lbl-abatible").hidden = !/gir/.test(val("comedor"));
   $("fs-banopos").hidden = val("bano")!=="completo";
-  $("fs-bano-acab").hidden = val("bano")!=="completo";
+  $("fs-bano-acab").hidden = val("bano")!=="completo" || !!STEPS[S.step].subs;
   var emp = val("tipoCliente")==="Empresa";
   $("lbl-nombre").textContent = emp ? "Razón social" : "Nombre y apellidos";
   $("lbl-nif").textContent = emp ? "CIF / NIF" : "DNI / NIE";
@@ -921,6 +937,8 @@ function txtDistribucion(){
   ];
 }
 function txtAcabados(){
+  if(SIMPLE) return ["Paredes: "+matName("paredes",val("paredes")), "Techo: "+matName("techo",val("techo")), "Suelo: "+matName("suelo",val("suelo")),
+    "Muebles estructura: "+matName("cuerpo",val("cuerpo")), "Muebles puertas: "+matName("puertas",val("puertas"))];
   var e = ESTILOS.find(function(x){return x.id===val("estilo")});
   var out = [
     "Estilo: "+(e?e.n:"a su gusto"),
@@ -943,6 +961,7 @@ function txtElectrico(){
 }
 function txtAvisos(){ return Array.prototype.map.call($("alerts").querySelectorAll(".alert"), function(a){return a.textContent}); }
 function renderSummary(){
+  if(SIMPLE){ $("summary").innerHTML = [["Furgoneta", esc(txtFurgo())], ["Acabados", txtAcabados().map(esc).join("<br>")]].map(function(r){return "<div><dt>"+r[0]+"</dt><dd>"+r[1]+"</dd></div>"}).join(""); return; }
   var rows = [["Furgoneta", esc(txtFurgo())], ["Distribución", txtDistribucion().map(esc).join("<br>")], ["Prioridades", esc(val("prioridades")||"—")], ["Acabados", txtAcabados().map(esc).join("<br>")], ["Extras", txtElectrico().map(esc).join("<br>")]];
   var av = txtAvisos(); if(av.length) rows.push(["Avisos", av.map(esc).join("<br>")]);
   $("summary").innerHTML = rows.map(function(r){return "<div><dt>"+r[0]+"</dt><dd>"+r[1]+"</dd></div>"}).join("");
@@ -957,15 +976,15 @@ function payload(ref){
     cliente: {tipo: val("tipoCliente"), nombre: val("nombre").trim(), nif: val("nif").trim(), email: val("email").trim(), telefono: val("telefono").trim(),
       direccion: val("direccion").trim()+", "+val("cp").trim()+" "+val("poblacion").trim()+(val("provincia")?" ("+val("provincia").trim()+")":"")},
     furgoneta: {tiene: val("tiene")==="si", texto: txtFurgo(), longitud: val("aconsejar")?"Aconsejadme":curL(), altura: val("aconsejar")?"Aconsejadme":curH()},
-    plazas: val("plazas"),
-    distribucion: txtDistribucion(), prioridades: val("prioridades")||"",
-    acabados: txtAcabados(), electrico: txtElectrico(), avisos: txtAvisos()
+    plazas: SIMPLE ? null : val("plazas"),
+    distribucion: SIMPLE ? ["Configurador simplificado: distribución por definir con el taller"] : txtDistribucion(), prioridades: SIMPLE ? "" : (val("prioridades")||""),
+    acabados: txtAcabados(), electrico: SIMPLE ? [] : txtElectrico(), avisos: SIMPLE ? [] : txtAvisos()
   };
 }
 function textoPlano(p){
   return "Configuración "+p.referencia+"\n\nCLIENTE\n"+p.cliente.nombre+" · "+p.cliente.nif+"\n"+p.cliente.direccion+"\n"+p.cliente.email+" · "+p.cliente.telefono
     +"\n\nFURGONETA\n"+p.furgoneta.texto+"\n\nDISTRIBUCIÓN\n- "+p.distribucion.join("\n- ")+(p.prioridades?"\nPrioridades: "+p.prioridades:"")
-    +"\n\nACABADOS\n- "+p.acabados.join("\n- ")+"\n\nELECTRICIDAD\n- "+p.electrico.join("\n- ")+(p.avisos.length?"\n\nAVISOS\n- "+p.avisos.join("\n- "):"");
+    +"\n\nACABADOS\n- "+p.acabados.join("\n- ")+(p.electrico.length?"\n\nELECTRICIDAD\n- "+p.electrico.join("\n- "):"")+(p.avisos.length?"\n\nAVISOS\n- "+p.avisos.join("\n- "):"");
 }
 function validar(){
   var req = ["nombre","nif","email","telefono","direccion","cp","poblacion"];
@@ -1000,8 +1019,8 @@ function enviar(){
 /* ============================================================
    EVENTOS
    ============================================================ */
-function go(i){ S.step=Math.max(0,Math.min(4,i)); if(STEP_VIEW[S.step]) S.view=STEP_VIEW[S.step]; renderSteps(); renderPreview(); $("form").scrollIntoView({block:"start", behavior:"smooth"}); }
-$("next").onclick = function(){ if(S.step<4) go(S.step+1); else enviar(); };
+function go(i){ S.step=Math.max(0,Math.min(LAST,i)); if(STEPS[S.step].view) S.view=STEPS[S.step].view; renderSteps(); renderPreview(); $("form").scrollIntoView({block:"start", behavior:"smooth"}); }
+$("next").onclick = function(){ if(S.step<LAST) go(S.step+1); else enviar(); };
 $("prev").onclick = function(){ go(S.step-1); };
 $("steps").addEventListener("click", function(e){ var b=e.target.closest("[data-go]"); if(b) go(+b.dataset.go); });
 document.querySelectorAll(".tabs button").forEach(function(b){ b.onclick=function(){ S.view=b.dataset.view; renderPreview(); }; });
@@ -1016,8 +1035,13 @@ form.addEventListener("change", function(e){
   if(["suelo","paredes","techo","cuerpo","puertas","encimera","estilo","tapiceria","salpicadero","tiradores","griferia","banoRevest","banoPuerta"].indexOf(n)>=0) S.view="int";
   if(["ex-ruedas","ex-escalon","ex-nombre","ex-claraboya","ex-solar200"].indexOf(n)>=0) S.view="ext";
   if(["cama","numCamas","salon","comedor","mesaAbatible","plazas","bano","banoPos","cocinaLado","nevera","altillos","armario","rampa","cajon","fuegos"].indexOf(n)>=0) S.view="plan";
-  renderVisibility(); renderPreview(); if(S.step===4) renderSummary();
+  renderVisibility(); renderPreview(); if(S.step===LAST) renderSummary();
 });
 form.addEventListener("submit", function(e){ e.preventDefault(); });
+if(SIMPLE){
+  $("tab-plan").hidden = true;
+  document.querySelector("header.top h1").textContent = "Elige los acabados de tu camper";
+  document.querySelector("header.top p").textContent = "Tu furgo, paredes, suelo, techo y muebles. El dibujo cambia con cada elección.";
+}
 renderVisibility(); renderSteps(); renderPreview();
 </script>

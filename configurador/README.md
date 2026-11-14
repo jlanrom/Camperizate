@@ -16,7 +16,10 @@ Al enviar, se crea una ficha en Notion → **Configuraciones de clientes · Mál
 
 - `app.html`: la página entera (HTML, CSS y JS). **El catálogo está arriba del `<script>`**: `MODELOS` (medidas por marca), `MATERIALES`, `ESTILOS`, `CAMAS`, `COMEDORES`, `FUEGOS`, `SALPICADERO`, `BANO_*`, `PACK_ESTANDAR`, `EXTRAS`. Para cambiar maderas, colores, fotos u opciones, editad ahí.
 - `public/img/op/`: fotos de las opciones, sacadas de camperizacionmalaga.com/opciones-y-acabados (320 px).
-- `python3 build.py`: genera `public/index.html` a partir de `app.html`. Ejecutadlo tras cada cambio.
+- `python3 build.py`: genera a partir de `app.html` las dos versiones:
+  - `public/index.html`: configurador completo.
+  - `public/acabados.html`: versión corta (furgo, paredes, suelo, techo, muebles y datos). Es el mismo código con `window.MODO_SIMPLE = true`; los pasos están en `STEPS`.
+  Ejecutadlo tras cada cambio.
 - `src/index.js`: Worker de Cloudflare que sirve la web y guarda la configuración en Notion.
 
 ## Ponerlo en marcha (una vez)
