@@ -455,7 +455,7 @@ def register(b):
         "switch_label": "Español", "switch_short": "ES",
         "van_prefix": "/en/vans/",
         "nav": [("/en/full-campervan-conversion/", "Full conversion"), ("/en/vans/", "Vans"),
-                ("/en/our-work/", "Our work"), ("/en/contact/", "Contact")],
+                ("/en/options-and-finishes/", "Options"), ("/en/our-work/", "Our work"), ("/en/contact/", "Contact")],
         "vans": VANS_EN,
     }
     b.UI["es"]["switch_label"] = "English"

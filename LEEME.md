@@ -14,6 +14,7 @@ Web estática de Lifes Campers, publicada en Cloudflare Workers. Cada cambio que
 - `/`: inicio (Málaga).
 - `/camperizacion-integral/`: equipamiento, precio, plan de pago y preguntas frecuentes.
 - `/furgonetas/` y una página por modelo: Ducato, Boxer, Jumper, Movano, Master, Crafter, Sprinter, Transit y Daily.
+- `/opciones-y-acabados/` (y `/en/options-and-finishes/`): camas, comedor, cocina, baño, techos, extras y colores de tapicería, con fotos de entregas publicadas en Instagram. Textos y fotos en `src/content_opciones.py`.
 - `/trabajos/`: galería por proyectos.
 - `/contacto/`: WhatsApp, teléfonos, taller y formulario.
 - Aviso legal, privacidad y cookies.
