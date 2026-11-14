@@ -30,7 +30,8 @@ Mientras no esté conectado, el último paso muestra el resumen para copiarlo y 
 
 ## Pendiente para la versión 1
 
-- Catálogo real de maderas, suelos, paredes y techos, con foto de cada muestra.
+- Fotos de las muestras dentro del configurador (ahora son colores aproximados).
+- Confirmar: color del suelo Zaragoza y otros suelos, HPL arena, proveedor de los frentes verde salvia y roble.
 - Pack eléctrico estándar y extras confirmados, con precio.
 - Medidas reales de los módulos (cocina, baño, cama…) del taller para que el aviso de «no cabe» sea exacto.
 - Lista de compra automática desde la ficha congelada.
