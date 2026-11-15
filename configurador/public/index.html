@@ -55,6 +55,21 @@ header.top p{margin:0;color:var(--muted);font-size:14px}
 .sidebtn{display:flex;gap:6px;margin-top:6px}
 .sidebtn button{all:unset;cursor:pointer;font-size:12px;border:1px solid var(--line);border-radius:99px;padding:3px 10px;color:var(--muted)}
 .sidebtn button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:600}
+.editbar{margin-top:8px;display:grid;gap:8px}
+.edit-hint{margin:0;font-size:13px;color:var(--muted)}
+.edit-hint b{color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{all:unset;cursor:pointer;font-size:12.5px;font-weight:600;padding:5px 10px;border-radius:99px;border:1px dashed var(--line);color:var(--muted)}
+.chips button[aria-pressed="true"]{border-style:solid;border-color:var(--accent);background:var(--accent-soft);color:var(--ink)}
+.chips button::before{content:"+ ";}
+.chips button[aria-pressed="true"]::before{content:"✓ ";}
+.chips button:focus-visible,.linkbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.linkbtn{all:unset;cursor:pointer;font-size:12.5px;color:var(--accent);text-decoration:underline;justify-self:start}
+#view.editable svg{touch-action:none}
+svg g.drag{cursor:grab}
+svg g.drag:focus{outline:none}
+svg g.drag:focus-visible .focusring{stroke:var(--accent);stroke-width:2.5}
+svg g.dragging{cursor:grabbing;opacity:.85}
 .alerts{display:grid;gap:6px;margin-top:10px}
 .alert{background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:8px 10px;font-size:13px}
 .fit{color:var(--ok);font-size:13px;margin-top:8px}
@@ -155,6 +170,11 @@ svg .body{fill:var(--surface);stroke:var(--draw)}
         <button role="tab" id="tab-int" aria-selected="false" data-view="int">Interior</button>
       </div>
       <div id="view"></div>
+      <div class="editbar" id="editbar" hidden>
+        <p class="edit-hint"><b>Coloca tú los muebles:</b> arrástralos en el plano. Arriba va el lado de la puerta corredera; abajo, el del conductor.</p>
+        <div class="chips" id="paleta" aria-label="Añadir o quitar del plano"></div>
+        <button type="button" class="linkbtn" id="resetpos" hidden>Volver a la colocación automática</button>
+      </div>
       <div class="sidebtn" id="sidebtns" hidden>
         <button id="side-a" aria-pressed="true" data-side="A">Lado puerta corredera</button>
         <button id="side-b" aria-pressed="false" data-side="B">Lado conductor</button>
@@ -515,7 +535,7 @@ var EXTRAS = [
 /* ============================================================
    ESTADO Y UTILIDADES
    ============================================================ */
-var S = {view:"ext", side:"A", step:0};
+var S = {view:"ext", side:"A", step:0, pos:{}}; // pos: muebles colocados a mano en el plano {k:{side,x}}
 var SIMPLE = !!window.MODO_SIMPLE; // versión corta: solo furgo, paredes, suelo, techo, muebles y datos
 var STEPS = SIMPLE ? [
   {n:"Furgoneta", w:0, view:"ext"},
@@ -623,8 +643,22 @@ function layoutFor(L){
   if(bano==="wc") put(otro,"wc",500,500,900);
   if(val("armario")){ var la = end.A-Math.max(cur.A,PUERTA), lb = end.B-cur.B; var sd = la>=lb?"A":"B"; if(sd==="A") cur.A=Math.max(cur.A,PUERTA); put(sd,"armario",550,550,9999); }
   var over = {A: cur.A-end.A, B: cur.B-end.B};
-  return {Lc:Lc, W:W, items:items, warn:warn, over:over, cur:cur, end:end, fits: over.A<=0 && over.B<=0};
+  var manual = Object.keys(S.pos).length>0 && !SIMPLE, bad = {}, choques = [];
+  if(manual){
+    items.forEach(function(it){ var o = S.pos[it.k]; if(o && it.side!=="full"){ it.side = o.side; it.x = Math.max(0, Math.min(Lc-it.len, o.x)); } });
+    var libre = function(a,b){ return (a.k==="mesa"&&b.k==="banco")||(a.k==="banco"&&b.k==="mesa"); };
+    for(var i=0;i<items.length;i++) for(var j=i+1;j<items.length;j++){
+      var a=items[i], b=items[j];
+      if(libre(a,b)) continue;
+      var mismoLado = a.side===b.side || a.side==="full" || b.side==="full";
+      if(mismoLado && a.x < b.x+b.len-10 && b.x < a.x+a.len-10){ bad[a.k]=bad[b.k]=1; choques.push(nombreItem(a)+" y "+nombreItem(b).toLowerCase()); }
+    }
+    items.forEach(function(it){ if(it.side==="A" && it.x < INICIO_A-10){ bad[it.k]=1; choques.push(nombreItem(it)+" tapa la puerta corredera"); } });
+  }
+  return {Lc:Lc, W:W, items:items, warn:warn, over:over, cur:cur, end:end, manual:manual, bad:bad, choques:choques,
+          fits: manual ? choques.length===0 : (over.A<=0 && over.B<=0)};
 }
+function nombreItem(it){ return it.k==="cama" ? NOMBRE_CAMA[it.sub] : ({cocina:"Cocina", nevera:"Nevera", bano:"Baño", wc:"WC", armario:"Armario", banco:"Banco", mesa:"Mesa", dinetteL:"Dinette en L"})[it.k]; }
 function recommendL(){
   var ks = Object.keys(modelo().largo);
   for(var i=0;i<ks.length;i++){ if(layoutFor(ks[i]).fits) return ks[i]; }
@@ -711,8 +745,15 @@ function drawPlan(){
   function mesa(x,y,w,h,abat){ return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4" fill="'+top+'" stroke="var(--draw)"'+(abat?' stroke-dasharray="3 2"':'')+'/>'; }
   function txt(x,y,t,cls){ return '<text x="'+x+'" y="'+y+'" text-anchor="middle" dominant-baseline="middle" class="lbl" style="fill:var(--ink)">'+t+'</text>'; }
   function colchon(x,y,w,h){ return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="6" fill="'+tap+'" opacity=".6" stroke="var(--draw-soft)"/><rect x="'+(x+w-26)+'" y="'+(y+10)+'" width="18" height="'+(h/2-16)+'" rx="5" fill="#FBF8F2" stroke="#B9AE9C"/><rect x="'+(x+w-26)+'" y="'+(y+h/2+6)+'" width="18" height="'+(h/2-16)+'" rx="5" fill="#FBF8F2" stroke="#B9AE9C"/>'; }
-  var alt = val("altillos");
+  var alt = val("altillos"), editable = !SIMPLE;
   lay.items.forEach(function(it){
+    var mov = editable && it.side!=="full";
+    svg += '<g data-k="'+it.k+'"'+(mov?' class="drag" tabindex="0" role="button" aria-label="'+esc(nombreItem(it))+': arrastra o usa las flechas para moverlo"':'')+'>';
+    drawItem(it);
+    if(mov){ var bx=X0+it.x*s, bd=it.d*s, byy = it.side==="A"?Y0:Y0+W-bd; svg += '<rect class="focusring" x="'+(bx-1)+'" y="'+(byy-1)+'" width="'+(it.len*s+2)+'" height="'+(bd+2)+'" fill="none" stroke="none"/>'; }
+    svg += '</g>';
+  });
+  function drawItem(it){
     var x = X0+it.x*s, w = it.len*s, d = it.d*s, y;
     if(it.side==="full"){ y=Y0; d=W; } else if(it.side==="A"){ y=Y0; } else { y=Y0+W-d; }
     if(it.k==="cama"){
@@ -733,10 +774,11 @@ function drawPlan(){
       svg += txt(x+w/2, (sub==="fijaAlta"||sub==="dosFijas"||sub==="dosDesm") ? y+d/2 : y+d+14, NOMBRE_CAMA[sub]);
       return;
     }
+    if(lay.bad[it.k] && ["dinetteL","mesa","banco"].indexOf(it.k)>=0) svg += '<rect x="'+(x-2)+'" y="'+(y-2)+'" width="'+(w+4)+'" height="'+(d+4)+'" fill="none" stroke="#C2410C" stroke-width="2" rx="3"/>';
     if(it.k==="dinetteL"){ svg += sofa(x,y+d-45,w,45) + sofa(x,y,45,d-45) + mesa(x+55,y+d-115,w-80,58) + txt(x+w/2,y-6,"Dinette en L"); return; }
     if(it.k==="mesa"){ var ab = val("mesaAbatible"); svg += mesa(x, ab? y+d-28 : y, w, ab? 28 : d, ab) + txt(x+w/2, ab? y+d-40 : y+d/2, ab?"mesa abatible":"Mesa"); return; }
     if(it.k==="banco"){ svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+d+'" fill="'+body+'" stroke="var(--draw)"/>' + sofa(x+3,y+3,w-17,d-6) + '<rect x="'+(x+w-12)+'" y="'+y+'" width="12" height="'+d+'" fill="'+tap+'" stroke="var(--draw)" stroke-width=".8"/>' + '<text x="'+(x+w/2-6)+'" y="'+(y+d/2)+'" text-anchor="middle" dominant-baseline="middle" class="lbl'+(isDark(tap)?" on-dark":"")+'">Banco</text>'; return; }
-    var overflow = it.x+it.len > lay.end[it.side]+1;
+    var overflow = lay.manual ? !!lay.bad[it.k] : it.x+it.len > lay.end[it.side]+1;
     svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+d+'" fill="'+body+'" stroke="'+(overflow?"#C2410C":"var(--draw)")+'" stroke-width="'+(overflow?2:1)+'"/>';
     var fy = it.side==="A" ? y+d-5 : y;
     if(it.k==="cocina"){
@@ -753,7 +795,7 @@ function drawPlan(){
     svg += '<rect x="'+x+'" y="'+fy+'" width="'+w+'" height="5" fill="'+door+'"/>';
     var dark = it.k!=="bano" && isDark(mat("cuerpo",val("cuerpo")).c);
     svg += '<text x="'+(x+w/2)+'" y="'+(y+d/2)+'" text-anchor="middle" dominant-baseline="middle" class="lbl'+(dark?" on-dark":"")+'">'+NOMBRES[it.k]+'</text>';
-  });
+  }
   if(alt!=="no"){
     lay.items.forEach(function(it){
       if(["cocina","nevera","wc"].indexOf(it.k)<0 || (alt==="cocina" && it.k!=="cocina") || it.h>=9999) return;
@@ -869,11 +911,14 @@ function renderPreview(){
   $("view").innerHTML = S.view==="ext" ? drawExterior() : S.view==="plan" ? drawPlan() : drawInterior();
   document.querySelectorAll(".tabs button").forEach(function(b){ b.setAttribute("aria-selected", b.dataset.view===S.view ? "true":"false"); });
   $("sidebtns").hidden = S.view!=="int";
+  renderPaleta();
   var M=modelo(), L=curL(), H=curH(), lay=layoutFor(L);
   $("dims").innerHTML = '<span>Furgo <b>'+L+H+'</b></span><span>Carga <b>'+lay.Lc.toLocaleString("es-ES")+'</b> mm</span><span>Ancho <b>'+lay.W.toLocaleString("es-ES")+'</b> mm</span><span>Alto interior <b>'+M.alto[H].int.toLocaleString("es-ES")+'</b> mm</span>';
   var al = lay.warn.slice();
   if(SIMPLE){ $("alerts").innerHTML = ""; return; }
-  if(!lay.fits){
+  if(lay.manual && !lay.fits){
+    al.push("Hay muebles que se solapan: "+lay.choques.slice(0,3).join("; ")+". Muévelos hasta que no salgan en rojo.");
+  } else if(!lay.fits){
     var rec = recommendL(), falta = Math.max(lay.over.A, lay.over.B);
     al.push("Con esta distribución faltan unos "+Math.round(falta/10)+" cm en una "+L+". "+(rec && rec!==L ? "Te recomendamos una "+rec+", o quitar algún mueble." : "Quita algún mueble o cambia el comedor."));
   }
@@ -943,7 +988,14 @@ function txtDistribucion(){
     "Cocina lado "+(val("cocinaLado")==="A"?"puerta":"conductor")+": "+find(FUEGOS,val("fuegos")).n.toLowerCase()+(val("fregadero")?", fregadero"+(val("tapaFregadero")?" oculto bajo tapa":""):"")+(val("extension")?", extensión abatible":""),
     "Nevera de compresor "+nev+" · agua limpia "+val("agua")+" L",
     alt+(val("armario")?" + armario ropero":"")
-  ];
+  ].concat(txtColocacion());
+}
+function txtColocacion(){
+  if(!Object.keys(S.pos).length) return [];
+  var lay = layoutFor(curL());
+  return ["Colocación hecha por el cliente en el plano (desde el inicio de la zona camper): " + lay.items.filter(function(it){return it.side!=="full"}).map(function(it){
+    return nombreItem(it)+" lado "+(it.side==="A"?"puerta":"conductor")+" de "+(it.x/1000).toLocaleString("es-ES",{maximumFractionDigits:2})+" a "+((it.x+it.len)/1000).toLocaleString("es-ES",{maximumFractionDigits:2})+" m";
+  }).join("; ")];
 }
 function txtAcabados(){
   if(SIMPLE) return ["Paredes: "+matName("paredes",val("paredes")), "Techo: "+matName("techo",val("techo")), "Suelo: "+matName("suelo",val("suelo")),
@@ -1033,6 +1085,63 @@ $("next").onclick = function(){ if(S.step<LAST) go(S.step+1); else enviar(); };
 $("prev").onclick = function(){ go(S.step-1); };
 $("steps").addEventListener("click", function(e){ var b=e.target.closest("[data-go]"); if(b) go(+b.dataset.go); });
 document.querySelectorAll(".tabs button").forEach(function(b){ b.onclick=function(){ S.view=b.dataset.view; renderPreview(); }; });
+/* ---------- plano editable ---------- */
+var PLAN = {X0:170, Y0:44, s:0.1};
+var drag = null;
+function svgPoint(e){ var svg = $("view").querySelector("svg"); var pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; return pt.matrixTransform(svg.getScreenCTM().inverse()); }
+function itemOf(k){ return layoutFor(curL()).items.find(function(i){return i.k===k}); }
+function moveTo(k, side, x){ S.pos[k] = {side:side, x:Math.round(x/50)*50}; }
+$("view").addEventListener("pointerdown", function(e){
+  if(S.view!=="plan" || SIMPLE) return;
+  var g = e.target.closest("g.drag"); if(!g) return;
+  var it = itemOf(g.dataset.k), pt = svgPoint(e);
+  drag = {k:g.dataset.k, dx: pt.x - (PLAN.X0 + it.x*PLAN.s)};
+  try{ $("view").setPointerCapture(e.pointerId); }catch(err){}
+  e.preventDefault();
+});
+$("view").addEventListener("pointermove", function(e){
+  if(!drag) return;
+  var pt = svgPoint(e), lay = layoutFor(curL()), W = lay.W*PLAN.s;
+  moveTo(drag.k, pt.y < PLAN.Y0 + W/2 ? "A" : "B", (pt.x - drag.dx - PLAN.X0)/PLAN.s);
+  renderPreview();
+  var g = $("view").querySelector('g[data-k="'+drag.k+'"]'); if(g) g.classList.add("dragging");
+});
+function endDrag(){ if(!drag) return; var k = drag.k; drag = null; renderPreview(); var g = $("view").querySelector('g[data-k="'+k+'"]'); if(g) g.focus({preventScroll:true}); if(S.step===LAST) renderSummary(); }
+$("view").addEventListener("pointerup", endDrag);
+$("view").addEventListener("pointercancel", endDrag);
+$("view").addEventListener("keydown", function(e){
+  var g = e.target.closest && e.target.closest("g.drag"); if(!g) return;
+  var it = itemOf(g.dataset.k), k = g.dataset.k;
+  if(e.key==="ArrowLeft") moveTo(k, it.side, it.x-100);
+  else if(e.key==="ArrowRight") moveTo(k, it.side, it.x+100);
+  else if(e.key==="ArrowUp") moveTo(k, "A", it.x);
+  else if(e.key==="ArrowDown") moveTo(k, "B", it.x);
+  else return;
+  e.preventDefault(); renderPreview(); var n = $("view").querySelector('g[data-k="'+k+'"]'); if(n) n.focus({preventScroll:true});
+});
+function marcar(id){ var r = $(id); if(r) r.checked = true; }
+var PALETA = [
+  {k:"bano", n:"Baño con ducha", on:function(){return val("bano")==="completo"}, set:function(on){ marcar(on?"bano-full":"bano-no"); }},
+  {k:"wc", n:"WC en mueble", on:function(){return val("bano")==="wc"}, set:function(on){ marcar(on?"bano-wc":"bano-no"); }},
+  {k:"nevera", n:"Nevera de columna", on:function(){return val("nevera")!=="pequena"}, set:function(on){ marcar(on?"nv-m":"nv-s"); }},
+  {k:"armario", n:"Armario ropero", on:function(){return val("armario")}, set:function(on){ $("armario").checked = on; }},
+  {k:"banco", n:"Banco 2 plazas", on:function(){return val("plazas")==="4"}, set:function(on){ marcar(on?"plazas-4":"plazas-2"); }},
+  {k:"mesa", n:"Mesa", on:function(){return /gir/.test(val("comedor"))}, set:function(on){ marcar(on ? (val("plazas")==="4"?"comedor-girBanco":"comedor-gir") : "comedor-no"); }}
+];
+function renderPaleta(){
+  var show = S.view==="plan" && !SIMPLE;
+  $("editbar").hidden = !show; $("view").classList.toggle("editable", show);
+  if(!show) return;
+  $("paleta").innerHTML = PALETA.map(function(p){ return '<button type="button" data-k="'+p.k+'" aria-pressed="'+(p.on()?"true":"false")+'">'+p.n+'</button>'; }).join("");
+  $("resetpos").hidden = !Object.keys(S.pos).length;
+}
+$("paleta").addEventListener("click", function(e){
+  var b = e.target.closest("button[data-k]"); if(!b) return;
+  var p = PALETA.find(function(x){return x.k===b.dataset.k}), on = !p.on();
+  p.set(on); if(!on) delete S.pos[p.k];
+  renderVisibility(); renderPreview(); if(S.step===LAST) renderSummary();
+});
+$("resetpos").onclick = function(){ S.pos = {}; renderPreview(); if(S.step===LAST) renderSummary(); };
 document.querySelectorAll("#sidebtns button").forEach(function(b){ b.onclick=function(){ S.side=b.dataset.side; document.querySelectorAll("#sidebtns button").forEach(function(x){x.setAttribute("aria-pressed", x===b?"true":"false")}); renderPreview(); }; });
 form.addEventListener("change", function(e){
   var n = e.target.name;

@@ -8,6 +8,8 @@ El cliente diseña su camper en 5 pasos y el dibujo de la furgo cambia con cada 
 4. **Electricidad**: pack estándar y extras.
 5. **Resumen y datos de facturación**.
 
+En la vista de planta el cliente puede **arrastrar los muebles** (cocina, baño, nevera, armario, banco, mesa…) al lado y la altura que quiera, y añadir o quitar módulos con los botones de debajo. Si dos muebles se solapan o algo tapa la puerta, salen en rojo. Las posiciones llegan a Notion dentro de «Distribución».
+
 El dibujo tiene tres vistas: exterior (cambia con L/H y color), planta (dónde va cada mueble) e interior (paredes, techo, suelo y muebles con sus colores). Si algo no cabe en la medida elegida, avisa y recomienda la medida que sí vale.
 
 Al enviar, se crea una ficha en Notion → **Configuraciones de clientes · Málaga**, en estado «Nueva».
