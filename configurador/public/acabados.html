@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
 <title>Acabados Lifes Campers</title>
-<script>window.MODO_SIMPLE=true</script>
+<script>window.MODO="acabados"</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
@@ -71,6 +71,17 @@ svg g.drag{cursor:grab}
 svg g.drag:focus{outline:none}
 svg g.drag:focus-visible .focusring{stroke:var(--accent);stroke-width:2.5}
 svg g.dragging{cursor:grabbing;opacity:.85}
+.solo-cliente{display:none}
+html.m-cliente .solo-taller{display:none!important}
+.opt label .sw small{font-family:var(--f-body)}
+.sw i.th{background-size:cover;background-position:center;width:44px;height:44px;border-radius:7px}
+details.colores{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin-bottom:20px}
+details.colores summary{cursor:pointer;font-weight:600}
+details.colores[open] summary{margin-bottom:14px}
+.hoja{margin-top:18px}
+.hoja h3{font-size:16px;margin:0 0 6px}
+.hoja .pend{color:var(--warn)}
+.hoja .def{color:var(--muted)}
 .alerts{display:grid;gap:6px;margin-top:10px}
 .alert{background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:8px 10px;font-size:13px}
 .fit{color:var(--ok);font-size:13px;margin-top:8px}
@@ -222,31 +233,31 @@ svg .body{fill:var(--surface);stroke:var(--draw)}
         <div data-step="1" hidden>
           <h2>Distribución</h2>
           <p class="lead">Dónde va cada cosa. Si algo no cabe en tu furgo, te avisamos en el dibujo.</p>
-          <fieldset><legend>Plazas para viajar</legend>
+          <fieldset data-sub="plazas"><legend>Plazas para viajar</legend>
             <div class="opts">
               <div class="opt"><input type="radio" name="plazas" id="plazas-2" value="2" checked><label for="plazas-2"><b>2 plazas</b><span>Conductor y acompañante</span></label></div>
               <div class="opt"><input type="radio" name="plazas" id="plazas-4" value="4"><label for="plazas-4"><b>4 plazas</b><span>Banco homologado con cinturones</span></label></div>
             </div>
           </fieldset>
-          <fieldset><legend>¿Cuántas camas?</legend>
+          <fieldset data-sub="numCamas"><legend>¿Cuántas camas?</legend>
             <div class="opts">
               <div class="opt"><input type="radio" name="numCamas" id="nc-1" value="1" checked><label for="nc-1"><b>Una cama</b><span>Para 2 personas</span></label></div>
               <div class="opt"><input type="radio" name="numCamas" id="nc-2" value="2"><label for="nc-2"><b>Dos camas</b><span>Para 4 personas</span></label></div>
             </div>
           </fieldset>
-          <fieldset><legend>Tipo de cama</legend><div class="opts photo" id="opts-cama"></div></fieldset>
-          <fieldset id="fs-salon"><legend>¿Cómo es el salón que se hace cama?</legend><div class="opts photo" id="opts-salon"></div></fieldset>
-          <fieldset id="fs-garaje"><legend>Garaje bajo la cama</legend>
+          <fieldset data-sub="cama"><legend>Tipo de cama</legend><div class="opts photo" id="opts-cama"></div></fieldset>
+          <fieldset data-sub="salon" id="fs-salon"><legend>¿Cómo es el salón que se hace cama?</legend><div class="opts photo" id="opts-salon"></div></fieldset>
+          <fieldset data-sub="garaje" id="fs-garaje"><legend>Garaje bajo la cama</legend>
             <div class="checks">
               <label class="check"><input type="checkbox" id="rampa" name="rampa"><span>Rampa para meter bici o moto</span></label>
               <label class="check"><input type="checkbox" id="cajon" name="cajon"><span>Cajón o bandeja extraíble<small>Sale por las puertas traseras</small></span></label>
             </div>
           </fieldset>
-          <fieldset><legend>Comedor delantero</legend>
+          <fieldset data-sub="comedor"><legend>Comedor delantero</legend>
             <div class="opts photo" id="opts-comedor"></div>
             <label class="check" id="lbl-abatible"><input type="checkbox" id="mesaAbatible" name="mesaAbatible"><span>Mesa abatible contra la pared<small>Se pliega y deja el paso libre</small></span></label>
           </fieldset>
-          <fieldset><legend>Baño y ducha</legend>
+          <fieldset data-sub="banoTipo"><legend>Baño y ducha</legend>
             <div class="opts">
               <div class="opt"><input type="radio" name="bano" id="bano-no" value="no"><label for="bano-no"><b>Sin baño</b><span>Más espacio libre</span></label></div>
               <div class="opt"><input type="radio" name="bano" id="bano-wc" value="wc"><label for="bano-wc"><b>WC en un mueble</b><span>Inodoro portátil escondido</span></label></div>
@@ -254,35 +265,35 @@ svg .body{fill:var(--surface);stroke:var(--draw)}
             </div>
             <label class="check"><input type="checkbox" id="duchaExt" name="duchaExt"><span>Ducha exterior en la puerta trasera</span></label>
           </fieldset>
-          <fieldset id="fs-banopos"><legend>¿Dónde va el baño?</legend>
+          <fieldset data-sub="banoPos" id="fs-banopos"><legend>¿Dónde va el baño?</legend>
             <div class="opts">
               <div class="opt"><input type="radio" name="banoPos" id="bp-frente" value="frente" checked><label for="bp-frente"><b>Enfrente de la cocina</b><span>Lado del conductor</span></label></div>
               <div class="opt"><input type="radio" name="banoPos" id="bp-puerta" value="puerta"><label for="bp-puerta"><b>Junto a la puerta</b><span>Al entrar, en el lado de la corredera</span></label></div>
             </div>
           </fieldset>
-          <fieldset><legend>Cocina</legend>
+          <fieldset data-sub="cocinaLado"><legend>Cocina</legend>
             <div class="opts">
               <div class="opt"><input type="radio" name="cocinaLado" id="cl-a" value="A" checked><label for="cl-a"><b>Lado de la puerta</b><span>Empieza a media puerta corredera</span></label></div>
               <div class="opt"><input type="radio" name="cocinaLado" id="cl-b" value="B"><label for="cl-b"><b>Lado del conductor</b><span>Entrada más despejada</span></label></div>
             </div>
           </fieldset>
-          <fieldset><legend>Fuegos</legend><div class="opts photo" id="opts-fuegos"></div>
-            <div class="checks" style="margin-top:6px">
+          <fieldset data-sub="fuegos"><legend>Fuegos</legend><div class="opts photo" id="opts-fuegos"></div>
+            <div class="checks solo-taller" style="margin-top:6px">
               <label class="check"><input type="checkbox" id="fregadero" name="fregadero" checked><span>Fregadero con grifo</span></label>
               <label class="check"><input type="checkbox" id="tapaFregadero" name="tapaFregadero"><span>Fregadero oculto bajo tapa<small>Más encimera libre</small></span></label>
               <label class="check"><input type="checkbox" id="extension" name="extension"><span>Extensión de encimera abatible</span></label>
             </div>
-            <div class="row" style="margin-top:6px"><div class="f"><label for="agua">Depósito de agua limpia</label>
+            <div class="row solo-taller" style="margin-top:6px"><div class="f"><label for="agua">Depósito de agua limpia</label>
               <select id="agua" name="agua"><option value="70">70 litros</option><option value="100">100 litros</option><option value="120">120 litros</option></select></div></div>
           </fieldset>
-          <fieldset><legend>Nevera de compresor</legend>
+          <fieldset data-sub="nevera"><legend>Nevera de compresor</legend>
             <div class="opts">
               <div class="opt"><input type="radio" name="nevera" id="nv-s" value="pequena" checked><label for="nv-s"><b>Pequeña · 40–50 L</b><span>Bajo la encimera</span></label></div>
               <div class="opt"><input type="radio" name="nevera" id="nv-m" value="mediana"><label for="nv-m"><b>Mediana · 70–90 L</b><span>Columna junto a la cocina</span></label></div>
               <div class="opt"><input type="radio" name="nevera" id="nv-l" value="grande"><label for="nv-l"><b>Grande · 130 L o más</b><span>Columna alta con congelador</span></label></div>
             </div>
           </fieldset>
-          <fieldset><legend>Armarios</legend>
+          <fieldset data-sub="armarios"><legend>Armarios</legend>
             <div class="opts">
               <div class="opt"><input type="radio" name="altillos" id="al-no" value="no"><label for="al-no"><b>Sin altillos</b><span>Más sensación de espacio</span></label></div>
               <div class="opt"><input type="radio" name="altillos" id="al-coc" value="cocina"><label for="al-coc"><b>Altillos sobre la cocina</b></label></div>
@@ -290,7 +301,7 @@ svg .body{fill:var(--surface);stroke:var(--draw)}
             </div>
             <label class="check"><input type="checkbox" id="armario" name="armario"><span>Armario ropero de columna</span></label>
           </fieldset>
-          <div class="f"><label for="prioridades">¿Algo más? Prioridades, ideas, cosas que no quieres</label>
+          <div data-sub="prioridades" class="f"><label for="prioridades">¿Algo más? Cuéntanos lo que quieras</label>
             <textarea id="prioridades" name="prioridades" placeholder="Ej.: viajamos con perro y dos bicis, quiero mucha luz natural, mi pareja mide 1,90 m…"></textarea></div>
         </div>
 
@@ -324,14 +335,16 @@ svg .body{fill:var(--surface);stroke:var(--draw)}
         <div data-step="3" hidden>
           <h2>Electricidad y extras</h2>
           <p class="lead">Todas nuestras campers llevan el pack estándar. Añade lo que necesites según cómo viajes.</p>
-          <div class="std">
-            <h3>Pack estándar incluido</h3>
+          <div class="std" data-sub="pack">
+            <h3>Ya incluido en todas las campers</h3>
             <ul id="std-list"></ul>
           </div>
-          <fieldset><legend>Electricidad y confort</legend><div class="checks" id="extras-elec"></div></fieldset>
-          <fieldset><legend>Iluminación</legend><div class="opts photo" id="extras-luz"></div></fieldset>
-          <fieldset><legend>Personalización y exterior</legend><div class="opts photo" id="extras-pers"></div></fieldset>
-          <div class="f"><label for="usoElec">¿Cómo vas a usar la camper?</label>
+          <fieldset data-sub="ex-ventanas"><legend>Ventanas y claraboyas</legend><div class="opts" id="extras-ventanas"></div></fieldset>
+          <fieldset data-sub="ex-confort"><legend>Confort</legend><div class="opts" id="extras-confort"></div></fieldset>
+          <fieldset data-sub="ex-exterior"><legend>Exterior</legend><div class="opts" id="extras-exterior"></div></fieldset>
+          <fieldset data-sub="ex-energia"><legend>Más energía</legend><div class="opts" id="extras-energia"></div></fieldset>
+          <fieldset data-sub="ex-luz"><legend>Iluminación y detalles</legend><div class="opts" id="extras-luz"></div></fieldset>
+          <div data-sub="uso" class="f"><label for="usoElec">¿Cómo vas a usar la camper?</label>
             <select id="usoElec" name="usoElec"><option>Fines de semana y vacaciones</option><option>Viajes largos de varias semanas</option><option>Vivir o teletrabajar en ella</option><option>Invierno y nieve</option></select></div>
         </div>
         <!-- 5 DATOS -->
@@ -339,6 +352,7 @@ svg .body{fill:var(--surface);stroke:var(--draw)}
           <h2>Resumen y datos de facturación</h2>
           <p class="lead">Revisa tu configuración. Con estos datos preparamos el presupuesto y la factura.</p>
           <dl class="summary" id="summary"></dl>
+          <div id="hoja-taller"></div>
           <fieldset><legend>Facturar a</legend>
             <div class="opts">
               <div class="opt"><input type="radio" name="tipoCliente" id="tc-p" value="Particular" checked><label for="tc-p"><b>Particular</b></label></div>
@@ -478,7 +492,6 @@ var COMEDORES = [
 var FUEGOS = [
   {id:"gas2", n:"Gas, 2 fuegos", img:"cocina-crafter-gas-nevera"},
   {id:"gas3", n:"Gas, 3 fuegos", img:"cocina-tres-fuegos-gas"},
-  {id:"gashorno", n:"Gas con horno integrado", img:"cocina-horno-fuegos-tapa-madera"},
   {id:"electrica", n:"Placa eléctrica de cristal", d:"Pide más batería", img:"cocina-placa-escamas-verde"},
   {id:"ninguno", n:"Sin fuegos"}
 ];
@@ -514,36 +527,60 @@ var PACK_ESTANDAR = [ // beta: confirmar con el electricista
   "Enchufe de 230 V y tomas USB", "Toma exterior de 230 V para camping"
 ];
 var EXTRAS = [
-  {g:"elec", id:"bat100", n:"100 Ah más de batería", d:"Para placa eléctrica o vivir en ella"},
-  {g:"elec", id:"solar200", n:"Segunda placa solar 200 W"},
-  {g:"elec", id:"inv2000", n:"Inversor de 2.000 W", d:"Secador, cafetera, placa eléctrica"},
-  {g:"elec", id:"cargador230", n:"Cargador de 230 V", d:"Carga rápida en camping"},
-  {g:"elec", id:"monitor", n:"Monitor de batería con app"},
-  {g:"elec", id:"calefaccion", n:"Calefacción diésel 2 kW"},
-  {g:"elec", id:"aguacaliente", n:"Agua caliente", d:"Calentador para ducha y fregadero"},
-  {g:"elec", id:"claraboya", n:"Claraboya con extractor"},
-  {g:"elec", id:"ventanas", n:"Ventanas laterales abatibles"},
+  {g:"ventanas", id:"ventanas", n:"Ventanas laterales", d:"Abatibles, con mosquitera y oscurecedor"},
+  {g:"ventanas", id:"ventanaTrasera", n:"Ventanas en las puertas traseras"},
+  {g:"ventanas", id:"clarDel", n:"Claraboya delante", img:"techo-friso-pino-claraboya"},
+  {g:"ventanas", id:"clarTras", n:"Claraboya detrás", d:"Sobre la cama", img:"techo-pino-flexos-lectura"},
+  {g:"ventanas", id:"clarBano", n:"Claraboya en el baño", img:"ducha-claraboya-grifo-negro"},
+  {g:"confort", id:"calefaccion", n:"Calefacción", d:"Diésel, para invierno"},
+  {g:"confort", id:"aire", n:"Aire acondicionado"},
+  {g:"confort", id:"aguacaliente", n:"Agua caliente", d:"Para la ducha y el fregadero"},
+  {g:"confort", id:"horno", n:"Horno", img:"cocina-horno-fuegos-tapa-madera"},
+  {g:"confort", id:"tv", n:"Televisión", d:"En brazo extensible", img:"dinette-tv-friso-blanco"},
+  {g:"exterior", id:"escalon", n:"Escalón de acceso", img:"camper-boxer-escalon-toldo"},
+  {g:"exterior", id:"toldo", n:"Toldo"},
+  {g:"exterior", id:"techoElev", n:"Techo elevable", d:"Más altura y otra cama arriba"},
+  {g:"exterior", id:"ruedas", n:"Ruedas todoterreno", d:"Con llantas negras", img:"camper-ducato-gris-ruedas-todoterreno"},
+  {g:"energia", id:"bat100", n:"Más batería", d:"Para viajes largos o vivir en ella"},
+  {g:"energia", id:"solar200", n:"Más placas solares"},
+  {g:"energia", id:"inv2000", n:"Inversor más potente", d:"Para secador, cafetera o placa eléctrica"},
+  {g:"energia", id:"cargador230", n:"Cargador de enchufe", d:"Carga rápida en camping"},
+  {g:"energia", id:"enchufes", n:"Más enchufes"},
   {g:"luz", id:"ledArmarios", n:"Tiras LED bajo los armarios", img:"techo-lamas-madera-tapizado-turquesa"},
-  {g:"luz", id:"focos", n:"Focos empotrados en el techo", img:"techo-friso-pino-claraboya"},
+  {g:"luz", id:"focos", n:"Focos en el techo", img:"techo-friso-pino-claraboya"},
   {g:"luz", id:"flexos", n:"Flexos de lectura en la cama", img:"techo-pino-flexos-lectura"},
-  {g:"pers", id:"tv", n:"Televisión en brazo extensible", img:"dinette-tv-friso-blanco"},
-  {g:"pers", id:"nombre", n:"Nombre de la camper rotulado", img:"rotulo-personalizado-camper"},
-  {g:"pers", id:"mesaIlustrada", n:"Mesa ilustrada", img:"mesa-ilustrada-asientos-giratorios"},
-  {g:"pers", id:"escalon", n:"Escalón de acceso", img:"camper-boxer-escalon-toldo"},
-  {g:"pers", id:"ruedas", n:"Ruedas todoterreno y llantas negras", img:"camper-ducato-gris-ruedas-todoterreno"}
+  {g:"luz", id:"nombre", n:"Nombre de la camper rotulado", img:"rotulo-personalizado-camper"},
+  {g:"luz", id:"mesaIlustrada", n:"Mesa ilustrada", img:"mesa-ilustrada-asientos-giratorios"},
+  {g:"luz", id:"monitor", n:"Monitor de batería con app"}
 ];
+// Lo que pone el taller por defecto en la hoja de trabajo cuando el cliente no lo elige
+var TALLER_DEF = {
+  bateriaAh:200, bateriaExtraAh:100, solarW:200, solarExtraW:200, booster:"Cargador batería-batería 30 A",
+  inversorW:1000, inversorExtraW:2000, tomas:"1 enchufe 230 V, 2 USB, 1 toma 12 V y toma exterior 230 V para camping",
+  luces:"Iluminación LED regulable", aguaLimpiaL:100, aguaSuciaL:70, puertasFurgo:"Mismo panelado que las paredes",
+  wcCassette:"WC de cassette", wcPortatil:"WC portátil", fregadero:"Fregadero de acero inoxidable"
+};
 
 /* ============================================================
    ESTADO Y UTILIDADES
    ============================================================ */
 var S = {view:"ext", side:"A", step:0, pos:{}}; // pos: muebles colocados a mano en el plano {k:{side,x}}
-var SIMPLE = !!window.MODO_SIMPLE; // versión corta: solo furgo, paredes, suelo, techo, muebles y datos
+var MODO = window.MODO || "cliente";   // cliente (por defecto) · acabados (versión corta) · taller (completo, con plano editable)
+var CLIENTE = MODO==="cliente", SIMPLE = MODO==="acabados", TALLER = MODO==="taller";
+document.documentElement.classList.add("m-"+MODO);
 var STEPS = SIMPLE ? [
   {n:"Furgoneta", w:0, view:"ext"},
-  {n:"Paredes", w:2, subs:["paredes"], view:"int", h:"Paredes", lead:"Elige el panelado de las paredes. Las muestras reales las ves y tocas en el taller."},
-  {n:"Suelo", w:2, subs:["suelo"], view:"int", h:"Suelo", lead:"Elige el suelo de tu camper."},
-  {n:"Techo", w:2, subs:["techo"], view:"int", h:"Techo", lead:"Elige el techo. Puede ser de bambú o del mismo panelado que las paredes."},
-  {n:"Muebles", w:2, subs:["cuerpo","puertas"], view:"int", h:"Muebles", lead:"Puedes combinar un color para la estructura y otro para las puertas."},
+  {n:"Paredes", subs:["paredes"], view:"int", h:"Paredes", lead:"Elige el panelado de las paredes. Las muestras reales las ves y tocas en el taller."},
+  {n:"Suelo", subs:["suelo"], view:"int", h:"Suelo", lead:"Elige el suelo de tu camper."},
+  {n:"Techo", subs:["techo"], view:"int", h:"Techo", lead:"Elige el techo. Puede ser de bambú o del mismo panelado que las paredes."},
+  {n:"Muebles", subs:["cuerpo","puertas"], view:"int", h:"Muebles", lead:"Puedes combinar un color para la estructura y otro para las puertas."},
+  {n:"Tus datos", w:4}
+] : CLIENTE ? [
+  {n:"Tu furgo", w:0, view:"ext"},
+  {n:"Viaje y cama", subs:["plazas","cama","banoTipo"], view:"int", h:"¿Cómo vais a viajar y dormir?", lead:"Elige lo que más se parezca a lo que quieres. Los detalles los vemos juntos en el taller."},
+  {n:"Estilo", subs:["estilo","colores","paredes","techo","suelo","cuerpo","puertas"], view:"int", h:"Elige un estilo", lead:"Toca el que más te guste. Si quieres, abajo puedes cambiar los colores uno a uno."},
+  {n:"Cocina", subs:["fuegos","nevera","encimera","salpicadero"], view:"int", h:"Tu cocina", lead:"Solo lo básico. Grifo, fregadero y medidas los ajustamos en el taller."},
+  {n:"Extras", subs:["pack","ex-ventanas","ex-confort","ex-exterior","ex-energia","prioridades"], view:"ext", h:"¿Quieres algún extra?", lead:"Marca lo que te interese. Si no lo tienes claro, déjalo: lo hablamos."},
   {n:"Tus datos", w:4}
 ] : [
   {n:"Furgoneta", w:0, view:"ext"}, {n:"Distribución", w:1, view:"plan"}, {n:"Acabados", w:2, view:"int"}, {n:"Extras", w:3, view:"int"}, {n:"Tus datos", w:4}
@@ -575,7 +612,8 @@ function cardsHTML(type, name, items, checkedId, opts){
   return items.map(function(it){
     var id = (type==="checkbox" ? name+it.id : name+"-"+it.id), nm = type==="checkbox" ? name+it.id : name;
     var body = opts.photo ? photo(it) : "";
-    if(opts.swatch) body += '<span class="sw"><i style="background:'+swatchCss(it)+'"></i><span><b>'+esc(it.n)+'</b>'+(it.cod?'<small>'+esc(it.cod)+'</small>':'')+'</span></span>';
+    if(opts.thumb) body += '<span class="sw">'+(it.img?'<i class="th" style="background-image:url(img/op/'+it.img+'.webp)"></i>':'')+'<span><b>'+esc(it.n)+'</b>'+(it.d?'<small>'+esc(it.d)+'</small>':'')+'</span></span>';
+    else if(opts.swatch) body += '<span class="sw"><i style="background:'+swatchCss(it)+'"></i><span><b>'+esc(it.n)+'</b>'+(it.cod?'<small>'+esc(it.cod)+'</small>':'')+'</span></span>';
     else body += '<b>'+esc(it.n)+'</b>'+(it.d?'<span>'+esc(it.d)+'</span>':'');
     return '<div class="opt" data-id="'+it.id+'"><input type="'+type+'" name="'+nm+'" id="'+id+'" value="'+it.id+'"'+(it.id===checkedId?" checked":"")+'><label for="'+id+'">'+body+'</label></div>';
   }).join("");
@@ -608,8 +646,23 @@ radios("opts-tapiceria","tapiceria", TAPICERIA.map(function(t){return {id:t[0], 
 document.querySelectorAll("#opts-tapiceria label").forEach(function(l,i){ l.innerHTML = '<i class="dot" style="background:'+TAPICERIA[i][1]+'"></i>'+esc(TAPICERIA[i][0]); });
 Object.keys(OPCIONES).forEach(function(k){ $(k).innerHTML = OPCIONES[k].map(function(o){return "<option>"+esc(o)+"</option>"}).join(""); });
 $("std-list").innerHTML = PACK_ESTANDAR.map(function(t){return "<li>"+esc(t)+"</li>"}).join("");
-$("extras-elec").innerHTML = EXTRAS.filter(function(e){return e.g==="elec"}).map(function(e){return '<label class="check"><input type="checkbox" name="ex-'+e.id+'" id="ex-'+e.id+'"><span>'+esc(e.n)+(e.d?"<small>"+esc(e.d)+"</small>":"")+'</span></label>'}).join("");
-["luz","pers"].forEach(function(g){ $("extras-"+g).innerHTML = cardsHTML("checkbox","ex-", EXTRAS.filter(function(e){return e.g===g}), null, {photo:true}); });
+["ventanas","confort","exterior","energia","luz"].forEach(function(g){ $("extras-"+g).innerHTML = cardsHTML("checkbox","ex-", EXTRAS.filter(function(e){return e.g===g}), null, {thumb:true}); });
+
+/* ---------- pasos: en cliente y acabados se montan juntando secciones ---------- */
+if(CLIENTE){
+  var det = document.createElement("details"); det.className = "colores"; det.dataset.sub = "colores";
+  det.innerHTML = "<summary>Prefiero elegir los colores uno a uno</summary>";
+  var est = document.querySelector('[data-sub="estilo"]'); est.parentNode.insertBefore(det, est.nextSibling);
+  ["paredes","techo","suelo","cuerpo","puertas"].forEach(function(s){ det.appendChild(document.querySelector('[data-sub="'+s+'"]')); });
+}
+STEPS.forEach(function(st, i){
+  if(st.w!==undefined) return;
+  var d = document.createElement("div"); d.dataset.step = "s"+i; d.hidden = true;
+  d.innerHTML = "<h2></h2><p class='lead'></p>"; d.querySelector("h2").textContent = st.h; d.querySelector(".lead").textContent = st.lead;
+  st.subs.forEach(function(s){ var el = document.querySelector('[data-sub="'+s+'"]'); if(el && !d.contains(el)) d.appendChild(el); });
+  form.insertBefore(d, form.querySelector('[data-step="4"]'));
+  st.w = "s"+i;
+});
 
 /* ============================================================
    DISTRIBUCIÓN: coloca muebles y comprueba si cabe (mm)
@@ -644,7 +697,7 @@ function layoutFor(L){
   if(bano==="wc") put(otro,"wc",500,500,900);
   if(val("armario")){ var la = end.A-Math.max(cur.A,PUERTA), lb = end.B-cur.B; var sd = la>=lb?"A":"B"; if(sd==="A") cur.A=Math.max(cur.A,PUERTA); put(sd,"armario",550,550,9999); }
   var over = {A: cur.A-end.A, B: cur.B-end.B};
-  var manual = Object.keys(S.pos).length>0 && !SIMPLE, bad = {}, choques = [];
+  var manual = Object.keys(S.pos).length>0 && TALLER, bad = {}, choques = [];
   if(manual){
     items.forEach(function(it){ var o = S.pos[it.k]; if(o && it.side!=="full"){ it.side = o.side; it.x = Math.max(0, Math.min(Lc-it.len, o.x)); } });
     var libre = function(a,b){ return (a.k==="mesa"&&b.k==="banco")||(a.k==="banco"&&b.k==="mesa"); };
@@ -704,7 +757,10 @@ function drawExterior(){
     + '<path d="'+win+'" fill="var(--glass)"/>'
     + '<rect x="'+doorX+'" y="'+(top+18)+'" width="'+doorW+'" height="'+(g-52-top-18)+'" fill="none" stroke="'+edge+'" stroke-opacity=".55" stroke-dasharray="4 3"/>'
     + (val("ex-ventanas")? '<rect x="'+(doorX+14)+'" y="'+(top+28)+'" width="'+(doorW-28)+'" height="42" rx="6" fill="var(--glass)"/><rect x="'+(x0+len-150)+'" y="'+(top+28)+'" width="90" height="42" rx="6" fill="var(--glass)"/>' : '')
-    + (val("ex-claraboya")? '<rect x="'+(x0+len*0.55)+'" y="'+(top-7)+'" width="44" height="7" rx="2" fill="var(--glass)"/>' : '')
+    + [["ex-clarDel",0.3],["ex-clarBano",0.52],["ex-clarTras",0.82]].map(function(c){ return val(c[0]) ? '<rect x="'+(x0+len*c[1])+'" y="'+(top-7)+'" width="36" height="7" rx="2" fill="var(--glass)"/>' : ''; }).join("")
+    + (val("ex-aire")? '<rect x="'+(x0+len*0.62)+'" y="'+(top-16)+'" width="56" height="16" rx="3" fill="#E9EBEA" stroke="'+edge+'"/>' : '')
+    + (val("ex-techoElev")? '<path d="M'+(x0+150)+' '+top+'L'+(x0+160)+' '+(top-30)+'H'+(x0+len*0.72)+'L'+(x0+len*0.74)+' '+top+'" fill="#F4F4F2" stroke="'+edge+'" stroke-dasharray="4 3"/>' : '')
+    + (val("ex-toldo")? '<rect x="'+(x0+160)+'" y="'+(top+4)+'" width="'+(len*0.5)+'" height="9" rx="3" fill="#4B5052"/>' : '')
     + '<rect x="'+(x0+len*0.25)+'" y="'+(top-4)+'" width="'+(val("ex-solar200")?140:70)+'" height="4" fill="#1D2B3A"/>'
     + (val("ex-escalon")? '<rect x="'+(doorX+20)+'" y="'+(g-40)+'" width="70" height="5" rx="2" fill="#2B2F31"/>' : '')
     + (val("ex-nombre")? '<text x="'+(x0+len*0.62)+'" y="'+(g-90)+'" text-anchor="middle" style="font:italic 700 15px var(--f-display);fill:#2B3431">'+esc(((val("nombre")||"").split(" ")[0]||"Mi camper"))+'</text>' : '')
@@ -746,7 +802,7 @@ function drawPlan(){
   function mesa(x,y,w,h,abat){ return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4" fill="'+top+'" stroke="var(--draw)"'+(abat?' stroke-dasharray="3 2"':'')+'/>'; }
   function txt(x,y,t,cls){ return '<text x="'+x+'" y="'+y+'" text-anchor="middle" dominant-baseline="middle" class="lbl" style="fill:var(--ink)">'+t+'</text>'; }
   function colchon(x,y,w,h){ return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="6" fill="'+tap+'" opacity=".6" stroke="var(--draw-soft)"/><rect x="'+(x+w-26)+'" y="'+(y+10)+'" width="18" height="'+(h/2-16)+'" rx="5" fill="#FBF8F2" stroke="#B9AE9C"/><rect x="'+(x+w-26)+'" y="'+(y+h/2+6)+'" width="18" height="'+(h/2-16)+'" rx="5" fill="#FBF8F2" stroke="#B9AE9C"/>'; }
-  var alt = val("altillos"), editable = !SIMPLE;
+  var alt = val("altillos"), editable = TALLER;
   lay.items.forEach(function(it){
     var mov = editable && it.side!=="full";
     svg += '<g data-k="'+it.k+'"'+(mov?' class="drag" tabindex="0" role="button" aria-label="'+esc(nombreItem(it))+': arrastra o usa las flechas para moverlo"':'')+'>';
@@ -885,7 +941,7 @@ function drawInterior(){
       svg += panelBox(x, floorY-86, w, 86) + '<rect x="'+(x-2)+'" y="'+(floorY-90)+'" width="'+(w+4)+'" height="5" fill="'+top+'" stroke="var(--draw)" stroke-width=".6"/>';
       var gc = {"Negra":"#1C1C1C","Dorada":"#C9A24A","De color":"#2D7D8A"}[val("griferia")]||"#555";
       if(val("fregadero") && !val("tapaFregadero")) svg += '<path d="M'+(x+16)+' '+(floorY-90)+'v-14h8" stroke="'+gc+'" stroke-width="2.4" fill="none"/>';
-      if(val("fuegos")==="gashorno") svg += '<rect x="'+(x+w-50)+'" y="'+(floorY-80)+'" width="44" height="34" fill="#222" stroke="var(--draw)"/>';
+      if(val("ex-horno")) svg += '<rect x="'+(x+w-50)+'" y="'+(floorY-80)+'" width="44" height="34" fill="#222" stroke="var(--draw)"/>';
     } else if(it.k==="bano"){
       var bp = val("banoPuerta");
       svg += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+(floorY-y)+'" fill="'+body+'" stroke="var(--draw)"/>'
@@ -901,7 +957,7 @@ function drawInterior(){
   });
   if(val("ex-tv") && side==="B") svg += '<rect x="'+(X0+Lc*0.45)+'" y="'+(ceilY+50)+'" width="60" height="36" rx="2" fill="#15181B"/><path d="M'+(X0+Lc*0.45+30)+' '+(ceilY+50)+'v-10" stroke="#555" stroke-width="3"/>';
   if(val("ex-ventanas") && side==="B") svg += '<rect x="'+(X0+Lc*0.2)+'" y="'+(ceilY+46)+'" width="80" height="38" rx="6" fill="var(--glass)" opacity=".8"/>';
-  svg += '<text x="'+X0+'" y="16" class="dim">'+(side==="A"?"pared del lado de la puerta":"pared del lado del conductor")+(SIMPLE?' · distribución de ejemplo':'')+' · alto interior '+Hi.toLocaleString("es-ES")+' mm</text></svg>';
+  svg += '<text x="'+X0+'" y="16" class="dim">'+(side==="A"?"pared del lado de la puerta":"pared del lado del conductor")+(!TALLER?' · distribución de ejemplo':'')+' · alto interior '+Hi.toLocaleString("es-ES")+' mm</text></svg>';
   return svg;
 }
 
@@ -909,6 +965,7 @@ function drawInterior(){
    RENDER
    ============================================================ */
 function renderPreview(){
+  if(!TALLER && S.view==="plan") S.view = "int"; // el plano solo lo ve el taller
   $("view").innerHTML = S.view==="ext" ? drawExterior() : S.view==="plan" ? drawPlan() : drawInterior();
   document.querySelectorAll(".tabs button").forEach(function(b){ b.setAttribute("aria-selected", b.dataset.view===S.view ? "true":"false"); });
   $("sidebtns").hidden = S.view!=="int";
@@ -917,7 +974,8 @@ function renderPreview(){
   $("dims").innerHTML = '<span>Furgo <b>'+L+H+'</b></span><span>Carga <b>'+lay.Lc.toLocaleString("es-ES")+'</b> mm</span><span>Ancho <b>'+lay.W.toLocaleString("es-ES")+'</b> mm</span><span>Alto interior <b>'+M.alto[H].int.toLocaleString("es-ES")+'</b> mm</span>';
   var al = lay.warn.slice();
   if(SIMPLE){ $("alerts").innerHTML = ""; return; }
-  if(lay.manual && !lay.fits){
+  if(!TALLER){ /* el cliente no ve avisos de espacio: lo resuelve el taller */ }
+  else if(lay.manual && !lay.fits){
     al.push("Hay muebles que se solapan: "+lay.choques.slice(0,3).join("; ")+". Muévelos hasta que no salgan en rojo.");
   } else if(!lay.fits){
     var rec = recommendL(), falta = Math.max(lay.over.A, lay.over.B);
@@ -936,12 +994,10 @@ function renderSteps(){
   $("steps").innerHTML = STEPS.map(function(x){return x.n}).map(function(n,i){
     return '<li><button type="button" data-go="'+i+'" class="'+(i<S.step?"done":"")+'"'+(i===S.step?' aria-current="step"':'')+'><span class="n">'+(i+1)+'</span>'+n+'</button></li>';
   }).join("");
-  document.querySelectorAll("[data-step]").forEach(function(d){ d.hidden = +d.dataset.step!==st.w; });
+  document.querySelectorAll("[data-step]").forEach(function(d){ d.hidden = String(d.dataset.step)!==String(st.w); });
   var wrap = document.querySelector('[data-step="'+st.w+'"]');
-  wrap.querySelectorAll("[data-sub]").forEach(function(s){ s.hidden = st.subs ? st.subs.indexOf(s.dataset.sub)<0 : false; });
-  if(st.h){ wrap.querySelector("h2").textContent = st.h; wrap.querySelector(".lead").textContent = st.lead||""; }
-  if(st.subs) wrap.querySelectorAll("[data-sub] > legend").forEach(function(l){ l.hidden = st.subs.length===1; });
-  if(!st.subs && st.w===2) renderVisibility();
+  wrap.querySelectorAll("[data-sub] > legend").forEach(function(l){ l.hidden = !!st.subs && st.subs.length===1; });
+  renderVisibility();
   $("prev").style.visibility = S.step===0 ? "hidden" : "visible";
   $("next").textContent = S.step===LAST ? "Enviar mi configuración" : "Siguiente";
   if(S.step===LAST) renderSummary();
@@ -954,15 +1010,15 @@ function showOnly(container, ok){ // oculta las tarjetas que no aplican y marca 
 function renderVisibility(){
   var tiene = val("tiene")==="si";
   $("f-anio").hidden = !tiene; $("f-buscar").hidden = tiene;
-  var nc = +val("numCamas");
-  showOnly("opts-cama", function(id){ return find(CAMAS,id).g===nc; });
+  if(CLIENTE) marcar(find(CAMAS,val("cama")).g===2 ? "nc-2" : "nc-1");
+  else { var nc = +val("numCamas"); showOnly("opts-cama", function(id){ return find(CAMAS,id).g===nc; }); }
   var p = val("plazas");
   showOnly("opts-comedor", function(id){ var c=find(COMEDORES,id); return !c.p || c.p===p; });
   $("fs-salon").hidden = val("cama")!=="fijaSalon";
   $("fs-garaje").hidden = val("cama")!=="fijaAlta";
   $("lbl-abatible").hidden = !/gir/.test(val("comedor"));
   $("fs-banopos").hidden = val("bano")!=="completo";
-  $("fs-bano-acab").hidden = val("bano")!=="completo" || !!STEPS[S.step].subs;
+  $("fs-bano-acab").hidden = val("bano")!=="completo";
   var emp = val("tipoCliente")==="Empresa";
   $("lbl-nombre").textContent = emp ? "Razón social" : "Nombre y apellidos";
   $("lbl-nif").textContent = emp ? "CIF / NIF" : "DNI / NIE";
@@ -999,6 +1055,9 @@ function txtColocacion(){
   }).join("; ")];
 }
 function txtAcabados(){
+  if(CLIENTE){ var e = ESTILOS.find(function(x){return x.id===val("estilo")});
+    return ["Estilo: "+(e?e.n:"a su gusto"), "Paredes: "+matName("paredes",val("paredes")), "Techo: "+matName("techo",val("techo")), "Suelo: "+matName("suelo",val("suelo")),
+      "Muebles estructura: "+matName("cuerpo",val("cuerpo")), "Muebles puertas: "+matName("puertas",val("puertas")), "Encimera: "+matName("encimera",val("encimera")), "Frontal cocina: "+find(SALPICADERO,val("salpicadero")).n]; }
   if(SIMPLE) return ["Paredes: "+matName("paredes",val("paredes")), "Techo: "+matName("techo",val("techo")), "Suelo: "+matName("suelo",val("suelo")),
     "Muebles estructura: "+matName("cuerpo",val("cuerpo")), "Muebles puertas: "+matName("puertas",val("puertas"))];
   var e = ESTILOS.find(function(x){return x.id===val("estilo")});
@@ -1022,11 +1081,127 @@ function txtElectrico(){
   return ["Pack estándar"].concat(ex.length? ["Extras: "+ex.join(", ")] : ["Sin extras"]).concat(["Uso: "+val("usoElec")]);
 }
 function txtAvisos(){ return Array.prototype.map.call($("alerts").querySelectorAll(".alert"), function(a){return a.textContent}); }
+/* ---------- hoja de trabajo para el taller ----------
+   Cada fila: [etiqueta, valor, estado]
+   estado: "cliente" (lo eligió el cliente) · "defecto" (valor del taller, confirmar) · "taller" (por definir en el taller) */
+var PREGUNTA = {
+  cliente: ["plazas","cama","banoTipo","estilo","paredes","techo","suelo","cuerpo","puertas","fuegos","nevera","encimera","salpicadero","extras"],
+  acabados: ["paredes","techo","suelo","cuerpo","puertas"],
+  taller: ["plazas","cama","banoTipo","estilo","paredes","techo","suelo","cuerpo","puertas","fuegos","nevera","encimera","salpicadero","extras","tiradores","griferia","banoRevest","banoPuerta","fregadero","agua"]
+};
+function preguntado(campo){ return PREGUNTA[MODO].indexOf(campo)>=0; }
+function sino(b){ return b ? "Sí" : "No"; }
+function mm(n){ return Math.round(n).toLocaleString("es-ES"); }
+function medidaCama(){
+  var W = modelo().ancho - 40, c = val("cama");
+  var t = {
+    fijaSalon: val("salon")==="bancos" ? "Dos bancos laterales que se hacen cama · aprox. 1900 × "+mm(W)+" mm" : "Sofás en U que se hacen cama · aprox. "+mm(W)+" × 1500 mm",
+    fijaAlta: "Fija alta transversal con garaje · aprox. "+mm(W)+" × 1400 mm"+(val("rampa")?" · rampa":"")+(val("cajon")?" · cajón extraíble":""),
+    elevable: "Elevable eléctrica sobre dinette · aprox. "+mm(W)+" × 1400 mm",
+    dosFijas: "Dos camas fijas en litera transversal · aprox. "+mm(W)+" × 1400 mm cada una",
+    dosDesm: "Dos camas desmontables en litera transversal · aprox. "+mm(W)+" × 1400 mm cada una",
+    dosElec: "Elevable eléctrica arriba + cama inferior con sofás · aprox. "+mm(W)+" × 1400 mm cada una"
+  }[c];
+  return t + " (medir en la furgo)";
+}
+function hojaTrabajo(){
+  var distrib = !SIMPLE;
+  function f(etiqueta, valor, campo){
+    if(campo===null || valor==="" || valor===null) return [etiqueta, "", "taller"];
+    return [etiqueta, valor, preguntado(campo) ? "cliente" : "defecto"];
+  }
+  function ex(id){ return val("ex-"+id); }
+  var extrasPreg = preguntado("extras");
+  function fx(etiqueta, id){ return extrasPreg ? [etiqueta, sino(ex(id)), "cliente"] : [etiqueta, "", "taller"]; }
+  var bano = val("bano"), nev = {pequena:"40–50 L", mediana:"70–90 L", grande:"130 L o más"}[val("nevera")];
+  var secciones = [
+    {t:"Techo", rows:[f("Tipo y color", matName("techo",val("techo")), "techo")]},
+    {t:"Paredes", rows:[f("Tipo y color", matName("paredes",val("paredes")), "paredes")]},
+    {t:"Puertas trasera y lateral", rows:[f("Tipo y color", TALLER_DEF.puertasFurgo+" ("+mat("paredes",val("paredes")).n+")", "puertasFurgo")]},
+    {t:"Mobiliario", rows:[
+      f("1. Color cascos", matName("cuerpo",val("cuerpo")), "cuerpo"),
+      f("2. Color puertas", matName("puertas",val("puertas")), "puertas"),
+      distrib ? [ "3. Medida y forma de la cama", medidaCama(), preguntado("cama") ? "defecto" : "defecto"] : ["3. Medida y forma de la cama","","taller"],
+      f("4. Tiradores", val("tiradores"), "tiradores"),
+      f("5. Perfiles de aluminio (si lleva y color)", "", null),
+      f("6. Canteado (si lleva y color)", "", null),
+      distrib ? f("7. Encimera de la cocina", matName("encimera",val("encimera")), "encimera") : ["7. Encimera de la cocina","","taller"],
+      distrib ? f("8. Azulejos cocina", find(SALPICADERO,val("salpicadero")).n, "salpicadero") : ["8. Azulejos cocina","","taller"]
+    ]},
+    {t:"Cocina · electrodomésticos", rows: distrib ? [
+      f("Nevera: litros", "Compresor, "+nev, "nevera"),
+      f("Nevera: medidas y marca", "", null),
+      f("Grifo: color", val("griferia"), "griferia"),
+      f("Fregadero: tipo", val("fregadero") ? TALLER_DEF.fregadero+(val("tapaFregadero")?", oculto bajo tapa":"") : "Sin fregadero", "fregadero"),
+      f("Placa de cocina", find(FUEGOS,val("fuegos")).n, "fuegos")
+    ] : [["Nevera","","taller"],["Grifo","","taller"],["Fregadero","","taller"],["Placa de cocina","","taller"]]},
+    {t:"Baño", rows: !distrib ? [["Baño","","taller"]] : bano==="no" ? [f("Baño", "Sin baño", "banoTipo")] : bano==="wc" ? [
+      f("Baño", "WC en un mueble, sin ducha", "banoTipo"), f("3. Modelo WC", TALLER_DEF.wcPortatil+" · modelo por confirmar", "wc")
+    ] : [
+      f("1. Azulejos o paneles", find(BANO_REVEST,val("banoRevest")).n, "banoRevest"),
+      f("2. Grifería", val("griferia"), "griferia"),
+      f("3. Modelo WC", TALLER_DEF.wcCassette+" · modelo por confirmar", "wc"),
+      f("Puerta", find(BANO_PUERTA,val("banoPuerta")).n, "banoPuerta")
+    ]},
+    {t:"Electrónica", rows:[
+      ["1. Baterías", (TALLER_DEF.bateriaAh + (ex("bat100")?TALLER_DEF.bateriaExtraAh:0))+" Ah litio LiFePO4", "defecto"],
+      ["2. Placa solar", (TALLER_DEF.solarW + (ex("solar200")?TALLER_DEF.solarExtraW:0))+" W", "defecto"],
+      ["3. Booster", TALLER_DEF.booster, "defecto"],
+      ["4. Inversor", (ex("inv2000")?TALLER_DEF.inversorExtraW:TALLER_DEF.inversorW).toLocaleString("es-ES")+" W onda pura", "defecto"],
+      ["5. Cargador", ex("cargador230") ? "Cargador de 230 V" : "No lleva", "defecto"],
+      ["6. Tomas 220 V y 12 V", TALLER_DEF.tomas+(ex("enchufes")?" + enchufes extra (cuántos y dónde: por definir)":""), "defecto"],
+      ["7. Luces", TALLER_DEF.luces+[["focos","focos en el techo"],["ledArmarios","tiras LED bajo armarios"],["flexos","flexos de lectura"]].filter(function(l){return ex(l[0])}).map(function(l){return " + "+l[1]}).join(""), "defecto"]
+    ]},
+    {t:"Depósitos de agua", rows:[
+      f("Aguas limpias", (TALLER ? val("agua") : TALLER_DEF.aguaLimpiaL)+" L", "agua"),
+      ["Aguas sucias", TALLER_DEF.aguaSuciaL+" L", "defecto"]
+    ]},
+    {t:"Ventanas", rows:[
+      fx("Ventanas laterales", "ventanas"),
+      ex("ventanas") ? ["Ventanas laterales: lugar y medidas", "", "taller"] : null,
+      fx("Ventanas traseras (extra)", "ventanaTrasera"),
+      ["Ventanas extras", "", "taller"]
+    ].filter(Boolean)},
+    {t:"Claraboyas", rows:[fx("Delante", "clarDel"), fx("Detrás", "clarTras"), fx("En el baño", "clarBano")]},
+    {t:"Otros extras", rows:[fx("Horno","horno"), fx("Aire acondicionado","aire"), fx("Escalón","escalon"), fx("Toldo","toldo"), fx("Techo elevable","techoElev"),
+      extrasPreg ? ["Otros", EXTRAS.filter(function(e){return ["calefaccion","aguacaliente","tv","ruedas","nombre","mesaIlustrada","monitor"].indexOf(e.id)>=0 && ex(e.id)}).map(function(e){return e.n}).join(", ")||"Ninguno", "cliente"] : ["Otros","","taller"]]}
+  ];
+  var notas = [val("prioridades"), val("notasAcabados")].filter(Boolean);
+  if(notas.length) secciones.push({t:"Notas del cliente", rows:[["Notas", notas.join(" · "), "cliente"]]});
+  if(TALLER && Object.keys(S.pos).length) secciones.push({t:"Colocación en el plano", rows:[["Posiciones", txtColocacion()[0].replace(/^[^:]+: /,""), "cliente"]]});
+  return secciones;
+}
+function hojaTexto(h){
+  return h.map(function(s){ return s.t.toUpperCase()+"\n"+s.rows.map(function(r){ return "- "+r[0]+": "+(r[2]==="taller" ? "POR DEFINIR" : r[1]+(r[2]==="defecto"?" (por defecto, confirmar)":"")); }).join("\n"); }).join("\n\n");
+}
+function hojaHTML(h){
+  return '<div class="hoja"><h3>Hoja de trabajo para el taller</h3><dl class="summary">'+h.map(function(s){
+    return "<div><dt>"+esc(s.t)+"</dt><dd>"+s.rows.map(function(r){ return esc(r[0])+": "+(r[2]==="taller" ? '<span class="pend">por definir</span>' : esc(r[1])+(r[2]==="defecto"?' <span class="def">(por defecto)</span>':"")); }).join("<br>")+"</dd></div>";
+  }).join("")+"</dl></div>";
+}
+function txtCliente(){
+  var c = find(CAMAS, val("cama"));
+  return {
+    viaje: [val("plazas")+" plazas para viajar", c.n, {no:"Sin baño", wc:"WC en un mueble", completo:"Baño cerrado con ducha"}[val("bano")]],
+    cocina: [find(FUEGOS,val("fuegos")).n, "Nevera "+{pequena:"pequeña (40–50 L)", mediana:"mediana (70–90 L)", grande:"grande (130 L o más)"}[val("nevera")], "Encimera: "+mat("encimera",val("encimera")).n, "Frontal: "+find(SALPICADERO,val("salpicadero")).n],
+    extras: EXTRAS.filter(function(e){return val("ex-"+e.id)}).map(function(e){return e.n})
+  };
+}
 function renderSummary(){
+  if(CLIENTE){
+    var c = txtCliente(), e = ESTILOS.find(function(x){return x.id===val("estilo")});
+    var rows = [["Tu furgo", esc(txtFurgo())], ["Viaje y cama", c.viaje.map(esc).join("<br>")],
+      ["Estilo", esc(e ? e.n : "A tu gusto")+"<br>"+["Paredes: "+mat("paredes",val("paredes")).n, "Techo: "+mat("techo",val("techo")).n, "Suelo: "+mat("suelo",val("suelo")).n, "Muebles: "+mat("cuerpo",val("cuerpo")).n+" con puertas "+mat("puertas",val("puertas")).n].map(esc).join("<br>")],
+      ["Cocina", c.cocina.map(esc).join("<br>")], ["Extras", esc(c.extras.join(", ")||"Ninguno")]];
+    if(val("prioridades")) rows.push(["Comentarios", esc(val("prioridades"))]);
+    $("summary").innerHTML = rows.map(function(r){return "<div><dt>"+r[0]+"</dt><dd>"+r[1]+"</dd></div>"}).join("");
+    return;
+  }
   if(SIMPLE){ $("summary").innerHTML = [["Furgoneta", esc(txtFurgo())], ["Acabados", txtAcabados().map(esc).join("<br>")]].map(function(r){return "<div><dt>"+r[0]+"</dt><dd>"+r[1]+"</dd></div>"}).join(""); return; }
   var rows = [["Furgoneta", esc(txtFurgo())], ["Distribución", txtDistribucion().map(esc).join("<br>")], ["Prioridades", esc(val("prioridades")||"—")], ["Acabados", txtAcabados().map(esc).join("<br>")], ["Extras", txtElectrico().map(esc).join("<br>")]];
   var av = txtAvisos(); if(av.length) rows.push(["Avisos", av.map(esc).join("<br>")]);
   $("summary").innerHTML = rows.map(function(r){return "<div><dt>"+r[0]+"</dt><dd>"+r[1]+"</dd></div>"}).join("");
+  $("hoja-taller").innerHTML = TALLER ? hojaHTML(hojaTrabajo()) : "";
 }
 /* ============================================================
    ENVÍO
@@ -1038,15 +1213,20 @@ function payload(ref){
     cliente: {tipo: val("tipoCliente"), nombre: val("nombre").trim(), nif: val("nif").trim(), email: val("email").trim(), telefono: val("telefono").trim(),
       direccion: val("direccion").trim()+", "+val("cp").trim()+" "+val("poblacion").trim()+(val("provincia")?" ("+val("provincia").trim()+")":"")},
     furgoneta: {tiene: val("tiene")==="si", texto: txtFurgo(), longitud: val("aconsejar")?"Aconsejadme":curL(), altura: val("aconsejar")?"Aconsejadme":curH()},
+    modo: MODO,
     plazas: SIMPLE ? null : val("plazas"),
-    distribucion: SIMPLE ? ["Configurador simplificado: distribución por definir con el taller"] : txtDistribucion(), prioridades: SIMPLE ? "" : (val("prioridades")||""),
-    acabados: txtAcabados(), electrico: SIMPLE ? [] : txtElectrico(), avisos: SIMPLE ? [] : txtAvisos()
+    distribucion: SIMPLE ? ["Configurador de acabados: distribución por definir con el taller"] : CLIENTE ? txtCliente().viaje.concat(txtCliente().cocina) : txtDistribucion(),
+    prioridades: SIMPLE ? "" : (val("prioridades")||""),
+    acabados: txtAcabados(), electrico: SIMPLE ? [] : CLIENTE ? (txtCliente().extras.length ? ["Extras: "+txtCliente().extras.join(", ")] : ["Sin extras"]) : txtElectrico(),
+    avisos: TALLER ? txtAvisos() : [],
+    hoja: hojaTrabajo()
   };
 }
 function textoPlano(p){
   return "Configuración "+p.referencia+"\n\nCLIENTE\n"+p.cliente.nombre+" · "+p.cliente.nif+"\n"+p.cliente.direccion+"\n"+p.cliente.email+" · "+p.cliente.telefono
     +"\n\nFURGONETA\n"+p.furgoneta.texto+"\n\nDISTRIBUCIÓN\n- "+p.distribucion.join("\n- ")+(p.prioridades?"\nPrioridades: "+p.prioridades:"")
-    +"\n\nACABADOS\n- "+p.acabados.join("\n- ")+(p.electrico.length?"\n\nELECTRICIDAD\n- "+p.electrico.join("\n- "):"")+(p.avisos.length?"\n\nAVISOS\n- "+p.avisos.join("\n- "):"");
+    +"\n\nACABADOS\n- "+p.acabados.join("\n- ")+(p.electrico.length?"\n\nELECTRICIDAD\n- "+p.electrico.join("\n- "):"")+(p.avisos.length?"\n\nAVISOS\n- "+p.avisos.join("\n- "):"")
+    +"\n\n==== HOJA DE TRABAJO ====\n\n"+hojaTexto(p.hoja);
 }
 function validar(){
   var req = ["nombre","nif","email","telefono","direccion","cp","poblacion"];
@@ -1093,7 +1273,7 @@ function svgPoint(e){ var svg = $("view").querySelector("svg"); var pt = svg.cre
 function itemOf(k){ return layoutFor(curL()).items.find(function(i){return i.k===k}); }
 function moveTo(k, side, x){ S.pos[k] = {side:side, x:Math.round(x/50)*50}; }
 $("view").addEventListener("pointerdown", function(e){
-  if(S.view!=="plan" || SIMPLE) return;
+  if(S.view!=="plan" || !TALLER) return;
   var g = e.target.closest("g.drag"); if(!g) return;
   var it = itemOf(g.dataset.k), pt = svgPoint(e);
   drag = {k:g.dataset.k, dx: pt.x - (PLAN.X0 + it.x*PLAN.s)};
@@ -1130,7 +1310,7 @@ var PALETA = [
   {k:"mesa", n:"Mesa", on:function(){return /gir/.test(val("comedor"))}, set:function(on){ marcar(on ? (val("plazas")==="4"?"comedor-girBanco":"comedor-gir") : "comedor-no"); }}
 ];
 function renderPaleta(){
-  var show = S.view==="plan" && !SIMPLE;
+  var show = S.view==="plan" && TALLER;
   $("editbar").hidden = !show; $("view").classList.toggle("editable", show);
   if(!show) return;
   $("paleta").innerHTML = PALETA.map(function(p){ return '<button type="button" data-k="'+p.k+'" aria-pressed="'+(p.on()?"true":"false")+'">'+p.n+'</button>'; }).join("");
@@ -1152,13 +1332,20 @@ form.addEventListener("change", function(e){
   if(n==="cocinaLado" && S.view==="int") S.side = e.target.value;
   if(["largo","alto","marca"].indexOf(n)>=0 && S.step===0) S.view="ext";
   if(["suelo","paredes","techo","cuerpo","puertas","encimera","estilo","tapiceria","salpicadero","tiradores","griferia","banoRevest","banoPuerta"].indexOf(n)>=0) S.view="int";
-  if(["ex-ruedas","ex-escalon","ex-nombre","ex-claraboya","ex-solar200"].indexOf(n)>=0) S.view="ext";
+  if(["ex-ruedas","ex-escalon","ex-nombre","ex-clarDel","ex-clarTras","ex-clarBano","ex-aire","ex-toldo","ex-techoElev","ex-solar200"].indexOf(n)>=0) S.view="ext";
   if(["cama","numCamas","salon","comedor","mesaAbatible","plazas","bano","banoPos","cocinaLado","nevera","altillos","armario","rampa","cajon","fuegos"].indexOf(n)>=0) S.view="plan";
   renderVisibility(); renderPreview(); if(S.step===LAST) renderSummary();
 });
 form.addEventListener("submit", function(e){ e.preventDefault(); });
+if(!TALLER) $("tab-plan").hidden = true;
+if(TALLER){
+  document.querySelector("header.top h1").textContent = "Configurador de taller";
+  document.querySelector("header.top p").textContent = "Versión completa para la reunión con el cliente: distribución en el plano y hoja de trabajo.";
+}
+if(CLIENTE){
+  document.querySelector("header.top p").textContent = "Seis pasos sencillos. Elige lo que más te guste: los detalles los vemos juntos en el taller.";
+}
 if(SIMPLE){
-  $("tab-plan").hidden = true;
   document.querySelector("header.top h1").textContent = "Elige los acabados de tu camper";
   document.querySelector("header.top p").textContent = "Tu furgo, paredes, suelo, techo y muebles. El dibujo cambia con cada elección.";
 }

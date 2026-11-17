@@ -37,15 +37,31 @@ function propiedades(p) {
 }
 
 function cuerpo(p) {
-  const h = (t) => ({ object: "block", type: "heading_3", heading_3: { rich_text: txt(t) } });
+  const h2 = (t) => ({ object: "block", type: "heading_2", heading_2: { rich_text: txt(t) } });
+  const h3 = (t) => ({ object: "block", type: "heading_3", heading_3: { rich_text: txt(t) } });
   const li = (t) => ({ object: "block", type: "bulleted_list_item", bulleted_list_item: { rich_text: txt(t) } });
-  const bloques = [h("Furgoneta"), li(p.furgoneta?.texto)];
-  bloques.push(h("Distribución"), ...(p.distribucion || []).map(li));
-  if (p.prioridades) bloques.push(li("Prioridades: " + p.prioridades));
-  bloques.push(h("Acabados"), ...(p.acabados || []).map(li));
-  bloques.push(h("Electricidad"), ...(p.electrico || []).map(li));
-  if ((p.avisos || []).length) bloques.push(h("Avisos del configurador"), ...p.avisos.map(li));
-  return bloques.slice(0, 90);
+  const todo = (t) => ({ object: "block", type: "to_do", to_do: { rich_text: txt(t), checked: false } });
+  const nota = (t) => ({ object: "block", type: "callout", callout: { rich_text: txt(t), icon: { type: "emoji", emoji: "🛠️" } } });
+  const bloques = [];
+  // Hoja de trabajo: lo elegido por el cliente en lista; lo que hay que confirmar o definir, como casilla
+  if (Array.isArray(p.hoja) && p.hoja.length) {
+    bloques.push(h2("Hoja de trabajo"));
+    bloques.push(nota("Las casillas son lo que el encargado debe confirmar o definir antes de comprar material. Márcalas al cerrarlas."));
+    for (const s of p.hoja) {
+      bloques.push(h3(s.t));
+      for (const [etiqueta, valor, estado] of s.rows || []) {
+        if (estado === "taller") bloques.push(todo(`${etiqueta}: POR DEFINIR`));
+        else if (estado === "defecto") bloques.push(todo(`${etiqueta}: ${valor} (por defecto, confirmar)`));
+        else bloques.push(li(`${etiqueta}: ${valor}`));
+      }
+    }
+  }
+  bloques.push(h2("Lo que eligió el cliente"));
+  bloques.push(h3("Furgoneta"), li(p.furgoneta?.texto));
+  for (const [titulo, lista] of [["Distribución", p.distribucion], ["Acabados", p.acabados], ["Extras", p.electrico], ["Avisos del configurador", p.avisos]]) {
+    if ((lista || []).length) bloques.push(h3(titulo), ...lista.map(li));
+  }
+  return bloques.slice(0, 100); // límite de Notion por petición
 }
 
 async function guardar(req, env) {

@@ -14,6 +14,26 @@ El dibujo tiene tres vistas: exterior (cambia con L/H y color), planta (dónde v
 
 Al enviar, se crea una ficha en Notion → **Configuraciones de clientes · Málaga**, en estado «Nueva».
 
+## Tres versiones (todas salen de `app.html`)
+
+| Página | Para quién | Qué pide |
+|---|---|---|
+| `index.html` | Clientes | 6 pasos sencillos: furgo, viaje y cama, estilo, cocina, extras y datos. Sin preguntas técnicas. |
+| `acabados.html` | Clientes que ya tienen la distribución hablada | Furgo, paredes, suelo, techo, muebles y datos. |
+| `taller.html` | El taller, en la reunión con el cliente | Todo: distribución con plano editable, acabados, extras y la hoja de trabajo en pantalla. |
+
+## Hoja de trabajo
+
+Cada envío crea en Notion una ficha con la **hoja de trabajo** para los trabajadores: techo, paredes, puertas de la furgo,
+mobiliario (cascos, puertas, cama, tiradores, perfiles de aluminio, canteado, encimera, azulejos), cocina, baño,
+electrónica, depósitos, ventanas, claraboyas y extras.
+
+- Lo que eligió el cliente sale como punto normal.
+- Lo que pone el taller por defecto (pack eléctrico, depósitos, tiradores…) sale como **casilla «por defecto, confirmar»**.
+- Lo que nadie ha decidido (perfiles de aluminio, canteado, marca de nevera, medidas de ventanas…) sale como **casilla «POR DEFINIR»**.
+
+Los valores por defecto del taller están en `TALLER_DEF`, dentro de `app.html`.
+
 ## Archivos
 
 - `app.html`: la página entera (HTML, CSS y JS). **El catálogo está arriba del `<script>`**: `MODELOS` (medidas por marca), `MATERIALES`, `ESTILOS`, `CAMAS`, `COMEDORES`, `FUEGOS`, `SALPICADERO`, `BANO_*`, `PACK_ESTANDAR`, `EXTRAS`. Para cambiar maderas, colores, fotos u opciones, editad ahí.
