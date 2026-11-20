@@ -122,7 +122,23 @@ MODELES = [
     dict(slug="partner", nom="Peugeot Partner et Partner Tepee", court="Partner", cat="mini", groupe="ludospace",
          anciens=[W + "partner/"], titre="Peugeot Partner et Tepee",
          mesures=M_LUDO + [("Générations", "1996-2008, 2008-2018 (Partner Tepee) et depuis 2018")],
-         videos=V_LUDO, variantes=[("partner", "Peugeot Partner / Partner Tepee", "mini")]),
+         videos=V_LUDO, variantes=[("partner", "Peugeot Partner / Partner Tepee", "mini")],
+         # Bloc propre à la fiche (France uniquement) : vise « aménagement peugeot partner », « amenagement partner »
+         amenager=("Aménager un Peugeot Partner ou Partner Tepee : ce qu'il faut savoir",
+                   "Le Partner, comme son cousin le Berlingo, est un ludospace idéal pour partir le week-end : coffre carré, "
+                   "seuil bas et largeur utile qui accueille un lit de 120 cm avec le matelas.",
+                   [("Partner, Partner Tepee ou Partner récent ?",
+                     "Le kit existe pour les trois générations : 1996-2008, 2008-2018 (Partner Tepee) et depuis 2018. La largeur du kit "
+                     "est de 115 cm ; nous vérifions les mesures de votre véhicule avant la fabrication. Depuis 2018, la version "
+                     "ludospace s'appelle Rifter : son kit a sa propre fiche."),
+                    ("Comment se passe une nuit dans un Partner aménagé ?",
+                     "Le lit déplié mesure 187 cm (jusqu'à 190 cm). Le jour, le lit se replie et le kit reste dans le coffre : les "
+                     "5 places restent utilisables. La cuisine sort à l'arrière grâce au tiroir extractible, et la table s'installe "
+                     "dedans ou dehors.")],
+                   [("/kit-amenagement/rifter/", "Voir le kit Rifter"),
+                    ("/guide/kit-amenagement-van-amovible/", "Comparatif des solutions d'aménagement amovible")]),
+         faq_extra=[("Combien de temps faut-il pour installer le kit dans un Partner ?",
+                     "Quelques minutes : le kit repose sur 3 points d'appui et se sangle aux anneaux d'arrimage d'origine.")]),
     dict(slug="rifter", nom="Peugeot Rifter", court="Rifter", cat="mini", groupe="ludospace", anciens=[W + "rifter/"],
          versions="Rifter M : kit ludospace. Rifter XL (Long) : meuble 30 cm plus profond et lit de 220 cm, au prix van compact.",
          mesures=[("Lit déplié", "187 cm (M), 220 cm (XL)"), ("Largeur du kit", "115 cm (120 cm avec matelas)"),
@@ -135,7 +151,26 @@ MODELES = [
                   ("Largeur avec matelas", "120 cm"), ("Générations", "1997-2008, 2008-2021 et depuis 2021"),
                   ("Places assises", "les 5 places restent utilisables")],
          videos=[("5Finz42pfkI", "Le kit Kangoo en vidéo"), ("JUHMYA8Wyw4", "Le kit Kangoo en détail")],
-         variantes=[("renault-kangoo", "Renault Kangoo", "mini"), ("kangoo-maxi", "Renault Kangoo Maxi", "moyen")]),
+         variantes=[("renault-kangoo", "Renault Kangoo", "mini"), ("kangoo-maxi", "Renault Kangoo Maxi", "moyen")],
+         # Bloc propre à la fiche (France uniquement) : vise « aménagement kangoo », « aménagement renault kangoo », « plan aménagement kangoo »
+         amenager=("Aménager un Renault Kangoo pour dormir : ce qu'il faut savoir",
+                   "Le Kangoo est l'un des ludospaces les plus simples à transformer en mini camping-car : coffre haut, plancher plat "
+                   "et largeur suffisante pour un vrai lit. Avec un kit amovible, vous n'aménagez pas le véhicule lui-même : le "
+                   "meuble se pose dans le coffre et repart quand vous voulez.",
+                   [("Quelle génération de Kangoo ?",
+                     "Nous fabriquons le kit pour les trois générations : 1997-2008, 2008-2021 et depuis 2021. La largeur du kit varie "
+                     "de 111 à 117 cm selon la génération ; c'est pourquoi nous vérifions les mesures de votre véhicule avec vous "
+                     "avant la fabrication."),
+                    ("Kangoo ou Kangoo Maxi ?",
+                     "Sur le Kangoo, le lit déplié mesure 187 cm (jusqu'à 190 cm). Le Kangoo Maxi reçoit un kit plus long, au prix du "
+                     "kit van compact, pour ceux qui veulent plus de longueur."),
+                    ("Faire soi-même ou choisir un kit ?",
+                     "Beaucoup cherchent un plan d'aménagement Kangoo pour tout fabriquer soi-même. C'est possible, mais comptez "
+                     "plusieurs week-ends, des outils et des essais. Le kit arrive monté, se sangle aux anneaux d'arrimage d'origine et "
+                     "s'installe en quelques minutes, sans perçage. Vous gardez vos 5 places pour la semaine.")],
+                   [("/guide/kit-amenagement-van-amovible/", "Comparatif des solutions d'aménagement amovible")]),
+         faq_extra=[("Peut-on dormir à deux dans un Kangoo ?",
+                     "Le lit fait 187 cm de long et 120 cm de large avec le matelas.")]),
     dict(slug="caddy", nom="Volkswagen Caddy", court="Caddy", cat="mini", groupe="ludospace", anciens=[W + "caddy/"], titre="VW Caddy",
          versions="Caddy : kit ludospace. Caddy Maxi : kit plus long, au prix van compact.",
          mesures=[("Montage", "moins de 3 minutes"), ("Générations", "2004-2010, 2010-2015, 2015-2020 et depuis 2021"),

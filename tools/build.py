@@ -106,6 +106,7 @@ def construire_fiches():
             "fixation": m.get("fixation") or (FIXATION_GRAND if m["cat"] == "grand" else FIXATION),
             "mesures": m.get("mesures", []), "videos": VIDEOS.get(m["slug"], m.get("videos", [])),
             "faq": m.get("faq") or c["faq"], "versions": m.get("versions", ""), "variantes": m["variantes"],
+            "amenager": m.get("amenager"), "faq_extra": m.get("faq_extra", []),
         })
     return fiches
 
@@ -284,6 +285,11 @@ def header(lien, texte):
 """
 
 
+def lien_comparatif(classe="link", texte="Comparatif"):
+    """Lien vers le comparatif des kits amovibles (page française uniquement)."""
+    return f' · <a class="{classe}" href="{COMPARATIF}">{texte}</a>' if CFG is FR else ""
+
+
 def footer(script=""):
     return f"""
 <footer class="site-foot">
@@ -292,7 +298,7 @@ def footer(script=""):
       <div>
         <img src="/img/camperizate-logo-white.svg" alt="Camperizate" width="160" height="21" loading="lazy">
         <p>Kits camper amovibles pour ludospaces, vans et fourgons, fabriqués dans notre atelier.</p>
-        <a class="link" href="/kit-amenagement/">Tous les modèles</a> · <a class="link" href="/boutique/">Boutique</a> · <a class="link" href="/accessoires/">Accessoires</a> · <a class="link" href="/guide-kit-meubles-camper/">Guide</a> · <a class="link" href="/contact/">Contact</a>
+        <a class="link" href="/kit-amenagement/">Tous les modèles</a> · <a class="link" href="/boutique/">Boutique</a> · <a class="link" href="/accessoires/">Accessoires</a> · <a class="link" href="/guide-kit-meubles-camper/">Guide</a>{lien_comparatif()} · <a class="link" href="/contact/">Contact</a>
       </div>
       <div>
         <h3>Showroom en France</h3>
@@ -671,7 +677,9 @@ def fiche(m):
     img, alt, w, h = m["image"]
     srcset = (f' srcset="{img[:-5]}-800.webp 800w, {img} 1600w" sizes="(min-width:960px) 50vw, 100vw"'
               if img.startswith("/img/modeles/") else "")
-    faq = m["faq"] + FAQ_COMMUNE
+    # Le bloc « Aménager un … » et ses questions n'existent qu'en français (pas encore traduits pour l'Italie)
+    francais = CFG is FR
+    faq = m["faq"] + FAQ_COMMUNE + (m["faq_extra"] if francais else [])
     commande = f"/boutique/?modele={m['slug']}#commande"
     bas = prix(cat, "pin", False)
     noms_fin = {f[0]: f[1] for f in FINITIONS}
@@ -758,6 +766,23 @@ def fiche(m):
 
     videos_html, script = section_videos(m["videos"], f"Le kit {m['court']}")
 
+    section_amenager = ""
+    if francais and m["amenager"]:
+        h2, intro, parties, liens = m["amenager"]
+        blocs = "\n".join(f"      <h3>{e(t)}</h3>\n      <p>{e(p)}</p>" for t, p in parties)
+        liens_html = " · ".join(f'<a href="{u}">{e(t)}</a>' for u, t in liens)
+        section_amenager = f"""
+<section aria-labelledby="h-amenager">
+  <div class="wrap two">
+    <div class="sec-head"><span class="kicker">Bon à savoir</span><h2 id="h-amenager">{e(h2)}</h2></div>
+    <div>
+      <p>{e(intro)}</p>
+{blocs}
+      <p class="help">{liens_html}</p>
+    </div>
+  </div>
+</section>"""
+
     autres = [x for x in FICHES if x["groupe"] == m["groupe"] and x["slug"] != m["slug"]]
     liens_autres = "".join(f'<li><a href="/kit-amenagement/{x["slug"]}/">{e(x["nom"])}</a></li>' for x in autres)
     section_autres = f"""
@@ -826,7 +851,7 @@ def fiche(m):
   </div>
 </section>
 {section_galerie}
-{section_mesures}
+{section_mesures}{section_amenager}
 
 <section class="showroom" aria-labelledby="h-showroom">
   <div class="wrap">
@@ -872,9 +897,9 @@ ANCRES = {"ludospace": "ludospaces", "monospace": "monospaces", "van": "vans", "
 
 def catalogue():
     url = f"{SITE}/kit-amenagement/"
-    titre = "Kit aménagement par modèle : ludospace, van, fourgon | Camperizate"
-    desc = ("Trouvez le kit camper amovible de votre véhicule : Berlingo, Kangoo, Partner, Trafic, Transporter, Vito, "
-            "Ducato… Sans perçage ni VASP, dès 500 € TTC.")
+    titre = "Kit aménagement van amovible par modèle : 40 véhicules"
+    desc = ("Trouvez le kit d’aménagement amovible de votre van ou ludospace parmi 40 modèles : Berlingo, Kangoo, Trafic, "
+            "Transporter… Sans VASP, dès 500 €.")
     blocs = []
     for groupe, nom, _ in GROUPES:
         blocs.append(f"""
@@ -898,7 +923,8 @@ def catalogue():
 </section>
 <section class="kits" aria-label="Modèles compatibles">
   <div class="wrap">{''.join(blocs)}
-    <p class="help" style="margin-top:28px">Modèle absent ? <a href="{TALLY}" target="_blank" rel="noopener">Écrivez-nous</a> : nous avons sûrement déjà un kit pour lui.</p>
+    <p class="help" style="margin-top:28px">Modèle absent ? <a href="{TALLY}" target="_blank" rel="noopener">Écrivez-nous</a> : nous avons sûrement déjà un kit pour lui.</p>{f'''
+    <p class="help">Kit, malle, pack constructeur ou aménagement fixe ? <a href="{COMPARATIF}">Comparez les 5 solutions</a>.</p>''' if CFG is FR else ""}
   </div>
 </section>
 </main>
@@ -1144,7 +1170,8 @@ def guide():
       <li><b>Livraison</b> du kit monté sur palette en France, ou <b>retrait gratuit</b> au showroom de Nîmes.</li>
     </ol>
     <div class="ctas" style="margin-top:24px"><a class="btn btn-primary" href="/boutique/#commande">Configurer mon kit</a>
-      <a class="btn btn-line" href="/contact/">Visiter le showroom</a></div>
+      <a class="btn btn-line" href="/contact/">Visiter le showroom</a></div>{f'''
+    <p class="help" style="margin-top:16px">Vous hésitez entre un kit, une malle, un pack constructeur ou un aménagement fixe ? <a href="{COMPARATIF}">Lire notre comparatif des 5 solutions</a>.</p>''' if CFG is FR else ""}
   </div>
 </section>
 <section class="faq" aria-labelledby="h-faq">
@@ -1165,6 +1192,174 @@ def guide():
                        "commande. Sans VASP, dès 500 € TTC.",
                        "Guide", "Kit meubles camper : le guide pour aménager son van",
                        "Six étapes pour comprendre le kit, choisir le bon pour votre véhicule et partir.", contenu, ld, crumb="Guide du kit camper")
+
+
+COMPARATIF = "/guide/kit-amenagement-van-amovible/"
+COMPARATIF_PUBLIE = "2026-11-20"
+
+
+def comparatif():
+    """Page pilier « kit aménagement van amovible » : comparatif des 5 solutions (France uniquement)."""
+    bas = {cat: prix(cat, "pin", False) for cat in ("mini", "moyen", "grand")}
+    lignes = [
+        ("1. Kit amovible sur mesure", f"dès {bas['mini']} € (ludospace)", "quelques minutes, sans outil", "non", "oui",
+         "week-ends et vacances, véhicule utilisé au quotidien"),
+        ("2. Malle ou caisse universelle", "variable", "quelques minutes", "non", "partiel (souvent cuisine ou couchage)",
+         "usage ponctuel, petit budget"),
+        ("3. Pack du constructeur", "ex. Dacia Pack Sleep : 1 490 à 1 790 €*", "quelques minutes", "non",
+         "lit et rangement, cuisine limitée", "propriétaires d'un modèle précis"),
+        ("4. Aménagement fait maison", "matériaux + beaucoup de temps", "plusieurs week-ends", "non si rien n'est fixé",
+         "selon vos compétences", "bricoleurs expérimentés"),
+        ("5. Aménagement fixe homologué", "plusieurs milliers d'euros", "atelier, plusieurs semaines", "oui", "complet",
+         "vie à bord longue durée"),
+    ]
+    tableau = "".join("<tr>" + "".join(f"<td>{e(c)}</td>" for c in l) + "</tr>" for l in lignes)
+    faq = [
+        ("Quel est le prix d'un kit d'aménagement van amovible ?",
+         f"Chez nous, dès {bas['mini']} € pour un ludospace, dès {bas['moyen']} € pour un van compact et dès {bas['grand']} € "
+         f"pour un grand fourgon, hors matelas et livraison. Le Pack Sleep de Dacia coûte entre 1 490 et 1 790 € selon L'argus."),
+        ("Faut-il une homologation VASP pour un kit amovible ?",
+         "Non, si le meuble n'est ni vissé ni percé dans le véhicule : il est considéré comme un chargement et la carte grise "
+         "ne change pas."),
+        ("Combien de temps faut-il pour installer un kit amovible ?",
+         "Quelques minutes : le kit arrive monté, se pose dans le coffre et se sangle aux anneaux d'arrimage d'origine."),
+        ("Peut-on garder les places arrière avec un kit amovible ?",
+         "Oui sur les ludospaces : kit replié, les 5 places restent utilisables."),
+        ("Un kit amovible convient-il à un fourgon utilitaire ?",
+         "Oui, il existe des kits pour vans compacts et grands fourgons (Trafic, Transporter, Jumper, Boxer, Ducato…). "
+         "Vérifiez la génération et la longueur de votre véhicule."),
+        ("Où voir un kit avant d'acheter ?",
+         "Dans notre showroom de Nîmes (Local n° 112, 866 avenue du Maréchal Juin), sur rendez-vous."),
+    ]
+
+    def solution(num, titre, texte, forts, faibles, img=None, cls=""):
+        figure = (f'<figure style="margin:0 0 16px"><img src="{img[0]}" alt="{e(img[1])}" width="{img[2]}" height="{img[3]}" '
+                  f'loading="lazy" style="border-radius:var(--r);width:100%;height:auto"></figure>') if img else ""
+        return f"""
+<section{cls} aria-labelledby="h-sol{num}">
+  <div class="wrap two">
+    <div class="sec-head"><span class="kicker">Solution {num}</span><h2 id="h-sol{num}">{e(titre)}</h2></div>
+    <div>
+      {figure}<p>{texte}</p>
+      <p><b>Points forts :</b> {forts}</p>
+      <p><b>Points faibles :</b> {faibles}</p>
+    </div>
+  </div>
+</section>"""
+
+    contenu = f"""
+<section class="kits" aria-labelledby="h-tableau">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">En un coup d'œil</span><h2 id="h-tableau">Tableau comparatif des 5 solutions</h2></div>
+    <div style="overflow-x:auto">
+    <table class="price-table" style="min-width:760px">
+      <thead><tr><th>Solution</th><th>Prix indicatif</th><th>Montage</th><th>VASP</th><th>Lit + cuisine + rangements</th><th>Idéal pour</th></tr></thead>
+      <tbody>{tableau}</tbody>
+    </table>
+    </div>
+    <p class="help">* Prix publiés par L'argus pour le Pack Sleep du Dacia Jogger.</p>
+  </div>
+</section>
+{solution(1, "Le kit d'aménagement amovible sur mesure",
+          "C'est un meuble conçu pour les dimensions exactes de votre véhicule. Il réunit un lit, un tiroir cuisine et des coffres "
+          "de rangement, et se pose dans le coffre sans perçage.",
+          "le véhicule reste intact et redevient une voiture normale en quelques minutes ; pas de VASP, un meuble non fixé est un "
+          "chargement et la carte grise ne change pas ; sur les ludospaces (Berlingo, Kangoo, Partner, Caddy…), les 5 places "
+          "restent utilisables kit replié ; tout est déjà pensé : lit de 187 cm (jusqu'à 220 cm en version longue), tiroir pour "
+          "le réchaud, table, place pour un frigo de 15 L.",
+          "il faut choisir le kit qui correspond exactement à votre modèle et à sa génération ; moins d'équipements qu'un "
+          "camping-car (pas de douche ni de toilettes fixes, mais des solutions portables existent).",
+          ("/img/kit-carrossier-lit.webp", "Kit d'aménagement amovible en contreplaqué phénolique carrossier, lit déplié", 900, 900))}
+{solution(2, "La malle ou caisse universelle",
+          "Une caisse en bois qui se glisse dans le coffre et contient souvent une cuisine ou un couchage pliant. Elle convient à "
+          "beaucoup de véhicules, mais n'en exploite aucun au centimètre près.",
+          "pratique pour un usage occasionnel ; facile à revendre.",
+          "le couchage et le rangement sont moins optimisés qu'un kit fait pour votre modèle ; vérifiez la longueur du lit et la "
+          "hauteur sous plafond.", cls=' class="kits"')}
+{solution(3, "Le pack du constructeur",
+          "Certains constructeurs proposent leur propre kit. Le plus connu est le Pack Sleep de Dacia pour le Jogger, vendu entre "
+          "1 490 et 1 790 € selon L'argus : un lit deux places, une tablette et un rangement dans une caisse en bois. À titre de "
+          f'comparaison, notre kit amovible pour le Dacia Jogger et le Lodgy commence à {bas["mini"]} € et comprend un tiroir cuisine '
+          'extractible et un grand coffre : <a href="/kit-amenagement/dacia-jogger-lodgy/">voir le kit Jogger</a>.',
+          "pensé pour le véhicule, commandé chez le concessionnaire.",
+          "réservé à un seul modèle ; selon les essais publiés, pas de vraie kitchenette ni de réfrigérateur.")}
+{solution(4, "L'aménagement fait maison (DIY)",
+          "Avec un plan d'aménagement, du contreplaqué et de l'outillage, vous pouvez tout construire vous-même.",
+          "sur mesure selon vos envies ; la satisfaction de le faire soi-même.",
+          "plusieurs week-ends de travail, des essais et des erreurs, et un résultat souvent plus lourd. Pour rester sans VASP, "
+          "rien ne doit être vissé ni percé dans la carrosserie.",
+          ("/img/kit-pin-rangement.webp", "Kit d'aménagement en contreplaqué phénolique pin, coffres de rangement", 900, 900),
+          cls=' class="kits"')}
+{solution(5, "L'aménagement fixe homologué VASP",
+          "Un atelier installe des meubles fixés au véhicule, parfois avec électricité, eau et isolation. Le véhicule est ensuite "
+          "homologué en VASP (camping-car).",
+          "le confort le plus complet pour vivre à bord longtemps.",
+          "le prix (plusieurs milliers d'euros), les délais, et le véhicule ne redevient plus une voiture de tous les jours.")}
+<section class="kits" aria-labelledby="h-choisir">
+  <div class="wrap two">
+    <div class="sec-head"><span class="kicker">Méthode</span><h2 id="h-choisir">Comment choisir votre solution ?</h2></div>
+    <ol class="steps-merci">
+      <li><b>Votre usage :</b> week-ends et vacances → kit amovible ; vie à bord → aménagement fixe.</li>
+      <li><b>Votre véhicule au quotidien :</b> si vous en avez besoin pour travailler ou transporter la famille, choisissez une solution amovible qui garde les places assises.</li>
+      <li><b>Votre modèle exact :</b> marque, génération et longueur (L1, L2, Maxi, XL) changent les dimensions du meuble.</li>
+      <li><b>Le couchage :</b> vérifiez la longueur réelle du lit (187 cm minimum pour un adulte grand) et la largeur avec le matelas.</li>
+      <li><b>Le budget total :</b> kit, matelas, livraison et accessoires (occultants, frigo, batterie).</li>
+    </ol>
+  </div>
+</section>
+<section aria-labelledby="h-vasp">
+  <div class="wrap two">
+    <div class="sec-head"><span class="kicker">Réglementation</span><h2 id="h-vasp">Faut-il une homologation VASP pour un kit amovible ?</h2></div>
+    <div>
+      <p>Non, si le meuble n'est ni vissé ni percé dans le véhicule : il est alors considéré comme un chargement, comme une valise, et la carte grise ne change pas. {e(FIXATION)}</p>
+      <p>En cas de doute pour votre situation, renseignez-vous auprès de votre assureur.</p>
+    </div>
+  </div>
+</section>
+<section class="kits" aria-labelledby="h-notre">
+  <div class="wrap two">
+    <div class="sec-head"><span class="kicker">Notre solution</span><h2 id="h-notre">Le kit amovible Camperizate</h2></div>
+    <div>
+      <figure style="margin:0 0 16px"><img src="/img/kit-hpl-blanc-salon.webp" alt="Kit d'aménagement amovible en HPL blanc, position salon avec table" width="900" height="675" loading="lazy" style="border-radius:var(--r);width:100%;height:auto"></figure>
+      <ul>
+        <li><b>Plus de 40 véhicules :</b> ludospaces (Berlingo, Kangoo, Partner, Caddy, Dokker, Jogger…), vans (Trafic, Transporter, Vito, Transit Custom…) et grands fourgons.</li>
+        <li><b>Trois finitions :</b> phénolique pin ({bas['mini']} €), phénolique carrossier noir ({prix("mini", "carrossier", False)} €, la plus vendue) et HPL de peuplier blanc ou anthracite ({prix("mini", "hpl", False)} €) ; matelas sur mesure +{MATELAS} €.</li>
+        <li><b>Livré monté</b> partout en France (livraison dès {CATEGORIES["mini"]["livraison"]} €), ou à voir et à retirer gratuitement à notre <a href="/contact/">showroom de Nîmes</a>.</li>
+        <li><b>Fabrication en 3 semaines environ</b>, après vérification des mesures de votre véhicule.</li>
+      </ul>
+      <div class="ctas" style="margin-top:20px"><a class="btn btn-primary" href="/kit-amenagement/">Trouver le kit de mon véhicule</a>
+        <a class="btn btn-line" href="/boutique/">Voir la boutique</a></div>
+    </div>
+  </div>
+</section>
+<section class="faq" aria-labelledby="h-faq">
+  <div class="wrap faq-wrap">
+    <div class="sec-head"><span class="kicker">Questions fréquentes</span><h2 id="h-faq">Kit d'aménagement van amovible : en bref</h2></div>
+    <div class="faq-list">
+{faq_html(faq)}
+    </div>
+  </div>
+</section>"""
+    h1 = "Kit aménagement van amovible : les 5 meilleures solutions pour transformer votre fourgon (2026)"
+    ld = {"@context": "https://schema.org", "@graph": [
+        {"@type": "Article", "headline": h1, "inLanguage": "fr-FR",
+         "author": {"@type": "Organization", "name": "Camperizate"},
+         "publisher": {"@type": "Organization", "name": "Camperizate", "url": SITE + "/"},
+         "datePublished": COMPARATIF_PUBLIE, "dateModified": date.today().isoformat(),
+         "image": SITE + "/img/kit-carrossier-lit.webp", "mainEntityOfPage": SITE + COMPARATIF},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Accueil", "item": SITE + "/"},
+            {"@type": "ListItem", "position": 2, "name": "Comparatif kits amovibles", "item": SITE + COMPARATIF}]},
+        {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]}]}
+    lead = (f"<b>En bref :</b> pour dormir dans votre van, ludospace ou fourgon sans le modifier, la solution la plus polyvalente est le "
+            f"<b>kit d'aménagement amovible fabriqué pour votre modèle</b> : lit, cuisine et rangements dans un meuble posé dans le coffre, "
+            f"sans perçage et sans homologation VASP, que vous retirez quand vous le souhaitez. Selon votre budget et votre usage, quatre "
+            f"autres solutions existent. Voici comment les comparer. <small>Par l'atelier Camperizate · mis à jour le "
+            f"{date.today().strftime('%d/%m/%Y')}</small>")
+    return page_simple(COMPARATIF, "Kit aménagement van amovible : 5 solutions comparées (2026)",
+                       "Kit, malle, pack constructeur, DIY ou aménagement fixe ? Prix, montage et VASP : comparatif des 5 solutions "
+                       "pour transformer votre van ou ludospace.",
+                       "Comparatif 2026", h1, lead, contenu, ld, crumb="Comparatif kits amovibles")
 
 
 def contact():
@@ -1466,7 +1661,7 @@ def llms_txt():
 def sitemap():
     today = date.today().isoformat()
     urls = ["/", "/kit-amenagement/", "/boutique/", "/accessoires/", "/guide-kit-meubles-camper/",
-            "/occultants-isolants/", "/matelas-camper/", "/contact/"]
+            "/occultants-isolants/", "/matelas-camper/", "/contact/"] + ([COMPARATIF] if CFG is FR else [])
     urls += [f"/kit-amenagement/{m['slug']}/" for m in FICHES]
     urls += ["/conditions-generales-de-vente/", "/mentions-legales/", "/politique-de-confidentialite/"]
     rows = "\n".join(f"  <url><loc>{SITE}{u}</loc><lastmod>{today}</lastmod></url>" for u in urls)
@@ -1496,6 +1691,8 @@ def pages():
         "feeds/produits.xml": flux_produits(),
         "llms.txt": llms_txt(),
     })
+    if CFG is FR:  # pas encore traduite pour l'Italie
+        p[COMPARATIF.strip("/") + "/index.html"] = comparatif()
     return p
 
 
