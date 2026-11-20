@@ -926,6 +926,8 @@ def fix_post_links(p, known, scheduled):
         clean = path.split("#")[0].split("?")[0] or "/"
         if not clean.endswith("/") and "." not in clean.rsplit("/", 1)[-1]:
             clean += "/"
+        if clean.startswith("/img/"):
+            return m.group(0)  # foto ampliada del visor
         if clean in known:
             return f'<a{attrs_before}href="{path}"{attrs_after}>{text}</a>'
         if clean in scheduled:
