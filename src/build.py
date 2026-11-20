@@ -26,6 +26,11 @@ ADDRESS = "Carril de la Serrería, 7 · 29004 San Julián, Málaga"
 INSTAGRAM = "https://www.instagram.com/malagalifescampers/"
 FACEBOOK = "https://www.facebook.com/p/Lifes-Campers-M%C3%A1laga-100063913059162/"
 MAPS = "https://www.google.com/maps/search/?api=1&query=Lifes+Campers+M%C3%A1laga"
+# Ficha de Google (Business Profile) de Lifes Campers Málaga y enlace corto para pedir reseñas.
+# /resena/ redirige (ver _redirects) a REVIEW_URL: así el QR impreso no cambia aunque cambie el destino.
+GBP = "https://share.google/l07NLhJf2RcVWnIP5"
+GBP_KG = "https://www.google.com/search?kgmid=/g/11k9khspdy"
+REVIEW_URL = GBP
 WEB3FORMS_KEY = "71767edc-8025-4398-8918-90c888817feb"
 PRICE = "24.900 €"
 PRICE_NOTE = "Configuración básica en L2H2 y L3H2 · L4H2 desde 26.000 € · configuración avanzada hasta 26.300 €"
@@ -227,7 +232,8 @@ BUSINESS = {
     "address": {"@type": "PostalAddress", "streetAddress": "Carril de la Serrería, 7", "addressLocality": "Málaga",
                 "postalCode": "29004", "addressRegion": "Málaga", "addressCountry": "ES"},
     "areaServed": [{"@type": "State", "name": "Andalucía"}, {"@type": "Country", "name": "España"}],
-    "sameAs": [INSTAGRAM, FACEBOOK],
+    "hasMap": MAPS,
+    "sameAs": [INSTAGRAM, FACEBOOK, GBP_KG],
 }
 
 
@@ -396,7 +402,8 @@ def reviews_html():
     return f"""<section class="section"><div class="wrap">
 <div class="section-head"><p class="label">Lo que dicen nuestros clientes</p><h2>Opiniones de quienes ya viajan en su Lifes Campers</h2></div>
 <div class="reviews">{items}</div>
-<p style="margin-top:22px"><a href="{MAPS}" target="_blank" rel="noopener">Ver todas las reseñas en Google →</a></p>
+<div class="actions" style="margin-top:22px"><a class="btn btn-line" href="{GBP}" target="_blank" rel="noopener">Ver todas las reseñas en Google</a>
+<a class="btn btn-dark" href="/resena/">¿Ya tienes tu Lifes Campers? Déjanos tu reseña</a></div>
 </div></section>"""
 
 
@@ -690,7 +697,8 @@ def page_contacto():
         <dt>Teléfonos</dt><dd><a href="tel:+34637372296">{TEL1}</a> · <a href="tel:+34637313252">{TEL2}</a></dd>
         <dt>Atención telefónica</dt><dd>Lunes a viernes, de 8:00 a 14:00</dd>
         <dt>Email</dt><dd><a href="mailto:{EMAIL}">{EMAIL}</a></dd>
-        <dt>Taller</dt><dd>{esc(ADDRESS)}<br><a href="{MAPS}" target="_blank" rel="noopener">Abrir en Google Maps →</a></dd>
+        <dt>Taller</dt><dd>{esc(ADDRESS)}<br><a href="{MAPS}" target="_blank" rel="noopener">Cómo llegar en Google Maps →</a></dd>
+        <dt>Reseñas</dt><dd><a href="{GBP}" target="_blank" rel="noopener">Nuestra ficha en Google</a> · <a href="/resena/">Escribe tu reseña</a></dd>
       </dl>
       <div style="margin-top:28px">{pic("taller-lifes-campers-fachada")}</div>
     </div>
@@ -918,6 +926,8 @@ def fix_post_links(p, known, scheduled):
         clean = path.split("#")[0].split("?")[0] or "/"
         if not clean.endswith("/") and "." not in clean.rsplit("/", 1)[-1]:
             clean += "/"
+        if clean.startswith("/img/"):
+            return m.group(0)  # foto ampliada del visor
         if clean in known:
             return f'<a{attrs_before}href="{path}"{attrs_after}>{text}</a>'
         if clean in scheduled:
@@ -1084,6 +1094,9 @@ def main():
     write("/robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")
     # URLs de la web antigua (WordPress) que redirigen a su equivalente nuevo
     write("/_redirects", "\n".join([
+        f"/resena/ {REVIEW_URL} 302",
+        f"/resena {REVIEW_URL} 302",
+        f"/review/ {REVIEW_URL} 302",
         "/galeria/ /trabajos/ 301",
         "/galeria /trabajos/ 301",
         "/venta/ / 301",
@@ -1093,6 +1106,13 @@ def main():
         "/informacion-cookies/ /politica-de-cookies/ 301",
         "/informacion-cookies /politica-de-cookies/ 301",
     ]) + "\n")
+    # Página de respaldo por si el redireccionamiento de _redirects no se aplica: lleva igualmente a Google.
+    for path, txt, btn in (("/resena/", "Te llevamos a nuestra ficha de Google para que dejes tu reseña…", "Escribir reseña en Google"),
+                           ("/review/", "Taking you to our Google profile to leave your review…", "Write a Google review")):
+        write(path, f'<!doctype html><html lang="{"es" if path == "/resena/" else "en"}"><head><meta charset="utf-8">'
+                    f'<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">'
+                    f'<meta http-equiv="refresh" content="0;url={esc(REVIEW_URL)}"><title>{BRAND}</title></head>'
+                    f'<body style="font-family:sans-serif;padding:24px"><p>{txt}</p><p><a href="{esc(REVIEW_URL)}">{btn}</a></p></body></html>\n')
     write("/_headers", "/img/*\n  Cache-Control: public, max-age=2592000\n/fonts/*\n  Cache-Control: public, max-age=31536000, immutable\n")
     print(f"{len(pages)} páginas generadas en {OUT}")
     if scheduled:

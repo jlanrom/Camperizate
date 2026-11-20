@@ -480,7 +480,8 @@ def _reviews(b):
     return f"""<section class="section"><div class="wrap">
 <div class="section-head"><p class="label">What our customers say</p><h2>Reviews from people already travelling in their Lifes Campers</h2></div>
 <div class="reviews">{items}</div>
-<p style="margin-top:22px"><a href="{b.MAPS}" target="_blank" rel="noopener">See all our reviews on Google →</a></p>
+<div class="actions" style="margin-top:22px"><a class="btn btn-line" href="{b.GBP}" target="_blank" rel="noopener">See all our reviews on Google</a>
+<a class="btn btn-dark" href="/review/">Already travelling in a Lifes Campers? Leave us a review</a></div>
 </div></section>"""
 
 
@@ -767,7 +768,8 @@ def page_contact(b):
         <dt>Phone</dt><dd><a href="tel:+34637372296">+34 {b.TEL1}</a> · <a href="tel:+34637313252">+34 {b.TEL2}</a></dd>
         <dt>Phone hours</dt><dd>Monday to Friday, 8:00 to 14:00 (Spanish time)</dd>
         <dt>Email</dt><dd><a href="mailto:{b.EMAIL}">{b.EMAIL}</a></dd>
-        <dt>Workshop</dt><dd>{esc(b.ADDRESS)}<br><a href="{b.MAPS}" target="_blank" rel="noopener">Open in Google Maps →</a></dd>
+        <dt>Workshop</dt><dd>{esc(b.ADDRESS)}<br><a href="{b.MAPS}" target="_blank" rel="noopener">Directions in Google Maps →</a></dd>
+        <dt>Reviews</dt><dd><a href="{b.GBP}" target="_blank" rel="noopener">Our Google profile</a> · <a href="/review/">Write a review</a></dd>
       </dl>
       <div style="margin-top:28px">{b.pic("taller-lifes-campers-fachada")}</div>
     </div>
