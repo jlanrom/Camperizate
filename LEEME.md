@@ -25,6 +25,11 @@ Web estática de Lifes Campers, publicada en Cloudflare Workers. Cada cambio que
 - Cada página enlaza a su equivalente en el otro idioma (botón ES/EN del menú y etiquetas hreflang para Google).
 - El blog solo está en español.
 
+## Google (ficha y reseñas)
+- `GBP` en `src/build.py` es la ficha de Google de Lifes Campers Málaga; sale en el schema (`sameAs`, `hasMap`), en contacto y junto a las opiniones.
+- `/resena/` (y `/review/` en inglés) redirige a `REVIEW_URL`. El QR de la tarjeta para clientes apunta a `/resena/`, así que si cambia el enlace de reseñas basta con cambiar `REVIEW_URL`: no hay que reimprimir.
+- Lo ideal en `REVIEW_URL` es el enlace «Pedir reseñas» del Perfil de Empresa de Google (abre directamente la ventana para escribir la reseña).
+
 ## Cómo hacer cambios habituales
 - **Añadir fotos**: copia la foto (en .webp o .jpg convertida a .webp) en `src/fotos/` con un nombre descriptivo, por ejemplo `cocina-camper-ducato-encimera-roble.webp`. Añade su texto alternativo en `ALT` y colócala en un proyecto de `PROJECTS` (ambos en `build.py`).
 - **Añadir una furgoneta**: copia un bloque de `content_furgonetas.py` y adáptalo.
