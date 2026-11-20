@@ -56,6 +56,10 @@ PHOTOS = json.loads(PHOTOS_JSON.read_text(encoding="utf-8")) if PHOTOS_JSON.exis
 
 
 VIDEOS_CSV = ROOT / "tools" / "videos.csv"
+# Date de mise en ligne de chaque vidéo YouTube (id -> "AAAA-MM-JJ"), obligatoire pour le balisage VideoObject.
+# Une vidéo sans date n'est pas balisée (elle reste affichée sur la fiche).
+VIDEO_DATES_JSON = ROOT / "tools" / "videos_dates.json"
+VIDEO_DATES = json.loads(VIDEO_DATES_JSON.read_text(encoding="utf-8")) if VIDEO_DATES_JSON.exists() else {}
 
 
 def youtube_id(texte):
@@ -704,6 +708,13 @@ def fiche(m):
         {"@type": "FAQPage", "mainEntity": [
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
     ]}
+    if francais:  # balisage vidéo (pas encore traduit pour l'Italie)
+        ld["@graph"] += [
+            {"@type": "VideoObject", "name": f"{t} : kit d'aménagement amovible {m['nom']}",
+             "description": f"Démonstration du kit d'aménagement amovible pour {m['nom']} : lit, cuisine et rangements, sans perçage ni VASP.",
+             "thumbnailUrl": f"https://i.ytimg.com/vi/{v}/hqdefault.jpg", "uploadDate": VIDEO_DATES[v],
+             "embedUrl": f"https://www.youtube-nocookie.com/embed/{v}", "contentUrl": f"https://www.youtube.com/watch?v={v}"}
+            for v, t in m["videos"] if v in VIDEO_DATES]
 
     inclus = "\n".join(
         f'        <li><svg class="ico" aria-hidden="true"><use href="#{i}"/></svg><span><b>{e(t)}</b>{e(d)}</span></li>'
