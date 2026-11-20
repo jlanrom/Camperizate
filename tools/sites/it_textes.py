@@ -430,6 +430,12 @@ TEXTES = {
     # Titoli dei video
     "Le kit Combo Life en vidéo": "Il kit Combo Life in video",
     "Le kit Dacia Jogger en vidéo": "Il kit Dacia Jogger in video",
+    "Le kit Dacia Jogger : montage facile": "Il kit Dacia Jogger: montaggio facile",
+    "Le lit du kit dans le Dacia Jogger": "Il letto del kit nella Dacia Jogger",
+    "Le kit pour Dacia Bigster, Jogger et Duster": "Il kit per Dacia Bigster, Jogger e Duster",
+    "Le Peugeot Traveller aménagé": "Il Peugeot Traveller camperizzato",
+    "Van tour : Opel Vivaro aménagé": "Van tour: Opel Vivaro camperizzato",
+    "Fourgon de travail : camper en 2 minutes": "Furgone da lavoro: camper in 2 minuti",
     "Le kit en détail": "Il kit nel dettaglio",
     "Le kit en mode salon": "Il kit in modalità salotto",
     "Le kit en vidéo": "Il kit in video",
