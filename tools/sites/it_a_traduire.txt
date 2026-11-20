@@ -1,13 +1,17 @@
 # Textes sans traduction : 0. Les ajouter dans tools/sites/it_textes.py.
 
 
-# Traductions jamais utilisées (texte français modifié ou supprimé ?) : 6
+# Traductions jamais utilisées (texte français modifié ou supprimé ?) : 10
 
 "866 Avenue Maréchal Juin"
 "Atelier en France"
 "Commander par message"
 "Grand fourgon"
+"Kit aménagement par modèle : ludospace, van, fourgon | Camperizate"
+"Kit camper amovible sans VASP pour ludospace et van | Camperizate"
+"Kits camper amovibles pour Berlingo, Kangoo, Trafic, Transporter… Posés en 5 minutes sans perçage, sans homologation VASP. Dès 500 € TTC, livrés montés partout en France."
 "Ludospace"
+"Trouvez le kit camper amovible de votre véhicule : Berlingo, Kangoo, Partner, Trafic, Transporter, Vito, Ducato… Sans perçage ni VASP, dès 500 € TTC."
 "Van compact"
 
 # Remplacements SCRIPTS jamais utilisés : 0

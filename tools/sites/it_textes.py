@@ -175,6 +175,13 @@ TEXTES = {
     "Kits camper amovibles pour Berlingo, Kangoo, Trafic, Transporter… Posés en 5 minutes sans perçage, sans homologation VASP. Dès 500 € TTC, livrés montés partout en France.":
         "Kit camper rimovibili per Berlingo, Kangoo, Trafic, Transporter… Si montano in 5 minuti senza forature e senza omologazione. Da 500 € IVA inclusa, consegnati montati in tutta Italia.",
     "Kit camper amovible : sans VASP, sans perçage, dès 500 €": "Kit camper rimovibile: senza omologazione, senza forature, da 500 €",
+    # Titres français ajustés pour le SEO (20/11/2026) : l'italien garde son texte
+    "Kit aménagement van amovible sans VASP | Camperizate": "Kit camper rimovibile senza omologazione per multispazio e van | Camperizate",
+    "Kits d’aménagement amovibles pour ludospaces, vans et fourgons : lit, cuisine et rangements posés en 5 minutes, sans perçage ni VASP. Dès 500 €.":
+        "Kit camper rimovibili per Berlingo, Kangoo, Trafic, Transporter… Si montano in 5 minuti senza forature e senza omologazione. Da 500 € IVA inclusa, consegnati montati in tutta Italia.",
+    "Kit aménagement van amovible par modèle : 40 véhicules": "Kit camper per modello: multispazio, van, furgone | Camperizate",
+    "Trouvez le kit d’aménagement amovible de votre van ou ludospace parmi 40 modèles : Berlingo, Kangoo, Trafic, Transporter… Sans VASP, dès 500 €.":
+        "Trova il kit camper rimovibile per il tuo veicolo: Berlingo, Kangoo, Partner, Trafic, Transporter, Vito, Ducato… Senza forature né omologazione, da 500 € IVA inclusa.",
     "Votre ludospace ou votre van devient camper en 5 minutes. Kits sur mesure direct atelier, livrés montés en France.":
         "Il tuo multispazio o il tuo van diventa camper in 5 minuti. Kit su misura direttamente dal laboratorio, consegnati montati in Italia.",
     "Ludospace aménagé avec un kit camper en bois, hayon ouvert face à la montagne": "Multispazio camperizzato con un kit in legno, portellone aperto davanti alle montagne",
