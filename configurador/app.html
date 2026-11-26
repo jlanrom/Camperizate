@@ -75,6 +75,13 @@ details.colores[open] summary{margin-bottom:14px}
 .hoja h3{font-size:16px;margin:0 0 6px}
 .hoja .pend{color:var(--warn)}
 .hoja .def{color:var(--muted)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+table.compra{border-collapse:collapse;width:100%;font-size:12.5px}
+table.compra th,table.compra td{padding:6px 8px;border-top:1px solid var(--line);text-align:left;vertical-align:top}
+table.compra th{border-top:0;color:var(--muted);font-weight:600;background:var(--sunk)}
+table.compra td.num{white-space:nowrap;font-variant-numeric:tabular-nums}
+.foto{margin-top:18px;border:1px solid var(--line);border-radius:8px;padding:12px}
+.foto p{margin:0 0 8px;font-size:13px}
 .alerts{display:grid;gap:6px;margin-top:10px}
 .alert{background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:8px 10px;font-size:13px}
 .fit{color:var(--ok);font-size:13px;margin-top:8px}
@@ -169,7 +176,8 @@ svg .body{fill:var(--surface);stroke:var(--draw)}
       <div class="tabs" role="tablist">
         <button role="tab" id="tab-ext" aria-selected="true" data-view="ext">Exterior</button>
         <button role="tab" id="tab-plan" aria-selected="false" data-view="plan">Planta</button>
-        <button role="tab" id="tab-int" aria-selected="false" data-view="int">Interior</button>
+        <button role="tab" id="tab-3d" aria-selected="false" data-view="3d">3D</button>
+        <button role="tab" id="tab-int" aria-selected="false" data-view="int">Alzado</button>
       </div>
       <div id="view"></div>
       <div class="editbar" id="editbar" hidden>
@@ -560,20 +568,20 @@ var CLIENTE = MODO==="cliente", SIMPLE = MODO==="acabados", TALLER = MODO==="tal
 document.documentElement.classList.add("m-"+MODO);
 var STEPS = SIMPLE ? [
   {n:"Furgoneta", w:0, view:"ext"},
-  {n:"Paredes", subs:["paredes"], view:"int", h:"Paredes", lead:"Elige el panelado de las paredes. Las muestras reales las ves y tocas en el taller."},
-  {n:"Suelo", subs:["suelo"], view:"int", h:"Suelo", lead:"Elige el suelo de tu camper."},
-  {n:"Techo", subs:["techo"], view:"int", h:"Techo", lead:"Elige el techo. Puede ser de bambú o del mismo panelado que las paredes."},
-  {n:"Muebles", subs:["cuerpo","puertas"], view:"int", h:"Muebles", lead:"Puedes combinar un color para la estructura y otro para las puertas."},
+  {n:"Paredes", subs:["paredes"], view:"3d", h:"Paredes", lead:"Elige el panelado de las paredes. Las muestras reales las ves y tocas en el taller."},
+  {n:"Suelo", subs:["suelo"], view:"3d", h:"Suelo", lead:"Elige el suelo de tu camper."},
+  {n:"Techo", subs:["techo"], view:"3d", h:"Techo", lead:"Elige el techo. Puede ser de bambú o del mismo panelado que las paredes."},
+  {n:"Muebles", subs:["cuerpo","puertas"], view:"3d", h:"Muebles", lead:"Puedes combinar un color para la estructura y otro para las puertas."},
   {n:"Tus datos", w:4}
 ] : CLIENTE ? [
   {n:"Tu furgo", w:0, view:"ext"},
-  {n:"Viaje y cama", subs:["plazas","cama","banoTipo"], view:"int", h:"¿Cómo vais a viajar y dormir?", lead:"Elige lo que más se parezca a lo que quieres. Los detalles los vemos juntos en el taller."},
-  {n:"Estilo", subs:["estilo","colores","paredes","techo","suelo","cuerpo","puertas"], view:"int", h:"Elige un estilo", lead:"Toca el que más te guste. Si quieres, abajo puedes cambiar los colores uno a uno."},
-  {n:"Cocina", subs:["fuegos","nevera","encimera","salpicadero"], view:"int", h:"Tu cocina", lead:"Solo lo básico. Grifo, fregadero y medidas los ajustamos en el taller."},
+  {n:"Viaje y cama", subs:["plazas","cama","banoTipo"], view:"3d", h:"¿Cómo vais a viajar y dormir?", lead:"Elige lo que más se parezca a lo que quieres. Los detalles los vemos juntos en el taller."},
+  {n:"Estilo", subs:["estilo","colores","paredes","techo","suelo","cuerpo","puertas"], view:"3d", h:"Elige un estilo", lead:"Toca el que más te guste. Si quieres, abajo puedes cambiar los colores uno a uno."},
+  {n:"Cocina", subs:["fuegos","nevera","encimera","salpicadero"], view:"3d", h:"Tu cocina", lead:"Solo lo básico. Grifo, fregadero y medidas los ajustamos en el taller."},
   {n:"Extras", subs:["pack","ex-ventanas","ex-confort","ex-exterior","ex-energia","prioridades"], view:"ext", h:"¿Quieres algún extra?", lead:"Marca lo que te interese. Si no lo tienes claro, déjalo: lo hablamos."},
   {n:"Tus datos", w:4}
 ] : [
-  {n:"Furgoneta", w:0, view:"ext"}, {n:"Distribución", w:1, view:"plan"}, {n:"Acabados", w:2, view:"int"}, {n:"Extras", w:3, view:"int"}, {n:"Tus datos", w:4}
+  {n:"Furgoneta", w:0, view:"ext"}, {n:"Distribución", w:1, view:"plan"}, {n:"Acabados", w:2, view:"3d"}, {n:"Extras", w:3, view:"int"}, {n:"Tus datos", w:4}
 ];
 var LAST = STEPS.length-1;
 var form = document.getElementById("form");
@@ -952,11 +960,256 @@ function drawInterior(){
 }
 
 /* ============================================================
+   VISTA 3D: perspectiva desde la cabina mirando hacia atrás
+   ============================================================ */
+function drawVista3D(){
+  var M=modelo(), L=curL(), H=curH(), lay=layoutFor(L), Lc=lay.Lc, W=lay.W, Hi=M.alto[H].int;
+  var VW=640, VH=420, cx=VW/2, cy=200, cam=2300, ojo=1300, f=680;
+  function P(x,y,z){ var d=x+cam; return [cx + f*(y - W/2)/d, cy - f*(z - ojo)/d]; }
+  function poly(pts, fill, extra){ return '<polygon points="'+pts.map(function(p){return p[0].toFixed(1)+","+p[1].toFixed(1)}).join(" ")+'" fill="'+fill+'"'+(extra||"")+'/>'; }
+  function quadX(x, y0, y1, z0, z1){ return [P(x,y0,z0),P(x,y1,z0),P(x,y1,z1),P(x,y0,z1)]; }        // cara frontal (mirando a cabina)
+  function quadY(y, x0, x1, z0, z1){ return [P(x0,y,z0),P(x1,y,z0),P(x1,y,z1),P(x0,y,z1)]; }        // cara lateral (mirando al pasillo)
+  function quadZ(z, x0, x1, y0, y1){ return [P(x0,y0,z),P(x1,y0,z),P(x1,y1,z),P(x0,y1,z)]; }        // cara horizontal
+  function line(a,b,stroke,w,op){ return '<line x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+'" stroke="'+stroke+'" stroke-width="'+(w||1)+'"'+(op?' stroke-opacity="'+op+'"':'')+'/>'; }
+  var mP=mat("paredes",val("paredes")), mT=mat("techo",val("techo")), mS=mat("suelo",val("suelo")), mC=mat("cuerpo",val("cuerpo")), mD=mat("puertas",val("puertas")), mE=mat("encimera",val("encimera"));
+  var tap=tapiz(), sombra='rgba(0,0,0,.12)', svg='<svg viewBox="0 0 '+VW+' '+VH+'" role="img" aria-label="Vista 3D del interior"><defs><clipPath id="clip3d"><rect width="'+VW+'" height="'+VH+'" rx="6"/></clipPath><linearGradient id="luz3d" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset="1" stop-color="#000" stop-opacity=".12"/></linearGradient></defs><g clip-path="url(#clip3d)"><rect width="'+VW+'" height="'+VH+'" fill="#20262A"/>';
+  // techo
+  svg += poly(quadZ(Hi,0,Lc,0,W), mT.c);
+  if(mT.veta===4){ for(var y=0;y<=W;y+=110){ svg += line(P(0,y,Hi),P(Lc,y,Hi),"#2A2420",2.2,.85); } }
+  else if(mT.veta){ for(var y2=0;y2<=W;y2+=120){ svg += line(P(0,y2,Hi),P(Lc,y2,Hi),"#000",1,.12); } }
+  if(val("ex-focos")) for(var fx=500; fx<Lc-200; fx+=700){ var fc=P(fx,W/2,Hi); svg += '<circle cx="'+fc[0]+'" cy="'+fc[1]+'" r="'+(5*cam/(fx+cam))+'" fill="#FFF3C4"/>'; }
+  [["ex-clarDel",0.15],["ex-clarBano",0.45],["ex-clarTras",0.78]].forEach(function(c){ if(val(c[0])){ var x=Lc*c[1]; svg += poly(quadZ(Hi-2,x,x+400,W/2-250,W/2+250),"#DDE9EE",' stroke="#8A979D"'); } });
+  // suelo
+  svg += poly(quadZ(0,0,Lc,0,W), mS.c);
+  if(mS.veta) for(var y3=0;y3<=W;y3+=190){ svg += line(P(0,y3,0),P(Lc,y3,0),"#000",1,.15); }
+  // paredes laterales y del fondo
+  function pared(y){
+    var o = mP.c2 ? poly(quadY(y,0,Lc,Hi/2,Hi), mP.c)+poly(quadY(y,0,Lc,0,Hi/2), mP.c2) : poly(quadY(y,0,Lc,0,Hi), mP.c);
+    if(mP.veta===2||mP.veta===1) for(var z=120; z<Hi; z+=140){ o += line(P(0,y,z),P(Lc,y,z),"#000",1,.1); }
+    return o + poly(quadY(y,0,Lc,0,Hi), sombra);
+  }
+  svg += pared(0) + pared(W);
+  svg += (mP.c2 ? poly(quadX(Lc,0,W,Hi/2,Hi), mP.c)+poly(quadX(Lc,0,W,0,Hi/2), mP.c2) : poly(quadX(Lc,0,W,0,Hi), mP.c)) + poly(quadX(Lc,0,W,0,Hi),'rgba(0,0,0,.06)');
+  if(val("ex-ventanaTrasera")){ svg += poly(quadX(Lc-1,120,W/2-80,Hi*0.5,Hi*0.82),"#9CC3D5",' stroke="#3B4A52" stroke-width="3"') + poly(quadX(Lc-1,W/2+80,W-120,Hi*0.5,Hi*0.82),"#9CC3D5",' stroke="#3B4A52" stroke-width="3"'); }
+  if(val("ex-ventanas")){ svg += poly(quadY(1,Lc*0.38,Lc*0.38+900,Hi*0.48,Hi*0.78),"#9CC3D5",' stroke="#F4F4F2" stroke-width="4"'); }
+  // puerta corredera abierta (lado A, mitad de arriba del plano = derecha de la vista)
+  // muebles, del fondo hacia delante
+  var items = lay.items.slice().sort(function(a,b){ return (b.x) - (a.x); });
+  function caja(x0,x1,y0,y1,z0,z1,cCasco,cFrente,cTapa,lado,puertas,ghost){
+    var o = "", yi = lado==="A" ? y0 : y1;              // cara que mira al pasillo
+    if(z1 < ojo) o += poly(quadZ(z1,x0,x1,y0,y1), cTapa||cCasco);
+    o += poly(quadY(yi,x0,x1,z0,z1), cCasco);
+    if(puertas){ var n=Math.max(1,Math.round((x1-x0)/450)), g=(x1-x0)/n;
+      for(var i=0;i<n;i++){ o += poly(quadY(yi,x0+i*g+18,x0+(i+1)*g-18,z0+20,z1-20), cFrente, ' stroke="rgba(0,0,0,.25)" stroke-width=".6"');
+        var hpos = P(x0+i*g+g/2, yi, z1-70); o += '<rect x="'+(hpos[0]-4)+'" y="'+(hpos[1]-1.5)+'" width="8" height="3" rx="1" fill="'+(val("tiradores")==="De cuero"?"#8A5A34":"#1A1A1A")+'"/>'; } }
+    o += ghost ? poly(quadX(x0,y0,y1,z0,z1), cCasco, ' fill-opacity=".22" stroke="rgba(255,255,255,.5)" stroke-dasharray="4 3"') : poly(quadX(x0,y0,y1,z0,z1), cCasco) + poly(quadX(x0,y0,y1,z0,z1), 'rgba(0,0,0,.08)');
+    return o;
+  }
+  var alt = val("altillos");
+  items.forEach(function(it){
+    var x0=it.x, x1=it.x+it.len, d=it.d, y0, y1;
+    if(it.side==="full"){ y0=0; y1=W; } else if(it.side==="A"){ y0=W-d; y1=W; } else { y0=0; y1=d; }
+    var lado = it.side==="A" ? "A" : "B";
+    if(it.k==="cama"){
+      var sub = it.sub;
+      if(sub==="fijaAlta" || sub==="dosFijas" || sub==="dosDesm"){
+        var zc = sub==="fijaAlta" ? 950 : 600;
+        svg += poly(quadX(x0,0,W,0,zc), mC.c) + poly(quadX(x0,0,W,0,zc),'rgba(0,0,0,.25)');
+        svg += poly(quadZ(zc+150,x0,Lc,0,W), tap) + poly(quadX(x0,0,W,zc,zc+150), tap) + poly(quadX(x0,0,W,zc,zc+150),'rgba(0,0,0,.12)');
+        var al = P(x0+200,W*0.25,zc+150), ar = P(x0+200,W*0.75,zc+150); svg += '<ellipse cx="'+((al[0]+ar[0])/2)+'" cy="'+(al[1]-6)+'" rx="'+((ar[0]-al[0])/2.4)+'" ry="8" fill="#F5F1EA"/>';
+        if(sub!=="fijaAlta"){ var z2 = Math.min(1450, Hi-450); svg += poly(quadZ(z2+120,x0+100,Lc,0,W), tap) + poly(quadX(x0+100,0,W,z2,z2+120), mC.c); }
+      } else if(sub==="elevable" || sub==="dosElec"){
+        svg += caja(x0,x0+450,0,W*0.45,0,450,mC.c,mD.c,tap,"B",false) + caja(x0,x0+450,W*0.55,W,0,450,mC.c,mD.c,tap,"A",false);
+        svg += poly(quadZ(720,x0+500,Lc-500,W/2-300,W/2+300), mE.c);
+        svg += poly(quadZ(Hi-180,x0,Lc,0,W), mC.c) + poly(quadX(x0,0,W,Hi-260,Hi-180), tap) + poly(quadX(x0,0,W,Hi-260,Hi-180),'rgba(0,0,0,.15)');
+      } else {
+        var sb = val("salon")==="bancos";
+        svg += caja(x0,Lc,0,600,0,450,mC.c,mD.c,tap,"B",false) + caja(x0,Lc,W-600,W,0,450,mC.c,mD.c,tap,"A",false);
+        if(!sb) svg += poly(quadX(Lc-500,0,W,0,450), tap);
+        svg += poly(quadZ(700,x0+300,Lc-600,W/2-280,W/2+280), mE.c);
+      }
+      return;
+    }
+    if(it.k==="mesa"){ svg += poly(quadZ(720,x0,x1,y0,y1), mE.c) + poly(quadX(x0,y0,y1,690,720), mE.c) + poly(quadX(x0,y0,y1,690,720),'rgba(0,0,0,.2)'); return; }
+    if(it.k==="banco" || it.k==="dinetteL"){ svg += caja(x0,x1,y0,y1,0,450,mC.c,mD.c,tap,lado,false) + poly(quadX(x1-80,y0,y1,450,950), tap) + poly(quadX(x1-80,y0,y1,450,950),'rgba(0,0,0,.1)'); return; }
+    var alto = it.h>=9999 ? Hi-30 : it.h, ghost = alto>1200 && x0 < Lc*0.4; // columnas cerca de la cámara: se ven en transparencia
+    if(it.k==="cocina"){
+      var sp = find(SALPICADERO, val("salpicadero"));
+      var yw = lado==="A" ? W-1 : 1;
+      if(sp.c) svg += poly(quadY(yw,x0,x1,940,1450), sp.c) + poly(quadY(yw,x0,x1,940,1450),'rgba(0,0,0,.08)');
+      svg += caja(x0,x1,y0,y1,0,880,mC.c,mD.c,mC.c,lado,true);
+      svg += poly(quadZ(920,x0-20,x1+20,y0-(lado==="B"?0:30),y1+(lado==="B"?30:0)), mE.c) + poly(quadX(x0-20,y0-(lado==="B"?0:30),y1+(lado==="B"?30:0),880,920), mE.c) + poly(quadX(x0-20,y0,y1,880,920),'rgba(0,0,0,.2)');
+      var f = val("fuegos"); if(f!=="ninguno"){ var hb=P(x0+250, lado==="A"?W-250:250, 921); svg += '<ellipse cx="'+hb[0]+'" cy="'+hb[1]+'" rx="16" ry="5" fill="#2A2A2A"/>'; }
+      if(val("fregadero")){ var sk=P(x1-300, lado==="A"?W-260:260, 921); svg += '<ellipse cx="'+sk[0]+'" cy="'+sk[1]+'" rx="14" ry="4" fill="#B8BEC2"/>'; }
+    } else if(it.k==="bano"){
+      svg += caja(x0,x1,y0,y1,0,alto,mC.c,mD.c,mC.c,lado,false,ghost) + poly(quadY(lado==="A"?y0:y1,x0+60,x1-60,30,alto-60), mD.c, ' stroke="rgba(0,0,0,.3)"');
+    } else {
+      svg += caja(x0,x1,y0,y1,0,alto,mC.c,mD.c,mC.c,lado,true,ghost);
+    }
+    if((alt==="perimetral" && it.h<9999) || (alt==="cocina" && it.k==="cocina")){
+      var ya0 = lado==="A" ? W-350 : 0, ya1 = lado==="A" ? W : 350;
+      svg += caja(x0,x1,ya0,ya1,Hi-420,Hi-20,mC.c,mD.c,mC.c,lado,true);
+      if(val("ex-ledArmarios")) svg += line(P(x0,lado==="A"?ya0:ya1,Hi-422),P(x1,lado==="A"?ya0:ya1,Hi-422),"#FFE9A8",3);
+    }
+  });
+  svg += '<rect width="'+VW+'" height="'+VH+'" fill="url(#luz3d)"/>';
+  svg += '</g><text x="12" y="'+(VH-10)+'" class="dim" style="fill:#E8ECEA">vista orientativa · '+esc(val("marca"))+' '+L+H+'</text></svg>';
+  return svg;
+}
+
+/* ---------- descripción para generar una foto realista con IA ---------- */
+function promptFoto(){
+  var M=modelo(), c=find(CAMAS,val("cama")), e=function(id){return val("ex-"+id)};
+  var muebles = "muebles con estructura en "+mat("cuerpo",val("cuerpo")).n.toLowerCase()+" y puertas en "+mat("puertas",val("puertas")).n.toLowerCase()
+    + (val("tiradores")==="De cuero" ? " con tiradores de cuero" : val("tiradores")==="Negros" ? " con tiradores negros" : " con uñero");
+  var partes = [
+    "Fotografía realista del interior de una furgoneta camperizada "+val("marca")+" "+curL()+curH()+", vista desde la cabina mirando hacia la parte trasera, gran angular, luz natural de día",
+    "techo: "+mat("techo",val("techo")).n.toLowerCase()+(e("focos")?" con focos LED empotrados":""),
+    "paredes: "+mat("paredes",val("paredes")).n.toLowerCase(),
+    "suelo: "+mat("suelo",val("suelo")).n.toLowerCase(),
+    muebles,
+    "cocina con encimera de "+mat("encimera",val("encimera")).n.toLowerCase()+", "+find(FUEGOS,val("fuegos")).n.toLowerCase()+(val("fregadero")?", fregadero":"")
+      +(find(SALPICADERO,val("salpicadero")).id!=="ninguno" ? " y frontal de azulejo "+find(SALPICADERO,val("salpicadero")).n.toLowerCase() : ""),
+    "al fondo: "+c.n.toLowerCase()+", tapicería color "+val("tapiceria").toLowerCase(),
+    {completo:"baño cerrado con puerta", wc:"", no:""}[val("bano")],
+    val("altillos")!=="no" ? "altillos superiores"+(e("ledArmarios")?" con tira LED debajo":"") : "",
+    e("ventanas") ? "ventanas laterales con vistas a un bosque" : "",
+    (e("clarDel")||e("clarTras")||e("clarBano")) ? "claraboya en el techo" : "",
+    e("tv") ? "televisión en brazo extensible" : "",
+    "estilo acogedor y ordenado, alta calidad, sin texto ni personas"
+  ].filter(Boolean);
+  return partes.join("; ")+".";
+}
+
+/* ============================================================
+   LISTA DE COMPRA (materiales) a partir de la configuración
+   Cantidades estimadas con las medidas del modelo: el encargado las revisa antes de pedir.
+   Formatos de tablero supuestos: editad FORMATOS si vuestro proveedor usa otros.
+   ============================================================ */
+var FORMATOS = { hplM2: 3.05*1.30, sueloCajaM2: 2.2, merma: 0.15 };
+function listaCompra(){
+  var M=modelo(), L=curL(), H=curH(), lay=layoutFor(L), Lc=lay.Lc/1000, W=lay.W/1000, Hi=M.alto[H].int/1000, ex=function(id){return val("ex-"+id)};
+  var r=[], dist=!SIMPLE;
+  function add(partida, material, cant, ud, nota){ r.push([partida, material, cant, ud, nota||""]); }
+  function m2(x){ return Math.ceil(x*(1+FORMATOS.merma)*10)/10; }
+  function tableros(m){ return Math.ceil(m/FORMATOS.hplM2); }
+  function n(x){ return String(x).replace(".",","); }
+  var mP=mat("paredes",val("paredes")), mT=mat("techo",val("techo")), mS=mat("suelo",val("suelo"));
+  // superficies (m²)
+  var supParedes = 2*Lc*Hi - 1.15*Hi;                       // laterales menos el hueco de la puerta corredera
+  var supPuertas = 1.15*Hi + W*Hi;                          // puerta lateral + traseras
+  var supTecho = Lc*W*1.1;                                  // techo curvo
+  var supSuelo = Lc*W;
+  function panel(partida, m, sup, nota){
+    if(/^hpl/.test(m.id)) add(partida, m.n+(m.cod?" ("+m.cod+")":"")+" · tablero 5 mm", tableros(m2(sup)), "tableros", "≈ "+n(m2(sup))+" m² con merma; tablero "+FORMATOS.hplM2.toFixed(2).replace(".",",")+" m²"+(nota?"; "+nota:""));
+    else add(partida, m.n+(m.cod?" ("+m.cod+")":""), m2(sup), "m²", "Con merma del "+Math.round(FORMATOS.merma*100)+" %"+(nota?"; "+nota:""));
+  }
+  // 1. Aislamiento y revestimientos
+  add("Aislamiento", "Aislante de paredes, techo y puertas (tipo según criterio del taller)", m2(supParedes+supPuertas+supTecho), "m²", "Va incluido en la partida de panelado");
+  panel("Paredes", mP, supParedes);
+  panel("Puertas trasera y lateral", mP, supPuertas, "mismo panelado que las paredes, por defecto");
+  if(mT.id==="bambu") add("Techo", "Techo de bambú (lamas)", m2(supTecho), "m²", "+ rastreles y fondo oscuro"); else panel("Techo", mT, supTecho);
+  add("Suelo", "Base del suelo: tablero + aislante (según criterio del taller)", m2(supSuelo), "m²");
+  add("Suelo", mS.n+(mS.cod?" ("+mS.cod+")":""), m2(supSuelo), "m²", /zaragoza/.test(mS.id) ? "≈ "+Math.ceil(m2(supSuelo)/FORMATOS.sueloCajaM2)+" cajas si la caja trae "+String(FORMATOS.sueloCajaM2).replace(".",",")+" m² (confirmar)" : "");
+  add("Suelo", "Perfil de remate y transición", Math.ceil(W+1), "m");
+  add("Fijaciones", "Remaches roscados M6, escuadras y tornillería de anclaje a carrocería", 1, "lote");
+  add("Fijaciones", "Adhesivo-sellador de poliuretano", 4, "cartuchos");
+  if(!dist) return r;
+  // 2. Mobiliario (HPL 15 mm)
+  var cascos=0, frentes=0, puertas=0, cantos=0;
+  lay.items.forEach(function(it){
+    if(it.side==="full" || it.k==="mesa") return;
+    var l=it.len/1000, d=it.d/1000, h=(it.h>=9999? Hi : (it.k==="banco"||it.k==="dinetteL"?0.45:(it.h||900)/1000));
+    cascos += 2*d*h + 2*l*d + l*d;                          // laterales, suelo, techo y una balda
+    if(["cocina","nevera","armario","wc","bano"].indexOf(it.k)>=0){ frentes += l*h; var n=Math.max(1,Math.round(l/0.45)); puertas += n; cantos += n*2*(l/n + h); }
+  });
+  var altillos = val("altillos")==="no" ? 0 : lay.items.filter(function(it){ return it.side!=="full" && (val("altillos")==="perimetral" ? it.h<9999 && it.k!=="mesa" && it.k!=="banco" && it.k!=="dinetteL" : it.k==="cocina"); }).reduce(function(s,it){return s+it.len/1000},0);
+  if(altillos){ cascos += altillos*(2*0.35 + 0.35) ; frentes += altillos*0.38; var na=Math.max(1,Math.round(altillos/0.45)); puertas += na; cantos += na*2*(altillos/na+0.38); }
+  var cama = val("cama"), camaDos = /^dos/.test(cama);
+  cascos += W*(cama==="fijaAlta"?1.0:0.6) + (lay.items[0].len/1000)*W*(camaDos?2:1);   // frontal y tablero de la cama
+  add("Mobiliario", "Cascos: "+mat("cuerpo",val("cuerpo")).n+" ("+(mat("cuerpo",val("cuerpo")).cod||"")+") · HPL 15 mm", tableros(m2(cascos)), "tableros", "≈ "+n(m2(cascos))+" m²; revisar con el despiece");
+  add("Mobiliario", "Puertas y frentes: "+mat("puertas",val("puertas")).n+(mat("puertas",val("puertas")).cod?" ("+mat("puertas",val("puertas")).cod+")":""), tableros(m2(frentes)), "tableros", "≈ "+n(m2(frentes))+" m²");
+  add("Mobiliario", "Tiradores "+String(val("tiradores")).toLowerCase(), puertas, "ud");
+  add("Mobiliario", "Bisagras de cazoleta", puertas*2, "ud");
+  add("Mobiliario", "Cierres de seguridad para que no se abran en marcha", puertas, "ud", "Imprescindible en camper");
+  add("Mobiliario", "Canteado (si lleva)", Math.ceil(cantos), "m", "POR DEFINIR si lleva y color");
+  add("Mobiliario", "Perfiles de aluminio (si lleva)", "", "m", "POR DEFINIR");
+  var coc = lay.items.find(function(it){return it.k==="cocina"});
+  if(coc) add("Cocina", "Encimera "+mat("encimera",val("encimera")).n.toLowerCase(), Math.ceil((coc.len+(val("extension")?300:0))/100)/10, "m", "Fondo 600 mm");
+  var sp = find(SALPICADERO,val("salpicadero"));
+  if(coc && sp.id!=="ninguno") add("Cocina", "Azulejo "+sp.n.toLowerCase(), m2((coc.len/1000)*0.6), "m²", "+ adhesivo y junta");
+  // 3. Cama
+  var colchon = {fijaSalon:"Cojines de los sofás (hacen de colchón)", fijaAlta:"Colchón a medida", elevable:"Colchón a medida", dosFijas:"Colchones a medida", dosDesm:"Colchones a medida", dosElec:"Colchón a medida + cojines de los sofás"}[cama];
+  add("Cama", colchon+" · tapicería "+String(val("tapiceria")).toLowerCase(), camaDos?2:1, "ud", "Medida: "+medidaCama());
+  if(cama==="elevable"||cama==="dosElec") add("Cama", "Kit de cama elevable eléctrica (guías, motor y mando)", 1, "ud");
+  if(camaDos || cama==="fijaAlta") add("Cama", "Somier de lamas", camaDos?2:1, "ud");
+  if(val("rampa")) add("Cama", "Rampa para bici o moto", 1, "ud");
+  if(val("cajon")) add("Cama", "Guías de carga pesada para cajón extraíble", 1, "par");
+  // 4. Cocina y electrodomésticos
+  add("Cocina", "Nevera de compresor "+{pequena:"40–50 L", mediana:"70–90 L", grande:"130 L o más"}[val("nevera")], 1, "ud", "Marca y medidas: POR DEFINIR");
+  var f = val("fuegos");
+  if(f!=="ninguno") add("Cocina", find(FUEGOS,f).n, 1, "ud", /gas/.test(f) ? "+ bombona, regulador, latiguillo y detector de gas" : "Revisar consumo con la instalación eléctrica");
+  if(ex("horno")) add("Cocina", "Horno", 1, "ud");
+  if(val("fregadero")) { add("Cocina", TALLER_DEF.fregadero+(val("tapaFregadero")?" con tapa":""), 1, "ud"); add("Cocina", "Grifo de cocina · grifería "+String(val("griferia")).toLowerCase(), 1, "ud"); }
+  // 5. Baño
+  var bano = val("bano");
+  if(bano==="completo"){
+    add("Baño", TALLER_DEF.wcCassette, 1, "ud", "Modelo POR DEFINIR");
+    add("Baño", "Plato de ducha y desagüe", 1, "ud", val("tarima")?"+ tarima de madera":"");
+    add("Baño", "Grifería de ducha "+String(val("griferia")).toLowerCase(), 1, "ud");
+    add("Baño", find(BANO_REVEST,val("banoRevest")).n, m2(3.4*Hi), "m²", "Paredes del baño");
+    add("Baño", "Puerta del baño: "+find(BANO_PUERTA,val("banoPuerta")).n.toLowerCase(), 1, "ud");
+    add("Baño", "Impermeabilización y sellado de la zona de ducha", 1, "lote");
+  } else if(bano==="wc") add("Baño", TALLER_DEF.wcPortatil, 1, "ud", "Modelo POR DEFINIR");
+  // 6. Agua
+  var limpias = TALLER ? +val("agua") : TALLER_DEF.aguaLimpiaL;
+  add("Agua", "Depósito de aguas limpias "+limpias+" L", 1, "ud");
+  add("Agua", "Depósito de aguas grises "+TALLER_DEF.aguaSuciaL+" L", 1, "ud", "Con vaciado accesible");
+  add("Agua", "Bomba a presión con filtro (Lulukabaraka)", 1, "ud");
+  add("Agua", "Tubo de 12 mm y racores", Math.ceil(Lc*2+3), "m");
+  if(ex("aguacaliente")){ add("Agua", "Calentador de agua", 1, "ud"); add("Agua", "Vaso de expansión", 1, "ud", "Casi obligatorio con calentador"); }
+  if(val("duchaExt")) add("Agua", "Ducha exterior trasera", 1, "ud");
+  // 7. Electricidad
+  var ah = TALLER_DEF.bateriaAh + (ex("bat100")?TALLER_DEF.bateriaExtraAh:0), wsol = TALLER_DEF.solarW + (ex("solar200")?TALLER_DEF.solarExtraW:0), inv = ex("inv2000")?TALLER_DEF.inversorExtraW:TALLER_DEF.inversorW;
+  add("Electricidad", "Batería litio LiFePO4 "+ah+" Ah", 1, "ud", ah>TALLER_DEF.bateriaAh ? "o dos baterías en paralelo" : "");
+  add("Electricidad", "Placa solar "+wsol+" W", wsol/200, "ud", "Paneles de 200 W");
+  add("Electricidad", "Regulador MPPT", 1, "ud", wsol>200 ? "Dimensionar para "+wsol+" W" : "");
+  add("Electricidad", TALLER_DEF.booster, 1, "ud");
+  add("Electricidad", "Inversor de onda pura "+inv+" W", 1, "ud");
+  if(ex("cargador230")) add("Electricidad", "Cargador de 230 V", 1, "ud");
+  add("Electricidad", "Panel de control táctil", 1, "ud");
+  if(ex("monitor")) add("Electricidad", "Monitor de batería con app (shunt)", 1, "ud");
+  add("Electricidad", "Fusible principal, portafusibles, caja de fusibles 12 V y desconectador", 1, "lote", "Cada circuito con su fusible");
+  add("Electricidad", "Cable de batería e inversor", 1, "lote", "Sección según amperaje y longitud de cada tramo (inversor de "+inv+" W)");
+  add("Electricidad", "Enchufes 230 V", 1 + (ex("enchufes")?2:0), "ud");
+  add("Electricidad", "Tomas USB", 2, "ud");
+  add("Electricidad", "Toma 12 V", 1, "ud");
+  add("Electricidad", "Toma exterior 230 V de camping", 1, "ud");
+  var focos = Math.max(4, Math.round(Lc/0.6));
+  add("Electricidad", ex("focos") ? "Focos LED empotrados" : "Luces LED", focos, "ud");
+  if(ex("ledArmarios")) add("Electricidad", "Tira LED bajo armarios + perfil", Math.ceil(altillos||Lc), "m");
+  if(ex("flexos")) add("Electricidad", "Flexos de lectura", 2, "ud");
+  // 8. Ventanas, claraboyas y extras
+  if(ex("ventanas")) add("Ventanas", "Ventana lateral abatible con mosquitera y oscurecedor", 1, "ud", "Lugar y medidas: POR DEFINIR");
+  if(ex("ventanaTrasera")) add("Ventanas", "Ventanas para puertas traseras", 2, "ud");
+  var clar = ["clarDel","clarTras","clarBano"].filter(ex).length;
+  if(clar) add("Claraboyas", "Claraboya Turbovent", clar, "ud", "Confirmar que la eléctrica alimenta el ventilador");
+  [["calefaccion","Kit de calefacción diésel 2 kW"],["aire","Aire acondicionado"],["escalon","Escalón de acceso"],["toldo","Toldo "+(Math.round(Lc*0.9*2)/2).toString().replace(".",",")+" m (aprox.)"],["techoElev","Techo elevable (subcontratar)"],["tv","Televisión + brazo extensible"],["ruedas","Ruedas todoterreno + llantas negras"],["nombre","Vinilo con el nombre de la camper"],["mesaIlustrada","Mesa ilustrada"]].forEach(function(e){ if(ex(e[0])) add("Extras", e[1], e[0]==="ruedas"?4:1, "ud"); });
+  return r;
+}
+function compraTexto(c){ return c.map(function(x){ return "- ["+x[0]+"] "+x[1]+": "+(x[2]===""?"?":String(x[2]).replace(".",","))+" "+x[3]+(x[4]?" · "+x[4]:""); }).join("\n"); }
+function compraHTML(c){
+  return '<div class="hoja"><h3>Lista de compra (estimada)</h3><div class="tablewrap"><table class="compra"><thead><tr><th>Partida</th><th>Material</th><th>Cant.</th><th>Nota</th></tr></thead><tbody>'
+    + c.map(function(x){ return "<tr><td>"+esc(x[0])+"</td><td>"+esc(x[1])+"</td><td class=\"num\">"+esc(x[2]===""?"—":String(x[2]).replace(".",",")+" "+x[3])+"</td><td>"+esc(x[4])+"</td></tr>"; }).join("")
+    + '</tbody></table></div></div>';
+}
+
+/* ============================================================
    RENDER
    ============================================================ */
 function renderPreview(){
-  if(!TALLER && S.view==="plan") S.view = "int"; // el plano solo lo ve el taller
-  $("view").innerHTML = S.view==="ext" ? drawExterior() : S.view==="plan" ? drawPlan() : drawInterior();
+  if(!TALLER && S.view==="plan") S.view = "3d"; // el plano solo lo ve el taller
+  $("view").innerHTML = S.view==="ext" ? drawExterior() : S.view==="plan" ? drawPlan() : S.view==="3d" ? drawVista3D() : drawInterior();
   document.querySelectorAll(".tabs button").forEach(function(b){ b.setAttribute("aria-selected", b.dataset.view===S.view ? "true":"false"); });
   $("sidebtns").hidden = S.view!=="int";
   renderPaleta();
@@ -1191,7 +1444,9 @@ function renderSummary(){
   var rows = [["Furgoneta", esc(txtFurgo())], ["Distribución", txtDistribucion().map(esc).join("<br>")], ["Prioridades", esc(val("prioridades")||"—")], ["Acabados", txtAcabados().map(esc).join("<br>")], ["Extras", txtElectrico().map(esc).join("<br>")]];
   var av = txtAvisos(); if(av.length) rows.push(["Avisos", av.map(esc).join("<br>")]);
   $("summary").innerHTML = rows.map(function(r){return "<div><dt>"+r[0]+"</dt><dd>"+r[1]+"</dd></div>"}).join("");
-  $("hoja-taller").innerHTML = TALLER ? hojaHTML(hojaTrabajo()) : "";
+  $("hoja-taller").innerHTML = TALLER ? hojaHTML(hojaTrabajo()) + compraHTML(listaCompra())
+    + '<div class="foto"><h3>Descripción para generar la foto</h3><p>Pégala en un generador de imágenes (ChatGPT, Gemini…) junto con una foto de referencia de vuestras campers.</p><pre class="copy" id="promptfoto"></pre><button type="button" class="btn" id="copiafoto">Copiar descripción</button></div>' : "";
+  if(TALLER){ $("promptfoto").textContent = promptFoto(); $("copiafoto").onclick = function(){ var b=this, tx=promptFoto(); navigator.clipboard.writeText(tx).then(function(){b.textContent="Copiada"}).catch(function(){ var rg=document.createRange(); rg.selectNodeContents($("promptfoto")); var s=getSelection(); s.removeAllRanges(); s.addRange(rg); b.textContent="Selecciona y copia"; }); }; }
 }
 /* ============================================================
    ENVÍO
@@ -1209,14 +1464,17 @@ function payload(ref){
     prioridades: SIMPLE ? "" : (val("prioridades")||""),
     acabados: txtAcabados(), electrico: SIMPLE ? [] : CLIENTE ? (txtCliente().extras.length ? ["Extras: "+txtCliente().extras.join(", ")] : ["Sin extras"]) : txtElectrico(),
     avisos: TALLER ? txtAvisos() : [],
-    hoja: hojaTrabajo()
+    hoja: hojaTrabajo(),
+    compra: listaCompra(),
+    promptFoto: promptFoto()
   };
 }
 function textoPlano(p){
   return "Configuración "+p.referencia+"\n\nCLIENTE\n"+p.cliente.nombre+" · "+p.cliente.nif+"\n"+p.cliente.direccion+"\n"+p.cliente.email+" · "+p.cliente.telefono
     +"\n\nFURGONETA\n"+p.furgoneta.texto+"\n\nDISTRIBUCIÓN\n- "+p.distribucion.join("\n- ")+(p.prioridades?"\nPrioridades: "+p.prioridades:"")
     +"\n\nACABADOS\n- "+p.acabados.join("\n- ")+(p.electrico.length?"\n\nELECTRICIDAD\n- "+p.electrico.join("\n- "):"")+(p.avisos.length?"\n\nAVISOS\n- "+p.avisos.join("\n- "):"")
-    +"\n\n==== HOJA DE TRABAJO ====\n\n"+hojaTexto(p.hoja);
+    +"\n\n==== HOJA DE TRABAJO ====\n\n"+hojaTexto(p.hoja)
+    +"\n\n==== LISTA DE COMPRA (estimada) ====\n"+compraTexto(p.compra);
 }
 function validar(){
   var req = ["nombre","nif","email","telefono","direccion","cp","poblacion"];
@@ -1321,7 +1579,7 @@ form.addEventListener("change", function(e){
   if(["suelo","paredes","techo","cuerpo","puertas","encimera"].indexOf(n)>=0){ $("estilo-propio").checked = true; }
   if(n==="cocinaLado" && S.view==="int") S.side = e.target.value;
   if(["largo","alto","marca"].indexOf(n)>=0 && S.step===0) S.view="ext";
-  if(["suelo","paredes","techo","cuerpo","puertas","encimera","estilo","tapiceria","salpicadero","tiradores","griferia","banoRevest","banoPuerta"].indexOf(n)>=0) S.view="int";
+  if(["suelo","paredes","techo","cuerpo","puertas","encimera","estilo","tapiceria","salpicadero","tiradores","griferia","banoRevest","banoPuerta"].indexOf(n)>=0) S.view="3d";
   if(["ex-ruedas","ex-escalon","ex-nombre","ex-clarDel","ex-clarTras","ex-clarBano","ex-aire","ex-toldo","ex-techoElev","ex-solar200"].indexOf(n)>=0) S.view="ext";
   if(["cama","numCamas","salon","comedor","mesaAbatible","plazas","bano","banoPos","cocinaLado","nevera","altillos","armario","rampa","cajon","fuegos"].indexOf(n)>=0) S.view="plan";
   renderVisibility(); renderPreview(); if(S.step===LAST) renderSummary();

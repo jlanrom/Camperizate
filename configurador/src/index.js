@@ -56,6 +56,19 @@ function cuerpo(p) {
       }
     }
   }
+  // Lista de compra estimada como tabla
+  if (Array.isArray(p.compra) && p.compra.length) {
+    const celda = (s) => txt(s);
+    const fila = (cells) => ({ type: "table_row", table_row: { cells: cells.map(celda) } });
+    bloques.push(h2("Lista de compra (estimada)"));
+    bloques.push(nota("Cantidades calculadas con las medidas del modelo. Revísalas con el despiece antes de pedir."));
+    bloques.push({ object: "block", type: "table", table: { table_width: 4, has_column_header: true, has_row_header: false,
+      children: [fila(["Partida", "Material", "Cantidad", "Nota"])].concat(p.compra.slice(0, 99).map(([pa, m, q, u, n]) => fila([pa, m, q === "" ? "—" : `${String(q).replace(".", ",")} ${u}`, n || ""]))) } });
+  }
+  if (p.promptFoto) {
+    bloques.push(h2("Descripción para generar la foto"));
+    bloques.push({ object: "block", type: "paragraph", paragraph: { rich_text: txt(p.promptFoto) } });
+  }
   bloques.push(h2("Lo que eligió el cliente"));
   bloques.push(h3("Furgoneta"), li(p.furgoneta?.texto));
   for (const [titulo, lista] of [["Distribución", p.distribucion], ["Acabados", p.acabados], ["Extras", p.electrico], ["Avisos del configurador", p.avisos]]) {

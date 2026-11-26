@@ -34,6 +34,17 @@ electrónica, depósitos, ventanas, claraboyas y extras.
 
 Los valores por defecto del taller están en `TALLER_DEF`, dentro de `app.html`.
 
+## Vista 3D, foto y lista de compra
+
+- **Vista 3D**: perspectiva desde la cabina hacia atrás con los materiales elegidos (pestaña «3D»). Es orientativa, no una foto.
+- **Descripción para la foto**: `promptFoto()` redacta el texto para pegarlo en un generador de imágenes (ChatGPT, Gemini…).
+  Sale en la versión de taller y en la ficha de Notion. Para que la foto se genere sola hace falta conectar un servicio de
+  imágenes con clave propia (coste por imagen); no está hecho.
+- **Lista de compra**: `listaCompra()` calcula materiales y cantidades con las medidas del modelo (m² de paredes, techo y
+  suelo, tableros HPL, tiradores, bisagras, cierres, encimera, azulejo, electricidad, agua, ventanas, claraboyas y extras).
+  Sale en la versión de taller y como tabla en la ficha de Notion. Formatos supuestos (tablero HPL 3,05 × 1,30 m, caja de
+  suelo 2,2 m², merma 15 %) en `FORMATOS`.
+
 ## Archivos
 
 - `app.html`: la página entera (HTML, CSS y JS). **El catálogo está arriba del `<script>`**: `MODELOS` (medidas por marca), `MATERIALES`, `ESTILOS`, `CAMAS`, `COMEDORES`, `FUEGOS`, `SALPICADERO`, `BANO_*`, `PACK_ESTANDAR`, `EXTRAS`. Para cambiar maderas, colores, fotos u opciones, editad ahí.
